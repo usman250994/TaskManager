@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "CreateProject";
+    Layout = "~/Views/Shared/_Home.cshtml";
+}
+<div id="wrapper">
+    <!-- Navigation -->
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="text-align:center">Create Project</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Create Project
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class=" col-lg-offset-3  col-lg-6">
+
+
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Project Name</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" name="ProjName" id="ProjName" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Start Date</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="date" name="StartDate" id="StartDate" placeholder="DD/MM/YYYY" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>End Date</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control ui-datepicker" type="date" name="EndDate" id="EndDate" placeholder="DD/MM/YYYY" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Customer Name</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <select id="ProjectDropdown"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Customer Detail</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <select id="custDetail"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-offset-6 col-lg-6 spacing">
+                                    <button class="btn btn-success" value="Add" onclick="Add()" id="bc"> Create </button>
+                                    <button type="reset" class="btn btn-info">Reset</button>
+                                </div>
+
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                            <!-- /.col-lg-6 (nested) -->
+                        </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<script type="text/javascript">
+    // Fill DropDown
+    $(document).ready(function () {
+        $.ajax({
+            async: false,
+            url: '/api/ProjectApi/' + "1",
+            type: 'GET',
+            success: function (data) {
+                $.each(data, function (i) {
+                    $('#ProjectDropdown').append($('<option></option>').val(data[i].customerId).html(data[i].customer_name));
+                });
+                console.log(data);
+                $.ajax({
+                    async: false,
+                    url: '/api/ProjectApi/' + "0",
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                        $.each(data, function (i) {
+                            $('#custDetail').append($('<option></option>').val(data[i].customerContactDetailId).html(data[i].project_manager));
+                        });
+                    },
+                    failure: function () { alert("Failed to load Users"); }
+                });
+            },
+            failure: function () {
+                alert("Failed to load Projects");
+            }
+        });
+    });
+    //add user button press for adding or updating db
+    //need correction when updating probably
+    function Add() {
+        var model = { Project_Name: $("#ProjName").val(), Start_Date: $("#StartDate").val(), End_Date: $("#EndDate").val(), customer: $("#ProjectDropdown").val(), customerContactDetail: $("#custDetail").val() };
+        console.log(model);
+        $.ajax({
+            url: 'http://localhost:51525/api/ProjectApi/',
+            type: 'POST',
+            data: JSON.stringify(model),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                alert('Customer Added');
+            },
+            error: function () { alert('Customer not Added'); }
+        });
+    }
+</script>

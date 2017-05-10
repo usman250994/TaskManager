@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "CreateCustomer";
+    Layout = "~/Views/Shared/_Home.cshtml";
+}
+<div id="wrapper">
+    <!-- Navigation -->
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="text-align:center">Create Task</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Create Task
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class=" col-lg-offset-3  col-lg-6">
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Customer Name</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <select id="ProjectDropdown"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Project Manager</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" name="Customername" id="ProjManager" placeholder="abc name" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Contact Number</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" name="Customername" id="Mobnum" placeholder="+92341234567" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" name="Customername" id="Email" placeholder="example@gmail.com" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Address</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" name="Customername" id="Address" placeholder=" WA 98052-7329. " required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-offset-6 col-lg-6 spacing">
+                                    <button class="btn btn-success" value="Add" onclick="Add()" id="bc"> Create Customer </button>                                        <button type="reset" class="btn btn-info">Reset Task</button>
+
+                                </div>
+
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                            <!-- /.col-lg-6 (nested) -->
+                        </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            async: false,
+            url: '/api/CustomerDetailApi/' + "1",
+            type: 'GET',
+            success: function (data) {
+                $.each(data, function (i) {
+                    $('#ProjectDropdown').append($('<option></option>').val(data[i].customerId).html(data[i].customer_name));
+                });
+            },
+            failure: function () {
+                alert("Failed to load Projects");
+            }
+        });
+    });
+
+    //add user button press for adding or updating db
+    //need correction when updating probably
+    function Add() {
+        var model = { customerContactDetailId: $("#ProjectDropdown").val(), project_manager: $("#ProjManager").val(), contact_number: $("#Mobnum").val(), email: $("#Email").val(), address: $("#Address").val() };
+          $.ajax({
+            url: '/api/CustomerDetailApi/',
+            type: 'POST',
+            data: JSON.stringify(model),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                alert('Customer Detail Added');
+            },
+            error: function () { alert('Customer Detail Not Added'); }
+        });
+    }
+
+</script>
+
