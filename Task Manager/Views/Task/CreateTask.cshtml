@@ -25,6 +25,14 @@
                             <div class=" col-lg-offset-3  col-lg-6">
                                 <div class="col-lg-12 spacing">
                                     <div class="    col-lg-6 ">
+                                        <label>Customer Name</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <select id="CustomerDropdown" onchange="getval(this);"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="    col-lg-6 ">
                                         <label>Project Name</label>
                                     </div>
                                     <div class="col-lg-6 ">
@@ -113,13 +121,18 @@
 
 
     $(document).ready(function () {
+        globalProjects = [];
         dat = [];
         $.ajax({
             async: false,
-            url: '/api/TaskApi/' + 0,
+            url: '/api/TaskApi/'+0,
             type: 'GET',
             success: function (data) {
                 console.log(data);
+                $.each(data.dropdowns.customer, function (i) {
+                    $('#CustomerDropdown').append($('<option></option>').val(data.dropdowns.customer[i].customerId).html(data.dropdowns.customer[i].customer_name));
+                });
+                globalProjects = data.dropdowns.projects;
                 $.each(data.dropdowns.projects, function (i) {
                     $('#ProjectDropdown').append($('<option></option>').val(data.dropdowns.projects[i].id).html(data.dropdowns.projects[i].Project_Name));
                 });
@@ -151,33 +164,71 @@
     //add user button press for adding or updating db
     //need correction when updating probably
     function Add() {
-        var Tname = document.getElementById("TaskName").value.trim();
-        var Sdate = document.getElementById("StartDate").value.trim();
-        var Edate = document.getElementById("EndDate").value.trim();
-        var sms = document.getElementById("chkSMS").checked;
-        var email = document.getElementById("chkEmail").checked;
-        var assigned = document.getElementById("test").value.trim();
-
-        if (Tname == "") { alert("Please enter Your Task Name"); }
-        else if (Sdate >= Edate) { alert("Please Correct the Start And End date"); }
-        else {
+       
             var user = $("#test").select2("val");
             console.log(user);
-            var model = { projectId: $("#ProjectDropdown").val(), task_name: $("#TaskName").val(), Description: $("#Desc").val(), start_date: $("#StartDate").val(), end_date: $("#EndDate").val(), SMS: document.getElementById("chkSMS").checked, Email: document.getElementById("chkEmail").checked, tempUsers: user };
+           
+            var model =
+                {
+                id:$("#secid").val(),
+                projectId: $("#ProjectDropdown").val(),
+                task_name: $("#TaskName").val(),
+                description: $("#Desc").val(),
+                start_date: $("#StartDate").val(),
+                end_date: $("#EndDate").val(),
+                sms: document.getElementById("chkSMS").checked,
+                email: document.getElementById("chkEmail").checked,
+                status:"1",
+                tempUsers: user
+            };
             console.log(model);
+            console.log(JSON.stringify(model));
             $.ajax({
-                async: false,
-                url: '/api/TaskApi/',
+                url: '/api/TaskApi',
                 type: 'POST',
                 data: JSON.stringify(model),
-                contentType: "application/json;charset=utf-8",
+                contentType: "text/json;charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    alert('Task Added');
+                    alert(data);
                     location.reload();
                 },
-                error: function () { alert('Task not Added'); }
+                error: function (error) { alert(error); }
             });
+
+
+        
+    }
+
+    function getval(val)
+    {
+       
+        var check = 0;
+        for (var i = 0; i<document.getElementById('ProjectDropdown').length;i++)
+        {
+            console.log(globalProjects[i].customer);
+            console.log(globalProjects[i].customer.customerId);
+            console.log(val.value);
+
+            if (globalProjects[i].customer.customerId == val.value)
+            {
+                if (check == 0) {
+                    document.getElementById('ProjectDropdown').options.length = 0;
+                }
+                var option = document.createElement("option");
+                option.text = globalProjects[i].Project_Name;
+                option.value = globalProjects[i].id;
+                document.getElementById('ProjectDropdown').add(option);
+                
+            }
+            else
+            {
+                document.getElementById('ProjectDropdown').options.length = 0;
+            }
+           
         }
+        
+      
+
     }
 </script>

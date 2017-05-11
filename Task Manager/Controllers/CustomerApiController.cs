@@ -86,13 +86,6 @@ namespace Task_Manager.Controllers
 
         }
 
-
-
-
-
-
-
-
         // For Update 
         [Route("/api/CustomerApi/"), HttpPut]
         public int set(int id)

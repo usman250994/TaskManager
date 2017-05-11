@@ -31,7 +31,7 @@ namespace Task_Manager.Controllers
             }
         }
 
-        //session set
+        ////session set
         [Route("/api/TaskApi/"), HttpPut]
         public int set(int id)
         {
@@ -41,7 +41,7 @@ namespace Task_Manager.Controllers
         }
 
         //gtetting session and dropdown info
-        [Route("/api/TaskApi/"), HttpGet]
+        [HttpGet]
         public updateTaskReturning get(int id)
         {
             updateTaskReturning returning = new updateTaskReturning();
@@ -51,8 +51,8 @@ namespace Task_Manager.Controllers
                 string str = session["Task"].ToString();
                 session.Clear();
                 var task = db.task.Find(Convert.ToInt32(str));
-               var pid= db.tagging.Where(p=>p.tasks.id==task.id).Select(p=>p.project.id).FirstOrDefault();
-                
+                var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.id).FirstOrDefault();
+
                 returning.task = task;
                 returning.projectId = pid;
                 returning.dropdowns = find();
@@ -66,33 +66,48 @@ namespace Task_Manager.Controllers
         }
 
         //Create Task
-        [Route("/api/TaskApi/"), HttpPost]
-        public String CreateTask(tempTask tempTask)
+        [HttpPost]
+        public String CreateTask([FromBody]tempTask tempTask)
         {
 
-            Task task = new Task();
-            task.enable = true;
-            task.created_on = DateTime.Now;
-            task.task_name = tempTask.task_name;
-            task.description = tempTask.description;
-            task.start_date = tempTask.start_date;
-            task.end_date = tempTask.end_date;
-            task.status = tempTask.status = 1;
-            task.sms = tempTask.sms;
-            task.email = tempTask.email;
-            db.task.Add(task);
-            Tagging tag = new Tagging();
-            tag.tasks = task;
-            tag.project = db.project.Find(tempTask.projectId);
-            List<Users> usr = new List<Users>();
-            for (int i = 0; i < tempTask.tempUsers.Count; i++)
+            if (tempTask.id != 0)
             {
+          
+                var taskdetail = db.task.Find(tempTask.id);
 
-                var user = db.user.Find(tempTask.tempUsers[i]);
-                usr.Add(user);
+               
+                db.Entry(taskdetail).CurrentValues.SetValues(setTask(tempTask));
+              
+                //updating project
+                var tagging = db.tagging.Where(p => p.tasks.id == tempTask.id).FirstOrDefault();
+                var tag = tagging;
+                tag.project = db.project.Find(tempTask.projectId);
+                db.Entry(tagging).CurrentValues.SetValues(tag);
+
+
+                //adding users
+
+               
             }
-            tag.users = usr;
-            db.tagging.Add(tag);
+
+            else
+            {
+                var task = setTask(tempTask);
+                db.task.Add(task);
+                Tagging tag = new Tagging();
+                tag.tasks = task;
+                tag.project = db.project.Find(tempTask.projectId);
+                List<Users> usr = new List<Users>();
+                for (int i = 0; i < tempTask.tempUsers.Count; i++)
+                {
+
+                     var user = db.user.Find(tempTask.tempUsers[i]);
+                    usr.Add(user);
+                }
+                tag.users = usr;
+                db.tagging.Add(tag);
+
+            }
             if (db.SaveChanges() > 0)
             {
                 return "task success!!";
@@ -101,14 +116,29 @@ namespace Task_Manager.Controllers
             else
             {
                 return "Some Error";
-            }
+            }           
+        }
 
-           
+        private Task setTask (tempTask tempTask)
+        {
+            Task task = new Task();
+            task.enable = true;
+            task.created_on = DateTime.Now;
+            task.task_name = tempTask.task_name;
+            task.description = tempTask.description;
+            task.start_date = tempTask.start_date;
+            task.end_date = tempTask.end_date;
+            task.status = tempTask.status;
+            task.sms = tempTask.sms;
+            task.email = tempTask.email;
+            task.id = tempTask.id;
+            return task;
         }
 
 
-//deleting tasks without tagging
-        [Route("/api/TaskApi/"), HttpPost]
+
+        ////Deleting tasks without tagging
+        [HttpPost]
         public String delete(int id)
         {
             var user = db.task.Where(p => p.id == id).FirstOrDefault().enable = false;
@@ -123,10 +153,10 @@ namespace Task_Manager.Controllers
             }
         }
 
-   
-        
-        
-        // For Grid Data
+
+
+
+        //// For Grid Data
         [Route("/api/TaskApi"), HttpGet]
         public List<taskResponse> taskall()
         {
@@ -163,16 +193,21 @@ namespace Task_Manager.Controllers
             return taskResponse;
         }
 
-       
-        public TaskDropdown find()
+
+        private TaskDropdown find()
         {
             TaskDropdown tasksDropDown = new TaskDropdown();
             List<Project> projects = new List<Project>();
             projects = db.project.Where(p => p.Enable == true).ToList();
             tasksDropDown.projects = projects;
+
             List<Users> users = new List<Users>();
             users = db.user.Where(p => p.Enable == true).ToList();
             tasksDropDown.Users = users;
+
+            List<Customer> cus = new List<Customer>();
+            cus = db.customer.Where(p => p.enable == true).ToList();
+            tasksDropDown.customer = cus;
 
             return tasksDropDown;
 

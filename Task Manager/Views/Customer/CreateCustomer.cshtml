@@ -101,12 +101,18 @@
             type: 'PUT',
             success: function (data) {
                 console.log(data);
-                document.getElementById("Customername").value = data.customer_name;
-                document.getElementById("cust_id").value = data.customerId;
-                document.getElementById("CustAdd").value = data.address;
-                document.getElementById("CustContact").value = data.Phonenumber.substring(3, 13);
-                document.getElementById("CustWebsites").value = data.Website;
-                document.getElementById("CustEmail").value = data.Email;
+
+                if (data.customer_name != null) {
+                    console.log(data);
+                    document.getElementById("Customername").value = data.customer_name;
+                    document.getElementById("cust_id").value = data.customerId;
+                    document.getElementById("CustAdd").value = data.address;
+                    document.getElementById("CustContact").value = data.Phonenumber.substring(3, 13);
+                    document.getElementById("CustWebsites").value = data.Website;
+                    document.getElementById("CustEmail").value = data.Email;
+                }
+
+
             },
             error: function () { alert('Customer not Updated'); }
         });
@@ -123,7 +129,7 @@
         else if (address == "") { alert("Please Insert Customer Address"); }
         else if (contact == "" || contact.length != 10) { alert("Please insert valid number"); }
         else if (websites == "") { alert("Please Insert Customer Website"); }
-        else if (validateEmail(email) == false) { alert('Please provide a valid email address');}
+        else if (validateEmail(email) == false) { alert('Please provide a valid email address'); }
         else {
             var model = { customer_name: $("#Customername").val(), customerId: $("#cust_id").val(), enable: true, address: $("#CustAdd").val(), Phonenumber: "+92" + $("#CustContact").val(), Website: $("#CustWebsites").val(), Email: $("#CustEmail").val() };
             console.log(model);
