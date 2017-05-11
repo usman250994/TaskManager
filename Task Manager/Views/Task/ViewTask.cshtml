@@ -67,7 +67,8 @@
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            success: function (data) {
+            success: function (data)
+            {
                 console.log(data);
                 var fxg = "";
                 for (var i = 0; i < data.length; i++) {
@@ -96,6 +97,8 @@
             error: function () { alert('Grid Not Load'); }
         });
     });
+
+
     function DeleteTask(id) {
         if (confirm('Are You Sure ! You Want to Delete This Task')) {
             $.ajax({

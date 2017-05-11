@@ -92,9 +92,14 @@
 </div>
 <script type="text/javascript">
 
-    function Dashboard(val)
-    {
-        alert(val);
+    function Dashboard(val) {
+        $.ajax({
+            url: '/api/DashboardApi/'+val,
+            type: 'POST',       
+            success: function (data) {
+                window.location.href = '/Task/ViewTask';          
+            },
+            error: function () { alert("lanat"); }
+        });
     }
-
 </script>

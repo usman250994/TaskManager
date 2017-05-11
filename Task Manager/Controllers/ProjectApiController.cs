@@ -70,7 +70,7 @@ namespace Task_Manager.Controllers
                     }
                     else
                     {
-
+                        return "Not successfull call try again";
                     }
                 }
                 catch (Exception ex)
@@ -135,6 +135,7 @@ namespace Task_Manager.Controllers
             var user = db.project.Where(p => p.id == id).FirstOrDefault();
             return user;
         }
+      
         //Grid View Of Data
         [Route("/api/ProjectApi/"), HttpGet]
         public List<ProjectGrid> projall()
@@ -148,7 +149,8 @@ namespace Task_Manager.Controllers
                 toAdd.projectName = entity.Project_Name;
                 toAdd.startDate = entity.Start_Date.Date;
                 toAdd.endDate = entity.End_Date.Date;
-                toAdd.projectManager = entity.customerContactDetail.project_manager;
+                toAdd.customerManager= entity.customerContactDetail.project_manager;
+                toAdd.projectManager = entity.projectManager.user_Name;
                 toAdd.customerName = entity.customer.customer_name;
                 toAdd.userName = entity.Created_By.user_Name;
                 toAdd.Email = entity.customerContactDetail.email;

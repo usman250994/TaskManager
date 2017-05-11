@@ -72,7 +72,6 @@ E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.pdb
 E:\Visual Studio\Projects\Task Manager\Task Manager\bin\Microsoft.Azure.AppService.ApiApps.Service.dll
 E:\Visual Studio\Projects\Task Manager\Task Manager\bin\System.IdentityModel.Tokens.Jwt.dll
 E:\Visual Studio\Projects\Task Manager\Task Manager\bin\System.IdentityModel.Tokens.Jwt.xml
-E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.usman.resources
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csprojResolveAssemblyReference.cache
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.muqeet.resources
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csproj.GenerateResource.Cache
-E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.Fahad.resources
-E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.projectwithuser.resources

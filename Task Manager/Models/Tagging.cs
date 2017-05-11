@@ -13,7 +13,6 @@ namespace Task_Manager.Models
         public int id { get; set; }
         public virtual Project project { get; set; }
         public virtual Task tasks { get; set; }
-        public virtual List<Team> teams { get; set; }
         public virtual List<Users> users { get; set; }
     }
 }

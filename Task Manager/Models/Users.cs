@@ -18,5 +18,6 @@ namespace Task_Manager.Models
         public string Email { get; set; }
         public DateTime  Createdon { get; set; }
         public bool Enable { get; set; }
+        public virtual List<Tagging> users { get; set; }
     }
 }

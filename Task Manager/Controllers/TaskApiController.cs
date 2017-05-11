@@ -93,18 +93,18 @@ namespace Task_Manager.Controllers
             else
             {
                 var task = setTask(tempTask);
-                db.task.Add(task);
+               // db.task.Add(task);
                 Tagging tag = new Tagging();
                 tag.tasks = task;
                 tag.project = db.project.Find(tempTask.projectId);
                 List<Users> usr = new List<Users>();
+
                 for (int i = 0; i < tempTask.tempUsers.Count; i++)
                 {
-
                      var user = db.user.Find(tempTask.tempUsers[i]);
-                    usr.Add(user);
+                     usr.Add(user);
                 }
-                tag.users = usr;
+               tag.users = usr;
                 db.tagging.Add(tag);
 
             }
@@ -119,6 +119,8 @@ namespace Task_Manager.Controllers
             }           
         }
 
+        
+        
         private Task setTask (tempTask tempTask)
         {
             Task task = new Task();
@@ -162,7 +164,50 @@ namespace Task_Manager.Controllers
         {
             List<Task> tasks = new List<Task>();
             List<taskResponse> taskResponse = new List<taskResponse>();
-            tasks = db.task.Where(c => c.enable == true).ToList();
+    
+            
+            //checking for dashboard returns 
+            
+            var session = HttpContext.Current.Session;
+            if (session["dashboard"] != null)
+            {
+                string str = session["dashboard"].ToString();
+                session.Clear();
+                
+                //todays 
+                if(str=="t")
+                {
+                    DateTime date=DateTime.Now.Date;
+             var task  = db.task.Where(c => c.enable == true).ToList();
+                    foreach( var entity in  task )
+                    {
+                        if (entity.created_on.Date == date)
+                        {
+                            tasks.Add(entity);
+                        }
+                        
+                    }
+                    
+                }
+
+                    //unassigned
+                else if (str == "u")
+                {
+                    tasks = db.task.Where(c => c.enable == true).ToList();
+                }
+
+                //newly
+                else
+                {
+                    tasks = db.task.Where(c => c.enable == true).Take(10).ToList();
+                }
+            }
+                //all
+            else
+            {
+                tasks = db.task.Where(c => c.enable == true).ToList();
+            }
+            
             for (int i = 0; i < tasks.Count; i++)
             {
                 taskResponse taskRes = new taskResponse();

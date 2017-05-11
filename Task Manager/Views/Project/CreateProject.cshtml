@@ -70,7 +70,7 @@
                                  
                                     
                                     <div class="col-lg-6 ">
-                                        <input class="form-control" type="text" id="clientmanager" placeholder="abc name" required="required">
+                                        <input class="form-control" type="text" id="ProjManager" placeholder="abc name" required="required">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -161,7 +161,7 @@
                     document.getElementById("ProjName").value = data.proj.Project_Name;
                     document.getElementById("StartDate").value = data.proj.Start_Date.substring(0, 10);
                     document.getElementById("EndDate").value = data.proj.End_Date.substring(0, 10);
-                    document.getElementById("clientmanager").value = data.proj.customerContactDetail.project_manager;
+                    document.getElementById("ProjManager").value = data.proj.customerContactDetail.project_manager;
                     document.getElementById("Mobnum").value = data.proj.customerContactDetail.contact_number.substring(3, 13);
                     document.getElementById("Email").value = data.proj.customerContactDetail.email;
                     document.getElementById("Address").value = data.proj.customerContactDetail.address;
@@ -199,7 +199,7 @@
         var Pname = document.getElementById("ProjName").value.trim();
         var Sdate = document.getElementById("StartDate").value.trim();
         var Edate = document.getElementById("EndDate").value.trim();
-        var cmanager = document.getElementById("clientmanager").value.trim();
+        var cmanager = document.getElementById("ProjManager").value.trim();
         var pnumber = document.getElementById("Mobnum").value.trim();
         var email = document.getElementById("Email").value.trim();
 

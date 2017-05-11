@@ -203,17 +203,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705060802008_usman.cs" />
-    <Compile Include="Migrations\201705060802008_usman.Designer.cs">
-      <DependentUpon>201705060802008_usman.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705061059278_Fahad.cs" />
-    <Compile Include="Migrations\201705061059278_Fahad.Designer.cs">
-      <DependentUpon>201705061059278_Fahad.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705120949104_project with user.cs" />
-    <Compile Include="Migrations\201705120949104_project with user.Designer.cs">
-      <DependentUpon>201705120949104_project with user.cs</DependentUpon>
+    <Compile Include="Migrations\201705121645370_muqeet.cs" />
+    <Compile Include="Migrations\201705121645370_muqeet.Designer.cs">
+      <DependentUpon>201705121645370_muqeet.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -448,14 +440,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705060802008_usman.resx">
-      <DependentUpon>201705060802008_usman.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705061059278_Fahad.resx">
-      <DependentUpon>201705061059278_Fahad.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705120949104_project with user.resx">
-      <DependentUpon>201705120949104_project with user.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705121645370_muqeet.resx">
+      <DependentUpon>201705121645370_muqeet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
