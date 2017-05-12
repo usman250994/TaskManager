@@ -5,7 +5,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Tables</h1>
+            <h1 class="page-header">Project Detail</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -14,7 +14,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Users Detail
+                    Project Detail
                     @*<button type="button" class="btn btn-primary" onclick="gridLoad()">Update</button>*@
                 </div>
                 <!-- /.panel-heading -->
@@ -25,11 +25,10 @@
                                 <th>Name</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Created By</th>
-                                <th>Company</th>
-                                <th>Client Name</th>
-                                <th>Mobile</th>
-                                <th>Email</th>
+                                <th>Customer</th>
+                                <th>Customer Name</th>
+                                <th>Customer Email</th>
+                                <th>Customer Mobile</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -38,11 +37,11 @@
                                 <td>Hamamd </td>
                                 <td>05/09/2017</td>
                                 <td>15/09/2017</td>
-                                <td>Hamamd </td>
                                 <td>Resco</td>
                                 <td>Tayyaba</td>
-                                <td>+923000314981</td>
                                 <td>Tayyaba@HBL.com</td>
+                                <td>+923000314981</td>
+
                                 <td class="">
                                     <button type="button" class="btn btn-primary fa fa-check"></button>
                                     <button type="button" class="btn btn-danger fa fa-times"></button>
@@ -74,7 +73,7 @@
             success: function (data) {
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
-                    $("#dynamic-Grid").append("<tr><td>" + data[i].projectName + "</td><td>" + data[i].startDate.substring(0, 10) + "</td><td>" + data[i].endDate.substring(0, 10) + "</td><td>" + data[i].userName + "</td><td>" + data[i].customerName + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].Email + "</td><td>" + data[i].PhoneNumber + "</td><td><button value='Update' class='btn btn-primary fa fa-check' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
+                    $("#dynamic-Grid").append("<tr><td>" + data[i].projectName + "</td><td>" + data[i].startDate.substring(0, 10) + "</td><td>" + data[i].endDate.substring(0, 10) + "</td><td>" + data[i].customerName + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].Email + "</td><td>" + data[i].PhoneNumber + "</td><td><button value='Update' class='btn btn-primary fa fa-check' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
 
                 }
             },
@@ -94,7 +93,7 @@
 
         $.ajax({
             async: false,
-            url: '/api/ProjectApi/'+id,
+            url: '/api/ProjectApi/' + id,
             type: 'PUT',
             success: function (data) {
                 window.location.href = '/Project/CreateProject';
