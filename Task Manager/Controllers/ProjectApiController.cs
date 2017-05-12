@@ -19,10 +19,16 @@ namespace Task_Manager.Controllers
             if (pro != null)
             {
                 var cusDet = db.customer_contact_detail.Find(pro.customerContactDetail.customerContactDetailId);
+                var user = db.user.Find(pro.projectManager.id);
+
+                var user1 = db.user.Find(projinst.projectManager.id);
+
+
                 db.Entry(pro).CurrentValues.SetValues(projinst);
                 db.Entry(cusDet).CurrentValues.SetValues(projinst.customerContactDetail);
-
-                if (db.SaveChanges() == 1)
+                db.Entry(user).CurrentValues.SetValues(user1);
+                //edit user as project manager USMAN
+                if (db.SaveChanges()>0)
                 {
                     return "Project updated Succesfully";
                 }
@@ -43,6 +49,9 @@ namespace Task_Manager.Controllers
               //  Customer cust = new Customer();
                 var custTemp = db.customer.Find(projinst.customer.customerId);
                 Project proj = new Project();
+               //add user as project manager   USMAN
+
+                proj.projectManager = db.user.Where(p => p.id == projinst.projectManager.id).FirstOrDefault();
                 proj.customer = custTemp;
                 proj.Created_On = DateTime.Now;
                 proj.Created_By = db.user.Find(1);
@@ -55,7 +64,7 @@ namespace Task_Manager.Controllers
                 db.project.Add(proj);
                 try
                 {
-                    if (db.SaveChanges() == 1)
+                    if (db.SaveChanges() >0 )
                     {
                         return "Done";
                     }
@@ -100,6 +109,10 @@ namespace Task_Manager.Controllers
                 List<Customer> cust = new List<Customer>();
                 cust = db.customer.Where(d=>d.enable==true).ToList();
                 obj.cust = cust;
+
+                //getting list of users as project manager
+
+                obj.candidsForProjManager = db.user.Where(p => p.Enable == true).ToList();
                 return obj;
             }
             else
@@ -107,6 +120,9 @@ namespace Task_Manager.Controllers
                 List<Customer> cust = new List<Customer>();
                 cust = db.customer.Where(d=>d.enable==true).ToList();
                 obj.cust = cust;
+
+                //getting list of users as project manager
+                obj.candidsForProjManager = db.user.Where(p => p.Enable == true).ToList();
                 return obj;
             }
 

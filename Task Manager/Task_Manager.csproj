@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201705061059278_Fahad.Designer.cs">
       <DependentUpon>201705061059278_Fahad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705120949104_project with user.cs" />
+    <Compile Include="Migrations\201705120949104_project with user.Designer.cs">
+      <DependentUpon>201705120949104_project with user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContactDetail.cs" />
@@ -423,12 +427,9 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\CreateUser.cshtml" />
-    <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\Task\CreateTask.cshtml" />
     <Content Include="Views\Task\ViewTask.cshtml" />
     <Content Include="Views\User\ViewUser.cshtml" />
@@ -437,9 +438,8 @@
     <Content Include="Views\Customer\ViewCustomer.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
     <Content Include="Views\Project\ViewProject.cshtml" />
-    <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -453,6 +453,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705061059278_Fahad.resx">
       <DependentUpon>201705061059278_Fahad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705120949104_project with user.resx">
+      <DependentUpon>201705120949104_project with user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

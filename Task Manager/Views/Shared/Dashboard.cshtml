@@ -1,7 +1,9 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿
+@{
+    ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Home.cshtml";
 }
+
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -26,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#" onclick="added()">
+                <a href="#">
 
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
@@ -51,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#" onclick="Unassigned">
+                <a href="#">
 
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
@@ -77,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#" onclick="today">
+                <a href="#">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -90,15 +92,4 @@
     <!-- /.row -->
     <!-- /.row -->
 </div>
-<script type="text/javascript">
 
-    function added() {
-        alert("added");
-    }
-    function Unassigned() {
-        alert("Un Assigned")
-    }
-    function today() {
-        alert("Todays Task")
-    }
-</script>

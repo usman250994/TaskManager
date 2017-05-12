@@ -9,10 +9,6 @@ namespace Task_Manager.Controllers
     public class ProjectController : Controller
     {
         // GET: Project
-        public ActionResult Index()
-        {
-            return View();
-        }
         public ActionResult CreateProject()
         {
             return View();

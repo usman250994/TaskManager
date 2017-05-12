@@ -17,6 +17,7 @@ namespace Task_Manager.Models
         public DateTime End_Date { get; set; }   
         public virtual Customer customer { get; set; }
         public virtual CustomerContactDetail customerContactDetail { get; set; }
+        public virtual Users projectManager { get; set; }
         public bool Enable { get; set; }
     }
 }

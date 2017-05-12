@@ -9,10 +9,6 @@ namespace Task_Manager.Controllers
 {
     public class UserController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
         public ActionResult CreateUser()
         {
             return View();

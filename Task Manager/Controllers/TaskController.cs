@@ -10,10 +10,6 @@ namespace Task_Manager.Controllers
 {
     public class TaskController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
         public ActionResult CreateTask()
         {
             return View();
