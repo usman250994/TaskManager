@@ -17,6 +17,7 @@ namespace Task_Manager.Controllers
         [Route("/api/UserApi/"), HttpPost]
         public String CreateUser(Users Emp)
         {
+     
             var user = db.user.Find(Emp.id);
             //user already exisits
             if (user != null)
@@ -41,6 +42,12 @@ namespace Task_Manager.Controllers
             //Add user here
             else
             {
+                var sessionId = HttpContext.Current.Session;
+                string id = sessionId["UserID"].ToString();
+
+                var createdUser = db.user.Find(Convert.ToInt32(id));
+
+                Emp.Created_By= createdUser;
                 Emp.Enable = true;
                 Emp.Createdon = DateTime.Now;
                 db.user.Add(Emp);

@@ -12,12 +12,12 @@ namespace Task_Manager.Controllers
     public class CustomerApiController : ApiController
     {
         TaskContext db = new TaskContext();
-
+  
         //To Add User In Database Table Customer
         [Route("/api/CustomerApi/"), HttpPost]
         public String CreateCustomer(Customer cust)
         {
-            var session = HttpContext.Current.Session;
+          
           
             if (cust == null)
             {
@@ -25,6 +25,7 @@ namespace Task_Manager.Controllers
             }
             else
             {
+              
                 var client = db.customer.Find(cust.customerId);
                 if (client != null)
                 {
@@ -33,7 +34,14 @@ namespace Task_Manager.Controllers
                 }
                 else
                 {
-                    
+
+                    var sessionId = HttpContext.Current.Session;
+                    string id = sessionId["UserID"].ToString();
+
+                    var createdUser = db.user.Find(Convert.ToInt32(id));
+
+                    cust.Created_By = createdUser;
+
                     db.customer.Add(cust);
                     if (db.SaveChanges() == 1)
                     {

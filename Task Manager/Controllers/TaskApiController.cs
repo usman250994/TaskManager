@@ -51,9 +51,19 @@ namespace Task_Manager.Controllers
                 string str = session["Task"].ToString();
                 session["Task"] = null;
                 var task = db.task.Find(Convert.ToInt32(str));
+              //
+                List<int> taggedUsers = new List<int>();
+                var tag = db.tagging.Where(p => p.tasks.id == task.id).FirstOrDefault();
+                
+                foreach(var entity in tag.users)
+                {
+                    taggedUsers.Add(entity.id);
+                }
+                //
                 var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.id).FirstOrDefault();
 
                 returning.task = task;
+                returning.tags = taggedUsers;
                 returning.projectId = pid;
                 returning.dropdowns = find();
                 return returning;
@@ -69,7 +79,8 @@ namespace Task_Manager.Controllers
         [HttpPost]
         public String CreateTask([FromBody]tempTask tempTask)
         {
-
+            var uid = HttpContext.Current.Session;
+            string id = uid["UserID"].ToString();
             //update
             if (tempTask.id != 0)
             {
@@ -87,7 +98,14 @@ namespace Task_Manager.Controllers
 
 
                 //adding users
+                tagging.users.Clear();
+                for (int i = 0; i < tempTask.tempUsers.Count;i++ )
+                {
+                    var user = db.user.Find(tempTask.tempUsers[i]);
+                    tagging.users.Add(user);
+                }
 
+                
 
             }
             //create

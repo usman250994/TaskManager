@@ -17,8 +17,8 @@ namespace Task_Manager.Controllers
      
         public String CreateProj(Project projinst)
         {
-            var session = HttpContext.Current.Session;
-            string str = session["UserID"].ToString();
+            var uid = HttpContext.Current.Session;
+            string id = uid["UserID"].ToString();
 
             var pro = db.project.Find(projinst.id);
             if (pro != null)

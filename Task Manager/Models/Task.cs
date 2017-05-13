@@ -20,5 +20,6 @@ namespace Task_Manager.Models
         public bool email { get; set; }
         public int status { get; set; }
         public bool enable { get; set; }
+        public virtual Users Created_By { get; set; }
     }
 }

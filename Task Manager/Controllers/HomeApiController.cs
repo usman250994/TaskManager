@@ -19,21 +19,17 @@ namespace Task_Manager.Controllers
             {
                 return "Invalid ID or Password";
             }
-
             else
             {
                 if (ModelState.IsValid)
                 {
                     using (TaskContext db = new TaskContext())
                     {
-
                         if (log.user_Name == "sudo" && log.password == "sudo")
                         {
-
                             var session = HttpContext.Current.Session;
                             session["UserID"] = "sudo";
                             return "Authenticated";
-
                         }
                         else
                         {
@@ -44,11 +40,9 @@ namespace Task_Manager.Controllers
                                 session["UserID"] = obj.id;
                                 return "Authenticated";
                             }
-
                             else
                             {
                                 return "Invalid ID or Password";
-
                             }
                         }
                     }
@@ -57,9 +51,7 @@ namespace Task_Manager.Controllers
                 {
                     return "Invalid ID or Password";
                 }
-
             }
-
         }
     }
 }

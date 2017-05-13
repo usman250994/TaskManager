@@ -19,5 +19,6 @@ namespace Task_Manager.Models
         public DateTime  Createdon { get; set; }
         public bool Enable { get; set; }
         public virtual List<Tagging> users { get; set; }
+        public virtual Users Created_By { get; set; }
     }
 }

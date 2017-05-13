@@ -11,5 +11,6 @@ namespace Task_Manager.Models
         public TaskDropdown dropdowns { get; set; }
         public Task task { get; set; }
         public int projectId { get; set; }
+        public  List<int> tags { get; set;}
     }
 }
