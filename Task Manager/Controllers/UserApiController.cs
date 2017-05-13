@@ -44,9 +44,11 @@ namespace Task_Manager.Controllers
             {
                 var sessionId = HttpContext.Current.Session;
                 string id = sessionId["UserID"].ToString();
-
-                var createdUser = db.user.Find(Convert.ToInt32(id));
-
+               
+             
+                
+                   var  createdUser = db.user.Find(Convert.ToInt32(id));
+                
                 Emp.Created_By= createdUser;
                 Emp.Enable = true;
                 Emp.Createdon = DateTime.Now;
@@ -109,7 +111,7 @@ namespace Task_Manager.Controllers
 
             var session = HttpContext.Current.Session;
 
-            if (session["UserID"] == "sudo")
+            if (session["UserID"] == "5")
             {
                 list = db.user.Where(p => p.Enable == true ).ToList();
             }

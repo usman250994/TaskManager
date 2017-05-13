@@ -25,14 +25,12 @@ namespace Task_Manager.Controllers
                 {
                     using (TaskContext db = new TaskContext())
                     {
-                        if (log.user_Name == "sudo" && log.password == "sudo")
-                        {
-                            var session = HttpContext.Current.Session;
-                            session["UserID"] = "sudo";
-                            return "Authenticated";
-                        }
-                        else
-                        {
+                        
+                        
+                            
+                        
+                        
+                       
                             var obj = db.user.Where(a => a.Email.Equals(log.user_Name) && a.Password.Equals(log.password) && a.Enable.Equals(true)).FirstOrDefault();
                             if (obj != null)
                             {
@@ -44,7 +42,7 @@ namespace Task_Manager.Controllers
                             {
                                 return "Invalid ID or Password";
                             }
-                        }
+                        
                     }
                 }
                 else
