@@ -17,6 +17,8 @@ namespace Task_Manager.Controllers
         [Route("/api/CustomerApi/"), HttpPost]
         public String CreateCustomer(Customer cust)
         {
+            var session = HttpContext.Current.Session;
+          
             if (cust == null)
             {
                 return "Please Insert Customer";
@@ -103,8 +105,7 @@ namespace Task_Manager.Controllers
             if (session["Customer"] != null)
             {
                 string str = session["Customer"].ToString();
-                session.Clear();
-
+                session["Customer"] = null;
                 cust = db.customer.Find(Convert.ToInt32(str));
                 return cust;
             }
