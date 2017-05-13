@@ -108,7 +108,7 @@ namespace Task_Manager.Controllers
             if (session["project"] != null)
             {
                 string str = session["project"].ToString();
-                session.Clear();
+                session["project"] = null;
                 var proj = db.project.Find(Convert.ToInt32(str));
                 obj.proj = proj;
                 List<Customer> cust = new List<Customer>();

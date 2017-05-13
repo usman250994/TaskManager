@@ -49,7 +49,7 @@ namespace Task_Manager.Controllers
             if (session["Task"] != null)
             {
                 string str = session["Task"].ToString();
-                session.Clear();
+                session["Task"] = null;
                 var task = db.task.Find(Convert.ToInt32(str));
                 var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.id).FirstOrDefault();
 
@@ -65,11 +65,12 @@ namespace Task_Manager.Controllers
             }
         }
 
-        //Create Task
+        //Create Task or update task
         [HttpPost]
         public String CreateTask([FromBody]tempTask tempTask)
         {
 
+            //update
             if (tempTask.id != 0)
             {
 
@@ -89,7 +90,7 @@ namespace Task_Manager.Controllers
 
 
             }
-
+            //create
             else
             {
                 var task = setTask(tempTask);
@@ -130,7 +131,14 @@ namespace Task_Manager.Controllers
             task.description = tempTask.description;
             task.start_date = tempTask.start_date;
             task.end_date = tempTask.end_date;
-            task.status = tempTask.status;
+            if (tempTask.tempUsers.Count == 0)
+            {
+                task.status = 0;
+            }
+            else
+            {
+                task.status = tempTask.status;
+            }
             task.sms = tempTask.sms;
             task.email = tempTask.email;
             task.id = tempTask.id;
@@ -186,7 +194,15 @@ namespace Task_Manager.Controllers
                 //Unassigned
                 else if (str == "u")
                 {
-                    tasks = db.task.Where(c => c.enable == true).ToList();
+                    var task = db.task.Where(c => c.enable == true).ToList();
+                    foreach (var entity in task)
+                    {
+                        if (entity.status == 0)
+                        {
+                            tasks.Add(entity);
+                        }
+
+                    }
                 }
 
                 //Newly

@@ -84,7 +84,7 @@ namespace Task_Manager.Controllers
             if (session["user"] != null)
             {
                 string str = session["user"].ToString();
-                session.Clear();
+                session["user"] = null;
                 return str;
             }
             else
