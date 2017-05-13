@@ -59,7 +59,19 @@ namespace Task_Manager.Controllers
         public List<Customer> custall()
         {
             List<Customer> list = new List<Customer>();
-            list = db.customer.Where(d => d.enable == true).ToList();
+            var session = HttpContext.Current.Session;
+           
+            if (session["UserID"] == "sudo")
+            {
+           list = db.customer.Where(d => d.enable == true ).ToList();
+            }
+            
+            else
+            {
+                var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
+                list = db.customer.Where(d => d.enable == true && d.Created_By.id == createdBy.id).ToList();
+            }
+          
             return list;
         }
 

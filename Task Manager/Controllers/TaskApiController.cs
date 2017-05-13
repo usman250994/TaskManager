@@ -79,8 +79,10 @@ namespace Task_Manager.Controllers
         [HttpPost]
         public String CreateTask([FromBody]tempTask tempTask)
         {
-            var uid = HttpContext.Current.Session;
-            string id = uid["UserID"].ToString();
+            var sessionId = HttpContext.Current.Session;
+            string id = sessionId["UserID"].ToString();
+            var createdUser = db.user.Find(Convert.ToInt32(id));
+
             //update
             if (tempTask.id != 0)
             {
@@ -111,6 +113,7 @@ namespace Task_Manager.Controllers
             //create
             else
             {
+
                 var task = setTask(tempTask);
                 // db.task.Add(task);
                 Tagging tag = new Tagging();
@@ -142,9 +145,13 @@ namespace Task_Manager.Controllers
 
         private Task setTask(tempTask tempTask)
         {
+            var sessionId = HttpContext.Current.Session;
+            string id = sessionId["UserID"].ToString();
+            var createdUser = db.user.Find(Convert.ToInt32(id));
             Task task = new Task();
             task.enable = true;
             task.created_on = DateTime.Now;
+            task.Created_By = createdUser;
             task.task_name = tempTask.task_name;
             task.description = tempTask.description;
             task.start_date = tempTask.start_date;

@@ -106,7 +106,21 @@ namespace Task_Manager.Controllers
         public List<Users> Userall()
         {
             List<Users> list = new List<Users>();
-            list = db.user.Where(p => p.Enable == true).ToList();
+
+            var session = HttpContext.Current.Session;
+
+            if (session["UserID"] == "sudo")
+            {
+                list = db.user.Where(p => p.Enable == true ).ToList();
+            }
+            else
+            {
+                var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
+
+                list = db.user.Where(p => p.Enable == true && p.Created_By.id == createdBy.id).ToList();
+            }
+
+          
             return list;
         }
 

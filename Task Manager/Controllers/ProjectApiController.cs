@@ -25,10 +25,7 @@ namespace Task_Manager.Controllers
             {
                 var cusDet = db.customer_contact_detail.Find(pro.customerContactDetail.customerContactDetailId);
                 var user = db.user.Find(pro.projectManager.id);
-
                 var user1 = db.user.Find(projinst.projectManager.id);
-
-
                 db.Entry(pro).CurrentValues.SetValues(projinst);
                 db.Entry(cusDet).CurrentValues.SetValues(projinst.customerContactDetail);
                 db.Entry(user).CurrentValues.SetValues(user1);
@@ -44,22 +41,28 @@ namespace Task_Manager.Controllers
             }
             else
             {
+                var sessionId = HttpContext.Current.Session;
+                string aid = sessionId["UserID"].ToString();
+                var createdUser = db.user.Find(Convert.ToInt32(aid));
+
+                
+
                 CustomerContactDetail custdetail = new CustomerContactDetail();
                 custdetail.project_manager = projinst.customerContactDetail.project_manager;
                 custdetail.contact_number = projinst.customerContactDetail.contact_number;
                 custdetail.email = projinst.customerContactDetail.email;
                 custdetail.address = projinst.customerContactDetail.address;
+                custdetail.Created_By = createdUser;
                 db.customer_contact_detail.Add(custdetail);
                 //projinst.customerid = custdetail.customerContactDetailId;
               //  Customer cust = new Customer();
                 var custTemp = db.customer.Find(projinst.customer.customerId);
                 Project proj = new Project();
                //add user as project manager   USMAN
-
+                proj.Created_By = createdUser;
                 proj.projectManager = db.user.Where(p => p.id == projinst.projectManager.id).FirstOrDefault();
                 proj.customer = custTemp;
                 proj.Created_On = DateTime.Now;
-                proj.Created_By = db.user.Find(1);
                 proj.Enable = true;
                 proj.Project_Name = projinst.Project_Name;
                 proj.Start_Date = projinst.Start_Date;
@@ -146,7 +149,22 @@ namespace Task_Manager.Controllers
         public List<ProjectGrid> projall()
         {
             List<ProjectGrid> toReturn = new List<ProjectGrid>();
-            var Proj = db.project.Where(c => c.Enable == true).ToList();
+            var session = HttpContext.Current.Session;
+
+            List<Project> Proj = new List<Project>();
+
+            if (session["UserID"] == "sudo")
+            {
+                Proj = db.project.Where(c => c.Enable == true ).ToList();
+            }
+
+            else
+            {
+                var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
+                 Proj = db.project.Where(c => c.Enable == true && c.Created_By.id == createdBy.id).ToList();
+            }
+            
+            
             foreach (var entity in Proj)
             {
                 ProjectGrid toAdd = new ProjectGrid();
