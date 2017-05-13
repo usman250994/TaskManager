@@ -9,9 +9,17 @@ namespace Task_Manager.Controllers
     public class DashboardController : Controller
     {
         // GET: Dashboard
+
         public ActionResult Index()
         {
-            return View();
+            if (Session["UserId"] != null)
+            {
+                return View();
+            }
+            else 
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

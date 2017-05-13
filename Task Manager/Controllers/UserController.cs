@@ -11,11 +11,27 @@ namespace Task_Manager.Controllers
     {
         public ActionResult CreateUser()
         {
-            return View();
+            if (Session["UserId"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
         }
         public ActionResult ViewUser()
         {
-            return View();
+            if (Session["UserId"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
         }
 
     }

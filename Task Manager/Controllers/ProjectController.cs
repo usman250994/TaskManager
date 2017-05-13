@@ -11,11 +11,27 @@ namespace Task_Manager.Controllers
         // GET: Project
         public ActionResult CreateProject()
         {
-            return View();
+            if (Session["UserId"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
         }
         public ActionResult ViewProject()
         {
-            return View();
+            if (Session["UserId"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
         }
     }
 }

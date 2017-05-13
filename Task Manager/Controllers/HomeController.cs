@@ -19,21 +19,5 @@ namespace Task_Manager.Controllers
         {
             return View();
         }
-       
-        //public IEnumerable<Users> GetAllUser()
-        //{
-        //    var Users = DB.user.ToList();
-        //    return Users;
-        //}
-
-        //public IHttpActionResult GetUser(int id)
-        //{
-        //    var uu = DB.user.FirstOrDefault(p => p.id == id);
-        //    if (uu == null)
-        //    {
-        //        return null ;
-        //    }
-        //    return null;
-        //}
     }
 }

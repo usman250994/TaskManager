@@ -73,5 +73,3 @@ E:\Visual Studio\Projects\Task Manager\Task Manager\bin\Microsoft.Azure.AppServi
 E:\Visual Studio\Projects\Task Manager\Task Manager\bin\System.IdentityModel.Tokens.Jwt.dll
 E:\Visual Studio\Projects\Task Manager\Task Manager\bin\System.IdentityModel.Tokens.Jwt.xml
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csprojResolveAssemblyReference.cache
-E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.muqeet.resources
-E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csproj.GenerateResource.Cache
