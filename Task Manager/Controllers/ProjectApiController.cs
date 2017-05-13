@@ -12,9 +12,14 @@ namespace Task_Manager.Controllers
 {
     public class ProjectApiController : ApiController
     {
+         
         TaskContext db = new TaskContext();
+     
         public String CreateProj(Project projinst)
         {
+            var session = HttpContext.Current.Session;
+            string str = session["UserID"].ToString();
+
             var pro = db.project.Find(projinst.id);
             if (pro != null)
             {

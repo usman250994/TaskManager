@@ -32,7 +32,7 @@
             data: model,
             dataType: "json",
             success: function (data) {
-                if (data == "Authenticated") { window.location.href = ' /user/'; }
+                if (data == "Authenticated") { window.location.href = ' /Dashboard/'; }
                 else { alert(data); }
             },
             error: function (xhr) {

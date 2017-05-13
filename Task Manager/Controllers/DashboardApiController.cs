@@ -15,8 +15,7 @@ namespace Task_Manager.Controllers
         {
             var session = HttpContext.Current.Session;
             session["dashboard"] = id;
-            return 0;
-          
+            return 0;          
         }
     }
 }

@@ -15,7 +15,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Users Detail
-                    @*<button type="button" class="btn btn-primary" onclick="gridLoad()">Update</button>*@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -29,18 +28,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="dynamic-Grid" onload="gridLoad()">
-                            <tr class="odd gradeA">
-                                <td>Fahad</td>
-                                <td>Address</td>
-                                <td>Email</td>
-                                <td>Phone Number</td>
-                                <td class="">
-                                    <button type="button" class="btn btn-primary">Update</button>
-                                    <button type="button" class="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="dynamic-Grid"></tbody>
                     </table>
                     <!-- /.table-responsive -->
                 </div>
@@ -57,6 +45,7 @@
 
     $(document).ready(function () {
         $.ajax({
+            async: false,
             url: '/api/UserApi/',
             type: 'GET',
             contentType: "application/json;charset=utf-8",

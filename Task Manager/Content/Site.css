@@ -10,6 +10,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 select#CustomerDropdown {
     width: 100%;
     height: 34px;
@@ -22,6 +23,7 @@ select#CustomerDropdown {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 select#ProjectManagerDropdown {
     width: 100%;
     height: 34px;
@@ -34,6 +36,7 @@ select#ProjectManagerDropdown {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .btn_login {
     background: #7cbcd6;
     background-image: -webkit-linear-gradient(top, #7cbcd6, #7cbcd6);
@@ -65,7 +68,14 @@ select#ProjectManagerDropdown {
 label.abc {
     padding-top: 6px;
 }
-/*/*html {
+
+input[type="search"] {
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    /*/*html {
     background-color: #e2e2e2;
     margin: 0;
     padding: 0;
@@ -819,4 +829,4 @@ tr.pager td {
         footer p {
             margin: 0;
         }
-}*/ *
+}*/ *;

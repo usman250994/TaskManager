@@ -18,7 +18,7 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                             <tr>
                                 <th>Task Name</th>
@@ -45,7 +45,6 @@
 </div>
 
 <script type=text/javascript>
-
     function status(value, user) {
         var model = { value: value, user: user };
         $.ajax({
@@ -88,6 +87,8 @@
                         var mxg = "No Status Found";
                     }
                     $("#dynamic-Grid").append("<tr><td>" + data[i].task.task_name + "</td><td>" + data[i].task.description + "</td><td>" + fxg.toString() + "</td><td>" + data[i].task.start_date.substring(0, 10) + "</td><td>" + data[i].task.end_date.substring(0, 10) + "</td><td>" + mxg.toString() + "</td><td> <select  onchange='status(this.value," + data[i].task.id + ")' id=" + data[i].task.id + "><option value='1'>InProgress</option><option value='2'>Pending</option><option value='3'>Complete</option><option value='4'>Closed</option></select></td><td> <button value='Update' class='btn btn-primary fa fa-check' id='upd' onclick=\"UpdateTask(" + data[i].task.id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"DeleteTask(" + data[i].task.id + ")\"></button></td></tr>");
+
+
                     $("select#" + data[i].task.id + " option").filter(function () {
                         return $(this).val() == data[i].task.status;
                     }).prop('selected', true);
@@ -97,8 +98,6 @@
             error: function () { alert('Grid Not Load'); }
         });
     });
-
-
     function DeleteTask(id) {
         if (confirm('Are You Sure ! You Want to Delete This Task')) {
             $.ajax({
@@ -109,15 +108,7 @@
                 error: function (data) { alert(data); }
             });
         }
-    }
-
-
-
-
-
-
-
-
+    }    
     function UpdateTask(id) {
         $.ajax({
             async: false,
@@ -131,5 +122,4 @@
             }
         });
     }
-    //console.log(mxg);
 </script>

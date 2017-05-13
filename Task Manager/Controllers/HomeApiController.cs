@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Providers.Entities;
 using Task_Manager.Models;
@@ -28,6 +29,8 @@ namespace Task_Manager.Controllers
                         var obj = db.user.Where(a => a.Email.Equals(log.user_Name) && a.Password.Equals(log.password)&& a.Enable.Equals(true)).FirstOrDefault();
                         if (obj != null)
                         {
+                            var session = HttpContext.Current.Session;
+                            session["UserID"] = obj.id;
                             return "Authenticated";
                         }
                         else

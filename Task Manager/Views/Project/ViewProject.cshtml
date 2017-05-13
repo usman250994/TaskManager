@@ -33,26 +33,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="dynamic-Grid">
-                            <tr class="odd gradeA">
-                                <td>Hamamd </td>
-                                <td>05/09/2017</td>
-                                <td>15/09/2017</td>
-                                <td>customer new<td>
-                                <td>Resco Manager</td>
-                                <td>Tayyaba</td>
-                                <td>Tayyaba@HBL.com</td>
-                                <td>+923000314981</td>
-
-                                <td class="">
-                                    <button type="button" class="btn btn-primary fa fa-check"></button>
-                                    <button type="button" class="btn btn-danger fa fa-times"></button>
-                                </td>
-                            </tr>
-
-
-
-                        </tbody>
+                        <tbody id="dynamic-Grid"></tbody>
                     </table>
                     <!-- /.table-responsive -->
                 </div>
@@ -68,6 +49,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
+            async:false,
             url: '/api/ProjectApi/',
             type: 'GET',
             contentType: "application/json;charset=utf-8",
@@ -75,13 +57,16 @@
             success: function (data) {
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
-                    $("#dynamic-Grid").append("<tr><td>" + data[i].projectName + "</td><td>" + data[i].startDate.substring(0, 10) + "</td><td>" + data[i].endDate.substring(0, 10) + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].customerName + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].Email + "</td><td>" + data[i].PhoneNumber + "</td><td><button value='Update' class='btn btn-primary fa fa-check' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
-
+                    $("#dynamic-Grid").append("<tr><td>" + data[i].projectName + "</td><td>" + data[i].startDate.substring(0, 10) + "</td><td>" + data[i].endDate.substring(0, 10) + "</td><td>" + data[i].customerName + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].customerManager + "</td><td>" + data[i].Email + "</td><td>" + data[i].PhoneNumber + "</td><td><button value='Update' class='btn btn-primary fa fa-check' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
+                   
                 }
             },
             error: function () { alert('Grid Not Load'); }
         });
     });
+
+
+
     function deleteUser(id) {
         $.ajax({
             url: '/api/ProjectApi/' + id,

@@ -72,12 +72,12 @@ namespace Task_Manager.Controllers
 
             if (tempTask.id != 0)
             {
-          
+
                 var taskdetail = db.task.Find(tempTask.id);
 
-               
+
                 db.Entry(taskdetail).CurrentValues.SetValues(setTask(tempTask));
-              
+
                 //updating project
                 var tagging = db.tagging.Where(p => p.tasks.id == tempTask.id).FirstOrDefault();
                 var tag = tagging;
@@ -87,13 +87,13 @@ namespace Task_Manager.Controllers
 
                 //adding users
 
-               
+
             }
 
             else
             {
                 var task = setTask(tempTask);
-               // db.task.Add(task);
+                // db.task.Add(task);
                 Tagging tag = new Tagging();
                 tag.tasks = task;
                 tag.project = db.project.Find(tempTask.projectId);
@@ -101,10 +101,10 @@ namespace Task_Manager.Controllers
 
                 for (int i = 0; i < tempTask.tempUsers.Count; i++)
                 {
-                     var user = db.user.Find(tempTask.tempUsers[i]);
-                     usr.Add(user);
+                    var user = db.user.Find(tempTask.tempUsers[i]);
+                    usr.Add(user);
                 }
-               tag.users = usr;
+                tag.users = usr;
                 db.tagging.Add(tag);
 
             }
@@ -116,12 +116,12 @@ namespace Task_Manager.Controllers
             else
             {
                 return "Some Error";
-            }           
+            }
         }
 
-        
-        
-        private Task setTask (tempTask tempTask)
+
+
+        private Task setTask(tempTask tempTask)
         {
             Task task = new Task();
             task.enable = true;
@@ -164,50 +164,43 @@ namespace Task_Manager.Controllers
         {
             List<Task> tasks = new List<Task>();
             List<taskResponse> taskResponse = new List<taskResponse>();
-    
-            
-            //checking for dashboard returns 
-            
+            //Checking for Dashboard returns 
             var session = HttpContext.Current.Session;
             if (session["dashboard"] != null)
             {
                 string str = session["dashboard"].ToString();
                 session.Clear();
-                
-                //todays 
-                if(str=="t")
+                //Todays 
+                if (str == "t")
                 {
-                    DateTime date=DateTime.Now.Date;
-             var task  = db.task.Where(c => c.enable == true).ToList();
-                    foreach( var entity in  task )
+                    DateTime date = DateTime.Now.Date;
+                    var task = db.task.Where(c => c.enable == true).ToList();
+                    foreach (var entity in task)
                     {
                         if (entity.created_on.Date == date)
                         {
                             tasks.Add(entity);
                         }
-                        
                     }
-                    
                 }
-
-                    //unassigned
+                //Unassigned
                 else if (str == "u")
                 {
                     tasks = db.task.Where(c => c.enable == true).ToList();
                 }
 
-                //newly
+                //Newly
                 else
                 {
                     tasks = db.task.Where(c => c.enable == true).Take(10).ToList();
                 }
             }
-                //all
+            //all
             else
             {
                 tasks = db.task.Where(c => c.enable == true).ToList();
             }
-            
+
             for (int i = 0; i < tasks.Count; i++)
             {
                 taskResponse taskRes = new taskResponse();
