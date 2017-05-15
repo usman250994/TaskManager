@@ -158,6 +158,7 @@ namespace Task_Manager.Controllers
             task.description = tempTask.description;
             task.start_date = tempTask.start_date;
             task.end_date = tempTask.end_date;
+           
             if (tempTask.tempUsers.Count == 0)
             {
                 task.status = 0;
@@ -344,7 +345,7 @@ namespace Task_Manager.Controllers
             else
             {
                 
-                if (session["UserID"] == "5")
+                if (session["UserID"].ToString() == "5")
                 {
                     tasks = db.task.Where(c => c.enable == true).ToList();
                 }

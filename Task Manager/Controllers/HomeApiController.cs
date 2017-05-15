@@ -7,11 +7,14 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Providers.Entities;
 using Task_Manager.Models;
+using Task_Manager.viewModels;
 
 namespace Task_Manager.Controllers
 {
     public class HomeApiController : ApiController
     {
+
+        TaskContext db = new TaskContext();
         [Route("/api/Homeapi/"), HttpPost]
         public string Login(Login log)
         {
@@ -48,6 +51,47 @@ namespace Task_Manager.Controllers
                     return "Invalid ID or Password";
                 }
             }
+        }
+
+        [HttpPut]
+        public String Ticket(ComplainProjects ticket)
+        {
+
+            ticketContact tickCont = new ticketContact();
+            
+            tickCont.contact=ticket.contact;
+            tickCont.email=ticket.email;
+            tickCont.name=ticket.name;
+
+        
+
+
+            Task task = new Task();
+
+
+            task.enable = true;
+            task.task_name = "ticket";
+            task.description = ticket.issue;
+            task.created_on = DateTime.Now;
+            task.Created_By = db.user.Find(5);
+            task.sms=false;
+                task.email=false;
+            task.status =0;
+            Tagging tag = new Tagging();
+            tag.tasks = task;
+            tag.project = db.project.Find(ticket.projectId);
+            db.task.Add(task);
+            db.tagging.Add(tag);
+            if (db.SaveChanges() > 0)
+            {
+                return "Ticket is successfully Generated!! you will be cotacted Soon!";
+            }
+            
+            else
+            {
+                return "Ticket Cann not Be genrated At the Moment. Sorry For the Inconvenience";
+            }
+
         }
     }
 }

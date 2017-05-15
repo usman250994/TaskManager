@@ -188,7 +188,9 @@ namespace Task_Manager.Controllers
         public String delete(int id)
         {
             var proj = db.project.Find(id);
+            
             int porjectID = proj.id;
+
             var tagging = db.tagging.Where(c => c.project.id == porjectID).ToList();
             foreach (var entity in tagging)
             {

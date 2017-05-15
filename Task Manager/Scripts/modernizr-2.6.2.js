@@ -44,7 +44,15 @@
  * Authors        Faruk Ates, Paul Irish, Alex Sexton
  * Contributors   Ryan Seddon, Ben Alman
  */
-
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(email) == true) {
+        return true;
+    }
+    else {
+        return false;
+    };
+}
 window.Modernizr = (function( window, document, undefined ) {
 
     var version = '2.6.2',
