@@ -203,13 +203,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705131314376_usman.cs" />
-    <Compile Include="Migrations\201705131314376_usman.Designer.cs">
-      <DependentUpon>201705131314376_usman.cs</DependentUpon>
+    <Compile Include="Migrations\201705151144132_usman.cs" />
+    <Compile Include="Migrations\201705151144132_usman.Designer.cs">
+      <DependentUpon>201705151144132_usman.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705151003082_ticketamendments.cs" />
-    <Compile Include="Migrations\201705151003082_ticketamendments.Designer.cs">
-      <DependentUpon>201705151003082_ticketamendments.cs</DependentUpon>
+    <Compile Include="Migrations\201705151313073_usman2.cs" />
+    <Compile Include="Migrations\201705151313073_usman2.Designer.cs">
+      <DependentUpon>201705151313073_usman2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -228,6 +228,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMSandEmail.cs" />
     <Compile Include="viewModels\ComplainProjects.cs" />
+    <Compile Include="viewModels\projectDropDownInTickets.cs" />
     <Compile Include="viewModels\ProjectGrid.cs" />
     <Compile Include="viewModels\ProjectInsert.cs" />
     <Compile Include="viewModels\response\TaskDropdown.cs" />
@@ -235,7 +236,7 @@
     <Compile Include="viewModels\status.cs" />
     <Compile Include="viewModels\tempTask.cs" />
     <Compile Include="viewModels\tempUser.cs" />
-    <Compile Include="viewModels\TicketRequest.cs" />
+    <Compile Include="viewModels\TicketInitialrespone.cs" />
     <Compile Include="viewModels\updateOrCreateDropDown.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -447,11 +448,11 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705131314376_usman.resx">
-      <DependentUpon>201705131314376_usman.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705151144132_usman.resx">
+      <DependentUpon>201705151144132_usman.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705151003082_ticketamendments.resx">
-      <DependentUpon>201705151003082_ticketamendments.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705151313073_usman2.resx">
+      <DependentUpon>201705151313073_usman2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

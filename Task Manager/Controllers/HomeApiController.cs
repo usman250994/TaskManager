@@ -28,6 +28,7 @@ namespace Task_Manager.Controllers
                 {
                     using (TaskContext db = new TaskContext())
                     {
+
                         var session = HttpContext.Current.Session;
                         if (log.user_Name == "sudo" && log.password == "sudo")
                         {
@@ -56,42 +57,94 @@ namespace Task_Manager.Controllers
         [HttpPut]
         public String Ticket(ComplainProjects ticket)
         {
-
-            ticketContact tickCont = new ticketContact();
-            
-            tickCont.contact=ticket.contact;
-            tickCont.email=ticket.email;
-            tickCont.name=ticket.name;
-
-        
+            // Ticket table
 
 
             Task task = new Task();
-
-
+            task.id = 0;
             task.enable = true;
             task.task_name = "ticket";
             task.description = ticket.issue;
             task.created_on = DateTime.Now;
-            task.Created_By = db.user.Find(5);
-            task.sms=false;
-                task.email=false;
-            task.status =0;
+            var usr = db.user.Find(5);
+            task.Created_By = usr;
+            task.sms = false;
+            task.email = false;
+            task.status = 0;
+            task.start_date = DateTime.Now;
+            task.end_date = DateTime.Now;
+
+
+
+
+
             Tagging tag = new Tagging();
             tag.tasks = task;
             tag.project = db.project.Find(ticket.projectId);
-            db.task.Add(task);
             db.tagging.Add(tag);
+
+           
+            var check = db.tickets.Where(p => p.email == ticket.email && p.contact == ticket.contact).Count();
+            if (check > 0)
+            {
+                var ticketCustomer = db.tickets.Where(p => p.email == ticket.email && p.contact == ticket.contact).FirstOrDefault();
+
+
+                ticketCustomer._tickets.Add(task); 
+                //ticketCustomer.tickets.AddRange(tsk);
+
+            }
+            else
+            {
+
+                ticketContact tick = new ticketContact();
+                tick.email = ticket.email;
+                tick.contact = ticket.contact;
+                tick.name = ticket.name;
+                tick._tickets.Add(task);
+                db.tickets.Add(tick);
+
+            }
+
             if (db.SaveChanges() > 0)
             {
                 return "Ticket is successfully Generated!! you will be cotacted Soon!";
             }
-            
             else
             {
                 return "Ticket Cann not Be genrated At the Moment. Sorry For the Inconvenience";
             }
 
+
         }
+    
+    
+     //[HttpGet]
+     //   public List<TicketInitialrespone> getDropDown()
+     //   {
+     //       List<TicketInitialrespone> dropDown = new List<TicketInitialrespone>();
+
+     //       var customers = db.customer.Where(p => p.enable == true).Select(p=>p.customerId).ToList();
+     //    foreach(var entity in customers )
+     //    {
+     //        TicketInitialrespone response = TicketInitialrespone();
+             
+             
+     //        response.customerId = entity;
+
+     //     var saa = db.project.Where(p => p.customer.customerId == entity && p.Enable==true).Select(s =>new{s.Project_Name , s.id} ).ToList();
+             
+     //        response.projects = saa;
+     //        dropDown.Add(response);
+     //    }
+
+     //       return dropDown;
+     //   }
+    
+    
+    
     }
+
+
+
 }

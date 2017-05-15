@@ -19,6 +19,7 @@ namespace Task_Manager.Models
         public DbSet<Users> user { get; set; }
         public DbSet<Task> task { get; set; }
         public DbSet<Customer> customer { get; set; }
+        public DbSet<ticketContact> tickets { get; set; }
         public DbSet<CustomerContactDetail> customer_contact_detail { get; set; }
     }
 }

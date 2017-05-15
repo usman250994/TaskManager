@@ -15,5 +15,11 @@ namespace Task_Manager.Models
         public string contact { get; set; }
         public string email { get; set; }
         public string name { get; set; }
+        public bool enable { get; set; }
+        public List<Task> _tickets { get; set; }
+        public ticketContact() 
+        {
+            _tickets = new List<Task>();
+        }
     }
 }

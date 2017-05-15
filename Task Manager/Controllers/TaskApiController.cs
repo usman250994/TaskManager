@@ -386,10 +386,11 @@ namespace Task_Manager.Controllers
                 taskRes.task = tasks[i];
                 Tagging tag = new Tagging();
                 List<string> list = new List<string>();
-
-                tag = db.tagging.Find(tasks[i].id);
+                int s = tasks[i].id;
+              //  tag = db.tagging.Find(tasks[i].id);
+              //  commenting for some time IReadOnlyCollection ^^
                 //int k = tag.users.Count;
-
+             tag =   db.tagging.Where(p => p.tasks.id == s).FirstOrDefault();
                 if (tag != null && tag.users.Count > 0)
                 {
 
