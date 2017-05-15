@@ -140,7 +140,7 @@ namespace Task_Manager.Controllers
         [Route("/api/ProjectApi/"), HttpGet]
         public Project projectall(int id)
         {
-            var user = db.project.Where(p => p.id == id).FirstOrDefault();
+            var user = db.project.Where(p => p.id == id ).FirstOrDefault();
             return user;
         }
       

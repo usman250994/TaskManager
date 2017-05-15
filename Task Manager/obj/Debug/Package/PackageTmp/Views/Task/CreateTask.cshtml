@@ -140,7 +140,7 @@
                     var obj = { id: data.dropdowns.Users[i].id, text: data.dropdowns.Users[i].user_Name }
                     dat.push(obj);
                 }
-                $("#test").select2({ theme: "bootstrap", data: dat });
+               $("#test").select2({ theme: "bootstrap", data: dat });
                 if (data.task != null) {
                     console.log(data.task);
                     document.getElementById("secid").value = data.task.id
@@ -151,8 +151,14 @@
                     document.getElementById("Desc").value = data.task.description;
                     document.getElementById("chkSMS").checked = data.task.sms;
                     document.getElementById("chkEmail").checked = data.task.email;
-                    // document.getElementById("chkEmail").checked = data.task.email; By Usman Coz No id
+             
+                  
+                    $('#test').val(data.tags).trigger('change');
+                    
+
+                 
                 }
+               
             },
             failure: function () {
                 alert("Failed to load Projects");

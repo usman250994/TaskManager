@@ -62,7 +62,7 @@ namespace Task_Manager.Controllers
             List<Customer> list = new List<Customer>();
             var session = HttpContext.Current.Session;
            
-            if (session["UserID"] == "5")
+            if (session["UserID"].ToString() == "5")
             {
            list = db.customer.Where(d => d.enable == true ).ToList();
             }

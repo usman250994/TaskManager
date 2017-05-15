@@ -13,6 +13,7 @@ namespace Task_Manager.Controllers
         TaskContext db = new TaskContext();
         public ActionResult Index()
         {
+            var str = Session["UserId"];
             if (Session["UserId"] != null)
             {
                 int unassigned = 0;
@@ -20,9 +21,9 @@ namespace Task_Manager.Controllers
                 int newly = 0;
                 List<Task> tasks = new List<Task>();
                 //
-                
+
                 DateTime date = DateTime.Now.Date;
-              var   task = db.task.Where(c => c.enable == true).ToList();
+                var task = db.task.Where(c => c.enable == true).ToList();
                 foreach (var entity in task)
                 {
                     if (entity.created_on.Date == date)
@@ -36,10 +37,10 @@ namespace Task_Manager.Controllers
                 tasks.Clear();
                 //Unassigned
 
-                tasks = db.task.Where(c => c.enable == true && c.status==0).ToList();
-              
-               ViewData["unassigned"] = tasks.Count;
-               tasks.Clear();
+                tasks = db.task.Where(c => c.enable == true && c.status == 0).ToList();
+
+                ViewData["unassigned"] = tasks.Count;
+                tasks.Clear();
                 //Newly
 
                 tasks = db.task.Where(c => c.enable == true).Take(10).ToList();
@@ -49,7 +50,7 @@ namespace Task_Manager.Controllers
                 //
                 return View();
             }
-            else 
+            else
             {
                 return RedirectToAction("Index", "Home");
             }

@@ -208,10 +208,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2017 15:00:29</publishTime>
     </File>
     <File Include="bin/Task_Manager.dll">
-      <publishTime>05/13/2017 15:28:00</publishTime>
+      <publishTime>05/15/2017 09:59:49</publishTime>
     </File>
     <File Include="bin/Task_Manager.pdb">
-      <publishTime>05/13/2017 15:28:00</publishTime>
+      <publishTime>05/15/2017 09:59:49</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>04/07/2017 10:14:30</publishTime>
@@ -733,13 +733,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/07/2017 10:13:43</publishTime>
     </File>
     <File Include="Views/Shared/_Home.cshtml">
-      <publishTime>05/13/2017 13:57:21</publishTime>
+      <publishTime>05/15/2017 09:51:56</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>04/18/2017 12:58:30</publishTime>
     </File>
     <File Include="Views/Task/CreateTask.cshtml">
-      <publishTime>05/12/2017 22:54:35</publishTime>
+      <publishTime>05/13/2017 17:56:07</publishTime>
     </File>
     <File Include="Views/Task/Index.cshtml">
       <publishTime>05/12/2017 16:23:45</publishTime>

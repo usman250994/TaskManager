@@ -111,7 +111,7 @@ namespace Task_Manager.Controllers
 
             var session = HttpContext.Current.Session;
 
-            if (session["UserID"] == "5")
+            if (session["UserID"].ToString() == "5")
             {
                 list = db.user.Where(p => p.Enable == true ).ToList();
             }
