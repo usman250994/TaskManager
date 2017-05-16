@@ -83,6 +83,7 @@ a.hiddenanchor {
 
     #wrapper label {
         color: rgb(64, 92, 96);
+        padding-top:15px;
         position: relative!important;
         float: left;
     }

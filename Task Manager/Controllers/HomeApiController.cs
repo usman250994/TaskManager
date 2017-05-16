@@ -83,14 +83,14 @@ namespace Task_Manager.Controllers
             tag.project = db.project.Find(ticket.projectId);
             db.tagging.Add(tag);
 
-           
+
             var check = db.tickets.Where(p => p.email == ticket.email && p.contact == ticket.contact).Count();
             if (check > 0)
             {
                 var ticketCustomer = db.tickets.Where(p => p.email == ticket.email && p.contact == ticket.contact).FirstOrDefault();
 
 
-                ticketCustomer._tickets.Add(task); 
+                ticketCustomer._tickets.Add(task);
                 //ticketCustomer.tickets.AddRange(tsk);
 
             }
@@ -117,34 +117,23 @@ namespace Task_Manager.Controllers
 
 
         }
-    
-    
-     //[HttpGet]
-     //   public List<TicketInitialrespone> getDropDown()
-     //   {
-     //       List<TicketInitialrespone> dropDown = new List<TicketInitialrespone>();
 
-     //       var customers = db.customer.Where(p => p.enable == true).Select(p=>p.customerId).ToList();
-     //    foreach(var entity in customers )
-     //    {
-     //        TicketInitialrespone response = TicketInitialrespone();
-             
-             
-     //        response.customerId = entity;
 
-     //     var saa = db.project.Where(p => p.customer.customerId == entity && p.Enable==true).Select(s =>new{s.Project_Name , s.id} ).ToList();
-             
-     //        response.projects = saa;
-     //        dropDown.Add(response);
-     //    }
-
-     //       return dropDown;
-     //   }
-    
-    
-    
+        [HttpGet]
+        public List<TicketInitialrespone> getDropDown()
+        {
+            List<TicketInitialrespone> dropDown = new List<TicketInitialrespone>();
+            var customers = db.customer.Where(p => p.enable == true).Select(p => p.customerId).ToList();
+            foreach (var entity in customers)
+            {
+                TicketInitialrespone response =new TicketInitialrespone();
+                response.customerId = entity.ToString();
+                List<projectDropDownInTickets> saa;
+                saa = db.project.Where(p => p.customer.customerId == entity && p.Enable == true).Select(s => new projectDropDownInTickets() {name= s.Project_Name, id =s.id }).ToList();
+                response.projects = saa;
+                dropDown.Add(response);
+            }
+            return dropDown;
+        }
     }
-
-
-
 }

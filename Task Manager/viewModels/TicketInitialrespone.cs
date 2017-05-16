@@ -7,9 +7,7 @@ namespace Task_Manager.viewModels
 {
     public class TicketInitialrespone
     {
-        public string customerId { get; set; }
-
-         
+        public string customerId { get; set; }        
 
         public List<projectDropDownInTickets> projects { get; set; }
     }

@@ -37,6 +37,11 @@ select#ProjectManagerDropdown {
     border-radius: 4px;
 }
 
+.ddlproject {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .btn_login {
     background: #7cbcd6;
     background-image: -webkit-linear-gradient(top, #7cbcd6, #7cbcd6);
@@ -829,4 +834,5 @@ tr.pager td {
         footer p {
             margin: 0;
         }
-}*/ *;
+}*/
+}

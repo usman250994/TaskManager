@@ -51,11 +51,11 @@ namespace Task_Manager.Controllers
                 string str = session["Task"].ToString();
                 session["Task"] = null;
                 var task = db.task.Find(Convert.ToInt32(str));
-              //
+                //
                 List<int> taggedUsers = new List<int>();
                 var tag = db.tagging.Where(p => p.tasks.id == task.id).FirstOrDefault();
-                
-                foreach(var entity in tag.users)
+
+                foreach (var entity in tag.users)
                 {
                     taggedUsers.Add(entity.id);
                 }
@@ -101,13 +101,13 @@ namespace Task_Manager.Controllers
 
                 //adding users
                 tagging.users.Clear();
-                for (int i = 0; i < tempTask.tempUsers.Count;i++ )
+                for (int i = 0; i < tempTask.tempUsers.Count; i++)
                 {
                     var user = db.user.Find(tempTask.tempUsers[i]);
                     tagging.users.Add(user);
                 }
 
-                
+
 
             }
             //create
@@ -141,14 +141,12 @@ namespace Task_Manager.Controllers
             }
         }
 
-
-
         private Task setTask(tempTask tempTask)
         {
             var sessionId = HttpContext.Current.Session;
             string id = sessionId["UserID"].ToString();
 
-           
+
             var createdUser = db.user.Find(Convert.ToInt32(id));
             Task task = new Task();
             task.enable = true;
@@ -158,7 +156,7 @@ namespace Task_Manager.Controllers
             task.description = tempTask.description;
             task.start_date = tempTask.start_date;
             task.end_date = tempTask.end_date;
-           
+
             if (tempTask.tempUsers.Count == 0)
             {
                 task.status = 0;
@@ -173,10 +171,46 @@ namespace Task_Manager.Controllers
             return task;
         }
 
+        //change return to a view model
+        public responseToComplain TicketUser(int id)
+        {
+            responseToComplain tick = new responseToComplain();
+
+
+
+
+
+            var contacts = db.tickets.Select(p =>  new finding_ticketContact() { tasks=p._tickets, number=p.contact,name=p.name,email=p.email}).ToList();
+            foreach (var cont in contacts)
+            {
+                var obj = cont.tasks.Where(p => p.id == id).FirstOrDefault();
+
+                if (obj != null)
+                {
+                    tick.email = cont.email;
+                    tick.name = cont.name;
+                    tick.number = cont.number;
+                    break;
+                }
+
+            }
+            return tick;
+
+        }
+
+
+
+
+
+
+
+
+
+
 
 
         ////Deleting tasks without tagging
-        [HttpPost]
+        [HttpDelete]
         public String delete(int id)
         {
             var user = db.task.Where(p => p.id == id).FirstOrDefault().enable = false;
@@ -190,9 +224,6 @@ namespace Task_Manager.Controllers
                 return "Task Not Deleted";
             }
         }
-
-
-
 
         //// For Grid Data
         [Route("/api/TaskApi"), HttpGet]
@@ -212,10 +243,10 @@ namespace Task_Manager.Controllers
                 {
                     DateTime date = DateTime.Now.Date;
 
-                    
-                    if(session["UserID"]=="5")
+
+                    if (session["UserID"] == "5")
                     {
-                         task = db.task.Where(c => c.enable == true).ToList();
+                        task = db.task.Where(c => c.enable == true).ToList();
                     }
                     else
                     {
@@ -224,12 +255,12 @@ namespace Task_Manager.Controllers
 
                         //
 
-                       var tempTask = db.task.Where(c => c.enable == true && c.Created_By.id != createdBy.id).ToList();
-                        foreach(var entity in tempTask)
+                        var tempTask = db.task.Where(c => c.enable == true && c.Created_By.id != createdBy.id).ToList();
+                        foreach (var entity in tempTask)
                         {
                             var tag = db.tagging.Where(p => p.tasks.id == entity.id).FirstOrDefault();
 
-                            for (int i = 0; i<tag.users.Count; i++)
+                            for (int i = 0; i < tag.users.Count; i++)
                             {
                                 if (tag.users[i].id == createdBy.id)
                                 {
@@ -243,8 +274,8 @@ namespace Task_Manager.Controllers
                         //
 
                     }
-                    
-                 
+
+
                     foreach (var entity in task)
                     {
                         if (entity.created_on.Date == date)
@@ -256,10 +287,10 @@ namespace Task_Manager.Controllers
                 //Unassigned
                 else if (str == "u")
                 {
-                    
+
                     if (session["UserID"] == "5")
                     {
-                         task = db.task.Where(c => c.enable == true).ToList();
+                        task = db.task.Where(c => c.enable == true).ToList();
                     }
                     else
                     {
@@ -289,8 +320,8 @@ namespace Task_Manager.Controllers
 
 
                     }
-                    
-                   
+
+
                     foreach (var entity in task)
                     {
                         if (entity.status == 0)
@@ -304,7 +335,7 @@ namespace Task_Manager.Controllers
                 //Newly
                 else
                 {
-                    
+
                     if (session["UserID"] == "5")
                     {
                         tasks = db.task.Where(c => c.enable == true).Take(10).ToList();
@@ -312,8 +343,8 @@ namespace Task_Manager.Controllers
                     else
                     {
                         var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
-                        tasks = db.task.Where(c => c.enable == true && c.Created_By.id == createdBy.id).OrderByDescending(c=>c.created_on).Take(10).ToList();
-                        int remaining=10-tasks.Count;
+                        tasks = db.task.Where(c => c.enable == true && c.Created_By.id == createdBy.id).OrderByDescending(c => c.created_on).Take(10).ToList();
+                        int remaining = 10 - tasks.Count;
                         //
                         if (remaining > 0)
                         {
@@ -337,14 +368,14 @@ namespace Task_Manager.Controllers
                         //
 
                     }
-                    
-                    
+
+
                 }
             }
             //all
             else
             {
-                
+
                 if (session["UserID"].ToString() == "5")
                 {
                     tasks = db.task.Where(c => c.enable == true).ToList();
@@ -369,17 +400,10 @@ namespace Task_Manager.Controllers
                             }
                             break;
                         }
-
-
                     }
                     //
-
-
                 }
-                
-               
             }
-
             for (int i = 0; i < tasks.Count; i++)
             {
                 taskResponse taskRes = new taskResponse();
@@ -387,10 +411,10 @@ namespace Task_Manager.Controllers
                 Tagging tag = new Tagging();
                 List<string> list = new List<string>();
                 int s = tasks[i].id;
-              //  tag = db.tagging.Find(tasks[i].id);
-              //  commenting for some time IReadOnlyCollection ^^
+                //  tag = db.tagging.Find(tasks[i].id);
+                //  commenting for some time IReadOnlyCollection ^^
                 //int k = tag.users.Count;
-             tag =   db.tagging.Where(p => p.tasks.id == s).FirstOrDefault();
+                tag = db.tagging.Where(p => p.tasks.id == s).FirstOrDefault();
                 if (tag != null && tag.users.Count > 0)
                 {
 
@@ -410,7 +434,6 @@ namespace Task_Manager.Controllers
             }
             return taskResponse;
         }
-
 
         private TaskDropdown find()
         {
