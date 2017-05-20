@@ -20,5 +20,6 @@ namespace Task_Manager.Models
         public bool Enable { get; set; }
         public virtual List<Tagging> users { get; set; }
         public virtual Users Created_By { get; set; }
+        public virtual Roles Roles_id { get; set; }
     }
 }

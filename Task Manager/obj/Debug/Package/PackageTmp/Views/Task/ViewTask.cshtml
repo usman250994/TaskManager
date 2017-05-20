@@ -1,0 +1,201 @@
+﻿@{
+    ViewBag.Title = "ViewTask";
+    Layout = "~/Views/Shared/_Home.cshtml";
+}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Task Assigned</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Task Assigned
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                                <th>Description</th>
+                                <th>Assigned To</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Alerts</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dynamic-Grid"></tbody>
+                    </table>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+        <!-- /.row -->
+    </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title center">Sender Detail</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel-body">
+                        <div>
+                            <div class="col-lg-12 spacing">
+                                <div class="col-lg-6 ">
+                                    <label>User Name</label>
+                                </div>
+                                <div class="col-lg-6 ">
+                                    <label id="username"></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 spacing">
+                                <div class="col-lg-6">
+                                    <label>Email Address</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label id="uemail"></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 spacing">
+                                <div class="col-lg-6">
+                                    <label>Mobile Number</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label id="mobilenum"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-6 (nested) -->
+                        <!-- /.col-lg-6 (nested) -->
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script type=text/javascript>
+    function status(value, user) {
+        var model = { value: value, user: user };
+        $.ajax({
+            async: false,
+            url: '/api/TaskApi/',
+            type: 'PUT',
+            data: model,
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () { alert('Grid Not Load'); }
+        });
+    }
+    $(document).ready(function () {
+        $.ajax({
+            async: false,
+            url: '/api/TaskApi/',
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                var fxg = "";
+                for (var i = 0; i < data.length; i++) {
+                    for (k = 0; k < data[i].users.length; k++) {
+                        fxg = data[i].users[k] + "," + fxg;
+                    }
+                    if ((data[i].task.sms == false) && (data[i].task.email == true)) {
+                        var mxg = "Email";
+                    }
+                    else if ((data[i].task.sms == true) && (data[i].task.email == false)) {
+                        var mxg = "SMS";
+                    }
+                    else if ((data[i].task.sms == true) && (data[i].task.email == true)) {
+                        var mxg = "Email And SMS";
+                    }
+                    else {
+                        var mxg = "No Status Found";
+                    }
+                    $("#dynamic-Grid").append("<tr><td><a data-toggle='modal' data-target='#myModal' onclick=Detail(" + data[i].task.id + ")>" + data[i].task.task_name + "</a></td><td>" + data[i].task.description + "</td><td>" + fxg.toString() + "</td><td>" + data[i].task.start_date.substring(0, 10) + "</td><td>" + data[i].task.end_date.substring(0, 10) + "</td><td>" + mxg.toString() + "</td><td> <select  onchange='status(this.value," + data[i].task.id + ")' id=" + data[i].task.id + "><option value='1'>InProgress</option><option value='2'>Pending</option><option value='3'>Complete</option><option value='4'>Closed</option></select></td><td> <button value='Update' class='btn btn-primary fa fa-check' id='upd' onclick=\"UpdateTask(" + data[i].task.id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"DeleteTask(" + data[i].task.id + ")\"></button></td></tr>");
+                    //data-toggle='modal' data-target='#myModal'
+
+                    $("select#" + data[i].task.id + " option").filter(function () {
+                        return $(this).val() == data[i].task.status;
+                    }).prop('selected', true);
+                    fxg = "";
+                }
+            },
+            error: function () { alert('Grid Not Load'); }
+        });
+    });
+    function DeleteTask(id) {
+        if (confirm('Are You Sure ! You Want to Delete This Task')) {
+            $.ajax({
+                url: '/api/TaskApi/' + id,
+                type: 'Delete',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) { alert(data); location.reload(); },
+                error: function (data) { alert(data); }
+            });
+        }
+    }
+    function UpdateTask(id) {
+        $.ajax({
+            async: false,
+            url: '/api/TaskApi/' + id,
+            type: 'PUT',
+            success: function (data) {
+                window.location.href = '/Task/CreateTask';
+            },
+            error: function () {
+                alert(data);
+            }
+        });
+    }
+    function Detail(val) {
+        $.ajax({
+            url: '/api/TaskApi/' + val,
+            type: 'POST',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                console.log(data);
+
+                var uname = document.getElementById('username')
+                uname.innerHTML = "";
+                uname.innerHTML = uname.innerHTML + data.name;
+
+                var useremail = document.getElementById('uemail')
+                useremail.innerHTML = "";
+                useremail.innerHTML = useremail.innerHTML + data.email;
+
+                var pnum = document.getElementById('mobilenum')
+                pnum.innerHTML = "";
+                pnum.innerHTML = pnum.innerHTML + data.number;
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+</script>

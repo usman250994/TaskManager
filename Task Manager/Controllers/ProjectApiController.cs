@@ -153,7 +153,7 @@ namespace Task_Manager.Controllers
 
             List<Project> Proj = new List<Project>();
 
-            if (session["UserID"] == "5")
+            if (session["UserID"].ToString() == "5")
             {
                 Proj = db.project.Where(c => c.Enable == true ).ToList();
             }

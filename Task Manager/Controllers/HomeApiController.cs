@@ -33,6 +33,7 @@ namespace Task_Manager.Controllers
                         if (log.user_Name == "sudo" && log.password == "sudo")
                         {
                             session["UserID"] = "5";
+                            session["role_id"] = "1";
                             return "Authenticated";
                         }
                         else
@@ -41,6 +42,7 @@ namespace Task_Manager.Controllers
                             if (obj != null)
                             {
                                 session["UserID"] = obj.id;
+                                session["role_id"] = obj.Roles_id.id;
                                 return "Authenticated";
                             }
                             return "Invalid ID or Password";
@@ -70,13 +72,10 @@ namespace Task_Manager.Controllers
             task.Created_By = usr;
             task.sms = false;
             task.email = false;
+            task.IsTicket = true;
             task.status = 0;
             task.start_date = DateTime.Now;
             task.end_date = DateTime.Now;
-
-
-
-
 
             Tagging tag = new Tagging();
             tag.tasks = task;
@@ -88,15 +87,11 @@ namespace Task_Manager.Controllers
             if (check > 0)
             {
                 var ticketCustomer = db.tickets.Where(p => p.email == ticket.email && p.contact == ticket.contact).FirstOrDefault();
-
-
                 ticketCustomer._tickets.Add(task);
                 //ticketCustomer.tickets.AddRange(tsk);
-
             }
             else
             {
-
                 ticketContact tick = new ticketContact();
                 tick.email = ticket.email;
                 tick.contact = ticket.contact;
@@ -126,10 +121,10 @@ namespace Task_Manager.Controllers
             var customers = db.customer.Where(p => p.enable == true).Select(p => p.customerId).ToList();
             foreach (var entity in customers)
             {
-                TicketInitialrespone response =new TicketInitialrespone();
+                TicketInitialrespone response = new TicketInitialrespone();
                 response.customerId = entity.ToString();
                 List<projectDropDownInTickets> saa;
-                saa = db.project.Where(p => p.customer.customerId == entity && p.Enable == true).Select(s => new projectDropDownInTickets() {name= s.Project_Name, id =s.id }).ToList();
+                saa = db.project.Where(p => p.customer.customerId == entity && p.Enable == true).Select(s => new projectDropDownInTickets() { name = s.Project_Name, id = s.id }).ToList();
                 response.projects = saa;
                 dropDown.Add(response);
             }

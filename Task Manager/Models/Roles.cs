@@ -12,5 +12,6 @@ namespace Task_Manager.Models
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         public string role_name { get; set; }
+        public bool enable { get; set; }
     }
 }

@@ -1,0 +1,234 @@
+﻿@{
+    ViewBag.Title = "CreateTask";
+    Layout = "~/Views/Shared/_Home.cshtml";
+}
+<link href="~/Content/select2.css" rel="stylesheet" />
+<link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
+<div id="wrapper">
+    <!-- Navigation -->
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="text-align:center">Create Task</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Create Task
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class=" col-lg-offset-3  col-lg-6">
+                                <div class="col-lg-12 spacing">
+                                    <div class="    col-lg-6 ">
+                                        <label>Customer Name</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <select id="CustomerDropdown" onchange="getval(this);"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="    col-lg-6 ">
+                                        <label>Project Name</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <select id="ProjectDropdown"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Task Name</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" name="TaskName" id="TaskName" placeholder="Task Name" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6">
+                                        <label>Description</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <textarea type="text" name="Desc" id="Desc" cols="20" rows="3" class="form-control" placeholder="Description Of Project"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6">
+                                        <label>Start Date</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="date" name="StartDate" id="StartDate" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6">
+                                        <label>End Date</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="date" name="EndDate" id="EndDate" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6">
+                                        <label>Remind By</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="chkSMS"> SMS
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="chkEmail">  Email
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6">
+                                        <label>Assigned To</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dropdown">
+                                            <select id="test" multiple="multiple"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-offset-6 col-lg-6 spacing">
+                                    <button class="btn btn-success" value="Add" onclick="Add()"> Create Task </button>
+                                    <button type="reset" class="btn btn-info" onclick="location.reload();">Reset Task</button>
+                                    <input type="hidden" value="0" id="secid" />
+                                </div>
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                            <!-- /.col-lg-6 (nested) -->
+                        </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<script src="~/Scripts/select2.js"></script>
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+        globalProjects = [];
+        dat = [];
+        $.ajax({
+            async: false,
+            url: '/api/TaskApi/'+"0",
+            type: 'GET',
+            success: function (data) {
+                console.log(data);
+                $.each(data.dropdowns.customer, function (i) {
+                    $('#CustomerDropdown').append($('<option></option>').val(data.dropdowns.customer[i].customerId).html(data.dropdowns.customer[i].customer_name));
+                });
+                globalProjects = data.dropdowns.projects;
+                $.each(data.dropdowns.projects, function (i) {
+                    $('#ProjectDropdown').append($('<option></option>').val(data.dropdowns.projects[i].id).html(data.dropdowns.projects[i].Project_Name));
+                });
+                for (var i = 0; i < data.dropdowns.Users.length; i++) {
+                    var obj = { id: data.dropdowns.Users[i].id, text: data.dropdowns.Users[i].user_Name }
+                    dat.push(obj);
+                }
+               $("#test").select2({ theme: "bootstrap", data: dat });
+                if (data.task != null) {
+                    console.log(data.task);
+                    document.getElementById("secid").value = data.task.id
+                    document.getElementById("ProjectDropdown").value = data.projectId;
+                    document.getElementById("TaskName").value = data.task.task_name;
+                    document.getElementById("StartDate").value = data.task.start_date.substring(0, 10);
+                    document.getElementById("EndDate").value = data.task.end_date.substring(0, 10);
+                    document.getElementById("Desc").value = data.task.description;
+                    document.getElementById("chkSMS").checked = data.task.sms;
+                    document.getElementById("chkEmail").checked = data.task.email;
+             
+                  
+                    $('#test').val(data.tags).trigger('change');
+                    
+
+                 
+                }
+               
+            },
+            failure: function () {
+                alert("Failed to load Projects");
+            }
+        });
+
+
+    });
+    //add user button press for adding or updating db
+    //need correction when updating probably
+    function Add() {
+       
+            var user = $("#test").select2("val");
+            console.log(user);
+           
+            var model =
+                {
+                id:$("#secid").val(),
+                projectId: $("#ProjectDropdown").val(),
+                task_name: $("#TaskName").val(),
+                description: $("#Desc").val(),
+                start_date: $("#StartDate").val(),
+                end_date: $("#EndDate").val(),
+                sms: document.getElementById("chkSMS").checked,
+                email: document.getElementById("chkEmail").checked,
+                status:"1",
+                tempUsers: user
+            };
+            console.log(model);
+            console.log(JSON.stringify(model));
+            $.ajax({
+                url: '/api/TaskApi',
+                type: 'POST',
+                data: JSON.stringify(model),
+                contentType: "text/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                },
+                error: function (error) { alert(error); }
+            });
+
+
+        
+    }
+
+    function getval(val)
+    {
+       
+        var check = 0;
+        for (var i = 0; i<globalProjects.length;i++)
+        {
+            if (globalProjects[i].customer.customerId == val.value)
+            {
+                if (check == 0) {
+                    check=1;
+                    document.getElementById('ProjectDropdown').options.length = 0;
+                }
+                var option = document.createElement("option");
+                option.text = globalProjects[i].Project_Name;
+                option.value = globalProjects[i].id;
+                document.getElementById('ProjectDropdown').add(option);
+                
+            }
+           
+          
+        }
+        
+      
+
+    }
+</script>

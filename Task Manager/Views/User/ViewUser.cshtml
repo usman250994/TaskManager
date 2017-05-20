@@ -98,7 +98,7 @@
     function deleteUser(id) {
         $.ajax({
             url: '/api/UserApi/' + id,
-            type: 'POST',
+            type: 'Delete',
             contentType: "application/json;charset=utf-8",
             success: function (data) { alert(data); location.reload(); },
             error: function (data) { alert(data); }

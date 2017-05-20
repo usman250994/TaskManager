@@ -197,19 +197,17 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TaskApiController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\TicketApiController.cs" />
+    <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705151144132_usman.cs" />
-    <Compile Include="Migrations\201705151144132_usman.Designer.cs">
-      <DependentUpon>201705151144132_usman.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705151313073_usman2.cs" />
-    <Compile Include="Migrations\201705151313073_usman2.Designer.cs">
-      <DependentUpon>201705151313073_usman2.cs</DependentUpon>
+    <Compile Include="Migrations\201705190926218_Fahad.cs" />
+    <Compile Include="Migrations\201705190926218_Fahad.Designer.cs">
+      <DependentUpon>201705190926218_Fahad.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -229,6 +227,7 @@
     <Compile Include="SMSandEmail.cs" />
     <Compile Include="viewModels\ComplainProjects.cs" />
     <Compile Include="viewModels\finding_ticketContact.cs" />
+    <Compile Include="viewModels\internalTickets.cs" />
     <Compile Include="viewModels\projectDropDownInTickets.cs" />
     <Compile Include="viewModels\ProjectGrid.cs" />
     <Compile Include="viewModels\ProjectInsert.cs" />
@@ -240,6 +239,7 @@
     <Compile Include="viewModels\tempUser.cs" />
     <Compile Include="viewModels\TicketInitialrespone.cs" />
     <Compile Include="viewModels\updateOrCreateDropDown.cs" />
+    <Compile Include="viewModels\userRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -442,6 +442,11 @@
     <Content Include="Views\Project\ViewProject.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Ticket\CreateTicket.cshtml" />
+    <Content Include="Views\Ticket\ViewTicket.cshtml" />
+    <Content Include="Views\Shared\Admin.cshtml" />
+    <Content Include="Views\Shared\Normal.cshtml" />
+    <Content Include="Views\Shared\CSR.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -450,11 +455,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705151144132_usman.resx">
-      <DependentUpon>201705151144132_usman.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705151313073_usman2.resx">
-      <DependentUpon>201705151313073_usman2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705190926218_Fahad.resx">
+      <DependentUpon>201705190926218_Fahad.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

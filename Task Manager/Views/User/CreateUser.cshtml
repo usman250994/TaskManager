@@ -1,6 +1,21 @@
 ﻿@{
     ViewBag.Title = "CreateTask";
-    Layout = "~/Views/Shared/_Home.cshtml";
+    if (ViewData["id"].ToString() == "1")
+    {
+        Layout = "~/Views/Shared/_Home.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "2")
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "3")
+    {
+        Layout = "~/Views/Shared/Normal.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/CSR.cshtml";
+    }
 }
 <div id="wrapper">
     <!-- Navigation -->
@@ -66,7 +81,14 @@
                                         <label id="UpdID" type="text" name="UpdID"> </label>
                                     </div>
                                 </div>
-
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Position</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <select id="Position"></select>
+                                    </div>
+                                </div>
                                 <div class="col-lg-offset-6 col-lg-6 spacing">
 
                                     <button onclick="Add()" id="upd" class="btn btn-success"> Create User </button>
@@ -92,42 +114,60 @@
 </div>
 <!-- /#page-wrapper -->
 <script type="text/javascript">
-    $(document).ready(function () {
-        $.ajax({
-            async: false,
-            url: '/api/UserApi/',
-            type: 'PUT',
-            success: function (data) {
-                console.log(data);
-                if (data != 0) {
-                    $.ajax({
-                        async: false,
-                        url: '/api/UserApi/' + data,
-                        type: 'GET',
-                        success: function (data) {
-                            console.log(data);
-                            document.getElementById("user_name").value = data.user_Name;
-                            document.getElementById("password").value = data.Password;
-                            document.getElementById("Address").value = data.Address;
-                            document.getElementById("MobileNo").value = data.MobileNo.substring(3, 13);
-                            document.getElementById("Email").value = data.Email;
-                            document.getElementById("UpdID").value = data.id;
-                            document.getElementById("upd").value = "Update";
-                            console.log(data);
-                        },
-                        error: function () {
-                            alert('Cannot Find User');
-                        }
-                    });
-                }
-                //
-            },
-            error: function () {
-                alert('User not Added');
-            }
-        });
+    $.ajax({
+        async: false,
+        url: '/api/UserApi/' + "1",
+        type: 'POST',
+        success: function (data) {
+            $.each(data, function (i) {
+                $('#Position').append($('<option></option>').val(data[i].id).html(data[i].role_name));
+            });
+        },
+        error: function () {
+            alert('Dropdown Position Not Loaded');
+        }
     });
-    //add user button press for adding or updating db
+
+
+
+
+
+
+
+    $.ajax({
+        async: false,
+        url: '/api/UserApi/',
+        type: 'PUT',
+        success: function (data) {
+            console.log(data);
+            if (data != 0) {
+                $.ajax({
+                    async: false,
+                    url: '/api/UserApi/' + data,
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                        document.getElementById("user_name").value = data.user_Name;
+                        document.getElementById("password").value = data.Password;
+                        document.getElementById("Address").value = data.Address;
+                        document.getElementById("MobileNo").value = data.MobileNo.substring(3, 13);
+                        document.getElementById("Email").value = data.Email;
+                        document.getElementById("Position").value = data.Roles_id.id;
+                        document.getElementById("UpdID").value = data.id;
+                        document.getElementById("upd").value = "Update";
+                        console.log(data);
+                    },
+                    error: function () {
+                        alert('Cannot Find User');
+                    }
+                });
+            }
+            //
+        },
+        error: function () {
+            alert('User not Added');
+        }
+    });
     //need correction when updating probably
 
     function Add() {
@@ -141,7 +181,9 @@
         else if (pnumber == "" || pnumber.length != 10) { alert("Please Enter Valid Phone Number"); }
         else
         {
-            var model = { id: $("#id").val(), user_Name: $("#user_name").val(), Password: $("#password").val(), Address: $("#Address").val(), MobileNo: "+92" + $("#MobileNo").val(), Email: $("#Email").val(), CreatedOn: $("#date").val(), Enable: $("#enable").val(), id: $("#UpdID").val() };
+
+            var model = { id: $("#id").val(), user_Name: $("#user_name").val(), Password: $("#password").val(), Address: $("#Address").val(), MobileNo: "+92" + $("#MobileNo").val(), Email: $("#Email").val(), CreatedOn: $("#date").val(), Enable: $("#enable").val(), id: $("#UpdID").val(), Roles_id: $("#Position").val() };
+            console.log($("#Position").val() + "aasas");
             $.ajax({
                 async: false,
                 url: '/api/UserApi/',

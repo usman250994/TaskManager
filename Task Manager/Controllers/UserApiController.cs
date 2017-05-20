@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using Task_Manager.Models;
+using Task_Manager.viewModels;
 
 namespace Task_Manager.Controllers
 {
@@ -15,22 +16,24 @@ namespace Task_Manager.Controllers
         TaskContext db = new TaskContext();
 
         [Route("/api/UserApi/"), HttpPost]
-        public String CreateUser(Users Emp)
+        public String CreateUser(userRequest Emp)
         {
-     
+
             var user = db.user.Find(Emp.id);
             //user already exisits
             if (user != null)
             {
+                var userRole = db.roles.Find(Emp.Roles_id);
                 user.user_Name = Emp.user_Name;
                 user.Password = Emp.Password;
                 user.MobileNo = Emp.MobileNo;
                 user.Email = Emp.Email;
                 user.Address = Emp.Address;
+                user.Roles_id = userRole;
                 user.Enable = true;
                 user.Createdon = DateTime.Now;
                 //db.Entry(user).CurrentValues.SetValues(Emp);
-                if (db.SaveChanges() == 1)
+                if (db.SaveChanges() > 0)
                 {
                     return "User updated Succesfully";
                 }
@@ -44,16 +47,21 @@ namespace Task_Manager.Controllers
             {
                 var sessionId = HttpContext.Current.Session;
                 string id = sessionId["UserID"].ToString();
-               
-             
-                
-                   var  createdUser = db.user.Find(Convert.ToInt32(id));
-                
-                Emp.Created_By= createdUser;
-                Emp.Enable = true;
-                Emp.Createdon = DateTime.Now;
-                db.user.Add(Emp);
-                if (db.SaveChanges() == 1)
+                var createdUser = db.user.Find(Convert.ToInt32(id));
+                var userRole = db.roles.Find(Emp.Roles_id);
+                Users adduser = new Users();
+                adduser.user_Name = Emp.user_Name;
+                adduser.Password = Emp.Password;
+                adduser.MobileNo = Emp.MobileNo;
+                adduser.Address = Emp.Address;
+                adduser.Email = Emp.Email;
+                adduser.Enable = true;
+                adduser.Createdon = DateTime.Now;
+                adduser.Roles_id = userRole;
+                adduser.Created_By = createdUser;
+
+                db.user.Add(adduser);
+                if (db.SaveChanges() > 0)
                 {
                     return "User Added Successfully";
                 }
@@ -62,8 +70,18 @@ namespace Task_Manager.Controllers
             }
         }
 
-        //Delete user function
+
         [Route("/api/UserApi/"), HttpPost]
+        public List<Roles> Dropdownuser(int id)
+        {
+            List<Roles> role = new List<Roles>();
+            role = db.roles.Where(p => p.enable == true).ToList();
+            return role;
+        }
+
+
+        //Delete user function
+        [Route("/api/UserApi/"), HttpDelete]
         public String delete(int id)
         {
             var user = db.user.Where(p => p.id == id).FirstOrDefault().Enable = false;
@@ -113,7 +131,7 @@ namespace Task_Manager.Controllers
 
             if (session["UserID"].ToString() == "5")
             {
-                list = db.user.Where(p => p.Enable == true ).ToList();
+                list = db.user.Where(p => p.Enable == true).ToList();
             }
             else
             {
@@ -122,7 +140,7 @@ namespace Task_Manager.Controllers
                 list = db.user.Where(p => p.Enable == true && p.Created_By.id == createdBy.id).ToList();
             }
 
-          
+
             return list;
         }
 

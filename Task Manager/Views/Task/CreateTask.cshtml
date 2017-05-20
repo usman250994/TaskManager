@@ -1,6 +1,21 @@
 ﻿@{
     ViewBag.Title = "CreateTask";
-    Layout = "~/Views/Shared/_Home.cshtml";
+    if (ViewData["id"].ToString() == "1")
+    {
+        Layout = "~/Views/Shared/_Home.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "2")
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "3")
+    {
+        Layout = "~/Views/Shared/Normal.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/CSR.cshtml";
+    }
 }
 <link href="~/Content/select2.css" rel="stylesheet" />
 <link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
@@ -26,6 +41,7 @@
                                 <div class="col-lg-12 spacing">
                                     <div class="    col-lg-6 ">
                                         <label>Customer Name</label>
+                                        
                                     </div>
                                     <div class="col-lg-6 ">
                                         <select id="CustomerDropdown" onchange="getval(this);"></select>
