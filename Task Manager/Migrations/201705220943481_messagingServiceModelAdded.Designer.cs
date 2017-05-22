@@ -7,13 +7,13 @@ namespace Task_Manager.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Fahad : IMigrationMetadata
+    public sealed partial class messagingServiceModelAdded : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Fahad));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(messagingServiceModelAdded));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705190926218_Fahad"; }
+            get { return "201705220943481_messagingServiceModelAdded"; }
         }
         
         string IMigrationMetadata.Source

@@ -23,5 +23,7 @@ namespace Task_Manager.Models
         public virtual Users Created_By { get; set; }
         public bool IsTicket { get; set; }
 
+        public List<messages> discussion { get; set; }
+
     }
 }

@@ -205,14 +205,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705190926218_Fahad.cs" />
-    <Compile Include="Migrations\201705190926218_Fahad.Designer.cs">
-      <DependentUpon>201705190926218_Fahad.cs</DependentUpon>
+    <Compile Include="Migrations\201705220943481_messagingServiceModelAdded.cs" />
+    <Compile Include="Migrations\201705220943481_messagingServiceModelAdded.Designer.cs">
+      <DependentUpon>201705220943481_messagingServiceModelAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContactDetail.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\messages.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Requests.cs" />
     <Compile Include="Models\Roles.cs" />
@@ -363,6 +364,7 @@
     <None Include="Properties\PublishProfiles\usman.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\bg.jpg" />
+    <Content Include="Scripts\chatscript.js" />
     <Content Include="Scripts\gen_validatorv4.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -455,8 +457,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705190926218_Fahad.resx">
-      <DependentUpon>201705190926218_Fahad.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705220943481_messagingServiceModelAdded.resx">
+      <DependentUpon>201705220943481_messagingServiceModelAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

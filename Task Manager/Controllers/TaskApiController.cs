@@ -130,7 +130,7 @@ namespace Task_Manager.Controllers
                 db.tagging.Add(tag);
 
             }
-            if (db.SaveChanges() > 0)
+            if (db.SaveChanges() > 1)
             {
                 return "task success!!";
 
