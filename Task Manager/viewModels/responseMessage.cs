@@ -11,7 +11,7 @@ namespace Task_Manager.viewModels
         public DateTime timeStamp { get; set; }
         public string name { get; set; }
         public string initials { get; set; }
-        public string direction { get; set; }
+        public bool direction { get; set; }
         public string location { get; set; }
     }
 }

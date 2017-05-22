@@ -153,7 +153,7 @@
                     else {
                         var mxg = "No Status Found";
                     }
-                    $("#dynamic-Grid").append("<tr><td><a data-toggle='modal' data-target='#myModal' onclick=Detail(" + data[i].task.id + ")>" + data[i].task.task_name + "</a></td><td>" + data[i].task.description + "</td><td>" + fxg.toString() + "</td><td>" + data[i].task.start_date.substring(0, 10) + "</td><td>" + data[i].task.end_date.substring(0, 10) + "</td><td>" + mxg.toString() + "</td><td> <select  onchange='status(this.value," + data[i].task.id + ")' id=" + data[i].task.id + "><option value='1'>InProgress</option><option value='2'>Pending</option><option value='3'>Complete</option><option value='4'>Closed</option></select></td><td> <button value='Update' class='btn btn-primary fa fa-check' id='upd' onclick=\"UpdateTask(" + data[i].task.id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"DeleteTask(" + data[i].task.id + ")\"></button></td></tr>");
+                    $("#dynamic-Grid").append("<tr><td><a data-toggle='modal' data-target='#myModal' onclick=Detail(" + data[i].task.id + ")>" + data[i].task.task_name + "</a></td><td>" + data[i].task.description + "</td><td>" + fxg.toString() + "</td><td>" + data[i].task.start_date.substring(0, 10) + "</td><td>" + data[i].task.end_date.substring(0, 10) + "</td><td>" + mxg.toString() + "</td><td> <select  onchange='status(this.value," + data[i].task.id + ")' id=" + data[i].task.id + "><option value='1'>InProgress</option><option value='2'>Pending</option><option value='3'>Complete</option><option value='4'>Closed</option></select></td><td> <button value='Update' class='btn btn-primary fa fa-check' id='upd' onclick=\"UpdateTask(" + data[i].task.id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"DeleteTask(" + data[i].task.id + ")\"></button> <button  class='btn btn-info fa fa-comments-o' onclick=\"comments(" + data[i].task.id + ")\"></button></td></tr>");
                     //data-toggle='modal' data-target='#myModal'
 
                     $("select#" + data[i].task.id + " option").filter(function () {
@@ -191,6 +191,7 @@
     }
     function Detail(val) {
         $.ajax({
+            async: false,
             url: '/api/TaskApi/' + val,
             type: 'POST',
             contentType: "application/json;charset=utf-8",
@@ -215,6 +216,18 @@
         });
     }
 
-
+    function comments(id) {
+        console.log(id);
+        $.ajax({
+            async: false,
+            url: '/api/messageApi/'+id,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                window.location.href = '/message/ViewMessage';
+            },
+            error: function () { console.log("Code Not Ok!"); }
+        });
+    }
     
 </script>

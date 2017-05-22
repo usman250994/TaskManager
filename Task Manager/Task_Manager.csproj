@@ -194,6 +194,7 @@
     <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\messageApiController.cs" />
+    <Compile Include="Controllers\messageController.cs" />
     <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TaskApiController.cs" />
@@ -451,6 +452,7 @@
     <Content Include="Views\Shared\Admin.cshtml" />
     <Content Include="Views\Shared\Normal.cshtml" />
     <Content Include="Views\Shared\CSR.cshtml" />
+    <Content Include="Views\message\ViewMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
