@@ -193,6 +193,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\messageApiController.cs" />
     <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TaskApiController.cs" />
@@ -205,9 +206,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705220943481_messagingServiceModelAdded.cs" />
-    <Compile Include="Migrations\201705220943481_messagingServiceModelAdded.Designer.cs">
-      <DependentUpon>201705220943481_messagingServiceModelAdded.cs</DependentUpon>
+    <Compile Include="Migrations\201705221228326_location.cs" />
+    <Compile Include="Migrations\201705221228326_location.Designer.cs">
+      <DependentUpon>201705221228326_location.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="viewModels\projectDropDownInTickets.cs" />
     <Compile Include="viewModels\ProjectGrid.cs" />
     <Compile Include="viewModels\ProjectInsert.cs" />
+    <Compile Include="viewModels\responseMessage.cs" />
     <Compile Include="viewModels\responseToComplain.cs" />
     <Compile Include="viewModels\response\TaskDropdown.cs" />
     <Compile Include="viewModels\response\taskResponse.cs" />
@@ -457,8 +459,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705220943481_messagingServiceModelAdded.resx">
-      <DependentUpon>201705220943481_messagingServiceModelAdded.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705221228326_location.resx">
+      <DependentUpon>201705221228326_location.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -14,5 +14,6 @@ namespace Task_Manager.Models
         public string message { get; set; }
         public virtual Users sentBy { get; set; }
         public DateTime timeStamp { get; set; }
+        public string location { get; set; }
     }
 }
