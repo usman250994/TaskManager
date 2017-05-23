@@ -13,6 +13,7 @@ namespace Task_Manager.Controllers
         TaskContext db = new TaskContext();
         public ActionResult Index()
         {
+            Session["task_id"] = null;
             var str = Session["UserId"];
             var roles_Id = Session["role_id"].ToString();
             ViewData["id"] = roles_Id;
@@ -27,12 +28,11 @@ namespace Task_Manager.Controllers
                 if (Session["role_Id"].ToString() == "1")
                 {
                     //todays
-                    ViewData["todays"] =     db.task.Where(c => c.enable == true && c.IsTicket == false).Take(10).ToList().Count();
-                //unassigned
+                    ViewData["todays"] = db.task.Where(c => c.enable == true && c.IsTicket == false).Take(10).ToList().Count();
+                    //unassigned
                     ViewData["unassigned"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.status == 0).ToList().Count();
-                //newly
+                    //newly
                     ViewData["newly"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.created_on == date).ToList().Count();
-
                     //tickets
                     //todays
                     ViewData["todayst"] = db.task.Where(c => c.enable == true && c.IsTicket == true).Take(10).ToList().Count();
@@ -44,12 +44,11 @@ namespace Task_Manager.Controllers
                 else
                 {
                     //todays
-                    ViewData["todays"] = db.task.Where(c => c.enable == true && c.IsTicket==false && c.Created_By.id == createdUser.id && c.created_on==date).Take(10).ToList().Count();
-               //unassigned
+                    ViewData["todays"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.Created_By.id == createdUser.id && c.created_on == date).Take(10).ToList().Count();
+                    //unassigned
                     ViewData["unassigned"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.status == 0 && c.Created_By.id == createdUser.id).ToList().Count();
                     //newly
                     ViewData["newly"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.Created_By.id == createdUser.id && c.created_on == date).ToList().Count();
-
                     //tickets
                     //todays
                     ViewData["todayst"] = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdUser.id && c.created_on == date).Take(10).ToList().Count();
@@ -57,31 +56,19 @@ namespace Task_Manager.Controllers
                     ViewData["unassignedt"] = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status == 0 && c.Created_By.id == createdUser.id).ToList().Count();
                     //newly
                     ViewData["newlyt"] = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdUser.id && c.created_on == date).ToList().Count();
-                }                 
-                
+                }
+
                 //foreach (var entity in tasks)
                 //{
                 //    if (entity.created_on.Date == date)
                 //    {
                 //        tasks.Add(entity);
                 //    }
-
                 //}
-            
                 ///  working for tickets
                 ///  
-
-
-
                 //ended working for tickets 
-                
-                
-                
                 return View();
-            
-            
-            
-            
             }
             else
             {

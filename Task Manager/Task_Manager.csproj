@@ -193,6 +193,8 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoryApiController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\messageApiController.cs" />
     <Compile Include="Controllers\messageController.cs" />
     <Compile Include="Controllers\ProjectApiController.cs" />
@@ -207,15 +209,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705221228326_location.cs" />
-    <Compile Include="Migrations\201705221228326_location.Designer.cs">
-      <DependentUpon>201705221228326_location.cs</DependentUpon>
+    <Compile Include="Migrations\201705231434227_usman.cs" />
+    <Compile Include="Migrations\201705231434227_usman.Designer.cs">
+      <DependentUpon>201705231434227_usman.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContactDetail.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\messages.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Requests.cs" />
     <Compile Include="Models\Roles.cs" />
@@ -234,6 +238,9 @@
     <Compile Include="viewModels\projectDropDownInTickets.cs" />
     <Compile Include="viewModels\ProjectGrid.cs" />
     <Compile Include="viewModels\ProjectInsert.cs" />
+    <Compile Include="viewModels\reqmessage.cs" />
+    <Compile Include="viewModels\requestproduct.cs" />
+    <Compile Include="viewModels\responseInventory.cs" />
     <Compile Include="viewModels\responseMessage.cs" />
     <Compile Include="viewModels\responseToComplain.cs" />
     <Compile Include="viewModels\response\TaskDropdown.cs" />
@@ -453,6 +460,8 @@
     <Content Include="Views\Shared\Normal.cshtml" />
     <Content Include="Views\Shared\CSR.cshtml" />
     <Content Include="Views\message\ViewMessage.cshtml" />
+    <Content Include="Views\Inventory\CreateInventory.cshtml" />
+    <Content Include="Views\Inventory\ViewInventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -461,8 +470,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705221228326_location.resx">
-      <DependentUpon>201705221228326_location.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705231434227_usman.resx">
+      <DependentUpon>201705231434227_usman.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

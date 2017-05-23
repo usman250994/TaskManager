@@ -6,20 +6,16 @@ using System.Web.Mvc;
 
 namespace Task_Manager.Controllers
 {
-    public class TicketController : Controller
+    public class InventoryController : Controller
     {
-        // GET: Ticket
-        public ActionResult CreateTicket()
+        // GET: Inventory
+        public ActionResult CreateInventory()
         {
+            var roles_Id = Session["role_id"].ToString();
             Session["task_id"] = null;
-            string roles_Id = Session["role_id"].ToString();
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "4"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
             {
-
                 ViewData["id"] = roles_Id;
-
-
-
                 return View();
             }
             else
@@ -28,12 +24,11 @@ namespace Task_Manager.Controllers
 
             }
         }
-
-        public ActionResult ViewTicket()
+        public ActionResult ViewInventory()
         {
-            Session["task_id"] = null;
             var roles_Id = Session["role_id"].ToString();
-            if (Session["UserId"] != null )
+            Session["task_id"] = null;
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
             {
                 ViewData["id"] = roles_Id;
                 return View();

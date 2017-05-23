@@ -14,6 +14,7 @@ namespace Task_Manager.Controllers
         public ActionResult CreateCustomer()
         {
             var roles_Id = Session["role_id"].ToString();
+            Session["task_id"] = null;
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
             {
                
@@ -31,7 +32,7 @@ namespace Task_Manager.Controllers
             var roles_Id = Session["role_id"].ToString();
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
             {
-               
+                Session["task_id"] = null;
                 ViewData["id"] = roles_Id;
                 return View();
             }

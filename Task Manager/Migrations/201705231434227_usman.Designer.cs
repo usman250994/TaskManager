@@ -7,13 +7,13 @@ namespace Task_Manager.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class location : IMigrationMetadata
+    public sealed partial class usman : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(location));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(usman));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705221228326_location"; }
+            get { return "201705231434227_usman"; }
         }
         
         string IMigrationMetadata.Source

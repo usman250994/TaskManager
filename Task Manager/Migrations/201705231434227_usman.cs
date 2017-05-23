@@ -3,16 +3,16 @@ namespace Task_Manager.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class location : DbMigration
+    public partial class usman : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.messages", "location", c => c.String());
+            AddColumn("dbo.Products", "enable", c => c.Boolean(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.messages", "location");
+            DropColumn("dbo.Products", "enable");
         }
     }
 }

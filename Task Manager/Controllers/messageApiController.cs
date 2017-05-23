@@ -28,29 +28,31 @@ namespace Task_Manager.Controllers
             responseMessage res = new responseMessage();
 
             var session = HttpContext.Current.Session;
-                var id = Convert.ToInt32(session["task_id"]);
+            var id = Convert.ToInt32(session["task_id"]);
 
-                var msgs = db.task.Find(id).discussion.OrderByDescending(d=>d.timeStamp);
-                var leftRight = true;
-                var sentById = 0;
-            foreach(var entity in msgs)
+            var msgs = db.task.Where(p => p.id == id).Select(p=>p.discussion).FirstOrDefault();
+            var leftRight = true;
+            var sentById = 0;
+            foreach (var entity in msgs)
             {
                 res.name = entity.sentBy.user_Name;
-                res.initials = entity.sentBy.user_Name.Substring(0,2);
+                res.initials = entity.sentBy.user_Name.Substring(0, 2);
                 res.timeStamp = entity.timeStamp;
                 res.location = entity.location;
-                if (entity.sentBy.id ==sentById)
+                res.message = entity.message;
+                
+                if (entity.sentBy.id == sentById)
                 {
                     res.direction = leftRight;
                 }
                 else
                 {
-                   sentById = entity.sentBy.id;
-                  
-                    if(leftRight==true)
+                    sentById = entity.sentBy.id;
+
+                    if (leftRight == true)
                     {
-                  res.direction=false;
-                  leftRight=false;
+                        res.direction = false;
+                        leftRight = false;
                     }
                     else
                     {
@@ -61,35 +63,33 @@ namespace Task_Manager.Controllers
                 }
                 listRes.Add(res);
 
-                }
+            }
             return listRes;
         }
 
 
-          [HttpPut]
+        [HttpPut]
         public int saveMessage(reqmessage req)
         {
             var session = HttpContext.Current.Session;
-          var taskId= Convert.ToInt32(session["task_id"]);
-          var userId = Convert.ToInt32(session["user_Id"]);
+            var taskId = Convert.ToInt32(session["task_id"]);
+            var userId = Convert.ToInt32(session["user_Id"]);
 
-          messages msg = new messages();
+            messages msg = new messages();
 
-                  msg.id = 0;
-                  msg.location=req.loc;
-                  msg.sentBy=db.user.Find(userId);
-                  msg.timeStamp=DateTime.Now;
-                  msg.message=req.msg;
+            msg.id = 0;
+            msg.location = req.loc;
+            msg.sentBy = db.user.Find(userId);
+            msg.timeStamp = DateTime.Now;
+            msg.message = req.msg;
+            db.messages.Add(msg);
 
-                  db.messages.Add(msg);
-
-              if(db.SaveChanges()>0)
-
-              { 
-                  return 1; 
-              }
-              else
-            return 0;
+            if (db.SaveChanges() > 0)
+            {
+                return 1;
+            }
+            else
+                return 0;
         }
     }
 }

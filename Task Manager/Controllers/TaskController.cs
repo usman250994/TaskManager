@@ -12,6 +12,7 @@ namespace Task_Manager.Controllers
     {
         public ActionResult CreateTask()
         {
+            Session["task_id"] = null;
             string roles_Id = Session["role_id"].ToString();
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
             {               
@@ -26,6 +27,7 @@ namespace Task_Manager.Controllers
         }
         public ActionResult ViewTask()
         {
+            Session["task_id"] = null;
             if (Session["UserId"] != null)
             {
                 string roles_Id = Session["role_id"].ToString();

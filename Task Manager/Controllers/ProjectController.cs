@@ -11,6 +11,7 @@ namespace Task_Manager.Controllers
         // GET: Project
         public ActionResult CreateProject()
         {
+            Session["task_id"] = null;
             var roles_Id = Session["role_id"].ToString();
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
             {
@@ -26,6 +27,7 @@ namespace Task_Manager.Controllers
         }
         public ActionResult ViewProject()
         {
+            Session["task_id"] = null;
             var roles_Id = Session["role_id"].ToString();
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
             {

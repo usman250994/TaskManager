@@ -12,16 +12,18 @@ namespace Task_Manager.Controllers
         // GET: message
         public ActionResult ViewMessage()
         {
-            var userid = Session["UserId"].ToString();
-            var taskid = Session["task_id"].ToString();
+            var userid = Session["UserId"];
+            var taskid = Session["task_id"];
             if (userid != null && taskid != null)
             {
                 return View();
             }
             else
             {
+                taskid = null;
                 return RedirectToAction("Index", "Home");
             }
+
         }
     }
 }

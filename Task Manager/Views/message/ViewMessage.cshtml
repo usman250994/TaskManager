@@ -12,20 +12,15 @@
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
-            <div class="col-md-8">
-                <div class="panel panel-primary">
-                    <div class="panel-heading" id="accordion">
-                        <span class="glyphicon glyphicon-comment"></span> Chat
-                        <div class="btn-group pull-right">
-                            <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                <span class="glyphicon glyphicon-chevron-down"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Collapse starts here I guess -->
-                </div>
 
-                <div class="panel-collapse collapse" id="collapseOne">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="accordion">
+                    <span class="glyphicon glyphicon-comment"></span> Conversation
+                </div>
+                <!-- Collapse starts here I guess -->
+            </div>
+            <div class="col-lg-12">
+                <div class="panel-collapse">
                     <div class="panel-body">
                         <!-- unordered list starts here -->
                         <ul class="chat" id="messageList">
@@ -53,7 +48,7 @@
                             </li>
 
 
-                            <li class="right clearfix">
+                            <li class="right clearfix ">
                                 <span class="chat-img pull-right">
                                     <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
                                 </span>
@@ -62,7 +57,7 @@
                                         <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
                                         <strong class="pull-right primary-font">Bhaumik Patel</strong>
                                     </div>
-                                    <p>
+                                    <p class="pull-right">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
                                         dolor, quis ullamcorper ligula sodales.
                                     </p>
@@ -97,7 +92,7 @@
                                         <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
                                         <strong class="pull-right primary-font">Bhaumik Patel</strong>
                                     </div>
-                                    <p>
+                                    <p class="pull-right">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
                                         dolor, quis ullamcorper ligula sodales.
                                     </p>
@@ -139,14 +134,18 @@
             dataType: "json",
             success: function (data) {
                 console.log(data);
-                alert("checkDataInConsole");
+
+                for (var i = 0;i<data.length;i++)
+                {
+                    chatstyle(data[i]);
+                }
+                
             },
             error: function () { alert('Grid Not Load'); }
         });
     });
     function sendMessage() {
 
-        
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
@@ -155,13 +154,11 @@
                 location = "cant access location";
             }
         }
-
         function showPosition(position) {
-             location = position.coords.latitude + "," + position.coords.longitude;
-           
+            location = position.coords.latitude + "," + position.coords.longitude;
         }
 
-        var model = { message: document.getElementById("btn-input").value , location: location};
+      
         $.ajax({
             async: false,
             url: '/api/messageApi/',
@@ -171,27 +168,77 @@
             dataType: "json",
             success: function (data) {
                 console.log(data);
-                if(data==1)
-                    {
-                var ul = document.getElementById("messageList");
-                var li = document.createElement("li");
-                var sp = document.createElement("span");
-                sp.appendChild(document.createTextNode("sdsdssssdsd"));
-                li.appendChild(document.createTextNode(document.getElementById("btn-input").value));
-                li.appendChild(sp);
-                ul.appendChild(li);
-                document.getElementById("btn-input").value = "";
+                if (data == 1) {
+
+                    var model = {
+                        message: document.getElementById("btn-input").value,
+                        location: location,
+                        initials: "ME",
+                        Name: "ME"
+                    };
+
+
+                    chatstyle(model);
+                    document.getElementById("btn-input").value = "";
 
                 }
-                else
-                {
+                else {
                     alert("Message could Not be Sent");
                 }
             },
             error: function () { alert('Grid Not Load'); }
         });
 
+    }
+    function chatstyle(model) {
+        console.log("sss" + model);
+        
+        //appending starts here
+        var ul = document.getElementById("messageList");
+
+        //fopr loop starts here
+        // -------------------------------------------- Create HTML Attributes -----------------------------------------//
+        var img = document.createElement('img');
+        var li = document.createElement("li");
+        var sp = document.createElement("span");
+        var div = document.createElement("div");
+        var div1 = document.createElement("div");
+        var strong = document.createElement("strong");
+        var small = document.createElement("small");
+        var p = document.createElement("p");
+        var span = document.createElement("span");
+        // -------------------------------------------- Append HTML Attributes Class Name--------------------------------//
+        li.className = "left clearfix";
+
+        if (model.direction == "left")
+            {
+            sp.className = "chat-img pull-left";
+        }
+        else
+        {
+            sp.className = "chat-img pull-right";
+        }
+
+        img.src = "http://placehold.it/50/55C1E7/fff&text="+model.initials;
+        img.className = "img-circle";
+        div.className = "chat-body clearfix";
+        div1.className = "header";
+        strong.className = "primary-font";
+        small.className = "pull-right text-muted";
+        span.className = "glyphicon glyphicon-time";
+        // -------------------------------------------- Append HTML Attributes -----------------------------------------//
+        p.textContent = model.message;
+        span.textContent = model.timeStamp;
+        sp.appendChild(img);
+        li.appendChild(sp);
+        li.appendChild(div);
+        ul.appendChild(li);
+        div.appendChild(div1);
+        div1.appendChild(strong);
+        strong.appendChild(small);
+        small.appendChild(span);
+        div.appendChild(p);
+
 
     }
 </script>
-

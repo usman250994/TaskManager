@@ -22,5 +22,7 @@ namespace Task_Manager.Models
         public DbSet<ticketContact> tickets { get; set; }
         public DbSet<CustomerContactDetail> customer_contact_detail { get; set; }
         public DbSet<messages> messages { get; set; }
+        public DbSet<Category> caterory { get; set; }
+        public DbSet<Product> product { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace Task_Manager.viewModels
         public string initials { get; set; }
         public bool direction { get; set; }
         public string location { get; set; }
+        public string message { get; set; }
     }
 }
