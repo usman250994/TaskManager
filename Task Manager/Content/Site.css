@@ -110,7 +110,7 @@ input[type="search"] {
         margin-right: 5px;
     }
 
-.panel-body {
+.panel-body1 {
     overflow-y: scroll;
     height: 500px;
 }

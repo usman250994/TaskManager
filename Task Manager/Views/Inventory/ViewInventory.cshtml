@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "ViewInventory";
     if (ViewData["id"].ToString() == "1")
     {
@@ -30,7 +29,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                   Pro Detail
+                    Pro Detail
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -64,30 +63,26 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-            async:false,
+            async: false,
             url: '/api/InventoryApi/',
             type: 'PUT',
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
                 console.log(data);
+                var type;
                 for (var i = 0; i < data.length; i++) {
-                    $("#dynamic-Grid").append("<tr><td>" + data[i].name + "</td><td>" + data[i].category + "</td><td>" + data[i].brand + "</td><td>" + data[i].model + "</td><td>" + data[i].vendorName + "</td><td>" + data[i].barcode + "</td><td>" + data[i].quantity + "</td><td>" + data[i].description + "</td><td><button value='Update' class='btn btn-primary fa fa-check' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
+                    if (data[i].category == true) {
+                        type = "Local"
+                    }
+                    else {
+                        type = "Imported";
 
-
-
-                    ///
-
-                 
-               
-               
-                 
-                    ////
-
+                    }
+                    $("#dynamic-Grid").append("<tr><td>" + data[i].name + "</td><td>" + type + "</td><td>" + data[i].brand + "</td><td>" + data[i].model + "</td><td>" + data[i].vendorName + "</td><td>" + data[i].barcode + "</td><td>" + data[i].quantity + "</td><td>" + data[i].description + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
                 }
             },
             error: function () { alert('Grid Not Load'); }
         });
     });
-
-    </script>
+</script>

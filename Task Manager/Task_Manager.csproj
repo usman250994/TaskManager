@@ -241,6 +241,7 @@
     <Compile Include="viewModels\reqmessage.cs" />
     <Compile Include="viewModels\requestproduct.cs" />
     <Compile Include="viewModels\responseInventory.cs" />
+    <Compile Include="viewModels\responseListForMessage.cs" />
     <Compile Include="viewModels\responseMessage.cs" />
     <Compile Include="viewModels\responseToComplain.cs" />
     <Compile Include="viewModels\response\TaskDropdown.cs" />

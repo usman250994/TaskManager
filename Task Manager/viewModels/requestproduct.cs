@@ -13,8 +13,8 @@ namespace Task_Manager.viewModels
     public string brand {get; set;}
     public string  model{get; set;}
     public string  description{get; set;}
-    public string  quantity{get; set;}
-    public string      barcode {get; set;}
+    public int  quantity{get; set;}
+    public string  barcode {get; set;}
     public string  vendorName {get; set;}
          
     

@@ -22,33 +22,28 @@ namespace Task_Manager.Controllers
         }
 
         [HttpGet]
-        public List<responseMessage> View()
+        public responseListForMessage View()
         {
+            responseListForMessage returnTo = new responseListForMessage();
             List<responseMessage> listRes = new List<responseMessage>();
-            responseMessage res = new responseMessage();
-
             var session = HttpContext.Current.Session;
             var id = Convert.ToInt32(session["task_id"]);
-
-            var msgs = db.task.Where(p => p.id == id).Select(p=>p.discussion).FirstOrDefault();
+            var objTask = db.task.Find(id);
+            var msgs = db.task.Where(p => p.id == id).Select(p => p.discussion).FirstOrDefault();
             var leftRight = true;
             var sentById = 0;
             foreach (var entity in msgs)
             {
+                responseMessage res = new responseMessage();
                 res.name = entity.sentBy.user_Name;
                 res.initials = entity.sentBy.user_Name.Substring(0, 2);
                 res.timeStamp = entity.timeStamp;
                 res.location = entity.location;
                 res.message = entity.message;
-                
-                if (entity.sentBy.id == sentById)
-                {
-                    res.direction = leftRight;
-                }
-                else
+
+                if (entity.sentBy.id != sentById)
                 {
                     sentById = entity.sentBy.id;
-
                     if (leftRight == true)
                     {
                         res.direction = false;
@@ -56,15 +51,30 @@ namespace Task_Manager.Controllers
                     }
                     else
                     {
-                        res.direction = false;
+                        res.direction = true;
                         leftRight = true;
                     }
-
+                }
+                else
+                {                
+                    res.direction = leftRight;
+                   
                 }
                 listRes.Add(res);
 
             }
-            return listRes;
+
+            var users = db.tagging.Where(p => p.tasks.id == id).Select(p => p.users.Select(q => q.user_Name).ToList()).FirstOrDefault();
+
+            returnTo.responseList = listRes;
+            returnTo.myTask = objTask;
+            returnTo.taggedUsers = users;
+
+
+
+
+
+            return returnTo;
         }
 
 
@@ -73,7 +83,7 @@ namespace Task_Manager.Controllers
         {
             var session = HttpContext.Current.Session;
             var taskId = Convert.ToInt32(session["task_id"]);
-            var userId = Convert.ToInt32(session["user_Id"]);
+            int userId = Convert.ToInt32(session["UserID"]);
 
             messages msg = new messages();
 
@@ -86,6 +96,7 @@ namespace Task_Manager.Controllers
 
             if (db.SaveChanges() > 0)
             {
+
                 return 1;
             }
             else

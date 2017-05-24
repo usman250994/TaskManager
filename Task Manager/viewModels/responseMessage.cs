@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Task_Manager.Models;
 
 namespace Task_Manager.viewModels
 {
@@ -14,5 +15,6 @@ namespace Task_Manager.viewModels
         public bool direction { get; set; }
         public string location { get; set; }
         public string message { get; set; }
+     
     }
 }
