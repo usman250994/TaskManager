@@ -68,6 +68,7 @@ namespace Task_Manager.Controllers
 
             returnTo.responseList = listRes;
             returnTo.myTask = objTask;
+            
             returnTo.taggedUsers = users;
 
 
@@ -92,7 +93,15 @@ namespace Task_Manager.Controllers
             msg.sentBy = db.user.Find(userId);
             msg.timeStamp = DateTime.Now;
             msg.message = req.msg;
+           // var ts = db.task.Where(c => c.id == taskId).FirstOrDefault();
+           // var ts = db.task.Find(taskId);
             db.messages.Add(msg);
+
+            db.task.Find(taskId).discussion.Add(msg);
+            //List<messages> ms = new List<messages>();
+            //ms.Add(msg);
+            //ts.discussion = ms;
+            
 
             if (db.SaveChanges() > 0)
             {

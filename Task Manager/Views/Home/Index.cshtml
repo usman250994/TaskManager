@@ -6,19 +6,65 @@
 <script src="~/Scripts/Theme JS/bootstrap.min.js"></script>
 
 
-<h1>Log in</h1>
-<p>
-    <label class="uname"> Your Email</label>
-    <input id="username" name="username" type="text" placeholder="example@gmail.com" required="required" />
-</p>
-<p>
-    <label class="youpasswd"> Your Password </label>
-    <input id="password" name="password" type="password" placeholder="12345678" required="required" />
-</p>
-<p class="login button">
-    <button class="btn_login" onclick="Login()">LOGIN</button>
-    <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal">Ticket</button>
-</p>
+
+<header>
+    <h1>Login Form <span>For Task Manager</span></h1>
+    <nav class="codrops-demos">
+        <span>Click <strong>"Login"</strong> to see the Today Task</span>
+    </nav>
+</header>
+<section>
+    <div id="container">
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                <div id="wrapper">
+                    <div id="login" class="animate form">
+                        <h1>Log in</h1>
+                        <p>
+                            <label class="uname"> Your Email</label>
+                            <input id="username" name="username" type="text" placeholder="example@gmail.com" required="required" />
+                        </p>
+                        <p>
+                            <label class="youpasswd"> Your Password </label>
+                            <input id="password" type="text" />
+                        </p>
+                        <p class="login button">
+                            <button class="btn_login" onclick="Login()">LOGIN</button>
+                        </p>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-6">
+                <div id="wrapper">
+                    <div id="login" class="animate form">
+                        <h1>Tickets</h1>
+                        <p>
+                            <label class="uname"> Customer Code</label>
+                            <input class="" type="number" id="customerCode" placeholder="Your ID" onfocusout="DDL(this.value)">
+                        </p>
+                        <p>
+                            <label>Ticket ID</label>
+                            <input id="ticketId" type="text" />
+                        </p>
+                        <p class="login button">
+
+                            <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal">Create Ticket</button>
+                            <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal1" onclick="checkStatus()">Check Status</button>
+                        </p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
 
 
 
@@ -47,15 +93,15 @@
                                         <label>Name</label>
                                     </div>
                                     <div class="col-lg-6 ">
-                                        <input class="" id="user_name" placeholder="User Name" required="required">
+                                        <input class="form-control" type="text" id="user_name">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
-                                    <div class="col-lg-6">
-                                        <label>Email Address</label>
+                                    <div class="col-lg-6 ">
+                                        <label>Email</label>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <input class="" type="email" id="Email" placeholder="Example12@Gmail.com" required="required">
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" id="Email">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -64,7 +110,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="col-lg-2"><label class="abc">+92</label></div>
-                                        <div class="col-lg-10"><input class="" type="number" id="MobileNo" placeholder="3001234567" required="required"></div>
+                                        <div class="col-lg-10"><input class="form-control" type="number" id="MobileNo" placeholder="3001234567" required="required"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -72,7 +118,7 @@
                                         <label>Customer Code</label>
                                     </div>
                                     <div class="col-lg-6 ">
-                                        <input class="" type="number" id="custcode" placeholder="12345" onfocusout="DDL(this.value)">
+                                        <input class="form-control" type="number" id="custcode" placeholder="12345" onfocusout="DDL(this.value)">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -92,7 +138,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-6 col-lg-6 spacing">
-                                    <button class="btn btn-success" value="Add" onclick="Add()" > Send </button>
+                                    <button class="btn btn-success" value="Add" onclick="Add()"> Send </button>
                                 </div>
                             </div>
                             <!-- /.col-lg-6 (nested) -->
@@ -113,7 +159,53 @@
     </div>
 </div>
 
+<div id="myModal1" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title center">Ticket Generator</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Customer Detail
+                            @*<button type="button" class="btn btn-primary" onclick="gridLoad()">Update</button>*@
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dynamic-Grid"></tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+                <!-- /.row -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+
+</div>
 
 
 <script type="text/javascript">
@@ -131,8 +223,6 @@
             error: function () { alert('Data Not Showing'); }
         });
     });
-
-
 
     function Login() {
         var model = { user_Name: $("#username").val(), password: $("#password").val() };
@@ -165,7 +255,7 @@
         else if (validateEmail(email) == false) { alert("Please enter Email"); }
         else if (pnum == "" || pnum.length != 10) { alert("Please enter Mobile Number"); }
         else if (code == "") { alert("Please enter Customer Code"); }
-                else if (issue == "") { alert("Please Enter the issue"); }
+        else if (issue == "") { alert("Please Enter the issue"); }
         else
         {
             var model = { name: $("#user_name").val(), email: $("#Email").val(), contact: $("#MobileNo").val(), customerId: $("#custcode").val(), projectId: $("#ProjectDropdown").val(), issue: $("#Desc").val() };
@@ -199,6 +289,31 @@
 
             }
         }
+    }
+
+    function checkStatus() {
+        var model = { customerId: $("#customerCode").val(), ticketId: $("#ticketId").val() };
+        console.log(model);
+        $.ajax({
+            async: false,
+            url: '/api/HomeApi/',
+            type: 'DELETE',
+            data: JSON.stringify(model),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    $("#dynamic-Grid").append("<tr><td>" + data[i].id + "</td><td>" + data[i].name + "</td><td>" + data[i].description + "</td><td>" + data[i].date.substring(0, 10) + "</td><td>" + data[i].status);
+                }
+                $('#myModal').on('hide', function (e) {
+                    e.preventDefault();
+                });
+            },
+            error: function () {
+                alert(data);
+            }
+        });
     }
 
 </script>

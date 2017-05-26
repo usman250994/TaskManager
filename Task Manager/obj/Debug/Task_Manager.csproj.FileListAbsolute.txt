@@ -74,3 +74,4 @@ E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migra
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csproj.GenerateResource.Cache
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.dll
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.pdb
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csprojResolveAssemblyReference.cache

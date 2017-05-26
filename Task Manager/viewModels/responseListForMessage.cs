@@ -11,5 +11,6 @@ namespace Task_Manager.viewModels
         public List<responseMessage> responseList { get; set; }
         public Task myTask { get; set; }
         public List<string> taggedUsers{get;set;}
+       
     }
 }

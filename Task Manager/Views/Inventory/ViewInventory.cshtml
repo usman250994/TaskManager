@@ -41,6 +41,7 @@
                                 <th>Catogery</th>
                                 <th>Brand</th>
                                 <th>Model</th>
+                                <th>Invert Date</th>
                                 <th>Desc</th>
                                 <th>Quantity</th>
                                 <th>Vendor Name</th>
@@ -79,7 +80,7 @@
                         type = "Imported";
 
                     }
-                    $("#dynamic-Grid").append("<tr><td>" + data[i].name + "</td><td>" + type + "</td><td>" + data[i].brand + "</td><td>" + data[i].model + "</td><td>" + data[i].vendorName + "</td><td>" + data[i].barcode + "</td><td>" + data[i].quantity + "</td><td>" + data[i].description + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
+                    $("#dynamic-Grid").append("<tr id="+i+"><td>" + data[i].name + "</td><td>" + type + "</td><td>" + data[i].brand + "</td><td>" + data[i].model + "</td><td>" + data[i].vendorName + "</td><td>" + data[i].barcode + "</td><td>" + data[i].quantity + "</td><td>" + data[i].description + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id +","+i+")\"></button></td></tr>");
                 }
             },
             error: function () { alert('Grid Not Load'); }

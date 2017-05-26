@@ -12,23 +12,8 @@
 <body>
     <div class="container">
         <!-- Codrops top bar -->
-
-        <header>
-            <h1>Login Form <span>For Task Manager</span></h1>
-            <nav class="codrops-demos">
-                <span>Click <strong>"Login"</strong> to see the Today Task</span>
-            </nav>
-        </header>
-        <section>
-            <div id="container_demo">
-                <div id="wrapper">
-                    <div id="login" class="animate form">
-                        @RenderBody()
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>  
+        @RenderBody();
+      </div>
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)

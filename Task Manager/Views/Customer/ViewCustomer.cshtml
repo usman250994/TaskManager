@@ -61,7 +61,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-            async:false,
+            async: false,
             url: '/api/CustomerApi/',
             type: 'GET',
             contentType: "application/json;charset=utf-8",
@@ -69,13 +69,14 @@
             success: function (data) {
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
-                    $("#dynamic-Grid").append("<tr><td>" + data[i].customerId + "</td><td>" + data[i].customer_name + "</td><td>" + data[i].address + "</td><td>" + data[i].Phonenumber + "</td><td>" + data[i].Website + "</td><td>" + data[i].Email + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].customerId + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].customerId + ")\"></button>");
+                    $("#dynamic-Grid").append("<tr id="+i+"><td>" + data[i].customerId + "</td><td>" + data[i].customer_name + "</td><td>" + data[i].address + "</td><td>" + data[i].Phonenumber + "</td><td>" + data[i].Website + "</td><td>" + data[i].Email + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].customerId + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].customerId+","+i+")\"></button>");
                 }
+
             },
             error: function () { alert('Data Not Showing'); }
         });
     });
-    function deleteUser(id) {
+    function deleteUser(id,rId) {
         if (confirm('Are you sure you want to save this thing into the database?')) {
             // Save it!
 
@@ -83,7 +84,12 @@
                 url: '/api/CustomerApi/' + id,
                 type: 'POST',
                 contentType: "application/json;charset=utf-8",
-                success: function (data) { alert(data); location.reload(); },
+                success: function (data) {
+                    alert(data);
+
+
+                    $('table#dataTables-example tr#' + rId).remove();
+                },
                 error: function (data) { alert(data); }
             });
         } else {

@@ -9,6 +9,12 @@ namespace Task_Manager.Models
 {
     public class Task
         {
+
+        public Task()
+        {
+            discussion = new List<messages>();
+        }
+
         [Key,DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         public string task_name { get; set; }
