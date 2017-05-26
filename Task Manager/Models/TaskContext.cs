@@ -24,5 +24,6 @@ namespace Task_Manager.Models
         public DbSet<messages> messages { get; set; }
         public DbSet<Category> caterory { get; set; }
         public DbSet<Product> product { get; set; }
+        public DbSet<City> city { get; set; }
     }
 }

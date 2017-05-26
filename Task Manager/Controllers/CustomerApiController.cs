@@ -6,42 +6,57 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using Task_Manager.Models;
+using Task_Manager.viewModels;
 
 namespace Task_Manager.Controllers
 {
     public class CustomerApiController : ApiController
     {
         TaskContext db = new TaskContext();
-  
+
         //To Add User In Database Table Customer
         [Route("/api/CustomerApi/"), HttpPost]
         public String CreateCustomer(Customer cust)
         {
-          
-          
+
             if (cust == null)
             {
                 return "Please Insert Customer";
             }
             else
             {
-              
+
                 var client = db.customer.Find(cust.customerId);
                 if (client != null)
                 {
+
+
+                    cust.city_code = cust.city_code + client.city_code.Substring(2, 8);  
+                        
                     db.Entry(client).CurrentValues.SetValues(cust);
                     db.SaveChanges();
+               
                 }
                 else
                 {
 
                     var sessionId = HttpContext.Current.Session;
                     string id = sessionId["UserID"].ToString();
-                  
+
 
                     var createdUser = db.user.Find(Convert.ToInt32(id));
 
                     cust.Created_By = createdUser;
+
+                    //
+
+
+
+
+
+                    //
+
+
 
                     db.customer.Add(cust);
                     if (db.SaveChanges() == 1)
@@ -61,18 +76,18 @@ namespace Task_Manager.Controllers
         {
             List<Customer> list = new List<Customer>();
             var session = HttpContext.Current.Session;
-           
+
             if (session["UserID"].ToString() == "5")
             {
-           list = db.customer.Where(d => d.enable == true ).ToList();
+                list = db.customer.Where(d => d.enable == true).ToList();
             }
-            
+
             else
             {
                 var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
                 list = db.customer.Where(d => d.enable == true && d.Created_By.id == createdBy.id).ToList();
             }
-          
+
             return list;
         }
 
@@ -119,20 +134,28 @@ namespace Task_Manager.Controllers
         }
 
         [Route("/api/CustomerApi/"), HttpPut]
-        public Customer get()
+        public customerdropdown get()
         {
             var session = HttpContext.Current.Session;
+            customerdropdown custdropdown = new customerdropdown();
             Customer cust = new Customer();
             if (session["Customer"] != null)
             {
                 string str = session["Customer"].ToString();
                 session["Customer"] = null;
                 cust = db.customer.Find(Convert.ToInt32(str));
-                return cust;
+                custdropdown.customers = cust;
+                List<City> citylist = new List<City>();
+                citylist = db.city.ToList();
+                custdropdown.city = citylist;
+                return custdropdown;
             }
             else
             {
-                return cust;
+                List<City> citylist = new List<City>();
+                citylist = db.city.ToList();
+                custdropdown.city = citylist;
+                return custdropdown;
             }
         }
         //to get a single user for filling form

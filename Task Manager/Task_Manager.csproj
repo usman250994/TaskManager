@@ -209,12 +209,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705231434227_usman.cs" />
-    <Compile Include="Migrations\201705231434227_usman.Designer.cs">
-      <DependentUpon>201705231434227_usman.cs</DependentUpon>
+    <Compile Include="Migrations\201705261347294_city Model add.cs" />
+    <Compile Include="Migrations\201705261347294_city Model add.Designer.cs">
+      <DependentUpon>201705261347294_city Model add.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContactDetail.cs" />
     <Compile Include="Models\Login.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="SMSandEmail.cs" />
     <Compile Include="viewModels\clientsTicketRespone.cs" />
     <Compile Include="viewModels\ComplainProjects.cs" />
+    <Compile Include="viewModels\customerdropdown.cs" />
     <Compile Include="viewModels\finding_ticketContact.cs" />
     <Compile Include="viewModels\internalTickets.cs" />
     <Compile Include="viewModels\projectDropDownInTickets.cs" />
@@ -473,8 +475,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705231434227_usman.resx">
-      <DependentUpon>201705231434227_usman.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705261347294_city Model add.resx">
+      <DependentUpon>201705261347294_city Model add.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

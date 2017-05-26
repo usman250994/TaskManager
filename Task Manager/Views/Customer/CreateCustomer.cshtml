@@ -47,6 +47,14 @@
                                 </div>
                                 <div class="col-lg-12 spacing">
                                     <div class="col-lg-6 ">
+                                        <label>Customer Location</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <select id="CustomerCityDropdown"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
                                         <label>Customer Address</label>
                                     </div>
                                     <div class="col-lg-6 ">
@@ -54,6 +62,7 @@
                                         <input class="form-control" type="text" id="CustAdd" required="required">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-12 spacing">
                                     <div class="col-lg-6 ">
                                         <label>Contact</label>
@@ -108,8 +117,6 @@
 <script type="text/javascript">
     //add user button press for adding or updating db
     //need correction when updating probably
-
-
     $(document).ready(function () {
         $.ajax({
             url: '/api/CustomerApi/',
@@ -117,14 +124,24 @@
             success: function (data) {
                 console.log(data);
 
-                if (data.customer_name != null) {
-                    console.log(data);
-                    document.getElementById("Customername").value = data.customer_name;
-                    document.getElementById("cust_id").value = data.customerId;
-                    document.getElementById("CustAdd").value = data.address;
-                    document.getElementById("CustContact").value = data.Phonenumber.substring(3, 13);
-                    document.getElementById("CustWebsites").value = data.Website;
-                    document.getElementById("CustEmail").value = data.Email;
+                $.each(data.city, function (i) {
+                    $('#CustomerCityDropdown').append($('<option></option>').val(data.city[i].city_code).html(data.city[i].city_name));
+                });
+                if (data.customers.customer_name != null) {
+                    console.log(data.customers.customer_name);
+                    document.getElementById("Customername").value = data.customers.customer_name;
+                    document.getElementById("cust_id").value = data.customers.customerId;
+                    document.getElementById("CustAdd").value = data.customers.address;
+                    document.getElementById("CustContact").value = data.customers.Phonenumber.substring(3, 13);
+                    document.getElementById("CustWebsites").value = data.customers.Website;
+                    document.getElementById("CustEmail").value = data.customers.Email;
+
+                }
+                else {
+                    $.each(data.city, function (i) {
+                        $('#CustomerCityDropdown').append($('<option></option>').val(data.city[i].city_code).html(data.city[i].city_name));
+                    });
+
                 }
 
 
@@ -146,7 +163,7 @@
         else if (websites == "") { alert("Please Insert Customer Website"); }
         else if (validateEmail(email) == false) { alert('Please provide a valid email address'); }
         else {
-            var model = { customer_name: $("#Customername").val(), customerId: $("#cust_id").val(), enable: true, address: $("#CustAdd").val(), Phonenumber: "+92" + $("#CustContact").val(), Website: $("#CustWebsites").val(), Email: $("#CustEmail").val() };
+            var model = { customer_name: $("#Customername").val(), customerId: $("#cust_id").val(), enable: true, address: $("#CustAdd").val(), Phonenumber: "+92" + $("#CustContact").val(), Website: $("#CustWebsites").val(), Email: $("#CustEmail").val(), city_code: $("#CustomerCityDropdown").val() };
             console.log(model);
             $.ajax({
                 url: '/api/CustomerApi/',
