@@ -25,6 +25,12 @@ namespace Task_Manager.Controllers
         public string CreateProduct(requestproduct prod)
         {
 
+            if (System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                var picture = System.Web.HttpContext.Current.Request.Files["logo"];
+            }
+            
+            string path = "E:\\Task Manager\\Product _Images";
             Product pro = new Product();
             var session = HttpContext.Current.Session;
             pro.enable = true;
@@ -35,6 +41,7 @@ namespace Task_Manager.Controllers
             pro.user = db.user.Find(Convert.ToInt32(session["UserID"]));
             pro.category = db.caterory.Find(prod.catogrey);
             pro.description = prod.description;
+             pro.image = path+prod.imagepath;
             pro.id = 0;
             if (prod.type == 0)
                 pro.islocal = true;

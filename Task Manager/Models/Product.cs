@@ -21,6 +21,7 @@ namespace Task_Manager.Models
         public string barcode { get; set; }
         public string vendor_name { get; set; }
         public virtual Users user { get; set; }
+        public string image { get; set; }
         public bool enable { get; set; }
     }
 }

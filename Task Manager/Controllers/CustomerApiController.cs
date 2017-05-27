@@ -25,39 +25,26 @@ namespace Task_Manager.Controllers
             }
             else
             {
-
                 var client = db.customer.Find(cust.customerId);
                 if (client != null)
                 {
-
-
-                    cust.city_code = cust.city_code + client.city_code.Substring(2, 8);  
-                        
+                    cust.city_code = cust.city_code + client.city_code.Substring(2, 8);
                     db.Entry(client).CurrentValues.SetValues(cust);
                     db.SaveChanges();
-               
                 }
                 else
                 {
-
                     var sessionId = HttpContext.Current.Session;
                     string id = sessionId["UserID"].ToString();
-
-
                     var createdUser = db.user.Find(Convert.ToInt32(id));
-
                     cust.Created_By = createdUser;
-
                     //
-
-
-
-
-
+             int a= db.customer.Count()+1;
+                var  customerNumber = a.ToString().PadLeft(4, '0');
+                var customerYear = DateTime.Now.Year;
+                cust.city_code = cust.city_code+customerNumber+customerYear;
+                    
                     //
-
-
-
                     db.customer.Add(cust);
                     if (db.SaveChanges() == 1)
                     {
@@ -73,25 +60,20 @@ namespace Task_Manager.Controllers
         //To Get All The Customer List (To Show in Grid View Of User)
         [Route("/api/CustomerApi/"), HttpGet]
         public List<Customer> custall()
-        {
-            List<Customer> list = new List<Customer>();
+        {         
+            List<Customer> list = new List<Customer>();        
             var session = HttpContext.Current.Session;
-
             if (session["UserID"].ToString() == "5")
             {
-                list = db.customer.Where(d => d.enable == true).ToList();
+                list = db.customer.Where(d => d.enable == true).ToList();        
             }
-
             else
             {
                 var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
                 list = db.customer.Where(d => d.enable == true && d.Created_By.id == createdBy.id).ToList();
             }
-
             return list;
         }
-
-
 
         //Delete user function
         [Route("/api/CustomerApi/"), HttpPost]

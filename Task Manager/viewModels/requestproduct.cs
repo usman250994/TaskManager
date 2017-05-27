@@ -16,6 +16,7 @@ namespace Task_Manager.viewModels
     public int  quantity{get; set;}
     public string  barcode {get; set;}
     public string  vendorName {get; set;}
+    public object imagepath { get; set; }
          
     
     

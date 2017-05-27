@@ -103,7 +103,7 @@ namespace Task_Manager.Controllers
 
             if (db.SaveChanges() > 0)
             {
-                return "Ticket is successfully Generated!! you will be cotacted Soon! Please Note Your Complaint ID:"+task.id ;
+                return "Ticket is successfully Generated!! you will be cotacted Soon! Please Note Your Complaint ID:" + task.id;
             }
             else
             {
@@ -118,79 +118,86 @@ namespace Task_Manager.Controllers
         public List<TicketInitialrespone> getDropDown()
         {
             List<TicketInitialrespone> dropDown = new List<TicketInitialrespone>();
-            var customers = db.customer.Where(p => p.enable == true).Select(p => p.customerId).ToList();
+            var customers = db.customer.Where(p => p.enable == true).Select(p => p.city_code).ToList();
             foreach (var entity in customers)
             {
                 TicketInitialrespone response = new TicketInitialrespone();
                 response.customerId = entity.ToString();
                 List<projectDropDownInTickets> saa;
-                saa = db.project.Where(p => p.customer.customerId == entity && p.Enable == true).Select(s => new projectDropDownInTickets() { name = s.Project_Name, id = s.id }).ToList();
+                saa = db.project.Where(p => p.customer.city_code == entity && p.Enable == true).Select(s => new projectDropDownInTickets() { name = s.Project_Name, id = s.id }).ToList();
                 response.projects = saa;
                 dropDown.Add(response);
             }
             return dropDown;
         }
 
-        
+
         [HttpDelete]
         public List<clientsTicketRespone> statusReturn(ticketStatus check)
         {
             List<clientsTicketRespone> list = new List<clientsTicketRespone>();
-          
-             int id=0;
-            if(!string.IsNullOrEmpty(check.ticketId))
 
+            int id = 0;
+            if (!string.IsNullOrEmpty(check.ticketId))
             {
                 id = Convert.ToInt32(check.ticketId);
-             if(db.task.Any(o=>o.id==id))
+                if (db.task.Any(o => o.id == id))
+                {
+                    clientsTicketRespone status = new clientsTicketRespone();
 
-             {
-                      clientsTicketRespone status = new clientsTicketRespone();
-
-                      var ticket = db.task.Find(id);
-                 status.id = ticket.id;
-                    status.status = ticket.status;
+                    var ticket = db.task.Find(id);
+                    status.id = ticket.id;
+                    status.status = fillStatus(ticket.status);
                     status.date = ticket.created_on;
                     status.description = ticket.description;
                     status.name = ticket.task_name;
                     list.Add(status);
                     return list;
 
-              }  
+                }
                 else
                 {
-                  return list;
-                   
+                    return list;
+
                 }
             }
 
 
             else
             {
-                var projIds = db.project.Where(p => p.customer.customerId == check.customerId).Select(p => p.id).ToList();
-           List<int>taskIdList = new List<int>();
-                foreach(var entity in projIds)
+                var projIds = db.project.Where(p => p.customer.city_code == check.customerId).Select(p => p.id).ToList();
+                List<int> taskIdList = new List<int>();
+                foreach (var entity in projIds)
                 {
-                    var lis = db.tagging.Where(p => p.project.id == entity && p.tasks.IsTicket==true ).Select(p => p.tasks.id).ToList();
+                    var lis = db.tagging.Where(p => p.project.id == entity && p.tasks.IsTicket == true).Select(p => p.tasks.id).ToList();
 
-                    foreach(var li in lis)
+                    foreach (var li in lis)
                     {
                         var ticket = db.task.Find(li);
                         clientsTicketRespone status = new clientsTicketRespone();
                         status.id = ticket.id;
-                        status.status = ticket.status;
+
+                        status.status = fillStatus(ticket.status);
                         status.date = ticket.created_on;
                         status.description = ticket.description;
                         status.name = ticket.task_name;
                         list.Add(status);
                     }
-
-
                 }
                 return list;
             }
+        }
 
-
+        private string fillStatus(int p)
+        {
+            if (p == 0)
+                return "No Progress";
+            if (p == 1)
+                return "In Pending";
+            if (p == 2)
+                return "Complete";
+            else
+                return "Resolved";
         }
     }
 }

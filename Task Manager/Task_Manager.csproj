@@ -209,9 +209,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705261347294_city Model add.cs" />
-    <Compile Include="Migrations\201705261347294_city Model add.Designer.cs">
-      <DependentUpon>201705261347294_city Model add.cs</DependentUpon>
+    <Compile Include="Migrations\201705271123512_Image_Upload.cs" />
+    <Compile Include="Migrations\201705271123512_Image_Upload.Designer.cs">
+      <DependentUpon>201705271123512_Image_Upload.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -235,6 +235,7 @@
     <Compile Include="SMSandEmail.cs" />
     <Compile Include="viewModels\clientsTicketRespone.cs" />
     <Compile Include="viewModels\ComplainProjects.cs" />
+    <Compile Include="viewModels\customerCityname.cs" />
     <Compile Include="viewModels\customerdropdown.cs" />
     <Compile Include="viewModels\finding_ticketContact.cs" />
     <Compile Include="viewModels\internalTickets.cs" />
@@ -475,8 +476,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705261347294_city Model add.resx">
-      <DependentUpon>201705261347294_city Model add.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705271123512_Image_Upload.resx">
+      <DependentUpon>201705271123512_Image_Upload.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

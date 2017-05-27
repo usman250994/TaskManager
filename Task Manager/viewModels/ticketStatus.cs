@@ -8,7 +8,7 @@ namespace Task_Manager.viewModels
     public class ticketStatus
     {
 
-        public int customerId { get; set; }
+        public string customerId { get; set; }
 
         public string ticketId { get; set; }
 

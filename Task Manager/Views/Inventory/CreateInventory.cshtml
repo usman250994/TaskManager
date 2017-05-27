@@ -71,7 +71,7 @@
                                         <input class="form-control" type="text" id="brand">
                                     </div>
                                 </div>
-
+                                
                                 <div class="col-lg-12 spacing">
                                     <div class="col-lg-6">
                                         <label>Model</label>
@@ -88,15 +88,26 @@
                                         <textarea type="text" id="Description" cols="20" rows="3" class="form-control" placeholder="Description Of Project"></textarea>
                                     </div>
                                 </div>
+
+
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6">
+                                        <label>Model</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="file" id="filer">
+                                    </div>
+                                </div>
                                 <div class="col-lg-12 spacing">
                                     <div class="col-lg-6">
                                         <label>Image</label>
                                     </div>
+                                  
                                     <div class="col-lg-6">
                                         <label for="file-upload" class="custom-file-upload">
                                             Upload Image
                                         </label>
-                                        <input id="file-upload" type="file" />
+                                        <input id="fileup" type="file" />
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -163,7 +174,16 @@
     });
 
     function Add() {
+        var fd = new FormData();
+        var files = $("#filer").get(0).files;
+
+        if (files.lenght > 0) {
+            fd.append("logo", files[0]);
+            console.log("23232");
+        }
+        console.log(fd);
         var model = {
+
             name: document.getElementById('productname').value.trim(),
             type: document.getElementById('radio').value,
             catogrey: document.getElementById('ProductCatogeryDropdown').value.trim(),
@@ -172,8 +192,8 @@
             description: document.getElementById('Description').value.trim(),
             quantity: document.getElementById('quantity').value.trim(),
             barcode: document.getElementById('barcode').value.trim(),
-            vendorName: document.getElementById('vendor').value.trim()
-            //  var image = document.getElementById('productimage').value.trim();
+            vendorName: document.getElementById('vendor').value.trim(),
+            imagepath : fd
         }
         $.ajax({
             async: false,

@@ -9,7 +9,7 @@ namespace Task_Manager.viewModels
     {
            public int id {get;set;}
            public DateTime  date {get;set;}
-           public int   status{get;set;}
+           public string   status{get;set;}
            public string   description {get;set;}
            public string name { get; set; }
 
