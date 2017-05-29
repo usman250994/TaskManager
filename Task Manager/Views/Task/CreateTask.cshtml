@@ -41,7 +41,7 @@
                                 <div class="col-lg-12 spacing">
                                     <div class="    col-lg-6 ">
                                         <label>Customer Name</label>
-                                        
+
                                     </div>
                                     <div class="col-lg-6 ">
                                         <select id="CustomerDropdown" onchange="getval(this);"></select>
@@ -140,8 +140,8 @@
         globalProjects = [];
         dat = [];
         $.ajax({
-            async: false,
-            url: '/api/TaskApi/'+"0",
+            async: true,
+            url: '/api/TaskApi/' + 0,
             type: 'GET',
             success: function (data) {
                 console.log(data);
@@ -156,7 +156,7 @@
                     var obj = { id: data.dropdowns.Users[i].id, text: data.dropdowns.Users[i].user_Name }
                     dat.push(obj);
                 }
-               $("#test").select2({ theme: "bootstrap", data: dat });
+                $("#test").select2({ theme: "bootstrap", data: dat });
                 if (data.task != null) {
                     console.log(data.task);
                     document.getElementById("secid").value = data.task.id
@@ -167,14 +167,8 @@
                     document.getElementById("Desc").value = data.task.description;
                     document.getElementById("chkSMS").checked = data.task.sms;
                     document.getElementById("chkEmail").checked = data.task.email;
-             
-                  
                     $('#test').val(data.tags).trigger('change');
-                    
-
-                 
                 }
-               
             },
             failure: function () {
                 alert("Failed to load Projects");
@@ -186,13 +180,13 @@
     //add user button press for adding or updating db
     //need correction when updating probably
     function Add() {
-       
-            var user = $("#test").select2("val");
-            console.log(user);
-           
-            var model =
-                {
-                id:$("#secid").val(),
+
+        var user = $("#test").select2("val");
+        console.log(user);
+
+        var model =
+            {
+                id: $("#secid").val(),
                 projectId: $("#ProjectDropdown").val(),
                 task_name: $("#TaskName").val(),
                 description: $("#Desc").val(),
@@ -200,51 +194,48 @@
                 end_date: $("#EndDate").val(),
                 sms: document.getElementById("chkSMS").checked,
                 email: document.getElementById("chkEmail").checked,
-                status:"1",
+                status: "1",
                 tempUsers: user
             };
-            console.log(model);
-            console.log(JSON.stringify(model));
-            $.ajax({
-                url: '/api/TaskApi',
-                type: 'POST',
-                data: JSON.stringify(model),
-                contentType: "text/json;charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    alert(data);
-                    location.reload();
-                },
-                error: function (error) { alert(error); }
-            });
+        console.log(model);
+        console.log(JSON.stringify(model));
+        $.ajax({
+            url: '/api/TaskApi',
+            type: 'POST',
+            data: JSON.stringify(model),
+            contentType: "text/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                alert(data);
+                location.reload();
+            },
+            error: function (error) { alert(error); }
+        });
 
 
-        
+
     }
 
-    function getval(val)
-    {
-       
+    function getval(val) {
+
         var check = 0;
-        for (var i = 0; i<globalProjects.length;i++)
-        {
-            if (globalProjects[i].customer.customerId == val.value)
-            {
+        for (var i = 0; i < globalProjects.length; i++) {
+            if (globalProjects[i].customer.customerId == val.value) {
                 if (check == 0) {
-                    check=1;
+                    check = 1;
                     document.getElementById('ProjectDropdown').options.length = 0;
                 }
                 var option = document.createElement("option");
                 option.text = globalProjects[i].Project_Name;
                 option.value = globalProjects[i].id;
                 document.getElementById('ProjectDropdown').add(option);
-                
+
             }
-           
-          
+
+
         }
-        
-      
+
+
 
     }
 </script>

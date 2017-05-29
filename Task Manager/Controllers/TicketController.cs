@@ -13,7 +13,7 @@ namespace Task_Manager.Controllers
         {
             Session["task_id"] = null;
             string roles_Id = Session["role_id"].ToString();
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "4"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "1002"))
             {
 
                 ViewData["id"] = roles_Id;

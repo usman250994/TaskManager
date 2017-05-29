@@ -22,6 +22,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>User Type</th>
                                 <th>Address</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
@@ -51,8 +52,9 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
+             
                 for (var i = 0; i < data.length; i++) {
-                    $("#dynamic-Grid").append("<tr><td>" + data[i].user_Name + "</td><td>" + data[i].Address + "</td><td>" + data[i].Email + "</td><td>" + data[i].MobileNo + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger  fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
+                    $("#dynamic-Grid").append("<tr><td>" + data[i].user_Name + "</td><td>" + data[i].Roles_id.role_name + "</td><td>" + data[i].Address + "</td><td>" + data[i].Email + "</td><td>" + data[i].MobileNo + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger  fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
                 }
             },
             error: function () { alert('Grid Not Load'); }

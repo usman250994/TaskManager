@@ -50,8 +50,8 @@
                                         <label>Type</label>
                                     </div>
                                     <div class="col-lg-6 ">
-                                        <label class="radio-inline"><input type="radio" name="optradio" value="0" id="radio1">Local</label>
-                                        <label class="radio-inline"><input type="radio" name="optradio" value="1" id="radio">Imported</label>
+                                        <label class="radio-inline"><input type="radio" name="optradio" value="0" id="radio">Local</label>
+                                        <label class="radio-inline"><input type="radio" name="optradio" value="1" id="radio1">Imported</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -88,26 +88,16 @@
                                         <textarea type="text" id="Description" cols="20" rows="3" class="form-control" placeholder="Description Of Project"></textarea>
                                     </div>
                                 </div>
-
-
-                                <div class="col-lg-12 spacing">
-                                    <div class="col-lg-6">
-                                        <label>Model</label>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" type="file" id="filer">
-                                    </div>
-                                </div>
                                 <div class="col-lg-12 spacing">
                                     <div class="col-lg-6">
                                         <label>Image</label>
                                     </div>
                                   
                                     <div class="col-lg-6">
-                                        <label for="file-upload" class="custom-file-upload">
-                                            Upload Image
-                                        </label>
-                                        <input id="fileup" type="file" />
+                                        <label class="custom-file-upload">
+                                            <input type="file" id="image" />
+                                            <span>Upload Image</span>
+                                        </label>                                        
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -174,18 +164,26 @@
     });
 
     function Add() {
-        var fd = new FormData();
-        var files = $("#filer").get(0).files;
-
-        if (files.lenght > 0) {
-            fd.append("logo", files[0]);
-            console.log("23232");
+        var radio = document.getElementById('radio').checked;
+        var radio1 = document.getElementById('radio1').checked;
+        var val = "";
+        if (radio == true) {
+            radioval = "0"
         }
-        console.log(fd);
-        var model = {
+        else {
+            radioval = "1";
+        }
+        //var fd = new FormData();
+        //var files = $("#filer").get(0).files;
 
+        //if (files.lenght > 0) {
+        //    fd.append("logo", files[0]);
+        //    console.log("23232");
+        //}
+        //console.log(fd);
+        var model = {
             name: document.getElementById('productname').value.trim(),
-            type: document.getElementById('radio').value,
+            type: radioval,
             catogrey: document.getElementById('ProductCatogeryDropdown').value.trim(),
             brand: document.getElementById('brand').value.trim(),
             model: document.getElementById('product_model').value.trim(),
@@ -193,7 +191,8 @@
             quantity: document.getElementById('quantity').value.trim(),
             barcode: document.getElementById('barcode').value.trim(),
             vendorName: document.getElementById('vendor').value.trim(),
-            imagepath : fd
+            imagepath: document.getElementById('image').value.trim(),
+            //imagepath : fd
         }
         $.ajax({
             async: false,

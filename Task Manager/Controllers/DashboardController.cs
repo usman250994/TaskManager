@@ -19,6 +19,7 @@ namespace Task_Manager.Controllers
             ViewData["id"] = roles_Id;
             if (Session["UserId"] != null)
             {
+                List<int> view = new List<int>();
                 List<Task> tasks = new List<Task>();
                 //
                 string id = Session["UserID"].ToString();
@@ -28,36 +29,50 @@ namespace Task_Manager.Controllers
                 if (Session["role_Id"].ToString() == "1")
                 {
                     //todays
-                    ViewData["todays"] = db.task.Where(c => c.enable == true && c.IsTicket == false).Take(10).ToList().Count();
+                    view.Add(db.task.Where(c => c.enable == true && c.IsTicket == false && c.created_on >= date).ToList().Count());
                     //unassigned
-                    ViewData["unassigned"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.status == 0).ToList().Count();
+                    view.Add(db.task.Where(c => c.enable == true && c.IsTicket == false && c.status == 0).ToList().Count());
                     //newly
-                    ViewData["newly"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.created_on == date).ToList().Count();
+                    view.Add(db.task.Where(c => c.enable == true && c.IsTicket == false).Take(20).ToList().Count());
                     //tickets
                     //todays
-                    ViewData["todayst"] = db.task.Where(c => c.enable == true && c.IsTicket == true).Take(10).ToList().Count();
+                    view.Add(db.task.Where(c => c.enable == true && c.IsTicket == true && c.created_on >= date).ToList().Count());
                     //unassigned
-                    ViewData["unassignedt"] = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status == 0).ToList().Count();
+                    view.Add(db.task.Where(c => c.enable == true && c.IsTicket == true && c.status == 0).ToList().Count());
                     //newly
-                    ViewData["newlyt"] = db.task.Where(c => c.enable == true && c.IsTicket == true && c.created_on == date).ToList().Count();
+                    view.Add(db.task.Where(c => c.enable == true && c.IsTicket == true && c.created_on >= date).Take(20).ToList().Count());
                 }
                 else
                 {
-                    //todays
-                    ViewData["todays"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.Created_By.id == createdUser.id && c.created_on == date).Take(10).ToList().Count();
+                    //todays 
+                   var tids= db.task.Where(c => c.enable == true && c.IsTicket == false && c.created_on >= date).Select(p=>p.id).ToList();
+                  
+                    view.Add(callTasks(tids,createdUser.id));
+                    
                     //unassigned
-                    ViewData["unassigned"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.status == 0 && c.Created_By.id == createdUser.id).ToList().Count();
+                    
+                    view.Add( db.task.Where(c => c.enable == true && c.IsTicket == false && c.status == 0 && c.Created_By.id == createdUser.id).ToList().Count());
+                    
                     //newly
-                    ViewData["newly"] = db.task.Where(c => c.enable == true && c.IsTicket == false && c.Created_By.id == createdUser.id && c.created_on == date).ToList().Count();
+                   tids= db.task.Where(c => c.enable == true && c.IsTicket == false).OrderByDescending(p => p.created_on).Select(p=>p.id).ToList();
+                   view.Add(callTasks10(tids, createdUser.id));
+                    
                     //tickets
-                    //todays
-                    ViewData["todayst"] = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdUser.id && c.created_on == date).Take(10).ToList().Count();
-                    //unassigned
-                    ViewData["unassignedt"] = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status == 0 && c.Created_By.id == createdUser.id).ToList().Count();
-                    //newly
-                    ViewData["newlyt"] = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdUser.id && c.created_on == date).ToList().Count();
+                    //todayst
+                    tids =db.task.Where(c => c.enable == true && c.IsTicket == true && c.created_on >= date).Select(p=>p.id).ToList();
+                    view.Add(callTasks(tids, createdUser.id));
+                    //unassignedt
+                    view.Add( db.task.Where(c => c.enable == true && c.IsTicket == true && c.status == 0 && c.Created_By.id == createdUser.id).ToList().Count());
+                    //newlyt
+                    tids = db.task.Where(c => c.enable == true && c.IsTicket == true).OrderByDescending(p => p.created_on).Select(p => p.id).ToList();
+                    view.Add(callTasks10(tids, createdUser.id));
                 }
-
+             ViewBag.newly = view[0];
+             ViewBag.unassigned = view[1];
+             ViewBag.todays = view[2];
+             ViewBag.todayst = view[3];
+             ViewBag.unassignedt = view[4];
+             ViewBag.newlyt = view[5];
                 //foreach (var entity in tasks)
                 //{
                 //    if (entity.created_on.Date == date)
@@ -74,6 +89,48 @@ namespace Task_Manager.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+        private int callTasks(List<int> tids,int cUiId)
+        {
+            var count = 0;
+            foreach(var id in tids)
+            {
+               if(db.task.Any(p => p.id == id && p.Created_By.id == cUiId))
+               {
+                   count++;
+               }
+            
+                if (db.tagging.Any(p => p.tasks.id == id && p.users.Any(o => o.id == cUiId)))
+                {
+                    count++;
+                }
+               
+            }
+
+            return count;
+        }
+
+        private int callTasks10(List<int> tids, int cUiId)
+        {
+            var count = 0;
+            foreach (var id in tids)
+            {
+                if (db.task.Any(p => p.id == id && p.Created_By.id == cUiId))
+                {
+                    count++;
+                }
+
+                if (db.tagging.Any(p => p.tasks.id == id && p.users.Any(o => o.id == cUiId)))
+                {
+                    count++;
+                }
+                if(count==10)
+                {
+                    return 10;
+                }
+            }
+
+            return count;
         }
     }
 }

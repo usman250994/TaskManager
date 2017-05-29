@@ -40,8 +40,8 @@
                                 <th>Description</th>
                                 <th>Assigned To</th>
                                 <th>Alerts</th>
-                                <th>Status</th>
                                 <th>Created By</th>
+                                <th>Status</th>                              
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -135,10 +135,12 @@
             success: function (data) {
                 console.log(data);
                 var fxg = "";
-                for (var i = 0; i < data.length; i++) {
+                for (var i = 0; i < data.length; i++) {                  
+
                     for (k = 0; k < data[i].users.length; k++) {
                         fxg = data[i].users[k] + "," + fxg;
                     }
+
                     if ((data[i].task.sms == false) && (data[i].task.email == true)) {
                         var mxg = "Email";
                     }
@@ -151,7 +153,7 @@
                     else {
                         var mxg = "No Status Found";
                     }
-                    $("#dynamic-Grid").append("<tr id="+i+"><td>" + data[i].task.task_name + "</td><td>" + data[i].task.description + "</td><td>" + fxg.toString() + "</td><td>" + mxg.toString() + "</td><td> <select  onchange='status(this.value," + data[i].task.id + ")' id=" + data[i].task.id + "><option value='1'>InProgress</option><option value='2'>Pending</option><option value='3'>Complete</option><option value='4'>Closed</option></select></td><td> <button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"UpdateTask(" + data[i].task.id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"DeleteTask(" + data[i].task.id +","+i+")\"></button> <button  class='btn btn-info fa fa-comments-o' onclick=\"comments(" + data[i].task.id + ")\"></button></td></tr>");
+                    $("#dynamic-Grid").append("<tr id=" + i + "><td>" + data[i].task.task_name + "</td><td>" + data[i].task.description + "</td><td>" + fxg.toString() + "</td><td>" + mxg.toString() + "</td><td>" + data[i].task.Created_By.user_Name + "</td><td> <select  onchange='status(this.value," + data[i].task.id + ")' id=" + data[i].task.id + "><option value='1'>InProgress</option><option value='2'>Pending</option><option value='3'>Complete</option><option value='4'>Closed</option></select></td><td> <button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"UpdateTask(" + data[i].task.id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"DeleteTask(" + data[i].task.id + "," + i + ")\"></button> <button  class='btn btn-info fa fa-comments-o' onclick=\"comments(" + data[i].task.id + ")\"></button></td></tr>");
                     //data-toggle='modal' data-target='#myModal'
 
                     $("select#" + data[i].task.id + " option").filter(function () {
@@ -215,8 +217,7 @@
                 console.log(data);
             }
         });
-    }
-    
+    }    
     function comments(id) {
         console.log(id);
         $.ajax({

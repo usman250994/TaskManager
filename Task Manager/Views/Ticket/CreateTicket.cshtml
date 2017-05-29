@@ -16,7 +16,7 @@
     {
         Layout = "~/Views/Shared/CSR.cshtml";
     }
-    
+
 }
 <link href="~/Content/select2.css" rel="stylesheet" />
 <link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
@@ -129,7 +129,7 @@
         globalProjects = [];
         dat = [];
         $.ajax({
-            async: false,
+            async: true,
             url: '/api/TicketApi/' + "0",
             type: 'GET',
             success: function (data) {
@@ -197,10 +197,19 @@
             dataType: "json",
             success: function (data) {
                 alert(data);
-                location.reload();
+                document.getElementById("tick_id").value="",
+                 document.getElementById("ticketName").value = "",
+                 document.getElementById("Desc").value = "",
+                // document.getElementById('#tick_id').value = "",
+                // document.getElementById('#tick_id').value = "",
+             
+                //$("#ProjectDropdown").val()= null,
+            
+                document.getElementById("chkEmail").checked="",
+                document.getElementById("chkSMS").checked = ""          
             },
             error: function (error) { alert(error); }
-        });
+    });
 
 
 
