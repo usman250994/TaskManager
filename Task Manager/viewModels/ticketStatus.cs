@@ -10,7 +10,7 @@ namespace Task_Manager.viewModels
 
         public string customerId { get; set; }
 
-        public string ticketId { get; set; }
+       
 
 
 

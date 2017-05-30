@@ -208,10 +208,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2017 15:00:29</publishTime>
     </File>
     <File Include="bin/Task_Manager.dll">
-      <publishTime>05/24/2017 21:24:15</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="bin/Task_Manager.pdb">
-      <publishTime>05/24/2017 21:24:15</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>04/07/2017 10:14:30</publishTime>
@@ -700,13 +700,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/07/2017 10:14:17</publishTime>
     </File>
     <File Include="Views/Customer/CreateCustomer.cshtml">
-      <publishTime>05/20/2017 15:25:25</publishTime>
+      <publishTime>05/27/2017 22:07:37</publishTime>
     </File>
     <File Include="Views/Customer/Index.cshtml">
       <publishTime>05/12/2017 16:23:17</publishTime>
     </File>
     <File Include="Views/Customer/ViewCustomer.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/27/2017 22:07:37</publishTime>
     </File>
     <File Include="Views/CustomerDetail/CreateCustomer.cshtml">
       <publishTime>04/27/2017 14:39:51</publishTime>
@@ -718,61 +718,61 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/27/2017 15:45:38</publishTime>
     </File>
     <File Include="Views/Dashboard/Index.cshtml">
-      <publishTime>05/20/2017 20:03:57</publishTime>
+      <publishTime>05/29/2017 12:25:50</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>05/20/2017 15:24:27</publishTime>
+      <publishTime>05/26/2017 18:10:02</publishTime>
     </File>
     <File Include="Views/Inventory/CreateInventory.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/Inventory/ViewInventory.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/message/ViewMessage.cshtml">
-      <publishTime>05/25/2017 17:33:47</publishTime>
+      <publishTime>05/26/2017 18:10:03</publishTime>
     </File>
     <File Include="Views/Project/CreateProject.cshtml">
-      <publishTime>05/20/2017 15:24:34</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/Project/Index.cshtml">
       <publishTime>05/12/2017 16:23:38</publishTime>
     </File>
     <File Include="Views/Project/ViewProject.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/26/2017 18:10:02</publishTime>
     </File>
     <File Include="Views/Shared/Admin.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/Shared/CSR.cshtml">
-      <publishTime>05/23/2017 17:06:57</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>04/07/2017 10:13:43</publishTime>
     </File>
     <File Include="Views/Shared/Normal.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/Shared/_Home.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/15/2017 11:56:55</publishTime>
+      <publishTime>05/26/2017 18:10:02</publishTime>
     </File>
     <File Include="Views/Task/CreateTask.cshtml">
-      <publishTime>05/22/2017 17:40:29</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/Task/Index.cshtml">
       <publishTime>05/12/2017 16:23:45</publishTime>
     </File>
     <File Include="Views/Task/ViewTask.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/26/2017 18:10:02</publishTime>
     </File>
     <File Include="Views/Ticket/CreateTicket.cshtml">
-      <publishTime>05/20/2017 13:35:44</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/Ticket/ViewTicket.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/User/CreateUser.cshtml">
       <publishTime>05/20/2017 15:25:22</publishTime>
@@ -781,7 +781,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/12/2017 16:23:51</publishTime>
     </File>
     <File Include="Views/User/ViewUser.cshtml">
-      <publishTime>05/24/2017 21:23:03</publishTime>
+      <publishTime>05/29/2017 16:20:37</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/13/2017 14:37:04</publishTime>
@@ -790,7 +790,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/23/2017 14:04:25</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/25/2017 17:43:47</publishTime>
+      <publishTime>05/29/2017 16:21:36</publishTime>
     </File>
   </ItemGroup>
 </Project>

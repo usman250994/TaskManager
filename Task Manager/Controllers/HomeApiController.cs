@@ -138,9 +138,9 @@ namespace Task_Manager.Controllers
             List<clientsTicketRespone> list = new List<clientsTicketRespone>();
 
             int id = 0;
-            if (!string.IsNullOrEmpty(check.ticketId))
+            if (!string.IsNullOrEmpty(check.customerId))
             {
-                id = Convert.ToInt32(check.ticketId);
+                id = Convert.ToInt32(check.customerId);
                 if (db.task.Any(o => o.id == id))
                 {
                     clientsTicketRespone status = new clientsTicketRespone();
@@ -155,37 +155,33 @@ namespace Task_Manager.Controllers
                     return list;
 
                 }
-                else
+                else 
                 {
-                    return list;
-
-                }
-            }
-
-
-            else
-            {
-                var projIds = db.project.Where(p => p.customer.city_code == check.customerId).Select(p => p.id).ToList();
-                List<int> taskIdList = new List<int>();
-                foreach (var entity in projIds)
-                {
-                    var lis = db.tagging.Where(p => p.project.id == entity && p.tasks.IsTicket == true).Select(p => p.tasks.id).ToList();
-
-                    foreach (var li in lis)
+                    var projIds = db.project.Where(p => p.customer.city_code == check.customerId).Select(p => p.id).ToList();
+                    List<int> taskIdList = new List<int>();
+                    foreach (var entity in projIds)
                     {
-                        var ticket = db.task.Find(li);
-                        clientsTicketRespone status = new clientsTicketRespone();
-                        status.id = ticket.id;
+                        var lis = db.tagging.Where(p => p.project.id == entity && p.tasks.IsTicket == true).Select(p => p.tasks.id).ToList();
 
-                        status.status = fillStatus(ticket.status);
-                        status.date = ticket.created_on;
-                        status.description = ticket.description;
-                        status.name = ticket.task_name;
-                        list.Add(status);
+                        foreach (var li in lis)
+                        {
+                            var ticket = db.task.Find(li);
+                            clientsTicketRespone status = new clientsTicketRespone();
+                            status.id = ticket.id;
+
+                            status.status = fillStatus(ticket.status);
+                            status.date = ticket.created_on;
+                            status.description = ticket.description;
+                            status.name = ticket.task_name;
+                            list.Add(status);
+                        }
                     }
                 }
-                return list;
+               
+
             }
+            return list;
+
         }
 
         private string fillStatus(int p)

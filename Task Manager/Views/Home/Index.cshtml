@@ -41,14 +41,10 @@
                     <div id="login" class="animate form">
                         <h1>Tickets</h1>
                         <p>
-                            <label class="uname"> Customer Code</label>
+                            <label class="uname"> Customer Code/Ticket ID</label>
                             <input class="" type="number" id="customerCode" placeholder="Your ID" onfocusout="DDL(this.value)">
                         </p>
-                        <p>
-                            <label>Ticket ID</label>
-                            <input id="ticketId" type="text" />
-                        </p>
-                        <p class="login button">
+                                                <p class="login button">
 
                             <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal">Create Ticket</button>
                             <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal1" onclick="checkStatus()">Check Status</button>
@@ -292,7 +288,7 @@
     }
 
     function checkStatus() {
-        var model = { customerId: $("#customerCode").val(), ticketId: $("#ticketId").val() };
+        var model = { customerId: $("#customerCode").val() };
         console.log(model);
         $.ajax({
             async: false,
