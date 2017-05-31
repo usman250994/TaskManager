@@ -39,7 +39,7 @@
                             <tr>
                                 <th>Customer Code</th>
                                 <th>Customer Name</th>
-                                <th>Address</th>                          
+                                <th>Address</th>
                                 <th>Contact</th>
                                 <th>Website</th>
                                 <th>Email</th>
@@ -68,15 +68,32 @@
             dataType: "json",
             success: function (data) {
                 console.log(data);
-                for (var i = 0; i < data.length; i++) {
-                    $("#dynamic-Grid").append("<tr id=" + i + "><td>" + data[i].city_code + "</td><td>" + data[i].customer_name + "</td><td>" + data[i].address + "</td><td>" + data[i].Phonenumber + "</td><td>" + data[i].Website + "</td><td>" + data[i].Email + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].customerId + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].customerId + "," + i + ")\"></button>");
-                }
-
+                filltable(data);
+                //for (var i = 0; i < data.length; i++) {
+                //<tr id=" + i + ">);
+                //}
+                //  <td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].customerId + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].customerId + "," + i + ")\"></button>"
             },
             error: function () { alert('Data Not Showing'); }
         });
     });
-    function deleteUser(id,rId) {
+
+    function filltable(datas) {
+        $("#dataTables-example").DataTable({
+            "aaData": datas,
+            "aoColumns": [
+                { "mDataProp": "name" },
+                { "mDataProp": "code" },
+                { "mDataProp": "address" },
+                { "mDataProp": "contact" },
+                { "mDataProp": "website" },
+                { "mDataProp": "email" },
+                { "mDataProp": "action" }
+            ]
+            });
+
+    }
+    function deleteUser(id, rId) {
         if (confirm('Are you sure you want to save this thing into the database?')) {
             // Save it!
 

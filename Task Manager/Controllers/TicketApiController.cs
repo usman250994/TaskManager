@@ -398,13 +398,14 @@ namespace Task_Manager.Controllers
                     {
                         string toAdd = tag.users[j].user_Name;
                         list.Add(toAdd);
+                        taskRes.users = taskRes.users + toAdd + ",";
                     }
                 }
                 else
                 {
                     list.Clear();
                 }
-                taskRes.users = list;
+               // taskRes.users = list;
                 taskResponse.Add(taskRes);
 
             }

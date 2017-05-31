@@ -9,6 +9,7 @@ namespace Task_Manager.viewModels.response
     public class taskResponse
     {
         public Task task { get;set; }
-        public List<String> users { get; set; }
+        public string users { get; set; }
+        public string notify{get;set;}
     }
 }

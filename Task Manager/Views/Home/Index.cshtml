@@ -8,7 +8,7 @@
 
 
 <header>
-    <h1>Login Form <span>For Task Manager</span></h1>
+    <h1>Task <span>Management System</span></h1>
     <nav class="codrops-demos">
         <span>Click <strong>"Login"</strong> to see the Today Task</span>
     </nav>
@@ -44,7 +44,7 @@
                             <label class="uname"> Customer Code/Ticket ID</label>
                             <input class="" type="number" id="customerCode" placeholder="Your ID" onfocusout="DDL(this.value)">
                         </p>
-                                                <p class="login button">
+                        <p class="login button">
 
                             <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal">Create Ticket</button>
                             <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal1" onclick="checkStatus()">Check Status</button>
@@ -58,15 +58,6 @@
 
     </div>
 </section>
-
-
-
-
-
-
-
-
-
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -154,56 +145,6 @@
 
     </div>
 </div>
-
-<div id="myModal1" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title center">Ticket Generator</h4>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Customer Detail
-                            @*<button type="button" class="btn btn-primary" onclick="gridLoad()">Update</button>*@
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dynamic-Grid"></tbody>
-                            </table>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-                <!-- /.row -->
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-    </div>
-
-</div>
-
-
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -289,7 +230,6 @@
 
     function checkStatus() {
         var model = { customerId: $("#customerCode").val() };
-        console.log(model);
         $.ajax({
             async: false,
             url: '/api/HomeApi/',
@@ -298,13 +238,13 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
-                console.log(data);
-                for (var i = 0; i < data.length; i++) {
-                    $("#dynamic-Grid").append("<tr><td>" + data[i].id + "</td><td>" + data[i].name + "</td><td>" + data[i].description + "</td><td>" + data[i].date.substring(0, 10) + "</td><td>" + data[i].status);
-                }
-                $('#myModal').on('hide', function (e) {
-                    e.preventDefault();
-                });
+                window.location.href = '/CheckStatus/Index';
+                //for (var i = 0; i < data.length; i++) {
+                //    $("#dynamic-Grid").append("<tr><td>" + data[i].id + "</td><td>" + data[i].name + "</td><td>" + data[i].description + "</td><td>" + data[i].date.substring(0, 10) + "</td><td>" + data[i].status);
+                //}
+                //$('#myModal').on('hide', function (e) {
+                //    e.preventDefault();
+                //});
             },
             error: function () {
                 alert(data);

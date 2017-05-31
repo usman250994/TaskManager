@@ -187,6 +187,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\CheckStatusApiController.cs" />
+    <Compile Include="Controllers\CheckStatusController.cs" />
     <Compile Include="Controllers\CustomerApiController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardApiController.cs" />
@@ -250,6 +252,7 @@
     <Compile Include="viewModels\responseToComplain.cs" />
     <Compile Include="viewModels\response\TaskDropdown.cs" />
     <Compile Include="viewModels\response\taskResponse.cs" />
+    <Compile Include="viewModels\response\ViewCustomer.cs" />
     <Compile Include="viewModels\status.cs" />
     <Compile Include="viewModels\tempTask.cs" />
     <Compile Include="viewModels\tempUser.cs" />
@@ -468,6 +471,8 @@
     <Content Include="Views\message\ViewMessage.cshtml" />
     <Content Include="Views\Inventory\CreateInventory.cshtml" />
     <Content Include="Views\Inventory\ViewInventory.cshtml" />
+    <Content Include="Views\CheckStatus\Index.cshtml" />
+    <Content Include="Views\Shared\Nonuser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

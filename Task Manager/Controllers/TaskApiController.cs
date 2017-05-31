@@ -124,14 +124,9 @@ namespace Task_Manager.Controllers
                                 }
                                 break;
                             }
-
-
                         }
                         //
-
                     }
-
-
                     foreach (var entity in task)
                     {
                         if (entity.created_on.Date == date)
@@ -216,7 +211,6 @@ namespace Task_Manager.Controllers
             //all
             else
             {
-
                 //make setting for view tasks of different roles  //done
 
                 if (session["role_Id"].ToString() == "1")
@@ -227,9 +221,7 @@ namespace Task_Manager.Controllers
                 {
                     var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
                     tasks = db.task.Where(c => c.enable == true && c.Created_By.id == createdBy.id && c.IsTicket == false).ToList();
-
-
-                    //
+             //
                     var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == false && c.Created_By.id != createdBy.id).ToList();
                     foreach (var entity in tempTask)
                     {
@@ -265,15 +257,16 @@ namespace Task_Manager.Controllers
                     {
                         string toAdd = tag.users[j].user_Name;
                         list.Add(toAdd);
+                        taskRes.users = taskRes.users + toAdd+",";
                     }
+                //remove last character of string for removing comma
                 }
                 else
                 {
                     list.Clear();
                 }
-                taskRes.users = list;
+               // taskRes.users = list;
                 taskResponse.Add(taskRes);
-
             }
             return taskResponse;
         }

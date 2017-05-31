@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Http;
 using Task_Manager.Models;
 using Task_Manager.viewModels;
+using Task_Manager.viewModels.response;
 
 namespace Task_Manager.Controllers
 {
@@ -39,11 +40,11 @@ namespace Task_Manager.Controllers
                     var createdUser = db.user.Find(Convert.ToInt32(id));
                     cust.Created_By = createdUser;
                     //
-             int a= db.customer.Count()+1;
-                var  customerNumber = a.ToString().PadLeft(4, '0');
-                var customerYear = DateTime.Now.Year;
-                cust.city_code = cust.city_code+customerNumber+customerYear;
-                    
+                    int a = db.customer.Count() + 1;
+                    var customerNumber = a.ToString().PadLeft(4, '0');
+                    var customerYear = DateTime.Now.Year;
+                    cust.city_code = cust.city_code + customerNumber + customerYear;
+
                     //
                     db.customer.Add(cust);
                     if (db.SaveChanges() == 1)
@@ -59,20 +60,46 @@ namespace Task_Manager.Controllers
 
         //To Get All The Customer List (To Show in Grid View Of User)
         [Route("/api/CustomerApi/"), HttpGet]
-        public List<Customer> custall()
-        {         
-            List<Customer> list = new List<Customer>();        
+        public List<ViewCustomer> custall()
+        {
+            List<Customer> list = new List<Customer>();
+            List<ViewCustomer> toReturn = new List<ViewCustomer>();
             var session = HttpContext.Current.Session;
             if (session["UserID"].ToString() == "5")
             {
-                list = db.customer.Where(d => d.enable == true).ToList();        
+                list = db.customer.Where(d => d.enable == true).ToList();
+                for (int i = 0; list.Count > i; i++)
+                {
+                    ViewCustomer viewcustomer = new ViewCustomer();
+                    viewcustomer.code = list[i].city_code;
+                    viewcustomer.name = list[i].customer_name;
+                    viewcustomer.address = list[i].address;
+                    viewcustomer.contact = list[i].Phonenumber;
+                    viewcustomer.email = list[i].Email;
+                    viewcustomer.website = list[i].Website;
+                    viewcustomer.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + list[i].customerId + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + list[i].customerId + ")'/>";
+                    toReturn.Add(viewcustomer);
+                }
             }
             else
             {
                 var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
                 list = db.customer.Where(d => d.enable == true && d.Created_By.id == createdBy.id).ToList();
+                for (int i = 0; list.Count > i; i++)
+                {
+                    ViewCustomer viewcustomer = new ViewCustomer();
+                    viewcustomer.code = list[i].city_code;
+                    viewcustomer.name = list[i].customer_name;
+                    viewcustomer.address = list[i].address;
+                    viewcustomer.contact = list[i].Phonenumber;
+                    viewcustomer.email = list[i].Email;
+                    viewcustomer.website = list[i].Website;
+                    viewcustomer.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + list[i].customerId + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + list[i].customerId + ")'/>";
+                    toReturn.Add(viewcustomer);
+                }
             }
-            return list;
+
+            return toReturn;
         }
 
         //Delete user function
@@ -149,3 +176,9 @@ namespace Task_Manager.Controllers
         }
     }
 }
+
+
+
+//action =
+//                           @"<div data-id='" + log.id + @"'>
+//                                <a href='#' onClick='deleteTerminal(" + log.id + ")'>Delete</a></div>"

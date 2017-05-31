@@ -208,10 +208,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2017 15:00:29</publishTime>
     </File>
     <File Include="bin/Task_Manager.dll">
-      <publishTime>05/29/2017 16:20:37</publishTime>
+      <publishTime>05/31/2017 10:25:54</publishTime>
     </File>
     <File Include="bin/Task_Manager.pdb">
-      <publishTime>05/29/2017 16:20:37</publishTime>
+      <publishTime>05/31/2017 10:25:54</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>04/07/2017 10:14:30</publishTime>
@@ -250,7 +250,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/26/2016 18:16:06</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>05/24/2017 21:23:02</publishTime>
+      <publishTime>05/31/2017 11:09:36</publishTime>
     </File>
     <File Include="Content/style.css">
       <publishTime>05/16/2017 12:56:16</publishTime>
@@ -699,6 +699,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/_references.js">
       <publishTime>04/07/2017 10:14:17</publishTime>
     </File>
+    <File Include="Views/CheckStatus/Index.cshtml">
+      <publishTime>05/31/2017 11:09:04</publishTime>
+    </File>
     <File Include="Views/Customer/CreateCustomer.cshtml">
       <publishTime>05/27/2017 22:07:37</publishTime>
     </File>
@@ -721,7 +724,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/29/2017 12:25:50</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>05/26/2017 18:10:02</publishTime>
+      <publishTime>05/31/2017 10:23:33</publishTime>
     </File>
     <File Include="Views/Inventory/CreateInventory.cshtml">
       <publishTime>05/29/2017 16:20:37</publishTime>
@@ -749,6 +752,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>04/07/2017 10:13:43</publishTime>
+    </File>
+    <File Include="Views/Shared/Nonuser.cshtml">
+      <publishTime>05/31/2017 09:31:02</publishTime>
     </File>
     <File Include="Views/Shared/Normal.cshtml">
       <publishTime>05/29/2017 16:20:37</publishTime>
@@ -790,7 +796,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/23/2017 14:04:25</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/29/2017 16:21:36</publishTime>
+      <publishTime>05/31/2017 11:14:22</publishTime>
     </File>
   </ItemGroup>
 </Project>

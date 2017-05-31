@@ -133,54 +133,65 @@ namespace Task_Manager.Controllers
 
 
         [HttpDelete]
-        public List<clientsTicketRespone> statusReturn(ticketStatus check)
+        public string statusReturn(ticketStatus check)
         {
-            List<clientsTicketRespone> list = new List<clientsTicketRespone>();
-
-            int id = 0;
-            if (!string.IsNullOrEmpty(check.customerId))
+            if (check != null)
             {
-                id = Convert.ToInt32(check.customerId);
-                if (db.task.Any(o => o.id == id))
-                {
-                    clientsTicketRespone status = new clientsTicketRespone();
-
-                    var ticket = db.task.Find(id);
-                    status.id = ticket.id;
-                    status.status = fillStatus(ticket.status);
-                    status.date = ticket.created_on;
-                    status.description = ticket.description;
-                    status.name = ticket.task_name;
-                    list.Add(status);
-                    return list;
-
-                }
-                else 
-                {
-                    var projIds = db.project.Where(p => p.customer.city_code == check.customerId).Select(p => p.id).ToList();
-                    List<int> taskIdList = new List<int>();
-                    foreach (var entity in projIds)
-                    {
-                        var lis = db.tagging.Where(p => p.project.id == entity && p.tasks.IsTicket == true).Select(p => p.tasks.id).ToList();
-
-                        foreach (var li in lis)
-                        {
-                            var ticket = db.task.Find(li);
-                            clientsTicketRespone status = new clientsTicketRespone();
-                            status.id = ticket.id;
-
-                            status.status = fillStatus(ticket.status);
-                            status.date = ticket.created_on;
-                            status.description = ticket.description;
-                            status.name = ticket.task_name;
-                            list.Add(status);
-                        }
-                    }
-                }
-               
-
+                var session = HttpContext.Current.Session;
+                session["customerid"] = check.customerId;
+                return "Code";
             }
-            return list;
+            else
+            {
+                return "Please Insert Value";
+            }
+
+            //List<clientsTicketRespone> list = new List<clientsTicketRespone>();
+
+            //int id = 0;
+            //if (!string.IsNullOrEmpty(check.customerId))
+            //{
+            //    id = Convert.ToInt32(check.customerId);
+            //    if (db.task.Any(o => o.id == id))
+            //    {
+            //        clientsTicketRespone status = new clientsTicketRespone();
+
+            //        var ticket = db.task.Find(id);
+            //        status.id = ticket.id;
+            //        status.status = fillStatus(ticket.status);
+            //        status.date = ticket.created_on;
+            //        status.description = ticket.description;
+            //        status.name = ticket.task_name;
+            //        list.Add(status);
+            //        return list;
+
+            //    }
+            //    else 
+            //    {
+            //        var projIds = db.project.Where(p => p.customer.city_code == check.customerId).Select(p => p.id).ToList();
+            //        List<int> taskIdList = new List<int>();
+            //        foreach (var entity in projIds)
+            //        {
+            //            var lis = db.tagging.Where(p => p.project.id == entity && p.tasks.IsTicket == true).Select(p => p.tasks.id).ToList();
+
+            //            foreach (var li in lis)
+            //            {
+            //                var ticket = db.task.Find(li);
+            //                clientsTicketRespone status = new clientsTicketRespone();
+            //                status.id = ticket.id;
+
+            //                status.status = fillStatus(ticket.status);
+            //                status.date = ticket.created_on;
+            //                status.description = ticket.description;
+            //                status.name = ticket.task_name;
+            //                list.Add(status);
+            //            }
+            //        }
+            //    }
+
+
+            //}
+            //return list;
 
         }
 
