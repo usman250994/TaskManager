@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "ViewTicket";
+    if (ViewData["id"].ToString() == "1")
+    {
+        Layout = "~/Views/Shared/_Home.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "2")
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "3")
+    {
+        Layout = "~/Views/Shared/Normal.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/CSR.cshtml";
+    }
+}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Ticket Assigned</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Ticket Assigned
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                                <th>Description</th>
+                                <th>Assigned To</th>
+                                <th>Created By</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>SMS</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dynamic-Grid"></tbody>
+                    </table>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+        <!-- /.row -->
+    </div>
+</div>
+
+<script type=text/javascript>
+    function status(value, user) {
+        var model = { value: value, user: user };
+        $.ajax({
+            async: false,
+            url: '/api/TaskApi/',
+            type: 'PUT',
+            data: model,
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () { alert('Grid Not Load'); }
+        });
+    }
+    $(document).ready(function () {
+        $.ajax({
+            async: false,
+            url: '/api/TicketApi/',
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {            
+                filltable(data);
+            },
+            error: function () { alert('Grid Not Load'); }
+        });
+    });
+    function DeleteTask(id, rId) {
+        if (confirm('Are You Sure ! You Want to Delete This Ticket')) {
+            $.ajax({
+                url: '/api/TicketApi/' + id,
+                type: 'Delete',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert(data);
+
+                    $('table#dataTables-example tr#' + rId).remove();
+                    location.reload();
+                },
+                error: function (data) { alert(data); }
+            });
+        }
+    }
+    function UpdateTask(id) {
+        $.ajax({
+            async: false,
+            url: '/api/TicketApi/' + id,
+            type: 'PUT',
+            success: function (data) {
+                window.location.href = '/Ticket/CreateTicket';
+            },
+            error: function () {
+                alert(data);
+            }
+        });
+    }
+    function comments(id) {
+        console.log(id);
+        $.ajax({
+            async: false,
+            url: '/api/messageApi/' + id,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                window.location.href = '/message/ViewMessage';
+            },
+            error: function () { console.log("Code Not Ok!"); }
+        });
+    }
+
+    function filltable(datas) {
+        $("#dataTables-example").DataTable({
+            "aaData": datas,
+            "aoColumns": [
+                { "mDataProp": "task_name" },
+                { "mDataProp": "description" },
+                { "mDataProp": "users" },
+                { "mDataProp": "createdBy" },
+                { "mDataProp": ".startDate" },
+                { "mDataProp": "endDate" },
+                { "mDataProp": "sms" },
+                { "mDataProp": "email" },
+                { "mDataProp": "status" },
+                { "mDataProp": "button" }
+
+
+
+            ]
+        });
+
+    }
+</script>

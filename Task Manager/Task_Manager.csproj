@@ -385,7 +385,6 @@
     <None Include="Properties\PublishProfiles\usman.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\bg.jpg" />
-    <Content Include="Product_Image\apple.jpg" />
     <Content Include="Scripts\chatscript.js" />
     <Content Include="Scripts\gen_validatorv4.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />

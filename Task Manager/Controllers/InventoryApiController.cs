@@ -42,8 +42,8 @@ namespace Task_Manager.Controllers
             pro.inward_date = prod.inwarddate;
             pro.created_on = DateTime.Now;
             pro.description = prod.description;
-           
-      
+
+
             pro.id = 0;
             if (prod.type == 0)
                 pro.islocal = true;
@@ -53,12 +53,12 @@ namespace Task_Manager.Controllers
             pro.vendor_name = prod.name;
 
             db.product.Add(pro);
-     
+
             if (db.SaveChanges() > 0)
             {
-            var id = db.product.OrderByDescending(p => p.id).FirstOrDefault().id;
+                var id = db.product.OrderByDescending(p => p.id).FirstOrDefault().id;
 
-                pro.image = "~/Images/" + id + ".jpg";
+                pro.image = "/Images/" + id + ".jpg";
                 db.SaveChanges();
                 return "Product Detail Added";
             }
@@ -109,7 +109,7 @@ namespace Task_Manager.Controllers
             return 0;
         }
         [HttpGet]
-        public Product DetailProduct( int id)
+        public Product DetailProduct(int id)
         {
             var Session = HttpContext.Current.Session;
             string abc = Session["Product_id"].ToString();
@@ -117,32 +117,5 @@ namespace Task_Manager.Controllers
             prod = db.product.Find(Convert.ToInt32(abc));
             return prod;
         }
-
-        //public HttpResponseMessage Post()
-        //{
-        //    HttpResponseMessage result = null;
-        //    var httpRequest = HttpContext.Current.Request;
-        //    if (httpRequest.Files.Count > 0)
-        //    {
-        //        var docfiles = new List<string>();
-        //        foreach (string file in httpRequest.Files)
-        //        {
-        //            var postedFile = httpRequest.Files[file];
-        //            var filePath = HttpContext.Current.Server.MapPath("~/Product_Image/" + postedFile.FileName);
-        //            postedFile.SaveAs(filePath);
-
-        //            docfiles.Add(filePath);
-        //        }
-        //        result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
-        //    }
-        //    else
-        //    {
-        //        result = Request.CreateResponse(HttpStatusCode.BadRequest);
-        //    }
-        //    return result;
-        //}
-
-
-
     }
 }
