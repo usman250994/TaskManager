@@ -139,7 +139,7 @@
                         </div>
                         <div class="panel-footer">
                             <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..."  onkeypress="if (event.keyCode == 13) { sendMessage() }"/>
                                 <span class="input-group-btn">
                                     <button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessage()">
                                         Send
@@ -171,28 +171,19 @@
             dataType: "json",
             success: function (data) {
                 console.log(data);
-
                 for (var i = 0; i < data.responseList.length; i++) {
                     chatstyle(data.responseList[i]);
                 }
-
                 document.getElementById('sms').innerText = data.myTask.sms;
                 document.getElementById('email').innerText = data.myTask.email;
                 document.getElementById('EndDate').innerText = data.myTask.end_date.substring(0, 10);
                 document.getElementById('taskname').innerText = data.myTask.task_name;
-
-
                 document.getElementById('createdby').innerText = data.myTask.Created_By.user_Name;
-
-
                 document.getElementById('Description').innerText = data.myTask.description;
                 document.getElementById('StartDate').innerText = data.myTask.start_date.substring(0, 10);
                 for (var i = 0; i < data.taggedUsers.length; i++) {
                     document.getElementById('assign').innerText = document.getElementById('assign').innerText + data.taggedUsers[i];
                 }
-
-
-
             },
             error: function () { alert('Grid Not Loaded'); }
         });
@@ -200,25 +191,25 @@
 
     function sendMessage() {
         var chat = document.getElementById("btn-input").value.trim();
-        
+
         if (chat == null) {
             Alert("Please Enter Some Messege");
             return;
         }
-        else {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showLocation);
-            }
-            else {
-                alert('Geolocation non supported..');
-            }
+        //else {
+        //    if (navigator.geolocation) {
+        //        navigator.geolocation.getCurrentPosition(showLocation);
+        //    }
+        //    else {
+        //        alert('Geolocation non supported..');
+        //    }
 
-            function showLocation(position) {
-                var locations = position.coords.latitude+","+position.coords.longitude;
-              
+        //    function showLocation(position) {
+              //  var locations = position.coords.latitude + "," + position.coords.longitude;
+
                 var model = {
                     msg: document.getElementById("btn-input").value,
-                    loc: locations
+                    loc: "24.9258156,67.0524282"
                 };
                 console.log(model);
                 $.ajax({
@@ -231,7 +222,6 @@
                     success: function (data) {
                         console.log(data);
                         if (data == 1) {
-
                             var model = {
                                 direction: "left",
                                 initials: "ME",
@@ -248,13 +238,12 @@
                     error: function () { alert('Grid Not Load'); }
                 });
             }
-        }
-    }
+    //   }
+    //}
 
 
 
     function chatstyle(model) {
-        console.log("sss" + model);
 
         //Appending Starts Here
         var ul = document.getElementById("messageList");

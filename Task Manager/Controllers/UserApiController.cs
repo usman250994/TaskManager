@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Http;
 using Task_Manager.Models;
 using Task_Manager.viewModels;
+using Task_Manager.viewModels.Views;
 
 namespace Task_Manager.Controllers
 {
@@ -123,25 +124,53 @@ namespace Task_Manager.Controllers
 
         //To Get All The User List (To Show in Grid View Of User)
         [Route("/api/UserApi/"), HttpGet]
-        public List<Users> Userall()
+        public List<viewUser> Userall()
         {
             List<Users> list = new List<Users>();
-
+            List<viewUser> toReturn = new List<viewUser>();
             var session = HttpContext.Current.Session;
 
             if (session["UserID"].ToString() == "5")
             {
                 list = db.user.Where(p => p.Enable == true).ToList();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    viewUser users = new viewUser();
+                    users.name = list[i].user_Name;
+                    users.userType = list[i].Roles_id.role_name;
+                    users.address = list[i].Address;
+                    users.email = list[i].Email;
+                    users.phonenumber = list[i].MobileNo;
+                    users.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + list[i].id + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + list[i].id + ")'/>";
+                    toReturn.Add(users);
+
+                }
             }
             else
             {
                 var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
 
                 list = db.user.Where(p => p.Enable == true && p.Created_By.id == createdBy.id).ToList();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    viewUser users = new viewUser();
+                    users.name = list[i].user_Name;
+                    users.userType = list[i].Roles_id.role_name;
+                    users.address = list[i].Address;
+                    users.email = list[i].Email;
+                    users.phonenumber = list[i].MobileNo;
+                    users.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + list[i].id + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + list[i].id + ")'/>";
+                    toReturn.Add(users);
+
+                }
+
+
+
             }
 
 
-            return list;
+
+            return toReturn;
         }
 
 

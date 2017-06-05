@@ -93,8 +93,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-6 col-lg-6 spacing">
-                                    <button class="btn btn-success" value="Add" onclick="Add()" id="bc"> Create </button>
-                                    <button type="reset" class="btn btn-info" onclick="location.reload();">Reset</button>
+                                    <input type="button" class="btn btn-success" onclick="Add()" id="button" value="Create"/>
+                                    <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();">
                                 </div>
 
                             </div>
@@ -135,7 +135,7 @@
                     document.getElementById("CustContact").value = data.customers.Phonenumber.substring(3, 13);
                     document.getElementById("CustWebsites").value = data.customers.Website;
                     document.getElementById("CustEmail").value = data.customers.Email;
-
+                    document.getElementById("button").value = "Update";
                 }
                 else {
                     $.each(data.city, function (i) {

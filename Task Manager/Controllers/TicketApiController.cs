@@ -224,7 +224,7 @@ namespace Task_Manager.Controllers
             List<taskResponse> taskResponse = new List<taskResponse>();
             //Checking for Dashboard returns 
             var session = HttpContext.Current.Session;
-          
+
             if (session["dashboard"] != null)
             {
                 string str = session["dashboard"].ToString();
@@ -359,10 +359,10 @@ namespace Task_Manager.Controllers
                 else
                 {
                     var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
-                    tasks = db.task.Where(c => c.enable == true && c.Created_By.id == createdBy.id && c.IsTicket==true).ToList();
+                    tasks = db.task.Where(c => c.enable == true && c.Created_By.id == createdBy.id && c.IsTicket == true).ToList();
 
                     //
-                    var tempTask = db.task.Where(c => c.enable == true &&  c.Created_By.id != createdBy.id && c.IsTicket == true).ToList();
+                    var tempTask = db.task.Where(c => c.enable == true && c.Created_By.id != createdBy.id && c.IsTicket == true).ToList();
                     foreach (var entity in tempTask)
                     {
                         var tag = db.tagging.Where(p => p.tasks.id == entity.id).FirstOrDefault();
@@ -376,20 +376,44 @@ namespace Task_Manager.Controllers
                             break;
                         }
                     }
-//
+                    //
                 }
 
             }
             for (int i = 0; i < tasks.Count; i++)
             {
                 taskResponse taskRes = new taskResponse();
-                taskRes.task = tasks[i];
+                taskRes.task_name = tasks[i].task_name;
+                taskRes.description = tasks[i].description;
+                taskRes.email = tasks[i].email;
+                taskRes.sms = tasks[i].sms;
+                taskRes.createdBy = tasks[i].Created_By.user_Name;
+                if(tasks[i].end_date==null)
+                   taskRes.endDate= "--";
+                else
+                    taskRes.endDate = tasks[i].end_date.Date.ToString();
+                if (tasks[i].start_date == null)
+                    taskRes.startDate = "--";
+                else
+                    taskRes.startDate = tasks[i].start_date.Date.ToString();               
+                
+                if (tasks[i].status == 0)
+                    taskRes.status = @"<select  status='onchange(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0' selected >Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
+                else if (tasks[i].status == 1)
+                    taskRes.status = @"<select  status='onchange(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1' selected >Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
+                else if (tasks[i].status == 2)
+                    taskRes.status = @"<select  status='onchange(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2' selected >InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
+                else if (tasks[i].status == 3)
+                    taskRes.status = @"<select  status='onchange(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3' selected >Complete</option><option value='4'>Closed</option></select>";
+                else
+                    taskRes.status = @"<select  status='onchange(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4' selected>Closed</option></select>";
+
+
+                taskRes.button = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='UpdateTask(" + tasks[i].id + ")'/><button  class='btn btn-danger fa fa-times' onclick='DeleteTask(" + tasks[i].id + "," + i + ")'></button> <button  class='btn btn-info fa fa-comments-o' onclick='comments(" + tasks[i].id + ")'></button>";
                 Tagging tag = new Tagging();
                 List<string> list = new List<string>();
                 int s = tasks[i].id;
-                //  tag = db.tagging.Find(tasks[i].id);
-                //  commenting for some time IReadOnlyCollection ^^
-                //int k = tag.users.Count;
+
                 tag = db.tagging.Where(p => p.tasks.id == s).FirstOrDefault();
                 if (tag != null && tag.users.Count > 0)
                 {
@@ -405,7 +429,7 @@ namespace Task_Manager.Controllers
                 {
                     list.Clear();
                 }
-               // taskRes.users = list;
+                // taskRes.users = list;
                 taskResponse.Add(taskRes);
 
             }

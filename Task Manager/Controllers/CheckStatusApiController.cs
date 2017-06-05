@@ -34,6 +34,11 @@ namespace Task_Manager.Controllers
                     status.date = ticket.created_on;
                     status.description = ticket.description;
                     status.name = ticket.task_name;
+                    status.branch_code = ticket.branch_code;
+                    status.project_name = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.Project_Name).FirstOrDefault();
+                    status.code = customerid;
+                    var projId = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.id).FirstOrDefault();
+                    status.customer_name = db.project.Where(o => o.id == projId).Select(o => o.customer.customer_name).FirstOrDefault();
                     list.Add(status);
                     return list;
 
@@ -54,8 +59,13 @@ namespace Task_Manager.Controllers
 
                             status.status = fillStatus(ticket.status);
                             status.date = ticket.created_on;
+                            status.branch_code = ticket.branch_code; 
                             status.description = ticket.description;
                             status.name = ticket.task_name;
+                            status.code = customerid;
+                            status.project_name = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.Project_Name).FirstOrDefault();
+                            var projId = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.id).FirstOrDefault();
+                            status.customer_name = db.project.Where(o => o.id == projId).Select(o => o.customer.customer_name).FirstOrDefault();
                             list.Add(status);
                         }
                     }
@@ -69,11 +79,11 @@ namespace Task_Manager.Controllers
 
         private string fillStatus(int p)
         {
-            if (p == 0)
-                return "Progress";
             if (p == 1)
                 return "Pending";
             if (p == 2)
+                return "Progress";
+            if (p == 3)
                 return "Complete";
             else
                 return "Resolved";

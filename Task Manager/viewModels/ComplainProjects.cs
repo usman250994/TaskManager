@@ -13,6 +13,7 @@ namespace Task_Manager.viewModels
         public string name { get; set; }
         public string contact { get; set; }
         public string email { get; set; }
+        public string branch_code { get; set; }
 
     }
 }

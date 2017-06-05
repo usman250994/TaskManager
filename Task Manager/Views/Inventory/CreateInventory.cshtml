@@ -71,13 +71,21 @@
                                         <input class="form-control" type="text" id="brand">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-12 spacing">
                                     <div class="col-lg-6">
                                         <label>Model</label>
                                     </div>
                                     <div class="col-lg-6">
                                         <input class="form-control" type="text" id="product_model">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6">
+                                        <label>Inward Date</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="date" id="inward_date">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -92,12 +100,11 @@
                                     <div class="col-lg-6">
                                         <label>Image</label>
                                     </div>
-                                  
+
                                     <div class="col-lg-6">
-                                        <label class="custom-file-upload">
-                                            <input type="file" id="image" />
-                                            <span>Upload Image</span>
-                                        </label>                                        
+                                        <div>
+                                            <input name="myFile" type="file" id="images" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -125,8 +132,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-6 col-lg-6 spacing">
-                                    <button class="btn btn-success" value="Add" onclick="Add()"> Create </button>
-                                    <button type="reset" class="btn btn-info" onclick="location.reload();">Reset</button>
+                                    <input type="button" class="btn btn-success" onclick="Add()" id="button" value="Create" />
+                                    <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();" />
                                 </div>
                             </div>
                             <!-- /.col-lg-6 (nested) -->
@@ -153,16 +160,27 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
-                console.log(data);
+               
                 $.each(data, function (i) {
-                    // console.log(data);
+               
                     $('#ProductCatogeryDropdown').append($('<option></option>').val(data[i].id).html(data[i].name));
                 });
             },
             error: function () { alert('Dropdown Not Load'); }
         });
     });
-
+    $('#images').on('change', function (e) {
+        var files = e.target.files;
+        //var myID = 3; //uncomment this to make sure the ajax URL works
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                Imagedata = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    Imagedata.append("file" + x, files[x]);
+                }
+            }
+        }
+    });
     function Add() {
         var radio = document.getElementById('radio').checked;
         var radio1 = document.getElementById('radio1').checked;
@@ -173,14 +191,8 @@
         else {
             radioval = "1";
         }
-        //var fd = new FormData();
-        //var files = $("#filer").get(0).files;
-
-        //if (files.lenght > 0) {
-        //    fd.append("logo", files[0]);
-        //    console.log("23232");
-        //}
-        //console.log(fd);
+        //          
+                //
         var model = {
             name: document.getElementById('productname').value.trim(),
             type: radioval,
@@ -191,9 +203,9 @@
             quantity: document.getElementById('quantity').value.trim(),
             barcode: document.getElementById('barcode').value.trim(),
             vendorName: document.getElementById('vendor').value.trim(),
-            imagepath: document.getElementById('image').value.trim(),
-            //imagepath : fd
+            inwarddate: document.getElementById('inward_date').value.trim()
         }
+       
         $.ajax({
             async: false,
             url: '/api/InventoryApi/',
@@ -201,8 +213,33 @@
             data: JSON.stringify(model),
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            success: function (data) { alert(data); location.reload() },
-            error: function () { alert(data); }
+            success: function (data) {
+
+                //another ajax call for saving image
+                //
+
+                $.ajax({
+                    type: "POST",
+                    url: '/api/UploadFileApi/',
+                    contentType: false,
+                    processData: false,
+                    data: Imagedata,
+                    success: function(result) {
+                        console.log(result);
+                    },
+                    error: function (xhr, status, p3, p4){
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+                        console.log(err);
+                    }
+                });
+                //
+
+
+                alert(data); location.reload()
+            },
+            error: function () { alert("Error"); }
         });
     }
 </script>

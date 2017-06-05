@@ -117,17 +117,27 @@
 <script type=text/javascript>
     function status(value, user) {
         var model = { value: value, user: user };
-        $.ajax({
-            async: false,
-            url: '/api/TaskApi/',
-            type: 'PUT',
-            data: model,
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-            },
-            error: function () { alert('Grid Not Load'); }
-        });
+        if (value == 0)
+     
+        {
+            if (confirm('users wil be deleted from the task Are You sure?')) {
+                // Save it!
+                $.ajax({
+                    async: false,
+                    url: '/api/TaskApi/',
+                    type: 'PUT',
+                    data: model,
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function () { alert('Grid Not Load'); }
+                });
+            } else {
+                return;
+            }
+    }
+       
     }
     $(document).ready(function () {
         $.ajax({
@@ -137,16 +147,37 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    $("#dynamic-Grid").append("<tr id=" + i + "><td>" + data[i].task.task_name + "</td><td>" + data[i].task.description + "</td><td>" + data[i].users + "</td><td>" + data[i].task.Created_By.user_Name + "</td><td>" + data[i].task.start_date.substring(0, 10) + "</td><td>" + data[i].task.end_date.substring(0, 10) + "</td><td>" + data[i].task.sms + "</td><td>" + data[i].task.email + "</td><td> <select  onchange='status(this.value," + data[i].task.id + ")' id=" + data[i].task.id + "><option value='1'>InProgress</option><option value='2'>Pending</option><option value='3'>Complete</option><option value='4'>Closed</option></select></td><td> <button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"UpdateTask(" + data[i].task.id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"DeleteTask(" + data[i].task.id + "," + i + ")\"></button> <button  class='btn btn-info fa fa-comments-o' onclick=\"comments(" + data[i].task.id + ")\"></button></td></tr>");
-                    $("select#" + data[i].task.id + " option").filter(function () {
-                        return $(this).val() == data[i].task.status;
-                    }).prop('selected', true);                  
-                }
+                filltable(data);
             },
-            error: function () { alert('Grid Not Load'); }
+            error: function () {
+                alert('Grid Not Load');
+            }
         });
     });
+    function filltable(datas) {
+        $("#dataTables-example").DataTable({
+            "aaData": datas,
+            "aoColumns": [
+                { "mDataProp": "task_name" },
+                { "mDataProp": "description" },
+                { "mDataProp": "users" },
+                { "mDataProp": "createdBy" },
+                { "mDataProp": ".startDate" },
+                { "mDataProp": "endDate" },
+                { "mDataProp": "sms" },
+                { "mDataProp": "email" },
+                { "mDataProp": "status" },
+                { "mDataProp": "button" }
+
+               
+
+            ]
+        });
+
+    }
+
+
+
     function DeleteTask(id,rId) {
         if (confirm('Are You Sure! You Want to Delete This Task')) {
             $.ajax({
@@ -158,6 +189,7 @@
 
 
                     $('table#dataTables-example tr#' + rId).remove();
+                    location.reload();
                 },
                 error: function (data) { alert(data); }
             });

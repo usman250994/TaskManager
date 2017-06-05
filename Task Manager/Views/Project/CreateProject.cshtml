@@ -115,8 +115,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-6 col-lg-6 spacing">
-                                    <button class="btn btn-success" value="Add" onclick="Add()" id="bc"> Create </button>
-                                    <button type="reset" class="btn btn-info">Reset</button>
+                                    <input type="button" class="btn btn-success" onclick="Add()" id="button" value="Create" />
+                                    <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();">
                                 </div>
 
                             </div>
@@ -139,34 +139,27 @@
     // Fill DropDown
 
     $(document).ready(function () {
-
-        //$.ajax({
-        //    async: false,
-        //    url: '/api/ProjectApi/',
-        //    type: 'GET',
-        //    success: function (data) {
-        //        console.log(data);
-        //        $.each(data, function (i) {
-        //            console.log(data);
-        //            $('#ProjectDropdown').append($('<option></option>').val(data[i].customerId).html(data[i].customer_name));
-        //        });
-
         $.ajax({
-            async: true,
+            async: false,
             url: '/api/ProjectApi/',
             type: 'PUT',
             success: function (data) {
-                console.log(data);
-
+                var select = document.getElementById('ProjectManagerDropdown');
                 $.each(data.candidsForProjManager, function (i) {
-                    // console.log(data);
-                    $('#ProjectManagerDropdown').append($('<option></option>').val(data.candidsForProjManager[i].id).html(data.candidsForProjManager[i].user_Name));
+                    var option = document.createElement('option');
+                    option.text = data.candidsForProjManager[i].user_Name;
+                    option.value = data.candidsForProjManager[i].id;
+                    select.add(option);
+                    //$('#ProjectManagerDropdown').append($('<option></option>').val(data.candidsForProjManager[i].id).html(data.candidsForProjManager[i].user_Name));
                 });
-
-
+                select = document.getElementById('ProjectDropdown');
                 $.each(data.cust, function (i) {
-                    // console.log(data);
-                    $('#ProjectDropdown').append($('<option></option>').val(data.cust[i].customerId).html(data.cust[i].customer_name));
+                  //  $('#ProjectDropdown').append($('<option></option>').val(data.cust[i].customerId).html(data.cust[i].customer_name));
+                    var option = document.createElement('option');
+                    option.text = data.cust[i].customer_name;
+                    option.value = data.cust[i].customerId;
+                    select.add(option);
+
                 });
                 if (data.proj != null) {
                     console.log(data.proj)
@@ -182,6 +175,7 @@
                     document.getElementById("Address").value = data.proj.customerContactDetail.address;
                     document.getElementById("proj_id").value = data.proj.id;
                     document.getElementById("ProjectManagerDropdown").value = data.proj.projectManager.id;
+                    document.getElementById("button").value = "Update";
 
                 }
                 else {
@@ -202,14 +196,9 @@
             }
         });
 
-        //    },
-        //    failure: function () {
-        //        alert("Failed to load Customers");
-        //    }
-        //});
+      
     });
-    //add user button press for adding or updating db
-    //need correction when updating probably
+    
     function Add() {
         var Pname = document.getElementById("ProjName").value.trim();
         var Sdate = document.getElementById("StartDate").value.trim();

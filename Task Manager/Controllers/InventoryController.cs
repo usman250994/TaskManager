@@ -38,6 +38,23 @@ namespace Task_Manager.Controllers
                 return RedirectToAction("Index", "Home");
 
             }
+        
         }
+        public ActionResult ViewInventoryDetail()
+        {
+            var roles_Id = Session["role_id"].ToString();
+            Session["task_id"] = null;
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
+            {
+                ViewData["id"] = roles_Id;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
+        }
+
     }
 }

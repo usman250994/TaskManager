@@ -83,7 +83,7 @@ input[type="search"] {
     border-radius: 4px;
 }
 /*------------------------------------Start Chating Css ------------------------------------------*/
-input[type="file"] {
+/*input[type="file"] {
     display: none;
 }
 
@@ -96,7 +96,7 @@ input[type="file"] {
 
     .custom-file-upload:hover {
         background-color: dimgrey;
-    }
+    }*/
 
 #back {
     margin-left: 50%;

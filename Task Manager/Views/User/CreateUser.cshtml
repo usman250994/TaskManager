@@ -91,8 +91,8 @@
                                 </div>
                                 <div class="col-lg-offset-6 col-lg-6 spacing">
 
-                                    <button onclick="Add()" id="upd" class="btn btn-success"> Create User </button>
-                                    <button class="btn btn-info" onclick="location.reload();">Reset</button>
+                                    <input type="button" class="btn btn-success" onclick="Add()" id="button" value="Create" />
+                                    <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();">
                                 </div>
 
                             </div>
@@ -127,13 +127,6 @@
             alert('Dropdown Position Not Loaded');
         }
     });
-
-
-
-
-
-
-
     $.ajax({
         async: false,
         url: '/api/UserApi/',
@@ -154,7 +147,7 @@
                         document.getElementById("Email").value = data.Email;
                         document.getElementById("Position").value = data.Roles_id.id;
                         document.getElementById("UpdID").value = data.id;
-                        document.getElementById("upd").value = "Update";
+                        document.getElementById("button").value = "Update";
                         console.log(data);
                     },
                     error: function () {
@@ -235,7 +228,5 @@
         //            alert(x + '\n' + y + '\n' + z);
         //        }
         //    }); }
-
-
     }
 </script>

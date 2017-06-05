@@ -23,5 +23,8 @@ namespace Task_Manager.Models
         public virtual Users user { get; set; }
         public string image { get; set; }
         public bool enable { get; set; }
+        public DateTime inward_date { get; set; }
+        public DateTime created_on { get; set; }
+
     }
 }

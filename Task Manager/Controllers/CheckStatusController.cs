@@ -11,6 +11,7 @@ namespace Task_Manager.Controllers
         // GET: CheckStatus
         public ActionResult Index()
         {
+            
             return View();
         }
     }

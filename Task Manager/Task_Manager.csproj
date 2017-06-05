@@ -205,15 +205,16 @@
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TicketApiController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="Controllers\UploadFileApiController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705271123512_Image_Upload.cs" />
-    <Compile Include="Migrations\201705271123512_Image_Upload.Designer.cs">
-      <DependentUpon>201705271123512_Image_Upload.cs</DependentUpon>
+    <Compile Include="Migrations\201706020626367_product.cs" />
+    <Compile Include="Migrations\201706020626367_product.Designer.cs">
+      <DependentUpon>201706020626367_product.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="viewModels\ticketStatus.cs" />
     <Compile Include="viewModels\updateOrCreateDropDown.cs" />
     <Compile Include="viewModels\userRequest.cs" />
+    <Compile Include="viewModels\Views\viewUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -383,6 +385,7 @@
     <None Include="Properties\PublishProfiles\usman.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\bg.jpg" />
+    <Content Include="Product_Image\apple.jpg" />
     <Content Include="Scripts\chatscript.js" />
     <Content Include="Scripts\gen_validatorv4.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -473,6 +476,7 @@
     <Content Include="Views\Inventory\ViewInventory.cshtml" />
     <Content Include="Views\CheckStatus\Index.cshtml" />
     <Content Include="Views\Shared\Nonuser.cshtml" />
+    <Content Include="Views\Inventory\ViewInventoryDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -481,8 +485,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705271123512_Image_Upload.resx">
-      <DependentUpon>201705271123512_Image_Upload.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706020626367_product.resx">
+      <DependentUpon>201706020626367_product.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

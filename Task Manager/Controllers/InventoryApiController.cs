@@ -29,8 +29,7 @@ namespace Task_Manager.Controllers
             {
                 var picture = System.Web.HttpContext.Current.Request.Files["logo"];
             }
-            
-            string path = "E:\\Task Manager\\Product _Images";
+
             Product pro = new Product();
             var session = HttpContext.Current.Session;
             pro.enable = true;
@@ -40,8 +39,11 @@ namespace Task_Manager.Controllers
             pro.quantity = prod.quantity;
             pro.user = db.user.Find(Convert.ToInt32(session["UserID"]));
             pro.category = db.caterory.Find(prod.catogrey);
+            pro.inward_date = prod.inwarddate;
+            pro.created_on = DateTime.Now;
             pro.description = prod.description;
-             pro.image = path+prod.imagepath;
+           
+      
             pro.id = 0;
             if (prod.type == 0)
                 pro.islocal = true;
@@ -51,9 +53,13 @@ namespace Task_Manager.Controllers
             pro.vendor_name = prod.name;
 
             db.product.Add(pro);
-
+     
             if (db.SaveChanges() > 0)
             {
+            var id = db.product.OrderByDescending(p => p.id).FirstOrDefault().id;
+
+                pro.image = "~/Images/" + id + ".jpg";
+                db.SaveChanges();
                 return "Product Detail Added";
             }
 
@@ -65,7 +71,7 @@ namespace Task_Manager.Controllers
         {
             List<responseInventory> res = new List<responseInventory>();
 
-          
+
 
             var prod = db.product.Where(p => p.enable == true).ToList();
             foreach (var entity in prod)
@@ -77,12 +83,66 @@ namespace Task_Manager.Controllers
                 respon.catogrey = entity.category.name;
                 respon.description = entity.description;
                 respon.name = entity.product_name;
-                respon.type = entity.islocal;
+                respon.inward = entity.inward_date;
+                if (entity.islocal == true)
+                {
+                    respon.type = "Local";
+                }
+                else
+                {
+                    respon.type = "Imported";
+                }
+                //  respon.type = entity.islocal;
                 respon.vendorName = entity.vendor_name;
                 respon.model = entity.model;
+                respon.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + entity.id + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + entity.id + ")'/> <button  style= margin-right: 5px;   class='btn btn-Primary  fa fa-eye' onclick='Detailproduct(" + entity.id + ")'/>";
                 res.Add(respon);
             }
             return res;
         }
+
+        [HttpPost]
+        public int set(int id)
+        {
+            var Session = HttpContext.Current.Session;
+            Session["Product_id"] = id;
+            return 0;
+        }
+        [HttpGet]
+        public Product DetailProduct( int id)
+        {
+            var Session = HttpContext.Current.Session;
+            string abc = Session["Product_id"].ToString();
+            Product prod = new Product();
+            prod = db.product.Find(Convert.ToInt32(abc));
+            return prod;
+        }
+
+        //public HttpResponseMessage Post()
+        //{
+        //    HttpResponseMessage result = null;
+        //    var httpRequest = HttpContext.Current.Request;
+        //    if (httpRequest.Files.Count > 0)
+        //    {
+        //        var docfiles = new List<string>();
+        //        foreach (string file in httpRequest.Files)
+        //        {
+        //            var postedFile = httpRequest.Files[file];
+        //            var filePath = HttpContext.Current.Server.MapPath("~/Product_Image/" + postedFile.FileName);
+        //            postedFile.SaveAs(filePath);
+
+        //            docfiles.Add(filePath);
+        //        }
+        //        result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
+        //    }
+        //    else
+        //    {
+        //        result = Request.CreateResponse(HttpStatusCode.BadRequest);
+        //    }
+        //    return result;
+        //}
+
+
+
     }
 }

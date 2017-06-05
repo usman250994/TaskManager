@@ -83,7 +83,7 @@
                                         <input class="form-control" type="text" id="user_name">
                                     </div>
                                 </div>
-                                <div class="col-lg-12 spacing">
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
                                     <div class="col-lg-6 ">
                                         <label>Email</label>
                                     </div>
@@ -91,16 +91,16 @@
                                         <input class="form-control" type="text" id="Email">
                                     </div>
                                 </div>
-                                <div class="col-lg-12 spacing">
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
                                     <div class="col-lg-6">
                                         <label>Mobile Number</label>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 ">
                                         <div class="col-lg-2"><label class="abc">+92</label></div>
                                         <div class="col-lg-10"><input class="form-control" type="number" id="MobileNo" placeholder="3001234567" required="required"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 spacing">
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
                                     <div class="col-lg-6 ">
                                         <label>Customer Code</label>
                                     </div>
@@ -108,7 +108,7 @@
                                         <input class="form-control" type="number" id="custcode" placeholder="12345" onfocusout="DDL(this.value)">
                                     </div>
                                 </div>
-                                <div class="col-lg-12 spacing">
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
                                     <div class="col-lg-6">
                                         <label>Project Name</label>
                                     </div>
@@ -116,11 +116,19 @@
                                         <select id="ProjectDropdown" class="ddlproject"></select>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 spacing">
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
+                                    <div class="col-lg-6 ">
+                                        <label>Location / Branch code</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" id="branchcode">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
                                     <div class="col-lg-6">
                                         <label>Issue</label>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6" style="padding-top:5px;">
                                         <textarea class="form-control" type="text" id="Desc" cols="22" rows="2" style="margin-bottom:5px;"> </textarea>
                                     </div>
                                 </div>
@@ -195,7 +203,7 @@
         else if (issue == "") { alert("Please Enter the issue"); }
         else
         {
-            var model = { name: $("#user_name").val(), email: $("#Email").val(), contact: $("#MobileNo").val(), customerId: $("#custcode").val(), projectId: $("#ProjectDropdown").val(), issue: $("#Desc").val() };
+            var model = { name: $("#user_name").val(), email: $("#Email").val(), contact: $("#MobileNo").val(), customerId: $("#custcode").val(), projectId: $("#ProjectDropdown").val(), issue: $("#Desc").val(), branch_code: $("#branchcode").val() };
             console.log(model);
             $.ajax({
                 async: false,

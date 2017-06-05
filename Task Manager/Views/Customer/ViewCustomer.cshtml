@@ -82,8 +82,8 @@
         $("#dataTables-example").DataTable({
             "aaData": datas,
             "aoColumns": [
-                { "mDataProp": "name" },
                 { "mDataProp": "code" },
+                { "mDataProp": "name" },
                 { "mDataProp": "address" },
                 { "mDataProp": "contact" },
                 { "mDataProp": "website" },
@@ -103,9 +103,8 @@
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     alert(data);
-
-
                     $('table#dataTables-example tr#' + rId).remove();
+                    location.reload();
                 },
                 error: function (data) { alert(data); }
             });

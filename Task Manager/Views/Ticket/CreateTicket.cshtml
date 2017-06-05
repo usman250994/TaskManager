@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="col-lg-6 ">
                                         <input type="hidden" id="cust_id" value="0" />
-                                        <input class="form-control" type="text" id="ticketName" placeholder="Example">
+                                        <input class="form-control" type="text" id="ticketName" >
                                     </div>
                                 </div>
 
@@ -99,8 +99,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-6 col-lg-6 spacing">
-                                    <button class="btn btn-success" value="Add" onclick="Add()" id="bc"> Create </button>
-                                    <button type="reset" class="btn btn-info" onclick="location.reload();">Reset</button>
+                                    <input type="button" class="btn btn-success" onclick="Add()" id="button" value="Create" />
+                                    <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();">
                                 </div>
 
                             </div>
@@ -129,7 +129,7 @@
         globalProjects = [];
         dat = [];
         $.ajax({
-            async: true,
+            async: false,
             url: '/api/TicketApi/' + "0",
             type: 'GET',
             success: function (data) {
@@ -150,10 +150,11 @@
                     console.log(data.task);
                     document.getElementById("tick_id").value = data.task.id
                     document.getElementById("ticketName").value = data.task.task_name;
-                    document.getElementById("CustomerDropdown").value = data.task.description;
+                    document.getElementById("CustomerDropdown").value = data.projectId;
                     document.getElementById("Desc").value = data.task.description;
                     document.getElementById("chkSMS").checked = data.task.sms;
                     document.getElementById("chkEmail").checked = data.task.email;
+                    document.getElementById("button").value = "Update";
                     $('#test').val(data.tags).trigger('change');
                 }
             },

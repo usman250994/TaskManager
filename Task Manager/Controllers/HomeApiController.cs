@@ -65,7 +65,7 @@ namespace Task_Manager.Controllers
             Task task = new Task();
             task.id = 0;
             task.enable = true;
-            task.task_name = "ticket";
+            task.task_name = ticket.name;
             task.description = ticket.issue;
             task.created_on = DateTime.Now;
             var usr = db.user.Find(5);
@@ -73,7 +73,8 @@ namespace Task_Manager.Controllers
             task.sms = false;
             task.email = false;
             task.IsTicket = true;
-            task.status = 0;
+            task.status = 1;
+            task.branch_code = ticket.branch_code;
             task.start_date = DateTime.Now;
             task.end_date = DateTime.Now;
             db.task.Add(task);
@@ -103,7 +104,7 @@ namespace Task_Manager.Controllers
 
             if (db.SaveChanges() > 0)
             {
-                return "Ticket is successfully Generated!! you will be cotacted Soon! Please Note Your Complaint ID:" + task.id;
+                return "Ticket is successfully Generated!! you will be cotacted Soon! Please Note Your Ticket Number:" + task.id;
             }
             else
             {

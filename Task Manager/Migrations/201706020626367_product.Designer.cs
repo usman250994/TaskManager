@@ -7,13 +7,13 @@ namespace Task_Manager.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Image_Upload : IMigrationMetadata
+    public sealed partial class product : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Image_Upload));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(product));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705271123512_Image_Upload"; }
+            get { return "201706020626367_product"; }
         }
         
         string IMigrationMetadata.Source
