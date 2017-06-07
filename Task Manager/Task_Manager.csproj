@@ -187,6 +187,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\angularApiController.cs" />
     <Compile Include="Controllers\CheckStatusApiController.cs" />
     <Compile Include="Controllers\CheckStatusController.cs" />
     <Compile Include="Controllers\CustomerApiController.cs" />
@@ -255,6 +256,7 @@
     <Compile Include="viewModels\response\taskResponse.cs" />
     <Compile Include="viewModels\response\ViewCustomer.cs" />
     <Compile Include="viewModels\status.cs" />
+    <Compile Include="viewModels\tagUsersView.cs" />
     <Compile Include="viewModels\tempTask.cs" />
     <Compile Include="viewModels\tempUser.cs" />
     <Compile Include="viewModels\TicketInitialrespone.cs" />
@@ -268,6 +270,7 @@
     <Content Include="Content\demo.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\multiple-select.min.css" />
     <Content Include="Content\select2-bootstrap.css" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\style.css" />
@@ -385,6 +388,8 @@
     <None Include="Properties\PublishProfiles\usman.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\bg.jpg" />
+    <Content Include="Scripts\angular-ui-select2.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\chatscript.js" />
     <Content Include="Scripts\gen_validatorv4.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -401,6 +406,7 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\multiple-select.min.js" />
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\Theme JS\bootstrap-multiselect.js" />
     <Content Include="Scripts\Theme JS\bootstrap.js" />
@@ -475,6 +481,7 @@
     <Content Include="Views\Inventory\ViewInventory.cshtml" />
     <Content Include="Views\CheckStatus\Index.cshtml" />
     <Content Include="Views\Shared\Nonuser.cshtml" />
+    <Content Include="Views\Inventory\ViewInventoryDetai0l.cshtml" />
     <Content Include="Views\Inventory\ViewInventoryDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>

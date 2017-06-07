@@ -18,8 +18,8 @@
     }
 
 }
-<link href="~/Content/select2.css" rel="stylesheet" />
-<link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
+@*<link href="~/Content/select2.css" rel="stylesheet" />
+<link href="~/Content/select2-bootstrap.css" rel="stylesheet" />*@
 <div id="wrapper">
     <!-- Navigation -->
     <div id="page-wrapper">
@@ -30,15 +30,15 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        <div class="row">
+        <div class="row" ng-app="ticket">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Create Tickets
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" ng-controller="tickctrl">
                         <div class="row">
-                            <div class=" col-lg-offset-3  col-lg-6">
+                            <div class=" col-lg-offset-3 col-lg-6">
                                 <div class="col-lg-12 spacing">
                                     <div class="col-lg-6 ">
                                         <label>Name</label>
@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="col-lg-6 ">
                                         <input type="hidden" id="cust_id" value="0" />
-                                        <input class="form-control" type="text" id="ticketName" >
+                                        <input class="form-control" type="text" value="{{task.task.task_name}}" >
                                     </div>
                                 </div>
 
@@ -55,7 +55,9 @@
                                         <label>Customer Name</label>
                                     </div>
                                     <div class="col-lg-6 ">
-                                        <select id="CustomerDropdown" onchange="getval(this);"></select>
+                                        <select name="repeatSelect" id="repeatSelect" ng-model="customerSelected">
+                                            <option ng-repeat="customer in customers" value="{{customer.customerId}}">{{customer.name}}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -63,7 +65,9 @@
                                         <label>Project Name</label>
                                     </div>
                                     <div class="col-lg-6 ">
-                                        <select id="ProjectDropdown"></select>
+                                        <select name="repeatSelect" id="repeatSelect" ng-model="projectSelected">
+                                            <option ng-repeat="project in projects" value="{{project.id}}" ng-selected="5=={{project.id}}">{{project.projectName}}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -71,7 +75,7 @@
                                         <label>Issue</label>
                                     </div>
                                     <div class="col-lg-6">
-                                        <textarea class="form-control" type="text" id="Desc" cols="22" rows="2"> </textarea>
+                                        <textarea class="form-control" type="text" id="Desc" cols="22" rows="2"> {{task.task.description}}</textarea>
                                     </div>
                                 </div>
 
@@ -81,7 +85,10 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dropdown">
-                                            <select id="test" multiple="multiple"></select>
+                                            <multiple-autocomplete ng-model="selectedList"
+                                                                   object-property="name"
+                                                                   suggestions-arr="optionsList">
+                                            </multiple-autocomplete>
                                         </div>
                                     </div>
                                 </div>
@@ -120,51 +127,84 @@
     </div>
     <!-- /#page-wrapper -->
 </div>
-<script src="~/Scripts/select2.js"></script>
+
+<script src="~/Scripts/angular.min.js"></script>
 <script type="text/javascript">
 
+    var app = angular.module("ticket", ['multipleSelect']);
 
+    app.controller("tickctrl", function ($scope,$http) {
 
-    $(document).ready(function () {
-        globalProjects = [];
-        dat = [];
-        $.ajax({
-            async: false,
-            url: '/api/TicketApi/' + "0",
-            type: 'GET',
-            success: function (data) {
-                console.log(data);
-                $.each(data.dropdowns.customer, function (i) {
-                    $('#CustomerDropdown').append($('<option></option>').val(data.dropdowns.customer[i].customerId).html(data.dropdowns.customer[i].customer_name));
-                });
-                globalProjects = data.dropdowns.projects;
-                $.each(data.dropdowns.projects, function (i) {
-                    $('#ProjectDropdown').append($('<option></option>').val(data.dropdowns.projects[i].id).html(data.dropdowns.projects[i].Project_Name));
-                });
-                for (var i = 0; i < data.dropdowns.Users.length; i++) {
-                    var obj = { id: data.dropdowns.Users[i].id, text: data.dropdowns.Users[i].user_Name }
-                    dat.push(obj);
-                }
-                $("#test").select2({ theme: "bootstrap", data: dat });
-                if (data.task != null) {
-                    console.log(data.task);
-                    document.getElementById("tick_id").value = data.task.id
-                    document.getElementById("ticketName").value = data.task.task_name;
-                    document.getElementById("CustomerDropdown").value = data.projectId;
-                    document.getElementById("Desc").value = data.task.description;
-                    document.getElementById("chkSMS").checked = data.task.sms;
-                    document.getElementById("chkEmail").checked = data.task.email;
-                    document.getElementById("button").value = "Update";
-                    $('#test').val(data.tags).trigger('change');
-                }
-            },
-            failure: function () {
-                alert("Failed to load Projects");
-            }
+        $scope.message = $http.get('/api/angularApi/').then(function (response) {
+            $scope.task = response.data;
+            $scope.selectedList = $scope.task.tags;
+            console.log($scope.task.projectId);
         });
 
+        $scope.message = $http.get('/api/CustomerApi/').then(function (response) {
+            $scope.customers = response.data;
+       
 
+
+        });
+
+        $scope.message = $http.get('/api/ProjectApi/').then(function (response) {
+            $scope.projects = response.data;
+         
+       
+        });
+
+        $scope.message = $http.post('/api/angularApi/').then(function (response) {
+            $scope.optionsList  = response.data;
+      
+
+         
+
+        });
     });
+
+
+
+    //$(document).ready(function () {
+    //    globalProjects = [];
+    //    dat = [];
+    //    $.ajax({
+    //        async: true,
+    //        url: '/api/TicketApi/'+0,
+    //        type: 'GET',
+    //        success: function (data) {
+    //            console.log(data);
+    //            $.each(data.dropdowns.customer, function (i) {
+    //                $('#CustomerDropdown').append($('<option></option>').val(data.dropdowns.customer[i].customerId).html(data.dropdowns.customer[i].customer_name));
+    //            });
+    //            globalProjects = data.dropdowns.projects;
+    //            $.each(data.dropdowns.projects, function (i) {
+    //                $('#ProjectDropdown').append($('<option></option>').val(data.dropdowns.projects[i].id).html(data.dropdowns.projects[i].Project_Name));
+    //            });
+    //            for (var i = 0; i < data.dropdowns.Users.length; i++) {
+    //                var obj = { id: data.dropdowns.Users[i].id, text: data.dropdowns.Users[i].user_Name }
+    //                dat.push(obj);
+    //            }
+    //            $("#test").select2({ theme: "bootstrap", data: dat });
+    //            if (data.task != null) {
+    //                console.log(data.task);
+    //                document.getElementById("tick_id").value = data.task.id
+    //                document.getElementById("ticketName").value = data.task.task_name;
+    //                document.getElementById("CustomerDropdown").value = data.projectId;
+    //                document.getElementById("Desc").value = data.task.description;
+    //                document.getElementById("chkSMS").checked = data.task.sms;
+    //                document.getElementById("chkEmail").checked = data.task.email;
+    //                document.getElementById("button").value = "Update";
+    //                $('#test').val(data.tags).trigger('change');
+    //            }
+    //        },
+    //        failure: function () {
+    //            alert("Failed to load Projects");
+    //        }
+    //    });
+
+
+    //});
     //add user button press for adding or updating db
     //need correction when updating probably
     function Add() {
@@ -198,19 +238,19 @@
             dataType: "json",
             success: function (data) {
                 alert(data);
-                document.getElementById("tick_id").value="",
+                document.getElementById("tick_id").value = "",
                  document.getElementById("ticketName").value = "",
                  document.getElementById("Desc").value = "",
                 // document.getElementById('#tick_id').value = "",
                 // document.getElementById('#tick_id').value = "",
-             
+
                 //$("#ProjectDropdown").val()= null,
-            
-                document.getElementById("chkEmail").checked="",
-                document.getElementById("chkSMS").checked = ""          
+
+                document.getElementById("chkEmail").checked = "",
+                document.getElementById("chkSMS").checked = ""
             },
             error: function (error) { alert(error); }
-    });
+        });
 
 
 
@@ -229,13 +269,6 @@
                 option.text = globalProjects[i].Project_Name;
                 option.value = globalProjects[i].id;
                 document.getElementById('ProjectDropdown').add(option);
-
             }
-
-
-        }
-
-
-
-    }
+    }}
 </script>

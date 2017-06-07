@@ -16,10 +16,9 @@ namespace Task_Manager.Controllers
         TaskContext db = new TaskContext();
 
         // Grid Status Fill Dropdown
-        [Route("/api/TaskApi/"), HttpPut]
+        [HttpPut]
         public String fillDropDown(status stat)
         {
-
             db.task.Find(stat.user).status = stat.value;
             if (db.SaveChanges() == 1)
             {
@@ -32,7 +31,7 @@ namespace Task_Manager.Controllers
         }
 
         ////session set
-        [Route("/api/TaskApi/"), HttpPut]
+        [HttpPut]
         public int set(int id)
         {
             var session = HttpContext.Current.Session;
@@ -60,17 +59,17 @@ namespace Task_Manager.Controllers
                     taggedUsers.Add(entity.id);
                 }
                 //
-                var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.id).FirstOrDefault();
+                var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.Project_Name).FirstOrDefault();
 
                 returning.task = task;
-                returning.tags = taggedUsers;
-                returning.projectId = pid;
-                returning.dropdowns = find();
+              //  returning.tags = taggedUsers;
+            //    returning.projectId = pid;
+              //  returning.dropdowns = find();
                 return returning;
             }
             else
             {
-                returning.dropdowns = find();
+               // returning.dropdowns = find();
                 return returning;
             }
         }
@@ -216,7 +215,7 @@ namespace Task_Manager.Controllers
         }
 
         //// For Grid Data
-        [Route("/api/TaskApi"), HttpGet]
+        [HttpGet]
         public List<taskResponse> taskall()
         {
             List<Task> tasks = new List<Task>();
@@ -383,6 +382,7 @@ namespace Task_Manager.Controllers
             for (int i = 0; i < tasks.Count; i++)
             {
                 taskResponse taskRes = new taskResponse();
+                taskRes.ticket_name = tasks[i].id;
                 taskRes.task_name = tasks[i].task_name;
                 taskRes.description = tasks[i].description;
                 taskRes.email = tasks[i].email;

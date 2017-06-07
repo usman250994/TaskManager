@@ -136,6 +136,7 @@ namespace Task_Manager.Controllers
                 for (int i = 0; i < list.Count; i++)
                 {
                     viewUser users = new viewUser();
+                    users.id = list[i].id;
                     users.name = list[i].user_Name;
                     users.userType = list[i].Roles_id.role_name;
                     users.address = list[i].Address;

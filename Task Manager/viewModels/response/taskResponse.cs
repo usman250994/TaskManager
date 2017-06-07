@@ -8,7 +8,7 @@ namespace Task_Manager.viewModels.response
 {
     public class taskResponse
     {
-      
+        public int ticket_name { get; set; }
         public string task_name { get; set; }
         public string description { get; set; }
         public string createdBy { get; set; }
@@ -17,7 +17,7 @@ namespace Task_Manager.viewModels.response
         public bool sms { get; set; }
         public bool email { get; set; }
         public string users { get; set; }
-      //  public string notify{get;set;}
+        //  public string notify{get;set;}
         public string status { get; set; }
         public string button { get; set; }
 

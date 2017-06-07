@@ -36,6 +36,7 @@
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                             <tr>
+                                <th>Ticket Number</th>
                                 <th>Task Name</th>
                                 <th>Description</th>
                                 <th>Assigned To</th>
@@ -83,7 +84,8 @@
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            success: function (data) {            
+            success: function (data) {
+                console.log(data);
                 filltable(data);
             },
             error: function () { alert('Grid Not Load'); }
@@ -111,7 +113,7 @@
             url: '/api/TicketApi/' + id,
             type: 'PUT',
             success: function (data) {
-                window.location.href = '/Ticket/CreateTicket';
+                 window.location.href = '/Ticket/CreateTicket';
             },
             error: function () {
                 alert(data);
@@ -136,6 +138,7 @@
         $("#dataTables-example").DataTable({
             "aaData": datas,
             "aoColumns": [
+                { "mDataProp": "ticket_name" },
                 { "mDataProp": "task_name" },
                 { "mDataProp": "description" },
                 { "mDataProp": "users" },

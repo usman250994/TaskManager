@@ -19,16 +19,12 @@ namespace Task_Manager.Controllers
         [Route("/api/TaskApi/"), HttpPut]
         public String fillDropDown(status stat)
         {
-
             db.task.Find(stat.user).status = stat.value;
-
-
             if (stat.value == 0)
             {
                 db.tagging.Find(stat.user).users.Clear();
 
             }
-
             if (db.SaveChanges() > 0)
             {
                 return "DONE";
@@ -68,17 +64,17 @@ namespace Task_Manager.Controllers
                     taggedUsers.Add(entity.id);
                 }
                 //
-                var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.id).FirstOrDefault();
+                var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.Project_Name).FirstOrDefault();
 
                 returning.task = task;
-                returning.tags = taggedUsers;
-                returning.projectId = pid;
-                returning.dropdowns = find();
+              //  returning.tags = taggedUsers;
+              //  returning.projectId = pid;
+               // returning.dropdowns = find();
                 return returning;
             }
             else
             {
-                returning.dropdowns = find();
+               // returning.dropdowns = find();
                 return returning;
             }
         }

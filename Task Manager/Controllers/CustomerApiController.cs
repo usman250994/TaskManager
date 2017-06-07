@@ -71,6 +71,7 @@ namespace Task_Manager.Controllers
                 for (int i = 0; list.Count > i; i++)
                 {
                     ViewCustomer viewcustomer = new ViewCustomer();
+                    viewcustomer.id = list[i].customerId;
                     viewcustomer.code = list[i].city_code;
                     viewcustomer.name = list[i].customer_name;
                     viewcustomer.address = list[i].address;

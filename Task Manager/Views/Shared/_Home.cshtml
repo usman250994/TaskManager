@@ -17,12 +17,11 @@
     <!-- Custom Fonts -->
     <link href="../Content/Theme CSS/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
     <link href="../Content/Theme CSS/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="../Content/Theme CSS/dataTables.responsive.css" rel="stylesheet" type="text/css">
     <script src="~/Scripts/Theme JS/jquery.min.js"></script>
-
-
+    <link href="~/Content/multiple-select.min.css" rel="stylesheet" />
+   
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -182,10 +181,13 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../Scripts/Theme JS/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
-    <script src="~/Scripts/Theme JS/sb-admin-2.js"></script>
+
+    <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/Theme JS/dataTables.responsive.js"></script>
     <script src="~/Scripts/Theme JS/dataTables.bootstrap.js"></script>
     <script src="~/Scripts/Theme JS/jquery.dataTables.js"></script>
+    <script src="~/Scripts/Theme JS/sb-admin-2.js"></script>
+    <script src="~/Scripts/multiple-select.min.js"></script>
     <script src="~/Scripts/Theme JS/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -194,7 +196,7 @@
                 processing: true,
                 deferloading: 57,
                 retrieve: true,
-             //   paging: false
+                //   paging: false
             });
         });
     </script>

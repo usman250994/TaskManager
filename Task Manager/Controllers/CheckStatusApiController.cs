@@ -79,6 +79,8 @@ namespace Task_Manager.Controllers
 
         private string fillStatus(int p)
         {
+            if (p == 0)
+                return "UnAssigned";
             if (p == 1)
                 return "Pending";
             if (p == 2)
@@ -86,7 +88,7 @@ namespace Task_Manager.Controllers
             if (p == 3)
                 return "Complete";
             else
-                return "Resolved";
+                return "Closed";
         }
     }
 }

@@ -111,8 +111,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-offset-6 col-lg-6 spacing">
-                                    <input type="button" class="btn btn-success" onclick="Add()" id="button" value="Create" />
-                                    <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();">
+                                    <button class="btn btn-success" value="Add" onclick="Add()"> Create Task </button>
+                                    <button type="reset" class="btn btn-info" onclick="location.reload();">Reset Task</button>
                                     <input type="hidden" value="0" id="secid" />
                                 </div>
                             </div>
@@ -167,7 +167,6 @@
                     document.getElementById("Desc").value = data.task.description;
                     document.getElementById("chkSMS").checked = data.task.sms;
                     document.getElementById("chkEmail").checked = data.task.email;
-                    document.getElementById("button").value = "Update";
                     $('#test').val(data.tags).trigger('change');
                 }
             },

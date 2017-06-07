@@ -140,7 +140,7 @@
 
     $(document).ready(function () {
         $.ajax({
-            async: false,
+            async: true,
             url: '/api/ProjectApi/',
             type: 'PUT',
             success: function (data) {
