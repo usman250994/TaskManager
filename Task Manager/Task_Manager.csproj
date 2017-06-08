@@ -259,6 +259,7 @@
     <Compile Include="viewModels\response\ViewCustomer.cs" />
     <Compile Include="viewModels\status.cs" />
     <Compile Include="viewModels\tagUsersView.cs" />
+    <Compile Include="viewModels\tempProj.cs" />
     <Compile Include="viewModels\tempTask.cs" />
     <Compile Include="viewModels\tempUser.cs" />
     <Compile Include="viewModels\TicketInitialrespone.cs" />

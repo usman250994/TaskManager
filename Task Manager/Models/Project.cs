@@ -19,5 +19,9 @@ namespace Task_Manager.Models
         public virtual CustomerContactDetail customerContactDetail { get; set; }
         public virtual Users projectManager { get; set; }
         public bool Enable { get; set; }
+
+
+      
+        
     }
 }

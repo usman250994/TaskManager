@@ -67,6 +67,17 @@ namespace Task_Manager.Controllers
         }
 
 
+
+        [HttpDelete]
+        public void statusoftask(status stat)
+        {
+           var task= db.task.Find(stat.user);
+           task.status = stat.value;
+           db.SaveChanges();
+        
+        }
+
+
         [HttpPost]
         public List<dropProd> gethem(int id)
         {

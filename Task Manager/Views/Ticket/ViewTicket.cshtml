@@ -133,7 +133,21 @@
             error: function () { console.log("Code Not Ok!"); }
         });
     }
+    function status(val, id) {
+        var model = { value: val, user: id };
+        $.ajax({
+            async: true,
+            url: '/api/angularApi/',
+            type: 'DELETE',
+            data: JSON.stringify(model),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                console.log("success");
+            },
+            error: function () { console.log("Code Not Ok!"); }
+        });
 
+    }
     function filltable(datas) {
         $("#dataTables-example").DataTable({
             "aaData": datas,
@@ -154,6 +168,7 @@
 
             ]
         });
-
+        
     }
+  
 </script>

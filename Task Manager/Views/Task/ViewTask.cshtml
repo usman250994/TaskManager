@@ -117,9 +117,7 @@
 <script type=text/javascript>
     function status(value, user) {
         var model = { value: value, user: user };
-        if (value == 0)
-     
-        {
+        if (value == 0) {
             if (confirm('users wil be deleted from the task Are You sure?')) {
                 // Save it!
                 $.ajax({
@@ -136,8 +134,8 @@
             } else {
                 return;
             }
-    }
-       
+        }
+
     }
     $(document).ready(function () {
         $.ajax({
@@ -169,7 +167,7 @@
                 { "mDataProp": "status" },
                 { "mDataProp": "button" }
 
-               
+
 
             ]
         });
@@ -178,7 +176,7 @@
 
 
 
-    function DeleteTask(id,rId) {
+    function DeleteTask(id, rId) {
         if (confirm('Are You Sure! You Want to Delete This Task')) {
             $.ajax({
                 url: '/api/TaskApi/' + id,
@@ -208,38 +206,31 @@
             }
         });
     }
-    function Detail(val) {
+   
+
+    function status(val, id)
+    {
+        var model = {value:val,user:id};
         $.ajax({
-            async: false,
-            url: '/api/TaskApi/' + val,
-            type: 'POST',
+            async: true,
+            url: '/api/angularApi/',
+            type: 'DELETE',
+            data: JSON.stringify(model),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                console.log(data);
-
-                var uname = document.getElementById('username')
-                uname.innerHTML = "";
-                uname.innerHTML = uname.innerHTML + data.name;
-
-                var useremail = document.getElementById('uemail')
-                useremail.innerHTML = "";
-                useremail.innerHTML = useremail.innerHTML + data.email;
-
-                var pnum = document.getElementById('mobilenum')
-                pnum.innerHTML = "";
-                pnum.innerHTML = pnum.innerHTML + data.number;
+                console.log("success");
             },
-            error: function (data) {
-                console.log(data);
-            }
+            error: function () { console.log("Code Not Ok!"); }
         });
+
     }
+
 
     function comments(id) {
         console.log(id);
         $.ajax({
             async: false,
-                     url: '/api/messageApi/' + id,
+            url: '/api/messageApi/' + id,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             success: function (data) {

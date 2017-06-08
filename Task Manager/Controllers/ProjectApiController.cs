@@ -14,11 +14,26 @@ namespace Task_Manager.Controllers
     {
          
         TaskContext db = new TaskContext();
-     
-        public String CreateProj(Project projinst)
+
+        public String CreateProj(tempProj proji)
         {
-            var uid = HttpContext.Current.Session;
+              var uid = HttpContext.Current.Session;
             string id = uid["UserID"].ToString();
+            Project projinst = new Project();
+
+              projinst.id=proji.id;
+       projinst.Project_Name=proji.projectName;
+       projinst.Created_By=db.user.Find(Convert.ToInt32(id)); 
+      projinst.Created_On =DateTime.Now;
+        projinst.Start_Date =proji.startDate;
+       projinst.End_Date  =proji.endDate;
+      projinst.customer =db.customer.Find(proji.cId);
+           CustomerContactDetail cust = new CustomerContactDetail();
+            cust.address=proji.address;
+                cust.email=proji.email;
+                cust.contact_number=proji.number;
+        projinst.customerContactDetail=cust;
+       projinst.projectManager =db.user.Find(proji.pmId);     
 
             var pro = db.project.Find(projinst.id);
             if (pro != null)
@@ -124,6 +139,7 @@ namespace Task_Manager.Controllers
             }
             else
             {
+                obj.id = 0;
                 return obj;
             }
 
