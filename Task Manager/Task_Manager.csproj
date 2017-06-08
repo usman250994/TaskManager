@@ -241,6 +241,8 @@
     <Compile Include="viewModels\ComplainProjects.cs" />
     <Compile Include="viewModels\customerCityname.cs" />
     <Compile Include="viewModels\customerdropdown.cs" />
+    <Compile Include="viewModels\dropCust.cs" />
+    <Compile Include="viewModels\dropProd.cs" />
     <Compile Include="viewModels\finding_ticketContact.cs" />
     <Compile Include="viewModels\internalTickets.cs" />
     <Compile Include="viewModels\projectDropDownInTickets.cs" />
@@ -481,7 +483,6 @@
     <Content Include="Views\Inventory\ViewInventory.cshtml" />
     <Content Include="Views\CheckStatus\Index.cshtml" />
     <Content Include="Views\Shared\Nonuser.cshtml" />
-    <Content Include="Views\Inventory\ViewInventoryDetai0l.cshtml" />
     <Content Include="Views\Inventory\ViewInventoryDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>

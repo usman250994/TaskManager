@@ -16,6 +16,6 @@ namespace Task_Manager.viewModels
         public bool sms { get; set; }
         public bool email { get; set; }
         public int status { get; set; }
-        public List<int> tempUsers { get; set; }
+        public List<tagUsersView> tempUsers { get; set; }
     }
 }

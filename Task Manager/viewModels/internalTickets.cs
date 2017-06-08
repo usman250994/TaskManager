@@ -13,7 +13,7 @@ namespace Task_Manager.viewModels
         public string issue { get; set; }
         public bool email { get; set; }
         public bool sms { get; set; }
-        public List<int> assignedTo { get; set; }
+        public List<tagUsersView> assignedTo { get; set; }
 
     }
 }

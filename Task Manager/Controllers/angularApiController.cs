@@ -25,6 +25,7 @@ namespace Task_Manager.Controllers
                 string str = session["Task"].ToString();
                 session["Task"] = null;
                 var task = db.task.Find(Convert.ToInt32(str));
+                
                 //
                 List<tagUsersView> taggedUsers = new List<tagUsersView>();
                 var tag = db.tagging.Where(p => p.tasks.id == task.id).FirstOrDefault();
@@ -35,19 +36,47 @@ namespace Task_Manager.Controllers
                 }
                 //
                 var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.id).FirstOrDefault();
-
+                var cid = db.project.Where(o => o.id == pid).Select(u => u.customer.customerId).FirstOrDefault();
                 returning.task = task;
-                returning.tags = taggedUsers;
+                returning.customerId = cid;
+                    returning.tags = taggedUsers;
+               
                 returning.projectId = pid;
               //  returning.dropdowns = find();
                 return returning;
             }
             else
             {
+                List<tagUsersView> taged = new List<tagUsersView>();
+                returning.tags = taged;
                 return returning;
 
             }
         }
+
+
+        [HttpGet]
+        public List<dropCust> getthem(int id)
+
+        {
+            List<dropCust> dropcustomer = new List<dropCust>();
+
+            dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
+         
+      return dropcustomer;
+        }
+
+
+        [HttpPost]
+        public List<dropProd> gethem(int id)
+        {
+            List<dropProd> dropproject = new List<dropProd>();
+
+            dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id,custId=o.customer.customerId }).ToList();
+
+            return dropproject;
+        }
+
 
         [HttpPost]
         public List<tagUsersView> find()

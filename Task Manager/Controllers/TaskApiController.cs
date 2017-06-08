@@ -56,25 +56,28 @@ namespace Task_Manager.Controllers
                 session["Task"] = null;
                 var task = db.task.Find(Convert.ToInt32(str));
                 //
-                List<int> taggedUsers = new List<int>();
+                List<tagUsersView> taggedUsers = new List<tagUsersView>();
                 var tag = db.tagging.Where(p => p.tasks.id == task.id).FirstOrDefault();
 
                 foreach (var entity in tag.users)
                 {
-                    taggedUsers.Add(entity.id);
+                    taggedUsers.Add(new tagUsersView { id = entity.id, name = entity.user_Name });
                 }
                 //
-                var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.Project_Name).FirstOrDefault();
-
+                var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.id).FirstOrDefault();
+                var cid = db.project.Where(o => o.id == pid).Select(u => u.customer.customerId).FirstOrDefault();
                 returning.task = task;
-              //  returning.tags = taggedUsers;
-              //  returning.projectId = pid;
-               // returning.dropdowns = find();
+                returning.customerId = cid;
+                returning.tags = taggedUsers;
+
+                returning.projectId = pid;
+                
                 return returning;
             }
             else
             {
-               // returning.dropdowns = find();
+               List<tagUsersView> taged = new List<tagUsersView>();
+                returning.tags = taged;
                 return returning;
             }
         }
@@ -323,7 +326,7 @@ namespace Task_Manager.Controllers
                 tagging.users.Clear();
                 for (int i = 0; i < tempTask.tempUsers.Count; i++)
                 {
-                    var user = db.user.Find(tempTask.tempUsers[i]);
+                    var user = db.user.Find(tempTask.tempUsers[i].id);
                     tagging.users.Add(user);
                 }
 
@@ -343,7 +346,7 @@ namespace Task_Manager.Controllers
 
                 for (int i = 0; i < tempTask.tempUsers.Count; i++)
                 {
-                    var user = db.user.Find(tempTask.tempUsers[i]);
+                    var user = db.user.Find(tempTask.tempUsers[i].id);
                     usr.Add(user);
                 }
                 tag.users = usr;
@@ -377,14 +380,14 @@ namespace Task_Manager.Controllers
             task.description = tempTask.description;
             task.start_date = tempTask.start_date;
             task.end_date = tempTask.end_date;
-
+         
             if (tempTask.tempUsers.Count == 0)
             {
                 task.status = 0;
             }
             else
             {
-                task.status = tempTask.status;
+                task.status = 1;
             }
             task.sms = tempTask.sms;
             task.email = tempTask.email;

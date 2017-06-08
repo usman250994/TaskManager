@@ -101,12 +101,9 @@ namespace Task_Manager.Controllers
                 tagging.users.Clear();
                 for (int i = 0; i < tempTask.assignedTo.Count; i++)
                 {
-                    var user = db.user.Find(tempTask.assignedTo[i]);
+                    var user = db.user.Find(tempTask.assignedTo[i].id);
                     tagging.users.Add(user);
                 }
-
-
-
             }
             //create
             else
@@ -121,7 +118,7 @@ namespace Task_Manager.Controllers
 
                 for (int i = 0; i < tempTask.assignedTo.Count; i++)
                 {
-                    var user = db.user.Find(tempTask.assignedTo[i]);
+                    var user = db.user.Find(tempTask.assignedTo[i].id);
                     usr.Add(user);
                 }
                 tag.users = usr;
@@ -155,7 +152,7 @@ namespace Task_Manager.Controllers
             task.start_date = DateTime.Now;
             task.end_date = DateTime.Now;
             task.IsTicket = true;
-
+            task.branch_code = "";
             if (tempTask.assignedTo.Count == 0)
             {
                 task.status = 0;

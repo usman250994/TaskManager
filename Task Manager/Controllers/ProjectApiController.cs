@@ -103,34 +103,27 @@ namespace Task_Manager.Controllers
         }
 
         [Route("/api/ProjectApi/"), HttpPut]
-        public updateOrCreateDropDown get()
+        public Project get()
         {
             var session = HttpContext.Current.Session;
 
-            updateOrCreateDropDown obj = new updateOrCreateDropDown();
+           Project obj = new Project();
             if (session["project"] != null)
             {
+               
                 string str = session["project"].ToString();
                 session["project"] = null;
-                var proj = db.project.Find(Convert.ToInt32(str));
-                obj.proj = proj;
-                List<Customer> cust = new List<Customer>();
-                cust = db.customer.Where(d=>d.enable==true).ToList();
-                obj.cust = cust;
+               obj = db.project.Find(Convert.ToInt32(str));
+             
+                str = obj.customerContactDetail.contact_number;
 
-                //getting list of users as project manager
-
-                obj.candidsForProjManager = db.user.Where(p => p.Enable == true).ToList();
+                obj.customerContactDetail.contact_number=str.Substring(3);
+               
                 return obj;
+           
             }
             else
             {
-                List<Customer> cust = new List<Customer>();
-                cust = db.customer.Where(d=>d.enable==true).ToList();
-                obj.cust = cust;
-
-                //getting list of users as project manager
-                obj.candidsForProjManager = db.user.Where(p => p.Enable == true).ToList();
                 return obj;
             }
 
