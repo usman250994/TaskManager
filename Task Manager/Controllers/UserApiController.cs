@@ -73,11 +73,21 @@ namespace Task_Manager.Controllers
 
 
         [Route("/api/UserApi/"), HttpPost]
-        public List<Roles> Dropdownuser(int id)
+        public Object Dropdownuser(int id)
         {
+            List<Object> obj = new List<object>();
             List<Roles> role = new List<Roles>();
             role = db.roles.Where(p => p.enable == true).ToList();
-            return role;
+            obj.Add(role);
+            var session = HttpContext.Current.Session;
+            if (session["user"] != null)
+            {
+                string str = session["user"].ToString();
+                int ids = Convert.ToInt32(str);
+              var user =  db.user.Where(p => p.id == ids).Select(o=>new userview {uId=ids,name=o.user_Name,address=o.Address,email=o.Email,contact=o.MobileNo,pasword=o.Password,positionId=o.Roles_id.id}).FirstOrDefault();           
+                obj.Add(user);
+            }
+            return obj;
         }
 
 

@@ -64,7 +64,8 @@ namespace Task_Manager.Controllers
                     taggedUsers.Add(new tagUsersView { id = entity.id, name = entity.user_Name });
                 }
                 //
-                var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.id).FirstOrDefault();
+                var pi = db.tagging.Where(o=>o.tasks.id==task.id).FirstOrDefault();
+                var pid = pi.project.id;
                 var cid = db.project.Where(o => o.id == pid).Select(u => u.customer.customerId).FirstOrDefault();
                 returning.task = task;
                 returning.customerId = cid;
@@ -249,7 +250,7 @@ namespace Task_Manager.Controllers
             for (int i = 0; i < tasks.Count; i++)
             {
                 taskResponse taskRes = new taskResponse();
-                taskRes.createdBy = //tasks[i];
+                taskRes.createdBy = tasks[i].Created_By.user_Name;
                     taskRes.description = tasks[i].description;
                 taskRes.email = tasks[i].email;
                 taskRes.endDate = tasks[i].end_date.Date.ToString();
@@ -304,14 +305,13 @@ namespace Task_Manager.Controllers
         {
             var sessionId = HttpContext.Current.Session;
             string id = sessionId["UserID"].ToString();
-            var createdUser = db.user.Find(Convert.ToInt32(id));
+                var createdUser = db.user.Find(Convert.ToInt32(id));
 
             //update
             if (tempTask.id != 0)
             {
 
                 var taskdetail = db.task.Find(tempTask.id);
-
 
                 db.Entry(taskdetail).CurrentValues.SetValues(setTask(tempTask));
 

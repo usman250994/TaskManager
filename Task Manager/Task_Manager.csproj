@@ -266,6 +266,7 @@
     <Compile Include="viewModels\ticketStatus.cs" />
     <Compile Include="viewModels\updateOrCreateDropDown.cs" />
     <Compile Include="viewModels\userRequest.cs" />
+    <Compile Include="viewModels\userview.cs" />
     <Compile Include="viewModels\Views\viewUser.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -515,7 +516,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64049</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51525/</IISUrl>
+          <IISUrl>http://localhost:51524/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

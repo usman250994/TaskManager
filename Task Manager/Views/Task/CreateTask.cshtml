@@ -36,7 +36,7 @@
                         Create Task
                     </div>
                     <div class="panel-body" ng-controller="taskctrl">
-                        <form ng-submit="Add()">
+                        <form ng-submit="Add()" id="taskForm">
                             <div class="row">
                                 <div class=" col-lg-offset-3 col-lg-6">
                                     <div class="col-lg-12 spacing">
@@ -64,7 +64,7 @@
                                             <label>Project Name</label>
                                         </div>
                                         <div class="col-lg-6 ">
-                                            <select ng-options="project.id as project.name for project in projects" ng-model="projectId" class="ddl"></select>
+                                            <select ng-options="project.name for project in projects" ng-model="projectId" class="ddl"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -150,9 +150,7 @@
 
         $scope.message = $http.get('/api/TaskApi/'+0).then(function (response) {
             $scope.task = response.data;
-
-            console.log($scope.task.task);
-
+            
             $scope.selectedList = $scope.task.tags;
             $scope.task.task.start_date = new Date($scope.task.task.start_date);
             $scope.task.task.end_date = new Date($scope.task.task.end_date);
@@ -161,12 +159,21 @@
 
         $scope.message = $http.get('/api/angularApi/'+0).then(function (response) {
             $scope.customers = response.data;
-            console.log($scope.customers);
+            
 
         });
 
         $scope.message = $http.post('/api/angularApi/'+0).then(function (response) {
             $scope.projects = response.data;
+
+            for (var i = 0; i < $scope.projects.length; i++) {
+             
+                if ($scope.task.projectId == $scope.projects[i].id) {
+                 
+                    $scope.projectId = $scope.projects[i];
+
+                }
+            }
 
         });
         $scope.message = $http.post('/api/angularApi/').then(function (response) {
@@ -174,11 +181,11 @@
         });
 
         $scope.Add = function () {
-
+            console.log($scope.projectId.id);
             $scope.new = {};
             $scope.new.task_name = $scope.task.task.task_name;
             $scope.new.id = $scope.task.task.id;
-            $scope.new.projectId = $scope.projectId;
+            $scope.new.projectId = $scope.projectId.id;
             $scope.new.description = $scope.task.task.description;
             $scope.new.email = $scope.task.task.email;
             $scope.new.sms = $scope.task.task.sms;
@@ -186,11 +193,17 @@
             $scope.new.end_date = $scope.task.task.end_date;
             $scope.new.tempUsers = $scope.selectedList;
           
-            console.log($scope.new);
+          
 
             $scope.message = $http.post('/api/TaskApi/', $scope.new).then(function (response) {
-                console.log(response.data);
+             
                 alert("Task Added Sucessfully");
+                document.getElementById("taskForm").reset();
+                $scope.selectedList = [];
+
+
+                $scope.customerId = {};
+                $scope.projectId = {};
             });
 
         }
@@ -203,7 +216,7 @@
                     $scope.pojecttemp.push($scope.projects[i]);
                 }
             }
-            console.log($scope.projecttemp);
+         
         }
     });
 

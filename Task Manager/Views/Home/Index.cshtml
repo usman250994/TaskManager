@@ -228,6 +228,7 @@
         xyz.empty();
         for (var i = 0; i < dropDown.length; i++) {
             if (dropDown[i].customerId == val) {
+         
                 for (var j = 0; j < dropDown[i].projects.length; j++) {
                     $('#ProjectDropdown').append($('<option></option>').val(dropDown[i].projects[j].id).html(dropDown[i].projects[j].name));
                 }

@@ -127,7 +127,7 @@
                     data: model,
                     dataType: "json",
                     success: function (data) {
-                        console.log(data);
+                  
                     },
                     error: function () { alert('Grid Not Load'); }
                 });
@@ -145,6 +145,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 filltable(data);
             },
             error: function () {

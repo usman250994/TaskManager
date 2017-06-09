@@ -114,54 +114,42 @@
 </div>
 <!-- /#page-wrapper -->
 <script type="text/javascript">
-    $.ajax({
-        async: false,
-        url: '/api/UserApi/' + "1",
-        type: 'POST',
-        success: function (data) {
-            $.each(data, function (i) {
-                $('#Position').append($('<option></option>').val(data[i].id).html(data[i].role_name));
-            });
-        },
-        error: function () {
-            alert('Dropdown Position Not Loaded');
-        }
-    });
-    $.ajax({
-        async: false,
-        url: '/api/UserApi/',
-        type: 'PUT',
-        success: function (data) {
-            console.log(data);
-            if (data != 0) {
-                $.ajax({
-                    async: false,
-                    url: '/api/UserApi/' + data,
-                    type: 'GET',
-                    success: function (data) {
-                        console.log(data);
-                        document.getElementById("user_name").value = data.user_Name;
-                        document.getElementById("password").value = data.Password;
-                        document.getElementById("Address").value = data.Address;
-                        document.getElementById("MobileNo").value = data.MobileNo.substring(3, 13);
-                        document.getElementById("Email").value = data.Email;
-                        document.getElementById("Position").value = data.Roles_id.id;
-                        document.getElementById("UpdID").value = data.id;
-                        document.getElementById("button").value = "Update";
-                        console.log(data);
-                    },
-                    error: function () {
-                        alert('Cannot Find User');
-                    }
+
+
+
+    $(document).ready(function () {
+
+        $.ajax({
+            async: false,
+            url: '/api/UserApi/'+0,
+            type: 'POST',
+            success: function (data) {
+                console.log(data[1]);
+                $.each(data.role, function (i) {
+                    $('#Position').append($('<option></option>').val(data.role[i].id).html(data.role[i].role_name));
                 });
+
+                if(data.length>1)
+                {
+                    
+                    console.log(data[1].name);
+                    document.getElementById("user_name").value = data[1].name;
+                    document.getElementById("password").value =  data[1].Password;
+                    document.getElementById("Address").value =   data[1].Address;
+                    document.getElementById("MobileNo").value =  data[1].contact.substring(3, 13);
+                    document.getElementById("Email").value = data[1].email;
+                    document.getElementById("Position").value = data[1].Roles_id.id;
+                    document.getElementById("UpdID").value = data[1].user.uId;
+                    document.getElementById("button").value = "Update";
+                }
+            },
+            error: function () {
+                alert('Dropdown Position Not Loaded');
             }
-            //
-        },
-        error: function () {
-            alert('User not Added');
-        }
+        });
+
     });
-    //need correction when updating probably
+    
 
     function Add() {
         var uname = document.getElementById("user_name").value.trim();
@@ -193,40 +181,6 @@
                 }
             });
         }
-        //update button press
-        //function preUpdate(id) {
-        //    $.ajax({
-        //        url: '/api/UserApi/' + id,
-        //        type: 'GET',
-        //        contentType: "application/json;charset=utf-8",
-        //        dataType: "json",
-        //        success: function (data) {
-        //            console.log(data);
-        //            document.getElementById("user_name").value = data.user_Name;
-        //            document.getElementById("password").value = data.Password;
-        //            document.getElementById("Address").value = data.Address;
-        //            document.getElementById("MobileNo").value = data.MobileNo;
-        //            document.getElementById("Email").value = data.Email;
-        //            document.getElementById("id").value = data.id;
-        //            document.getElementById("bc").value = "Confirm to Udpdate";
-        //            document.getElementById("date").value = data.CreatedOn;
-        //            document.getElementById("enable").value = "true";
-        //        },
-        //        error: function () { alert('User not Added'); }
-        //    });
-        //}
-        ////delete button press
-        //function Delete(id) {
-        //    $.ajax({
-        //        url: '/api/UserApi/'+id,
-        //        type: 'POST',
-        //        contentType: "application/json;charset=utf-8",
-        //        success: function (data) {
-        //        alert(data + "also refresh grid");
-        //        gridLoad(); },
-        //        error: function (x, y, z) {
-        //            alert(x + '\n' + y + '\n' + z);
-        //        }
-        //    }); }
+      
     }
 </script>

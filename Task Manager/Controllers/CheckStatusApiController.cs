@@ -19,12 +19,12 @@ namespace Task_Manager.Controllers
             List<clientsTicketRespone> list = new List<clientsTicketRespone>();
             var Session = HttpContext.Current.Session;
             string customerid = Session["customerid"].ToString();
-           
+
             int id = 0;
             if (!string.IsNullOrEmpty(customerid))
             {
                 id = Convert.ToInt32(customerid);
-                if (db.task.Any(o => o.id == id))
+                if (db.task.Any(o => o.id == id && o.enable == true))
                 {
                     clientsTicketRespone status = new clientsTicketRespone();
 
@@ -49,7 +49,7 @@ namespace Task_Manager.Controllers
                     List<int> taskIdList = new List<int>();
                     foreach (var entity in projIds)
                     {
-                        var lis = db.tagging.Where(p => p.project.id == entity && p.tasks.IsTicket == true).Select(p => p.tasks.id).ToList();
+                        var lis = db.tagging.Where(p => p.project.id == entity && p.tasks.IsTicket == true && p.tasks.enable == true).Select(p => p.tasks.id).ToList();
 
                         foreach (var li in lis)
                         {
@@ -59,13 +59,13 @@ namespace Task_Manager.Controllers
 
                             status.status = fillStatus(ticket.status);
                             status.date = ticket.created_on;
-                            status.branch_code = ticket.branch_code; 
+                            status.branch_code = ticket.branch_code;
                             status.description = ticket.description;
                             status.name = ticket.task_name;
-                            status.code = customerid;
+                            //  status.code = customerid;
                             status.project_name = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.Project_Name).FirstOrDefault();
                             var projId = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.id).FirstOrDefault();
-                            status.customer_name = db.project.Where(o => o.id == projId).Select(o => o.customer.customer_name).FirstOrDefault();
+                            //  status.customer_name = db.project.Where(o => o.id == projId).Select(o => o.customer.customer_name).FirstOrDefault();
                             list.Add(status);
                         }
                     }
