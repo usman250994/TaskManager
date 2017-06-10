@@ -17,7 +17,7 @@ namespace Task_Manager.viewModels
     public string  barcode {get; set;}
     public string  vendorName {get; set;}
     public DateTime inwarddate { get; set; }
-    public object imagepath { get; set; }
+    public string imagepath { get; set; }
          
     
     

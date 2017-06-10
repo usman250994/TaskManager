@@ -16,7 +16,7 @@ namespace Task_Manager.Controllers
         TaskContext db = new TaskContext();
 
         //To Add User In Database Table Customer
-        [Route("/api/CustomerApi/"), HttpPost]
+        [HttpPost]
         public String CreateCustomer(Customer cust)
         {
 
@@ -59,7 +59,7 @@ namespace Task_Manager.Controllers
         }
 
         //To Get All The Customer List (To Show in Grid View Of User)
-        [Route("/api/CustomerApi/"), HttpGet]
+        [HttpGet]
         public List<ViewCustomer> custall()
         {
             List<Customer> list = new List<Customer>();
@@ -104,7 +104,7 @@ namespace Task_Manager.Controllers
         }
 
         //Delete user function
-        [Route("/api/CustomerApi/"), HttpPost]
+        [HttpPost]
         public String delete(int id)
         {
 
@@ -135,7 +135,7 @@ namespace Task_Manager.Controllers
         }
 
         // For Update 
-        [Route("/api/CustomerApi/"), HttpPut]
+        [HttpPut]
         public int set(int id)
         {
             var session = HttpContext.Current.Session;
@@ -143,7 +143,7 @@ namespace Task_Manager.Controllers
             return 0;
         }
 
-        [Route("/api/CustomerApi/"), HttpPut]
+        [HttpPut]
         public customerdropdown get()
         {
             var session = HttpContext.Current.Session;

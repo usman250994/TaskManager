@@ -62,10 +62,10 @@ namespace Task_Manager.Controllers
                             status.branch_code = ticket.branch_code;
                             status.description = ticket.description;
                             status.name = ticket.task_name;
-                            //  status.code = customerid;
+                            status.code = customerid;
                             status.project_name = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.Project_Name).FirstOrDefault();
                             var projId = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.id).FirstOrDefault();
-                            //  status.customer_name = db.project.Where(o => o.id == projId).Select(o => o.customer.customer_name).FirstOrDefault();
+                            status.customer_name = db.project.Where(o => o.id == projId).Select(o => o.customer.customer_name).FirstOrDefault();
                             list.Add(status);
                         }
                     }

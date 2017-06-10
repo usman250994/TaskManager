@@ -57,8 +57,15 @@ namespace Task_Manager.Controllers
             if (db.SaveChanges() > 0)
             {
                 var id = db.product.OrderByDescending(p => p.id).FirstOrDefault().id;
+                if (prod.imagepath == "")
+                {
+                    pro.image = "/Images/0.jpg";
 
-                pro.image = "/Images/" + id + ".jpg";
+                }
+                else
+                {
+                    pro.image = "/Images/" + id + ".jpg";
+                }
                 db.SaveChanges();
                 return "Product Detail Added";
             }

@@ -20,7 +20,7 @@ namespace Task_Manager.Controllers
             var httpRequest = HttpContext.Current.Request;
             if (httpRequest.Files.Count > 0)
             {
-               
+                
                 int name =0;
                 var docfiles = new List<string>();
                 foreach (string file in httpRequest.Files)
@@ -36,11 +36,12 @@ namespace Task_Manager.Controllers
                     break;
                 }
                 result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
-
+                
             }
             else
             {
                 result = Request.CreateResponse(HttpStatusCode.BadRequest);
+                
             }
             
         }
