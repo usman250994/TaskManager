@@ -202,6 +202,7 @@
     <Compile Include="Controllers\messageController.cs" />
     <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\projectupdateController.cs" />
     <Compile Include="Controllers\TaskApiController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TicketApiController.cs" />
@@ -259,12 +260,14 @@
     <Compile Include="viewModels\response\ViewCustomer.cs" />
     <Compile Include="viewModels\status.cs" />
     <Compile Include="viewModels\tagUsersView.cs" />
+    <Compile Include="viewModels\taskupdate.cs" />
     <Compile Include="viewModels\tempProj.cs" />
     <Compile Include="viewModels\tempTask.cs" />
     <Compile Include="viewModels\tempUser.cs" />
     <Compile Include="viewModels\TicketInitialrespone.cs" />
     <Compile Include="viewModels\ticketStatus.cs" />
     <Compile Include="viewModels\updateOrCreateDropDown.cs" />
+    <Compile Include="viewModels\updateProject.cs" />
     <Compile Include="viewModels\userRequest.cs" />
     <Compile Include="viewModels\users.cs" />
     <Compile Include="viewModels\userview.cs" />

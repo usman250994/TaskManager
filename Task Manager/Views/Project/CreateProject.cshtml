@@ -27,112 +27,112 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-      
-            <div class="row" ng-app="project">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Create Project
-                        </div>
 
-                        <div class="panel-body" ng-controller="projectctrl">
-                            <form ng-submit="Add()" id="projForm">
-                                <div class="row">
-                                    <div class=" col-lg-offset-3  col-lg-6">
-                                        <div class="col-lg-12 spacing">
-                                            <div class="col-lg-6 ">
-                                                <label>Customer Name</label> <input type="hidden" ng-model="project.id"></input>
-                                            </div>
-                                            <div class="col-lg-6 ">
-                                                <select ng-options="customer.name for customer in customers" ng-model="customerId" class="ddl"></select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 spacing">
-                                            <div class="col-lg-6 ">
-                                                <label>Project Name</label>
-                                            </div>
-                                            <div class="col-lg-6 ">
-                                                <input class="form-control" type="text" ng-model="project.Project_Name" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 spacing">
-                                            <div class="col-lg-6 ">
-                                                <label>Start Date</label>
-                                            </div>
-                                            <div class="col-lg-6 ">
-                                                <input class="form-control" type="date" ng-model="project.Start_Date" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 spacing">
-                                            <div class="col-lg-6 ">
-                                                <label>End Date</label>
-                                            </div>
-                                            <div class="col-lg-6 ">
-                                                <input class="form-control ui-datepicker" type="date" ng-model="project.End_Date" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 spacing">
-                                            <div class="col-lg-6 ">
-                                                <label>Project Manager</label>
-                                            </div>
-                                            @*Usman added resco side project manager*@
-                                            <div class="col-lg-6 ">
-                                                <select ng-options="optionList.name for optionList in optionsList" ng-model="userId" class="ddl"></select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 spacing">
-                                            <div class="col-lg-6 ">
-                                                <label>Customer Manager</label>
-                                            </div>
+        <div class="row" ng-app="project">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Create Project
+                    </div>
 
-
-                                            <div class="col-lg-6 ">
-                                                <input class="form-control" type="text" ng-model="project.customerContactDetail.project_manager" required="required">
-                                            </div>
+                    <div class="panel-body" ng-controller="projectctrl">
+                        <form ng-submit="Add()" id="projForm">
+                            <div class="row">
+                                <div class=" col-lg-offset-3  col-lg-6">
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Customer Name</label> <input type="hidden" ng-model="project.pid"></input>
                                         </div>
-                                        <div class="col-lg-12 spacing">
-                                            <div class="col-lg-6 ">
-                                                <label>Customer Contact Number</label>
-                                            </div>
-                                            <div class="col-lg-6 ">
-                                                <div class="col-lg-2"><label class="abc">+92</label></div>
-                                                <div class="col-lg-10"><input class="form-control" type="text" ng-model="project.customerContactDetail.contact_number" placeholder="3401234567" required="required"></div>
-
-                                            </div>
+                                        <div class="col-lg-6 ">
+                                            <select ng-options="customer.name for customer in customers" ng-model="customerId" class="ddl"></select>
                                         </div>
-                                        <div class="col-lg-12 spacing">
-                                            <div class="col-lg-6 ">
-                                                <label>Customer Email</label>
-                                            </div>
-                                            <div class="col-lg-6 ">
-                                                <input class="form-control" type="email" ng-model="project.customerContactDetail.email" placeholder="example@gmail.com" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 spacing">
-                                            <div class="col-lg-6 ">
-                                                <label>Customer Address</label>
-                                            </div>
-                                            <div class="col-lg-6 ">
-                                                <input class="form-control" type="text" ng-model="project.customerContactDetail.address" placeholder=" WA 98052-7329. " required="required">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-offset-6 col-lg-6 spacing">
-                                            <input type="submit" class="btn btn-success" value="Create/Update" />
-                                            <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();">
-                                        </div>
-
                                     </div>
-                                    <!-- /.col-lg-6 (nested) -->
-                                    <!-- /.col-lg-6 (nested) -->
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Project Name</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="text" ng-model="project.pName" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Start Date</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="date" ng-model="project.sDate" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>End Date</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control ui-datepicker" type="date" ng-model="project.eDate" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Project Manager</label>
+                                        </div>
+                                        @*Usman added resco side project manager*@
+                                        <div class="col-lg-6 ">
+                                            <select ng-options="optionList.name for optionList in optionsList" ng-model="userId" class="ddl"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Customer Manager</label>
+                                        </div>
+
+
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="text" ng-model="project.cManager" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Customer Contact Number</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <div class="col-lg-2"><label class="abc">+92</label></div>
+                                            <div class="col-lg-10"><input class="form-control" type="text" ng-model="project.cContact" placeholder="3401234567" required="required"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Customer Email</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="email" ng-model="project.cEmail" placeholder="example@gmail.com" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Customer Address</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="text" ng-model="project.cAddress" placeholder=" WA 98052-7329. " required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-offset-6 col-lg-6 spacing">
+                                        <input type="submit" class="btn btn-success" value="Create/Update" />
+                                        <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();">
+                                    </div>
+
                                 </div>
-                            </form>
-        <!-- /.row (nested) -->
-        </div>
-        <!-- /.panel-body -->
-        </div>
-        <!-- /.panel -->
-        </div>
-        <!-- /.col-lg-12 -->
+                                <!-- /.col-lg-6 (nested) -->
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                        </form>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
     </div>
@@ -141,88 +141,103 @@
 
 <script src="~/Scripts/angular.min.js"></script>
 <script type="text/javascript">
-   
+
 
     var app = angular.module("project", ['multipleSelect']);
 
     app.controller("projectctrl", function ($scope, $http) {
 
-        $scope.message = $http.put('/api/ProjectApi/').then(function (response) {
+        $scope.message = $http.get('/api/projectupdate/').then(function (response) {
             $scope.project = response.data;
-            $scope.pid = $scope.project.projectManager.id;
-            $scope.cid=$scope.project.customer.customerId;
-           
-            if ($scope.project.id != 0)
-                {
-            $scope.project.Start_Date = new Date($scope.project.Start_Date);
-            $scope.project.End_Date = new Date($scope.project.End_Date);
-            }
-            else
-            {
-                $scope.project.Start_Date = new Date();
-                $scope.project.End_Date = new Date();
-            }
+            $scope.customers = response.data.dropList;
+            $scope.optionsList = response.data.userList;
+            var keepgoing = true;
+            angular.forEach($scope.optionsList, function (item) {
+                if (keepgoing) {
+                    if ($scope.project.pmId == item.id) {
+                        $scope.userId = item;
+                        keepgoing = false;
+                    }
+                }
             });
-        $scope.message = $http.get('/api/angularApi/' + 0).then(function (response) {
-            $scope.customers = response.data;
 
-            //
             var keepgoing = true;
             angular.forEach($scope.customers, function (item) {
                 if (keepgoing) {
-                    if ($scope.cid == item.id) {
+                    if ($scope.project.cId == item.id) {
                         $scope.customerId = item;
                         keepgoing = false;
                     }
                 }
             });
-       
-            //
+
+
+            if ($scope.project.pId != null) {
+               
+                $scope.project.sDate = new Date($scope.project.sDate);
+                $scope.project.eDate = new Date($scope.project.eDate);
+           
+            }
+            else
+            {
+           $scope.project.Start_Date = new Date();
+           $scope.project.End_Date = new Date();
+            }
         });
 
-        $scope.message = $http.post('/api/angularApi/').then(function (response) {
-            $scope.optionsList = response.data;
-            var keepgoing = true;
-            angular.forEach($scope.optionsList, function(item)
-            {
-                if (keepgoing)
-                {
-                    if ($scope.pid == item.id)
-                    {
-                    $scope.userId = item;
-                    keepgoing = false;
-                }
-            }
-                    });
-          
-            }
-        );
 
+        //$scope.message = $http.get('/api/angularApi/'+0).then(function (response) {
+        //    $scope.customers = response.data;
+        //    //
+        //    var keepgoing = true;
+        //    angular.forEach($scope.customers, function (item) {
+        //        if (keepgoing) {
+        //            if ($scope.project.cId == item.id) {
+        //                $scope.customerId = item;
+        //                keepgoing = false;
+        //            }
+        //        }
+        //    });
+
+        //    //
+        //});
+
+        //$scope.message = $http.post('/api/angularApi/').then(function (response) {
+        //    $scope.optionsList = response.data;
+        //    var keepgoing = true;
+        //    angular.forEach($scope.optionsList, function (item) {
+        //        if (keepgoing) {
+        //            if ($scope.project.pmId == item.id) {
+        //                $scope.userId = item;
+        //                keepgoing = false;
+        //            }
+        //        }
+        //    });
+        //});
+
+  
 
         $scope.Add = function () {
+          
+                $scope.new = {};
+                $scope.new.id = $scope.project.id
+                $scope.new.projectName = $scope.pName;
+                $scope.new.startDate = $scope.project.sDate;
+                $scope.new.endDate = $scope.project.eDate;
+                $scope.new.pmId = $scope.userId.id;
+                $scope.new.pm = $scope.project.cManager;
+                $scope.new.number = $scope.project.cContact;
+                $scope.new.email = $scope.project.cEmail;
+                $scope.new.address = $scope.project.cAddress;
+                $scope.new.cId = $scope.customerId.id;
 
-            $scope.new = {};
-            $scope.new.id =$scope.project.id
-            $scope.new.projectName = $scope.project.Project_Name;
-            $scope.new.startDate = $scope.project.Start_Date;
-            $scope.new.endDate = $scope.project.End_Date;
-            $scope.new.pmId = $scope.userId.id;
-            $scope.new.pm = $scope.project.customerContactDetail.project_manager;
-            $scope.new.number = $scope.project.customerContactDetail.contact_number;
-            $scope.new.email = $scope.project.customerContactDetail.email;
-            $scope.new.address = $scope.project.customerContactDetail.address;
-            $scope.new.cId = $scope.customerId.id;
-
-            $scope.message = $http.post('/api/ProjectApi/', $scope.new).then(function (response) {
-                console.log(response.data);
-                alert("Task Added Sucessfully");
-                document.getElementById("projForm").reset();
-            });
-
-        }
+                $scope.message = $http.post('/api/ProjectApi/', $scope.new).then(function (response) {
+                    console.log(response.data);
+                    alert("Task Added Sucessfully");
+                    document.getElementById("projForm").reset();
+                });
+            }
+        
     });
-
-
-
 </script>
 

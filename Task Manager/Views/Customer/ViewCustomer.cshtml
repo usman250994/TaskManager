@@ -67,12 +67,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
-                console.log(data);
                 filltable(data);
-                //for (var i = 0; i < data.length; i++) {
-                //<tr id=" + i + ">);
-                //}
-                //  <td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].customerId + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].customerId + "," + i + ")\"></button>"
             },
             error: function () { alert('Data Not Showing'); }
         });
@@ -90,7 +85,7 @@
                 { "mDataProp": "email" },
                 { "mDataProp": "action" }
             ]
-            });
+        });
 
     }
     function deleteUser(id, rId) {

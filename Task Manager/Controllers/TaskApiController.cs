@@ -46,7 +46,7 @@ namespace Task_Manager.Controllers
 
         //gtetting session and dropdown info
         [HttpGet]
-        public updateTaskReturning get(int id)
+        public taskupdate get(int id)
         {
             updateTaskReturning returning = new updateTaskReturning();
             var session = HttpContext.Current.Session;
@@ -64,22 +64,38 @@ namespace Task_Manager.Controllers
                     taggedUsers.Add(new tagUsersView { id = entity.id, name = entity.user_Name });
                 }
                 //
-                var pi = db.tagging.Where(o=>o.tasks.id==task.id).FirstOrDefault();
+                var pi = db.tagging.Where(o => o.tasks.id == task.id).FirstOrDefault();
                 var pid = pi.project.id;
                 var cid = db.project.Where(o => o.id == pid).Select(u => u.customer.customerId).FirstOrDefault();
                 returning.task = task;
                 returning.customerId = cid;
                 returning.tags = taggedUsers;
-
                 returning.projectId = pid;
-                
-                return returning;
+
+                taskupdate taskUpd = new taskupdate();
+                taskUpd.taskname = returning.task.task_name;
+                taskUpd.cid = returning.customerId;
+                taskUpd.pid = returning.projectId;
+                taskUpd.issue = returning.task.description;
+                taskUpd.sdate = returning.task.start_date.ToString();
+                taskUpd.edate= returning.task.end_date.ToString();
+                taskUpd.tags = returning.tags;
+                taskUpd.sms = returning.task.sms;
+                taskUpd.email = returning.task.email;
+                return taskUpd;
+
             }
             else
             {
-               List<tagUsersView> taged = new List<tagUsersView>();
+                List<tagUsersView> taged = new List<tagUsersView>();
                 returning.tags = taged;
-                return returning;
+
+
+
+                taskupdate taskUpd = new taskupdate();
+                taskUpd.tags = returning.tags;
+
+                return taskUpd;
             }
         }
 
@@ -251,10 +267,10 @@ namespace Task_Manager.Controllers
             {
                 taskResponse taskRes = new taskResponse();
                 taskRes.createdBy = tasks[i].Created_By.user_Name;
-                    taskRes.description = tasks[i].description;
+                taskRes.description = tasks[i].description;
                 taskRes.email = tasks[i].email;
-                taskRes.endDate = tasks[i].end_date.Date.ToString();
-                taskRes.startDate = tasks[i].start_date.Date.ToString();
+                taskRes.endDate = tasks[i].end_date.Date.ToShortDateString();
+                taskRes.startDate = tasks[i].start_date.Date.ToShortDateString();
                 taskRes.task_name = tasks[i].task_name;
                 taskRes.sms = tasks[i].sms;
                 if (tasks[i].status == 0)
@@ -305,7 +321,7 @@ namespace Task_Manager.Controllers
         {
             var sessionId = HttpContext.Current.Session;
             string id = sessionId["UserID"].ToString();
-                var createdUser = db.user.Find(Convert.ToInt32(id));
+            var createdUser = db.user.Find(Convert.ToInt32(id));
 
             //update
             if (tempTask.id != 0)
@@ -380,7 +396,7 @@ namespace Task_Manager.Controllers
             task.description = tempTask.description;
             task.start_date = tempTask.start_date;
             task.end_date = tempTask.end_date;
-         
+
             if (tempTask.tempUsers.Count == 0)
             {
                 task.status = 0;

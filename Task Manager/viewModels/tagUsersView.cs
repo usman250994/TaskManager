@@ -7,8 +7,6 @@ namespace Task_Manager.viewModels
 {
     public class tagUsersView
     {
-
-
         public string name { get; set; }
         public int id{ get; set; }
     }

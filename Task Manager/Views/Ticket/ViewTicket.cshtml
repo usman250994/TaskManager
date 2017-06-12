@@ -113,7 +113,7 @@
             url: '/api/TicketApi/' + id,
             type: 'PUT',
             success: function (data) {
-                 window.location.href = '/Ticket/CreateTicket';
+                window.location.href = '/Ticket/CreateTicket';
             },
             error: function () {
                 alert(data);
@@ -149,8 +149,11 @@
 
     }
     function filltable(datas) {
+
         $("#dataTables-example").DataTable({
             "aaData": datas,
+            "bAutoWidth": false,
+            "sPaginationType": "full_numbers",
             "aoColumns": [
                 { "mDataProp": "ticket_name" },
                 { "mDataProp": "task_name" },
@@ -168,7 +171,7 @@
 
             ]
         });
-        
+
     }
-  
+
 </script>

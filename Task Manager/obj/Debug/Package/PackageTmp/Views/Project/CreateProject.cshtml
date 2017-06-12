@@ -149,7 +149,9 @@
 
         $scope.message = $http.put('/api/ProjectApi/').then(function (response) {
             $scope.project = response.data;
-            console.log($scope.project);
+            $scope.pid = $scope.project.projectManager.id;
+            $scope.cid=$scope.project.customer.customerId;
+           
             if ($scope.project.id != 0)
                 {
             $scope.project.Start_Date = new Date($scope.project.Start_Date);
@@ -165,28 +167,36 @@
             $scope.customers = response.data;
 
             //
-            for (var i = 0; i < $scope.customers.length; i++) {
-                console.log($scope.customers.length);
-                if ($scope.project.customer.customerId == $scope.customers[i].id) {
-
-                    $scope.customerId = $scope.customers[i];
+            var keepgoing = true;
+            angular.forEach($scope.customers, function (item) {
+                if (keepgoing) {
+                    if ($scope.cid == item.id) {
+                        $scope.customerId = item;
+                        keepgoing = false;
+                    }
                 }
-            }
+            });
+       
             //
         });
 
         $scope.message = $http.post('/api/angularApi/').then(function (response) {
             $scope.optionsList = response.data;
-      
-
-            for (var i = 0; i < $scope.optionsList.length; i++) {
-                console.log($scope.optionsList.length);
-                if ($scope.project.projectManager.id == $scope.optionsList[i].id) {
-
-                    $scope.userId = $scope.optionsList[i];
+            var keepgoing = true;
+            angular.forEach($scope.optionsList, function(item)
+            {
+                if (keepgoing)
+                {
+                    if ($scope.pid == item.id)
+                    {
+                    $scope.userId = item;
+                    keepgoing = false;
                 }
             }
-        });
+                    });
+          
+            }
+        );
 
 
         $scope.Add = function () {
@@ -202,8 +212,6 @@
             $scope.new.email = $scope.project.customerContactDetail.email;
             $scope.new.address = $scope.project.customerContactDetail.address;
             $scope.new.cId = $scope.customerId.id;
-
-            console.log($scope.new);
 
             $scope.message = $http.post('/api/ProjectApi/', $scope.new).then(function (response) {
                 console.log(response.data);

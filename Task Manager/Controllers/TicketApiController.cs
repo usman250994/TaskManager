@@ -65,6 +65,7 @@ namespace Task_Manager.Controllers
               //  returning.tags = taggedUsers;
             //    returning.projectId = pid;
               //  returning.dropdowns = find();
+
                 return returning;
             }
             else
@@ -388,11 +389,11 @@ namespace Task_Manager.Controllers
                 if(tasks[i].end_date==null)
                    taskRes.endDate= "--";
                 else
-                    taskRes.endDate = tasks[i].end_date.Date.ToString();
+                    taskRes.endDate = tasks[i].end_date.Date.ToShortDateString();
                 if (tasks[i].start_date == null)
                     taskRes.startDate = "--";
                 else
-                    taskRes.startDate = tasks[i].start_date.Date.ToString();               
+                    taskRes.startDate = tasks[i].start_date.Date.ToShortDateString();               
                 
                 if (tasks[i].status == 0)
                     taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0' selected >Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";

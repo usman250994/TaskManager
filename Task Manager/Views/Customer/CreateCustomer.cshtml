@@ -173,7 +173,7 @@
                 dataType: "json",
                 success: function (data) {
                     alert('Customer Added');
-                    location.reload();
+                    window.location.href = '/Customer/ViewCustomer';
                 },
                 error: function () { alert('Customer not Added'); }
             });
