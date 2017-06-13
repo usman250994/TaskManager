@@ -271,6 +271,8 @@
     <Compile Include="viewModels\userRequest.cs" />
     <Compile Include="viewModels\users.cs" />
     <Compile Include="viewModels\userview.cs" />
+    <Compile Include="viewModels\ViewChatAndDetail.cs" />
+    <Compile Include="viewModels\ViewProductDetail.cs" />
     <Compile Include="viewModels\Views\viewUser.cs" />
   </ItemGroup>
   <ItemGroup>

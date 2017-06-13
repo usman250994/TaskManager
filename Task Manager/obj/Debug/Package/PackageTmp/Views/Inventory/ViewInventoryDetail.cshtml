@@ -149,20 +149,15 @@
     $(document).ready(function () {
         $.ajax({
             async: false,
-            url: '/api/InventoryApi/' + 0,
+            url: '/api/InventoryApi/'+0,
             type: 'GET',
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
                 console.log(data);
-                if (data.islocal = true) {
-                    var ty = "Local";
-                }
-                else {
-                    var ty = "Imported";
-                }
-                document.getElementById('productname').innerHTML = data.product_name;
-                document.getElementById('type').innerHTML = ty;
+
+                document.getElementById('productname').innerHTML = data.name;
+                document.getElementById('type').innerHTML = data.type;
                 document.getElementById('Catogrey').innerHTML = data.code;
                 document.getElementById('brand').innerHTML = data.brand;
                 document.getElementById('model').innerHTML = data.model;
@@ -171,7 +166,7 @@
                 document.getElementById('desc').innerHTML = data.description;
                 document.getElementById('quantity').innerHTML = data.quantity;
                 document.getElementById('vendor').innerHTML = data.vendor_name;
-                document.getElementById('image').src = data.image;
+                document.getElementById('image').src = data.img_path;
 
             },
             error: function () { alert('Grid Not Load'); }

@@ -42,7 +42,7 @@
                                     </div>
                                     <div class="col-lg-6 ">
                                         <input type="hidden" id="cust_id" value="0" />
-                                        <input class="form-control" type="text" name="Customername" id="Customername" placeholder="Example" required="required">
+                                        <input class="form-control" type="text" name="Customername" id="Customername" required="required">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 spacing">
@@ -119,38 +119,28 @@
     //need correction when updating probably
     $(document).ready(function () {
         $.ajax({
-            url: '/api/CustomerApi/',
+            url: '/api/CustomerApi',
             type: 'PUT',
             success: function (data) {
                 console.log(data);
                 $.each(data.city, function (i) {
-                    $('#CustomerCityDropdown').append($('<option></option>').val(data.city[i].city_code).html(data.city[i].city_name));
+                   $('#CustomerCityDropdown').append($('<option></option>').val(data.city[i].city_code).html(data.city[i].city_name));
                 });
 
-                if (data.customers.customer_name != null) {
-                    console.log(data.customers.customer_name);
-                    document.getElementById("Customername").value = data.customers.customer_name;
-                    document.getElementById("cust_id").value = data.customers.customerId;
-                    document.getElementById("CustAdd").value = data.customers.address;
-                    document.getElementById("CustContact").value = data.customers.Phonenumber.substring(3, 13);
-                    document.getElementById("CustWebsites").value = data.customers.Website;
-                    document.getElementById("CustEmail").value = data.customers.Email;
+                if (data.cust_id != null) {
+                    document.getElementById("Customername").value = data.username;
+                    document.getElementById("cust_id").value = data.cust_id;
+                    document.getElementById("CustAdd").value = data.address;
+                    document.getElementById("CustContact").value = data.contact.substring(3, 13);
+                    document.getElementById("CustWebsites").value = data.website;
+                    document.getElementById("CustEmail").value = data.email;
                     document.getElementById("button").value = "Update";
                 }
-                //else {
-                //    $.each(data.city, function (i) {
-                //        $('#CustomerCityDropdown').append($('<option></option>').val(data.city[i].city_code).html(data.city[i].city_name));
-                //    });
-
-                //}
-
 
             },
             error: function () { alert('Customer not Updated'); }
         });
     });
-
-
     function Add() {
         var name = document.getElementById('Customername').value.trim();
         var address = document.getElementById('CustAdd').value.trim();

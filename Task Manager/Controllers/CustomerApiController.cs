@@ -143,7 +143,7 @@ namespace Task_Manager.Controllers
             return 0;
         }
 
-        [HttpPut]
+        [Route("/api/CustomerApi/"), HttpPut]
         public customerdropdown get()
         {
             var session = HttpContext.Current.Session;
@@ -154,7 +154,13 @@ namespace Task_Manager.Controllers
                 string str = session["Customer"].ToString();
                 session["Customer"] = null;
                 cust = db.customer.Find(Convert.ToInt32(str));
-                custdropdown.customers = cust;
+                custdropdown.cust_id = cust.customerId;
+                custdropdown.username = cust.customer_name;
+                custdropdown.citycode = cust.city_code.Substring(0,2);
+                custdropdown.address = cust.address;
+                custdropdown.contact = cust.Phonenumber;
+                custdropdown.email = cust.Email;
+                custdropdown.website = cust.Website;
                 List<City> citylist = new List<City>();
                 citylist = db.city.ToList();
                 custdropdown.city = citylist;
@@ -177,9 +183,3 @@ namespace Task_Manager.Controllers
         }
     }
 }
-
-
-
-//action =
-//                           @"<div data-id='" + log.id + @"'>
-//                                <a href='#' onClick='deleteTerminal(" + log.id + ")'>Delete</a></div>"

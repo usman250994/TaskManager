@@ -40,7 +40,6 @@ namespace Task_Manager.Controllers
                 res.timeStamp = entity.timeStamp;
                 res.location = entity.location;
                 res.message = entity.message;
-
                 if (entity.sentBy.id != sentById)
                 {
                     sentById = entity.sentBy.id;
@@ -57,8 +56,7 @@ namespace Task_Manager.Controllers
                 }
                 else
                 {                
-                    res.direction = leftRight;
-                   
+                    res.direction = leftRight;                   
                 }
                 listRes.Add(res);
 

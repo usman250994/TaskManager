@@ -42,11 +42,11 @@
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
                                             <label>Name</label>
-                                            <input type="hidden" ng-model="task.task.id" />
+                                            <input type="hidden" ng-model="task.id" />
                                         </div>
                                         <div class="col-lg-6 ">
                                             <input type="hidden" id="cust_id" value="0" />
-                                            <input class="form-control" type="text" ng-model="task.task.task_name">
+                                            <input class="form-control" type="text" ng-model="task.taskname" required="required">
                                         </div>
                                     </div>
 
@@ -55,7 +55,7 @@
                                             <label>Customer Name</label>
                                         </div>
                                         <div class="col-lg-6 ">
-                                            <select ng-options="customer.name for customer in customers" ng-model="customerId" class="ddl"></select>
+                                            <select ng-options="customer.name for customer in task.dropcustomer" ng-model="customerId" class="ddl" required="required"></select>
 
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
                                             <label>Project Name</label>
                                         </div>
                                         <div class="col-lg-6 ">
-                                            <select ng-options="project.name for project in projects" ng-model="projectId" class="ddl"></select>
+                                            <select ng-options="project.name for project in task.dropproject" ng-model="projectId" class="ddl " required="required"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -72,7 +72,7 @@
                                             <label>Issue</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <textarea class="form-control" type="text" id="Desc" cols="22" rows="2" ng-model="task.task.description"> </textarea>
+                                            <textarea class="form-control" type="text" cols="22" rows="2" ng-model="task.issue" required="required"> </textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -80,7 +80,7 @@
                                             <label>Start Date</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input class="form-control" type="date" name="StartDate" ng-model="task.task.start_date" required="required">
+                                            <input class="form-control" type="date" name="StartDate" ng-model="task.sdate" required="required">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -88,7 +88,7 @@
                                             <label>End Date</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input class="form-control" type="date" name="EndDate" ng-model="task.task.end_date" required="required">
+                                            <input class="form-control" type="date" name="EndDate" ng-model="task.edate" required="required">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -110,10 +110,10 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" ng-model="task.task.sms" ng-checked="task.task.sms"> SMS
+                                                <input type="checkbox" ng-model="task.sms" ng-checked="task.sms"> SMS
                                             </label>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" ng-model="task.task.email" ng-checked="task.task.email">  Email
+                                                <input type="checkbox" ng-model="task.email" ng-checked="task.email">  Email
                                             </label>
                                         </div>
                                     </div>
@@ -144,78 +144,60 @@
 <script type="text/javascript">
 
     var app = angular.module("task", ['multipleSelect']);
-
     app.controller("taskctrl", function ($scope, $http) {
-
-
-        $scope.message = $http.get('/api/TaskApi/'+0).then(function (response) {
+        $scope.message = $http.get('/api/TaskApi/' + 0).then(function (response) {
+         
             $scope.task = response.data;
-            $scope.pid = $scope.task.projectId;
-            $scope.cid = $scope.task.customerId;
-            console.log($scope.pid+","+$scope.cid);
             $scope.selectedList = $scope.task.tags;
-            $scope.task.task.start_date = new Date($scope.task.task.start_date);
-            $scope.task.task.end_date = new Date($scope.task.task.end_date);
+            $scope.optionsList = $scope.task.list;
+            for (var i = 0; i < $scope.task.dropcustomer.length; i++) {
 
-        });
-
-        $scope.message = $http.get('/api/angularApi/'+0).then(function (response) {
-            $scope.customers = response.data;
-            console.log($scope.customers);
-            for (var i = 0; i < $scope.customers.length; i++) {
-               
-                if ($scope.cid == $scope.customers[i].id)
-                {
-                    $scope.customerId = $scope.customers[i];
-                }
-            }
-    
-        });
-
-        $scope.message = $http.post('/api/angularApi/'+0).then(function (response) {
-            $scope.projects = response.data;
-
-            for (var i = 0; i < $scope.projects.length; i++) {
-             
-                if ($scope.pid == $scope.projects[i].id)
-                {
-                    $scope.projectId = $scope.projects[i];
+                if ($scope.task.cid == $scope.task.dropcustomer[i].id) {
+                    $scope.customerId = $scope.task.dropcustomer[i];
                 }
             }
 
+            for (var i = 0; i < $scope.task.dropproject.length; i++) {
+
+                if ($scope.task.pid == $scope.task.dropproject[i].id) {
+                    $scope.projectId = $scope.task.dropproject[i];
+                }
+            }
+
+            if($scope.task.id!=null)
+            {
+                $scope.task.sdate= new Date($scope.task.sdate);
+                $scope.task.edate = new Date($scope.task.edate);
+            }
+            else
+            {
+                $scope.task.sdate = new Date();
+                $scope.task.edate = new Date();
+            }
+
+
         });
-        $scope.message = $http.post('/api/angularApi/').then(function (response) {
-            $scope.optionsList = response.data;
-        });
+
 
         $scope.Add = function () {
-            console.log($scope.projectId.id);
-            $scope.new = {};
-            $scope.new.task_name = $scope.task.task.task_name;
-            $scope.new.id = $scope.task.task.id;
-            $scope.new.projectId = $scope.projectId.id;
-            $scope.new.description = $scope.task.task.description;
-            $scope.new.email = $scope.task.task.email;
-            $scope.new.sms = $scope.task.task.sms;
-            $scope.new.start_date = $scope.task.task.end_date;
-            $scope.new.end_date = $scope.task.task.end_date;
-            $scope.new.tempUsers = $scope.selectedList;
-          
-          
+            if ($scope.task.sdate >= $scope.task.edate) {
+                alert("Please Enter Corrct Date ");
+                return;
+            }
+            else {
+              
+                $scope.message = $http.post('/api/TaskApi/', $scope.task).then(function (response) {
 
-            $scope.message = $http.post('/api/TaskApi/', $scope.new).then(function (response) {
-             
-                alert("Task Added Sucessfully");
-                document.getElementById("taskForm").reset();
-                $scope.selectedList = [];
+                    alert("Task Added Sucessfully");
+                    document.getElementById("taskForm").reset();
+                    $scope.selectedList = [];
 
 
-                $scope.customerId = {};
-                $scope.projectId = {};
-            });
-
+                    $scope.customerId = {};
+                    $scope.projectId = {};
+                });
+            }
         }
-
         $scope.getval = function (val) {
 
             $scope.projecttemp = [];
@@ -224,10 +206,10 @@
                     $scope.pojecttemp.push($scope.projects[i]);
                 }
             }
-         
+
         }
     });
 
-   
-   
+
+
 </script>

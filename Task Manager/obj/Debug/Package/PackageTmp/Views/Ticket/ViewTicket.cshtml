@@ -37,6 +37,8 @@
                         <thead>
                             <tr>
                                 <th>Ticket Number</th>
+                                <th>Customer Code</th>
+                                <th>Customer Name</th>
                                 <th>Task Name</th>
                                 <th>Description</th>
                                 <th>Assigned To</th>
@@ -113,7 +115,7 @@
             url: '/api/TicketApi/' + id,
             type: 'PUT',
             success: function (data) {
-                 window.location.href = '/Ticket/CreateTicket';
+                window.location.href = '/Ticket/CreateTicket';
             },
             error: function () {
                 alert(data);
@@ -149,10 +151,15 @@
 
     }
     function filltable(datas) {
+
         $("#dataTables-example").DataTable({
             "aaData": datas,
+            "bAutoWidth": false,
+            "sPaginationType": "full_numbers",
             "aoColumns": [
                 { "mDataProp": "ticket_name" },
+                 { "mDataProp": "cCode" },
+                  { "mDataProp": "cName" },
                 { "mDataProp": "task_name" },
                 { "mDataProp": "description" },
                 { "mDataProp": "users" },
@@ -168,7 +175,7 @@
 
             ]
         });
-        
+
     }
-  
+
 </script>

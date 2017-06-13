@@ -11,6 +11,9 @@ namespace Task_Manager.viewModels
         public string uname { get; set; }
         public int projectId { get; set; }
         public string issue { get; set; }
+        public string branchCode { get; set; }
+        public DateTime sdate { get; set; }
+        public DateTime edate { get; set; }
         public bool email { get; set; }
         public bool sms { get; set; }
         public List<tagUsersView> assignedTo { get; set; }

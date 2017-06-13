@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -73,12 +74,16 @@ namespace Task_Manager.Controllers
                 returning.projectId = pid;
 
                 taskupdate taskUpd = new taskupdate();
+                taskUpd.id = returning.task.id;
                 taskUpd.taskname = returning.task.task_name;
                 taskUpd.cid = returning.customerId;
                 taskUpd.pid = returning.projectId;
                 taskUpd.issue = returning.task.description;
                 taskUpd.sdate = returning.task.start_date.ToString();
-                taskUpd.edate= returning.task.end_date.ToString();
+                taskUpd.edate = returning.task.end_date.ToString();
+                taskUpd.list = db.user.Where(o => o.Enable == true).Select(o => new tagUsersView { id = o.id, name = o.user_Name }).ToList();
+                taskUpd.dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
+                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
                 taskUpd.tags = returning.tags;
                 taskUpd.sms = returning.task.sms;
                 taskUpd.email = returning.task.email;
@@ -87,14 +92,13 @@ namespace Task_Manager.Controllers
             }
             else
             {
-                List<tagUsersView> taged = new List<tagUsersView>();
-                returning.tags = taged;
-
-
 
                 taskupdate taskUpd = new taskupdate();
-                taskUpd.tags = returning.tags;
-
+                List<tagUsersView> taggedUsers = new List<tagUsersView>();
+                taskUpd.tags = taggedUsers;
+                taskUpd.list = db.user.Where(o => o.Enable == true).Select(o => new tagUsersView { id = o.id, name = o.user_Name }).ToList();
+                taskUpd.dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
+                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
                 return taskUpd;
             }
         }
@@ -317,59 +321,67 @@ namespace Task_Manager.Controllers
 
         //Create Task or update task
         [HttpPost]
-        public String CreateTask([FromBody]tempTask tempTask)
+        public String CreateTask([FromBody]taskupdate temp)
         {
+
+            tempTask temptask = new tempTask();
+            temptask.id = temp.id;
+            temptask.projectId = temp.pid;
+            temptask.task_name = temp.taskname;
+            temptask.tempUsers = temp.tags;
+            temptask.description = temp.issue;
+            temptask.start_date = DateTime.Parse(temp.sdate);
+            temptask.end_date = DateTime.Parse(temp.sdate);
+            temptask.sms = temp.sms;
+            temptask.email = temp.email;
             var sessionId = HttpContext.Current.Session;
             string id = sessionId["UserID"].ToString();
             var createdUser = db.user.Find(Convert.ToInt32(id));
 
             //update
-            if (tempTask.id != 0)
+            if (temp.id != 0)
             {
 
-                var taskdetail = db.task.Find(tempTask.id);
+                var taskdetail = db.task.Find(temp.id);
 
-                db.Entry(taskdetail).CurrentValues.SetValues(setTask(tempTask));
+                db.Entry(taskdetail).CurrentValues.SetValues(setTask(temptask));
 
                 //updating project
-                var tagging = db.tagging.Where(p => p.tasks.id == tempTask.id).FirstOrDefault();
+                var tagging = db.tagging.Where(p => p.tasks.id == temptask.id).FirstOrDefault();
                 var tag = tagging;
-                tag.project = db.project.Find(tempTask.projectId);
+                tag.project = db.project.Find(temptask.projectId);
                 db.Entry(tagging).CurrentValues.SetValues(tag);
 
 
                 //adding users
                 tagging.users.Clear();
-                for (int i = 0; i < tempTask.tempUsers.Count; i++)
+                for (int i = 0; i < temptask.tempUsers.Count; i++)
                 {
-                    var user = db.user.Find(tempTask.tempUsers[i].id);
+                    var user = db.user.Find(temptask.tempUsers[i].id);
                     tagging.users.Add(user);
                 }
-
-
-
             }
             //create
             else
             {
 
-                var task = setTask(tempTask);
+                var task = setTask(temptask);
                 // db.task.Add(task);
                 Tagging tag = new Tagging();
                 tag.tasks = task;
-                tag.project = db.project.Find(tempTask.projectId);
+                tag.project = db.project.Find(temptask.projectId);
                 List<Users> usr = new List<Users>();
 
-                for (int i = 0; i < tempTask.tempUsers.Count; i++)
+                for (int i = 0; i < temptask.tempUsers.Count; i++)
                 {
-                    var user = db.user.Find(tempTask.tempUsers[i].id);
+                    var user = db.user.Find(temptask.tempUsers[i].id);
                     usr.Add(user);
                 }
                 tag.users = usr;
                 db.tagging.Add(tag);
 
             }
-            if (db.SaveChanges() > 1)
+            if (db.SaveChanges() > 0)
             {
                 return "task success!!";
 

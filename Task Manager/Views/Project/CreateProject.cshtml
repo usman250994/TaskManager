@@ -148,6 +148,7 @@
     app.controller("projectctrl", function ($scope, $http) {
 
         $scope.message = $http.get('/api/projectupdate/').then(function (response) {
+
             $scope.project = response.data;
             $scope.customers = response.data.dropList;
             $scope.optionsList = response.data.userList;
@@ -186,39 +187,42 @@
         });
 
 
-        //$scope.message = $http.get('/api/angularApi/'+0).then(function (response) {
-        //    $scope.customers = response.data;
-        //    //
-        //    var keepgoing = true;
-        //    angular.forEach($scope.customers, function (item) {
-        //        if (keepgoing) {
-        //            if ($scope.project.cId == item.id) {
-        //                $scope.customerId = item;
-        //                keepgoing = false;
-        //            }
-        //        }
-        //    });
+        $scope.message = $http.get('/api/angularApi/'+0).then(function (response) {
+            $scope.customers = response.data;
+            //
+            var keepgoing = true;
+            angular.forEach($scope.customers, function (item) {
+                if (keepgoing) {
+                    if ($scope.project.cId == item.id) {
+                        $scope.customerId = item;
+                        keepgoing = false;
+                    }
+                }
+            });
 
-        //    //
-        //});
+            //
+        });
 
-        //$scope.message = $http.post('/api/angularApi/').then(function (response) {
-        //    $scope.optionsList = response.data;
-        //    var keepgoing = true;
-        //    angular.forEach($scope.optionsList, function (item) {
-        //        if (keepgoing) {
-        //            if ($scope.project.pmId == item.id) {
-        //                $scope.userId = item;
-        //                keepgoing = false;
-        //            }
-        //        }
-        //    });
-        //});
+        $scope.message = $http.post('/api/angularApi/').then(function (response) {
+            $scope.optionsList = response.data;
+            var keepgoing = true;
+            angular.forEach($scope.optionsList, function (item) {
+                if (keepgoing) {
+                    if ($scope.project.pmId == item.id) {
+                        $scope.userId = item;
+                        keepgoing = false;
+                    }
+                }
+            });
+        });
 
   
 
         $scope.Add = function () {
-          
+            if ($scope.project.sDate >= $scope.project.eDate) {
+                alert("Please Enter Corrct Date ");
+            }
+            else {
                 $scope.new = {};
                 $scope.new.id = $scope.project.id
                 $scope.new.projectName = $scope.pName;
@@ -237,7 +241,7 @@
                     document.getElementById("projForm").reset();
                 });
             }
-        
+        }
     });
 </script>
 

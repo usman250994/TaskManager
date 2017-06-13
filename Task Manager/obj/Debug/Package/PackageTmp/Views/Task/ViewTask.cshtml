@@ -127,7 +127,7 @@
                     data: model,
                     dataType: "json",
                     success: function (data) {
-                  
+
                     },
                     error: function () { alert('Grid Not Load'); }
                 });
@@ -207,11 +207,10 @@
             }
         });
     }
-   
 
-    function status(val, id)
-    {
-        var model = {value:val,user:id};
+
+    function status(val, id) {
+        var model = { value: val, user: id };
         $.ajax({
             async: true,
             url: '/api/angularApi/',

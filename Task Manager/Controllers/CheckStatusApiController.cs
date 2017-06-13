@@ -36,9 +36,10 @@ namespace Task_Manager.Controllers
                     status.name = ticket.task_name;
                     status.branch_code = ticket.branch_code;
                     status.project_name = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.Project_Name).FirstOrDefault();
-                    status.code = customerid;
+           
                     var projId = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.id).FirstOrDefault();
                     status.customer_name = db.project.Where(o => o.id == projId).Select(o => o.customer.customer_name).FirstOrDefault();
+                    status.code = db.project.Where(o => o.id == projId).Select(o => o.customer.city_code).FirstOrDefault();
                     list.Add(status);
                     return list;
 
@@ -56,7 +57,6 @@ namespace Task_Manager.Controllers
                             var ticket = db.task.Find(li);
                             clientsTicketRespone status = new clientsTicketRespone();
                             status.id = ticket.id;
-
                             status.status = fillStatus(ticket.status);
                             status.date = ticket.created_on;
                             status.branch_code = ticket.branch_code;

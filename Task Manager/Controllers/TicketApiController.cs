@@ -41,7 +41,7 @@ namespace Task_Manager.Controllers
 
         //gtetting session and dropdown info
         [HttpGet]
-        public updateTaskReturning get(int id)
+        public taskupdate get(int id)
         {
             updateTaskReturning returning = new updateTaskReturning();
             var session = HttpContext.Current.Session;
@@ -51,58 +51,89 @@ namespace Task_Manager.Controllers
                 session["Task"] = null;
                 var task = db.task.Find(Convert.ToInt32(str));
                 //
-                List<int> taggedUsers = new List<int>();
+                List<tagUsersView> taggedUsers = new List<tagUsersView>();
                 var tag = db.tagging.Where(p => p.tasks.id == task.id).FirstOrDefault();
 
                 foreach (var entity in tag.users)
                 {
-                    taggedUsers.Add(entity.id);
+                    taggedUsers.Add(new tagUsersView { id = entity.id, name = entity.user_Name });
                 }
                 //
-                var pid = db.tagging.Where(p => p.tasks.id == task.id).Select(p => p.project.Project_Name).FirstOrDefault();
-
+                var pi = db.tagging.Where(o => o.tasks.id == task.id).FirstOrDefault();
+                var pid = pi.project.id;
+                var cid = db.project.Where(o => o.id == pid).Select(u => u.customer.customerId).FirstOrDefault();
                 returning.task = task;
-              //  returning.tags = taggedUsers;
-            //    returning.projectId = pid;
-              //  returning.dropdowns = find();
+                returning.customerId = cid;
+                returning.tags = taggedUsers;
+                returning.projectId = pid;
+                taskupdate taskUpd = new taskupdate();
+                taskUpd.id = returning.task.id;
+                taskUpd.taskname = returning.task.task_name;
+                taskUpd.cid = returning.customerId;
+                taskUpd.pid = returning.projectId;
+                taskUpd.bCode = returning.task.branch_code;
+                taskUpd.issue = returning.task.description;
+                taskUpd.list = db.user.Where(o => o.Enable == true).Select(o => new tagUsersView { id = o.id, name = o.user_Name }).ToList();
+                taskUpd.dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
+                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                taskUpd.tags = returning.tags;
+                taskUpd.sms = returning.task.sms;
+                taskUpd.email = returning.task.email;
 
-                return returning;
+                return taskUpd;
             }
             else
             {
-               // returning.dropdowns = find();
-                return returning;
+
+                taskupdate taskUpd = new taskupdate();
+                List<tagUsersView> taggedUsers = new List<tagUsersView>();
+                taskUpd.tags = taggedUsers;
+                taskUpd.list = db.user.Where(o => o.Enable == true).Select(o => new tagUsersView { id = o.id, name = o.user_Name }).ToList();
+                taskUpd.dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
+                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                return taskUpd;
             }
         }
 
         //Create Ticket or update task
         [HttpPost]
-        public String CreateTask([FromBody]internalTickets tempTask)
+        public String CreateTask([FromBody]taskupdate temp)
         {
+            internalTickets temptask = new internalTickets();
+            temptask.id = temp.id;
+            temptask.branchCode = temp.bCode;
+            temptask.uname = temp.taskname;
+            temptask.projectId = temp.pid;
+            temptask.issue = temp.issue;
+            temptask.email = temp.email;
+            temptask.sms = temp.sms;
+            temptask.assignedTo = temp.tags;
+
+            //
             var sessionId = HttpContext.Current.Session;
             string id = sessionId["UserID"].ToString();
             var createdUser = db.user.Find(Convert.ToInt32(id));
 
             //update
-            if (tempTask.id != 0)
+            if (temptask.id != 0)
             {
 
-                var taskdetail = db.task.Find(tempTask.id);
+                var taskdetail = db.task.Find(temptask.id);
 
 
-                db.Entry(taskdetail).CurrentValues.SetValues(setTask(tempTask));
+                db.Entry(taskdetail).CurrentValues.SetValues(setTask(temptask));
 
                 //updating project
-                var tagging = db.tagging.Where(p => p.tasks.id == tempTask.id).FirstOrDefault();
+                var tagging = db.tagging.Where(p => p.tasks.id == temptask.id).FirstOrDefault();
                 var tag = tagging;
-                tag.project = db.project.Find(tempTask.projectId);
+                tag.project = db.project.Find(temptask.projectId);
                 db.Entry(tagging).CurrentValues.SetValues(tag);
 
                 //adding users
                 tagging.users.Clear();
-                for (int i = 0; i < tempTask.assignedTo.Count; i++)
+                for (int i = 0; i < temptask.assignedTo.Count; i++)
                 {
-                    var user = db.user.Find(tempTask.assignedTo[i].id);
+                    var user = db.user.Find(temptask.assignedTo[i].id);
                     tagging.users.Add(user);
                 }
             }
@@ -110,16 +141,16 @@ namespace Task_Manager.Controllers
             else
             {
 
-                var task = setTask(tempTask);
+                var task = setTask(temptask);
                 // db.task.Add(task);
                 Tagging tag = new Tagging();
                 tag.tasks = task;
-                tag.project = db.project.Find(tempTask.projectId);
+                tag.project = db.project.Find(temptask.projectId);
                 List<Users> usr = new List<Users>();
 
-                for (int i = 0; i < tempTask.assignedTo.Count; i++)
+                for (int i = 0; i < temptask.assignedTo.Count; i++)
                 {
-                    var user = db.user.Find(tempTask.assignedTo[i].id);
+                    var user = db.user.Find(temptask.assignedTo[i].id);
                     usr.Add(user);
                 }
                 tag.users = usr;
@@ -152,8 +183,8 @@ namespace Task_Manager.Controllers
             task.description = tempTask.issue;
             task.start_date = DateTime.Now;
             task.end_date = DateTime.Now;
+            task.branch_code = tempTask.branchCode;
             task.IsTicket = true;
-            task.branch_code = "";
             if (tempTask.assignedTo.Count == 0)
             {
                 task.status = 0;
@@ -381,20 +412,28 @@ namespace Task_Manager.Controllers
             {
                 taskResponse taskRes = new taskResponse();
                 taskRes.ticket_name = tasks[i].id;
+                int ids = Convert.ToInt32(tasks[i].id);
                 taskRes.task_name = tasks[i].task_name;
                 taskRes.description = tasks[i].description;
                 taskRes.email = tasks[i].email;
+                taskRes.bran_Code = tasks[i].branch_code;
                 taskRes.sms = tasks[i].sms;
                 taskRes.createdBy = tasks[i].Created_By.user_Name;
-                if(tasks[i].end_date==null)
-                   taskRes.endDate= "--";
+                var projid = db.tagging.Where(c => c.tasks.id == ids).Select(p => p.project.id).FirstOrDefault();
+                var obj = db.project.Where(p => p.id == projid).Select(c => c.customer).FirstOrDefault();
+                taskRes.cCode = obj.city_code;
+                taskRes.cName = obj.customer_name;
+
+
+                if (tasks[i].end_date == null)
+                    taskRes.endDate = "--";
                 else
                     taskRes.endDate = tasks[i].end_date.Date.ToShortDateString();
                 if (tasks[i].start_date == null)
                     taskRes.startDate = "--";
                 else
-                    taskRes.startDate = tasks[i].start_date.Date.ToShortDateString();               
-                
+                    taskRes.startDate = tasks[i].start_date.Date.ToShortDateString();
+
                 if (tasks[i].status == 0)
                     taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0' selected >Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
                 else if (tasks[i].status == 1)

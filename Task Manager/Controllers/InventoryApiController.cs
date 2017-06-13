@@ -116,13 +116,34 @@ namespace Task_Manager.Controllers
             return 0;
         }
         [HttpGet]
-        public Product DetailProduct(int id)
+        public ViewProductDetail DetailProduct(int id)
         {
+            string type, catogrey;
             var Session = HttpContext.Current.Session;
             string abc = Session["Product_id"].ToString();
+            ViewProductDetail view = new ViewProductDetail();
             Product prod = new Product();
             prod = db.product.Find(Convert.ToInt32(abc));
-            return prod;
+            view.name = prod.product_name;
+            if (prod.islocal == true)
+            {
+                type = "Local";
+            }
+            else
+            {
+                type = "Imported";
+            }
+            view.type = type;
+            view.Catogrey = prod.category.ToString();
+            view.brand = prod.brand;
+            view.model = prod.model;
+            view.barcode = prod.barcode;
+            view.inward_date = prod.inward_date;
+            view.description = prod.description;
+            view.quantity = prod.quantity;
+            view.vendor_name = prod.vendor_name;
+            view.img_path = prod.image;
+            return view;
         }
     }
 }
