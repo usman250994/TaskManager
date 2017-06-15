@@ -9,8 +9,18 @@ namespace Task_Manager.viewModels
     public class responseListForMessage
     {
         public List<responseMessage> responseList { get; set; }
-        public Task myTask { get; set; }
         public List<string> taggedUsers{get;set;}
+        public int task_no { get; set; }
+        public string task_name { get; set; }
+        public string Description { get; set; }
+        public string sDate { get; set; }
+        public string eDate { get; set; }
+        public bool Email { get; set; }
+        public bool SMS { get; set; }
+        public string customername { get; set; }
+        public string customercode { get; set; }
+        public string assigned { get; set; }
+        public string createdby { get; set; }
        
     }
 }

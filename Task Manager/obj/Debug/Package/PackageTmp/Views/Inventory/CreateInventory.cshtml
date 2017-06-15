@@ -103,7 +103,7 @@
 
                                     <div class="col-lg-6">
                                         <div>
-                                            <input id="myfile"name="myFile" type="file" id="images"/>
+                                            <input id="myfile" name="myFile" type="file" id="images" />
                                         </div>
                                     </div>
                                 </div>
@@ -229,10 +229,8 @@
                 dataType: "json",
                 success: function (data) {
                     alert("Product Saved");
-                    location.reload();
+                    window.location.href = '/Inventory/ViewInventory';
                     //another ajax call for saving image
-                    //
-
                     $.ajax({
                         type: "POST",
                         url: '/api/UploadFileApi/',
@@ -241,6 +239,8 @@
                         data: Imagedata,
                         success: function (result) {
                             alert("success message");
+
+
                         },
                         error: function (xhr, status, p3, p4) {
                             var err = "Error " + " " + status + " " + p3 + " " + p4;
@@ -250,9 +250,6 @@
                         }
                     });
                     //
-
-
-                    alert(data); location.reload()
                 },
                 error: function () { alert("Error"); }
             });

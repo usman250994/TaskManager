@@ -7,10 +7,8 @@ namespace Task_Manager.viewModels
 {
     public class clientsTicketRespone
     {
-        public int id { get; set; }
+        public int tid { get; set; }
         public string name { get; set; }
-        public string code { get; set; }
-        public string customer_name { get; set; }
         public string status { get; set; }
         public string description { get; set; }
         public string branch_code { get; set; }

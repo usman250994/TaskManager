@@ -100,6 +100,20 @@ namespace Task_Manager.Controllers
         public String CreateTask([FromBody]taskupdate temp)
         {
             internalTickets temptask = new internalTickets();
+
+
+            if (temp.id == 0)
+            {
+                temptask.created_on = DateTime.Now;
+                temptask.Modified = DateTime.Now;
+
+            }
+            else
+            {
+                temptask.Modified = DateTime.Now;
+            }
+
+
             temptask.id = temp.id;
             temptask.branchCode = temp.bCode;
             temptask.uname = temp.taskname;
@@ -119,8 +133,9 @@ namespace Task_Manager.Controllers
             {
 
                 var taskdetail = db.task.Find(temptask.id);
-
-
+                temptask.created_on = taskdetail.created_on;
+                temptask.sdate = taskdetail.start_date;
+                temptask.edate = taskdetail.end_date;
                 db.Entry(taskdetail).CurrentValues.SetValues(setTask(temptask));
 
                 //updating project
@@ -140,7 +155,7 @@ namespace Task_Manager.Controllers
             //create
             else
             {
-
+   
                 var task = setTask(temptask);
                 // db.task.Add(task);
                 Tagging tag = new Tagging();
@@ -172,26 +187,29 @@ namespace Task_Manager.Controllers
         {
             var sessionId = HttpContext.Current.Session;
             string id = sessionId["UserID"].ToString();
-
+        
 
             var createdUser = db.user.Find(Convert.ToInt32(id));
             Task task = new Task();
             task.enable = true;
-            task.created_on = DateTime.Now;
+            
             task.Created_By = createdUser;
             task.task_name = tempTask.uname;
             task.description = tempTask.issue;
-            task.start_date = DateTime.Now;
-            task.end_date = DateTime.Now;
+            
             task.branch_code = tempTask.branchCode;
             task.IsTicket = true;
+            task.created_on = tempTask.created_on;
+            task.start_date = DateTime.Now;
+            task.end_date = DateTime.Now;
+            task.LastModify = tempTask.Modified;
             if (tempTask.assignedTo.Count == 0)
             {
                 task.status = 0;
             }
             else
             {
-                task.status = 1;
+                task.status = 2;
             }
             task.sms = tempTask.sms;
             task.email = tempTask.email;
@@ -419,6 +437,7 @@ namespace Task_Manager.Controllers
                 taskRes.bran_Code = tasks[i].branch_code;
                 taskRes.sms = tasks[i].sms;
                 taskRes.createdBy = tasks[i].Created_By.user_Name;
+                taskRes.lastModify = tasks[i].LastModify.Date.ToShortDateString();
                 var projid = db.tagging.Where(c => c.tasks.id == ids).Select(p => p.project.id).FirstOrDefault();
                 var obj = db.project.Where(p => p.id == projid).Select(c => c.customer).FirstOrDefault();
                 taskRes.cCode = obj.city_code;

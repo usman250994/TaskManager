@@ -20,24 +20,16 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            @*<div class="col-lg-12 spacing">
-                                    <div class="col-lg-6 ">
-                                        <label>Customer Name</label>
-
-                                    </div>
-                                    <div class="col-lg-6 ">
-                                        <label id=" custname"> Customer Name </label>
-                                    </div>
-                                </div>*@
-                            @*<div class="col-lg-12 spacing">
-                                    <div class="    col-lg-6 ">
-                                        <label>Project Name</label>
-                                    </div>
-                                    <div class="col-lg-6 ">
-                                        <label id=" projname"> abc</label>
-                                    </div>
-                                </div>*@
                             <div class="col-lg-12 spacing">
+                                <div class="col-lg-6 ">
+                                    <label>Ticket/Task No.</label>
+                                </div>
+                                <div class="col-lg-6 ">
+                                    <label id="ticketno"></label>
+                                </div>
+                                <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
+                            </div>
+                            <div class="col-lg-12 spacing" >
                                 <div class="col-lg-6 ">
                                     <label>Task Name</label>
                                 </div>
@@ -47,12 +39,30 @@
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
 
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing " style="height:125px;">
                                 <div class="col-lg-6">
                                     <label>Description</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <label id="Description"> </label>
+                                </div>
+                                <p style=" border-bottom: 1px solid gray; position:relative; padding-bottom: 100px ; "> </p>
+                            </div>
+                            <div class="col-lg-12 spacing">
+                                <div class="col-lg-6 ">
+                                    <label>Customer Code</label>
+                                </div>
+                                <div class="col-lg-6 ">
+                                    <label id="custid"></label>
+                                </div>
+                                <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
+                            </div>
+                            <div class="col-lg-12 spacing">
+                                <div class="col-lg-6 ">
+                                    <label>Customer Name</label>
+                                </div>
+                                <div class="col-lg-6 ">
+                                    <label id="custname"></label>
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
@@ -99,7 +109,7 @@
                                 <div class="col-lg-6">
                                     <label id="assign"></label>
                                 </div>
-                                <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
+                                <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 40px; "> </p>
                             </div>
                             <div class="col-lg-12 spacing">
                                 <div class="col-lg-6">
@@ -139,7 +149,7 @@
                         </div>
                         <div class="panel-footer">
                             <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..."  onkeypress="if (event.keyCode == 13) { sendMessage() }"/>
+                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." onkeypress="if (event.keyCode == 13) { sendMessage() }" />
                                 <span class="input-group-btn">
                                     <button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessage()">
                                         Send
@@ -174,13 +184,16 @@
                 for (var i = 0; i < data.responseList.length; i++) {
                     chatstyle(data.responseList[i]);
                 }
-                document.getElementById('sms').innerText = data.myTask.sms;
-                document.getElementById('email').innerText = data.myTask.email;
-                document.getElementById('EndDate').innerText = data.myTask.end_date.substring(0, 10);
-                document.getElementById('taskname').innerText = data.myTask.task_name;
-                document.getElementById('createdby').innerText = data.myTask.Created_By.user_Name;
-                document.getElementById('Description').innerText = data.myTask.description;
-                document.getElementById('StartDate').innerText = data.myTask.start_date.substring(0, 10);
+                document.getElementById('ticketno').innerText = data.task_no;
+                document.getElementById('taskname').innerText = data.task_name;
+                document.getElementById('Description').innerText = data.Description;
+                document.getElementById('custid').innerText = data.customercode;
+                document.getElementById('custname').innerText = data.customername;
+                document.getElementById('StartDate').innerText = data.sDate;
+                document.getElementById('EndDate').innerText = data.eDate;
+                document.getElementById('sms').innerText = data.SMS;
+                document.getElementById('email').innerText = data.Email;
+                document.getElementById('createdby').innerText = data.createdby;
                 for (var i = 0; i < data.taggedUsers.length; i++) {
                     document.getElementById('assign').innerText = document.getElementById('assign').innerText + data.taggedUsers[i];
                 }
@@ -205,39 +218,39 @@
         //    }
 
         //    function showLocation(position) {
-              //  var locations = position.coords.latitude + "," + position.coords.longitude;
+        //  var locations = position.coords.latitude + "," + position.coords.longitude;
 
-                var model = {
-                    msg: document.getElementById("btn-input").value,
-                    loc: "24.9258156,67.0524282"
-                };
-                console.log(model);
-                $.ajax({
-                    async: false,
-                    url: '/api/messageApi/',
-                    type: 'PUT',
-                    data: JSON.stringify(model),
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    success: function (data) {
-                        console.log(data);
-                        if (data == 1) {
-                            var model = {
-                                direction: "left",
-                                initials: "ME",
-                                location: "",
-                                message: document.getElementById("btn-input").value,
-                                name: "",
-                                timeStamp: Date()
-                            };
-                            chatstyle(model);
-                            document.getElementById("btn-input").value = "";
-                        }
-                        else { alert("Message could Not be Sent"); }
-                    },
-                    error: function () { alert('Grid Not Load'); }
-                });
-            }
+        var model = {
+            msg: document.getElementById("btn-input").value,
+            loc: "24.9258156,67.0524282"
+        };
+        console.log(model);
+        $.ajax({
+            async: false,
+            url: '/api/messageApi/',
+            type: 'PUT',
+            data: JSON.stringify(model),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (data == 1) {
+                    var model = {
+                        direction: "left",
+                        initials: "ME",
+                        location: "",
+                        message: document.getElementById("btn-input").value,
+                        name: "",
+                        timeStamp: Date()
+                    };
+                    chatstyle(model);
+                    document.getElementById("btn-input").value = "";
+                }
+                else { alert("Message could Not be Sent"); }
+            },
+            error: function () { alert('Grid Not Load'); }
+        });
+    }
     //   }
     //}
 

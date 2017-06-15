@@ -171,7 +171,8 @@
                 dataType: "json",
                 success: function (data) {
                     alert(data);
-                    location.reload();
+                    window.location.href = '/User/ViewUser';
+               
                 },
                 error: function () {
                     alert(data);

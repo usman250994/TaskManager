@@ -174,20 +174,19 @@
 
 
             if ($scope.project.pId != null) {
-               
+
                 $scope.project.sDate = new Date($scope.project.sDate);
                 $scope.project.eDate = new Date($scope.project.eDate);
-           
+
             }
-            else
-            {
-           $scope.project.Start_Date = new Date();
-           $scope.project.End_Date = new Date();
+            else {
+                $scope.project.Start_Date = new Date();
+                $scope.project.End_Date = new Date();
             }
         });
 
 
-        $scope.message = $http.get('/api/angularApi/'+0).then(function (response) {
+        $scope.message = $http.get('/api/angularApi/' + 0).then(function (response) {
             $scope.customers = response.data;
             //
             var keepgoing = true;
@@ -216,7 +215,7 @@
             });
         });
 
-  
+
 
         $scope.Add = function () {
             if ($scope.project.sDate >= $scope.project.eDate) {
@@ -238,6 +237,7 @@
                 $scope.message = $http.post('/api/ProjectApi/', $scope.new).then(function (response) {
                     console.log(response.data);
                     alert("Task Added Sucessfully");
+                    window.location.href = '/Project/ViewProject';
                     document.getElementById("projForm").reset();
                 });
             }

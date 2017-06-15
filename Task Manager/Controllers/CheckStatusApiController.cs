@@ -14,8 +14,11 @@ namespace Task_Manager.Controllers
     {
         TaskContext db = new TaskContext();
         [HttpPost]
-        public List<clientsTicketRespone> statusReturn()
+        public ticketStatusForClient statusReturn()
         {
+            ticketStatusForClient tick = new ticketStatusForClient();
+
+           
             List<clientsTicketRespone> list = new List<clientsTicketRespone>();
             var Session = HttpContext.Current.Session;
             string customerid = Session["customerid"].ToString();
@@ -29,20 +32,20 @@ namespace Task_Manager.Controllers
                     clientsTicketRespone status = new clientsTicketRespone();
 
                     var ticket = db.task.Find(id);
-                    status.id = ticket.id;
+                    status.tid = ticket.id;
                     status.status = fillStatus(ticket.status);
                     status.date = ticket.created_on;
                     status.description = ticket.description;
                     status.name = ticket.task_name;
                     status.branch_code = ticket.branch_code;
                     status.project_name = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.Project_Name).FirstOrDefault();
-           
-                    var projId = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.id).FirstOrDefault();
-                    status.customer_name = db.project.Where(o => o.id == projId).Select(o => o.customer.customer_name).FirstOrDefault();
-                    status.code = db.project.Where(o => o.id == projId).Select(o => o.customer.city_code).FirstOrDefault();
-                    list.Add(status);
-                    return list;
 
+                    var projId = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.id).FirstOrDefault();
+                              
+                    list.Add(status);
+                    
+                    tick.code= db.tagging.Where(c=>c.tasks.id==id).Select(p=>p.project.customer.city_code).FirstOrDefault();
+                    tick.customer_name=db.tagging.Where(c=>c.tasks.id==id).Select(p=>p.project.customer.customer_name).FirstOrDefault();
                 }
                 else
                 {
@@ -56,25 +59,28 @@ namespace Task_Manager.Controllers
                         {
                             var ticket = db.task.Find(li);
                             clientsTicketRespone status = new clientsTicketRespone();
-                            status.id = ticket.id;
+                            status.tid = ticket.id;
                             status.status = fillStatus(ticket.status);
                             status.date = ticket.created_on;
                             status.branch_code = ticket.branch_code;
                             status.description = ticket.description;
-                            status.name = ticket.task_name;
-                            status.code = customerid;
+                            status.name = ticket.task_name;                         
                             status.project_name = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.Project_Name).FirstOrDefault();
                             var projId = db.tagging.Where(o => o.tasks.id == ticket.id).Select(o => o.project.id).FirstOrDefault();
-                            status.customer_name = db.project.Where(o => o.id == projId).Select(o => o.customer.customer_name).FirstOrDefault();
                             list.Add(status);
                         }
                     }
+              
+                    tick.code=customerid;
+                    tick.customer_name=db.customer.Where(c=>c.city_code==customerid).Select(p=>p.customer_name).FirstOrDefault();
                 }
+                tick.list = list;
 
-
+                return tick;
             }
-            return list;
 
+
+            return tick;
         }
 
         private string fillStatus(int p)

@@ -64,7 +64,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-            async: false,
+            async: true,
             url: '/api/ProjectApi/',
             type: 'GET',
             contentType: "application/json;charset=utf-8",
@@ -91,7 +91,6 @@
                     alert(data);
 
                     $('table#dataTables-example tr#' + rId).remove();
-                    location.reload();
                 },
                 error: function (data) { alert(data); }
             });

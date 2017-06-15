@@ -55,22 +55,29 @@ namespace Task_Manager.Controllers
                     }
                 }
                 else
-                {                
-                    res.direction = leftRight;                   
+                {
+                    res.direction = leftRight;
                 }
                 listRes.Add(res);
 
             }
 
             var users = db.tagging.Where(p => p.tasks.id == id).Select(p => p.users.Select(q => q.user_Name).ToList()).FirstOrDefault();
-
-            returnTo.responseList = listRes;
-            returnTo.myTask = objTask;
-            
             returnTo.taggedUsers = users;
-
-
-
+            returnTo.responseList = listRes;
+            returnTo.task_no = objTask.id;
+            returnTo.task_name = objTask.task_name;
+            var projid = db.tagging.Where(c => c.tasks.id == objTask.id).Select(p => p.project.id).FirstOrDefault();
+            var obj = db.project.Where(p => p.id == projid).Select(c => c.customer).FirstOrDefault();
+            returnTo.customercode = obj.city_code;
+            returnTo.customername = obj.customer_name;
+            returnTo.Description = objTask.description;
+            returnTo.sDate = objTask.start_date.Date.ToShortDateString();
+            returnTo.eDate = objTask.end_date.Date.ToShortDateString();
+            returnTo.Email = objTask.email;
+            returnTo.SMS = objTask.sms;
+            returnTo.assigned = users.ToString();
+            returnTo.createdby = objTask.Created_By.user_Name;
 
 
             return returnTo;
@@ -91,15 +98,15 @@ namespace Task_Manager.Controllers
             msg.sentBy = db.user.Find(userId);
             msg.timeStamp = DateTime.Now;
             msg.message = req.msg;
-           // var ts = db.task.Where(c => c.id == taskId).FirstOrDefault();
-           // var ts = db.task.Find(taskId);
+            // var ts = db.task.Where(c => c.id == taskId).FirstOrDefault();
+            // var ts = db.task.Find(taskId);
             db.messages.Add(msg);
 
             db.task.Find(taskId).discussion.Add(msg);
             //List<messages> ms = new List<messages>();
             //ms.Add(msg);
             //ts.discussion = ms;
-            
+
 
             if (db.SaveChanges() > 0)
             {

@@ -22,6 +22,8 @@ namespace Task_Manager.viewModels.response
         public string status { get; set; }
         public string button { get; set; }
         public string bran_Code { get; set; }
+        public string lastModify { get; set; }
+
 
     }
 }

@@ -25,7 +25,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header" style="text-align:center">Create Tickets</h1>
+                <h1 class="page-header" style="text-align:center">Create Ticket</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -34,7 +34,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Create Tickets
+                        Create Ticket
                     </div>
                     <div class="panel-body" ng-controller="tickctrl">
                         <form ng-submit="Add()" id="tickForm">
@@ -42,8 +42,17 @@
                                 <div class=" col-lg-offset-3 col-lg-6">
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
+                                            <label>Ticket No.</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="text" ng-model="task.id" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+
+                                        <div class="col-lg-6 ">
                                             <label>Ticket Name</label>
-                                            <input type="hidden" ng-model="task.id" />
+
                                         </div>
                                         <div class="col-lg-6 ">
                                             <input type="hidden" id="cust_id" value="0" />
@@ -56,7 +65,7 @@
                                             <label>Customer Name</label>
                                         </div>
                                         <div class="col-lg-6 ">
-                                            <select ng-options="customer.name for customer in task.dropcustomer" ng-model="customerId" class="ddl"></select>
+                                            <select ng-options="customer.name for customer in task.dropcustomer" ng-model="customerId" class="ddl" ng-change="selectionChange(this.id)"></select>
 
                                         </div>
                                     </div>
@@ -73,7 +82,16 @@
                                             <label>Issue</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <textarea class="form-control" type="text"  cols="22" rows="2" ng-model="task.issue" required="required"> </textarea>
+                                            <textarea class="form-control" type="text" cols="22" rows="2" ng-model="task.issue" required="required"> </textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Branch Code</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="text" ng-model="task.bCode" required="required">
                                         </div>
                                     </div>
 
@@ -92,7 +110,7 @@
                                     </div>
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6">
-                                            <label>Remind By</label>
+                                            <label>Reminder</label>
                                         </div>
                                         <div class="col-lg-6">
                                             <label class="checkbox-inline">
@@ -136,47 +154,50 @@
 
 
         $scope.message = $http.get('/api/TicketApi/' + 0).then(function (response) {
+            console.log(response.data);
             $scope.task = response.data;
             $scope.selectedList = $scope.task.tags;
-            $scope.optionsList= $scope.task.list; 
+            $scope.optionsList = $scope.task.list;
+            $scope.originalProjects = $scope.task.dropproject;
             for (var i = 0; i < $scope.task.dropcustomer.length; i++) {
-
                 if ($scope.task.cid == $scope.task.dropcustomer[i].id) {
                     $scope.customerId = $scope.task.dropcustomer[i];
                 }
             }
 
             for (var i = 0; i < $scope.task.dropproject.length; i++) {
-
                 if ($scope.task.pid == $scope.task.dropproject[i].id) {
                     $scope.projectId = $scope.task.dropproject[i];
                 }
             }
-
-        
-            //
         });
 
+        $scope.selectionChange = function (id) {
+            $scope.task.dropproject = [];
+            angular.forEach($scope.originalProjects, function (item) {
+                if (item.custId == $scope.customerId.id) {
+                    console.log("inside");
+                    $scope.task.dropproject.push(item);
+                }
+            });
+        }
 
         $scope.Add = function () {
-            if ($scope.task.sdate >= $scope.task.edate) {
-                alert("Please Enter Corrct Date ");
-                return;
-            }
-            else {
-                $scope.task.pid = $scope.task.projectId.id;
-                $scope.message = $http.post('/api/TicketApi/', $scope.task).then(function (response) {
 
-                    alert("Task Added Sucessfully");
-                    document.getElementById("taskForm").reset();
-                    $scope.selectedList = [];
+            $scope.task.pid = $scope.projectId.id;
+            $scope.message = $http.post('/api/TicketApi/', $scope.task).then(function (response) {
+
+                alert("Ticket Added Sucessfully");
+                window.location.href = '/Ticket/ViewTicket';
+                document.getElementById("taskForm").reset();
+                $scope.selectedList = [];
 
 
-                    $scope.customerId = {};
-                    $scope.projectId = {};
-                });
-            }
+                $scope.customerId = {};
+                $scope.projectId = {};
+            });
         }
+
         $scope.getval = function (val) {
 
             $scope.projecttemp = [];

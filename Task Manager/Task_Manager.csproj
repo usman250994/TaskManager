@@ -214,9 +214,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706020626367_product.cs" />
-    <Compile Include="Migrations\201706020626367_product.Designer.cs">
-      <DependentUpon>201706020626367_product.cs</DependentUpon>
+    <Compile Include="Migrations\201706151017558_TaskLastModified.cs" />
+    <Compile Include="Migrations\201706151017558_TaskLastModified.Designer.cs">
+      <DependentUpon>201706151017558_TaskLastModified.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -266,6 +266,7 @@
     <Compile Include="viewModels\tempUser.cs" />
     <Compile Include="viewModels\TicketInitialrespone.cs" />
     <Compile Include="viewModels\ticketStatus.cs" />
+    <Compile Include="viewModels\ticketStatusForClient.cs" />
     <Compile Include="viewModels\updateOrCreateDropDown.cs" />
     <Compile Include="viewModels\updateProject.cs" />
     <Compile Include="viewModels\userRequest.cs" />
@@ -500,8 +501,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706020626367_product.resx">
-      <DependentUpon>201706020626367_product.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706151017558_TaskLastModified.resx">
+      <DependentUpon>201706151017558_TaskLastModified.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

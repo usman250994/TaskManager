@@ -42,8 +42,17 @@
                                 <div class=" col-lg-offset-3 col-lg-6">
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
+                                            <label>Ticket No.</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="text" ng-model="task.id" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+
+                                        <div class="col-lg-6 ">
                                             <label>Ticket Name</label>
-                                            <input type="hidden" ng-model="task.id" />
+
                                         </div>
                                         <div class="col-lg-6 ">
                                             <input type="hidden" id="cust_id" value="0" />
@@ -145,6 +154,7 @@
 
 
         $scope.message = $http.get('/api/TicketApi/' + 0).then(function (response) {
+            console.log(response.data);
             $scope.task = response.data;
             $scope.selectedList = $scope.task.tags;
             $scope.optionsList = $scope.task.list;
@@ -173,20 +183,21 @@
         }
 
         $scope.Add = function () {
- 
-                $scope.task.pid = $scope.projectId.id;
-                $scope.message = $http.post('/api/TicketApi/', $scope.task).then(function (response) {
 
-                    alert("Task Added Sucessfully");
-                    document.getElementById("taskForm").reset();
-                    $scope.selectedList = [];
+            $scope.task.pid = $scope.projectId.id;
+            $scope.message = $http.post('/api/TicketApi/', $scope.task).then(function (response) {
+
+                alert("Ticket Added Sucessfully");
+                window.location.href = '/Ticket/ViewTicket';
+                document.getElementById("taskForm").reset();
+                $scope.selectedList = [];
 
 
-                    $scope.customerId = {};
-                    $scope.projectId = {};
-                });
-            }
-        
+                $scope.customerId = {};
+                $scope.projectId = {};
+            });
+        }
+
         $scope.getval = function (val) {
 
             $scope.projecttemp = [];
