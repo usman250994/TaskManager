@@ -202,6 +202,7 @@
     <Compile Include="Controllers\messageController.cs" />
     <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProjectFilesUploadController.cs" />
     <Compile Include="Controllers\projectupdateController.cs" />
     <Compile Include="Controllers\TaskApiController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
@@ -210,19 +211,22 @@
     <Compile Include="Controllers\UploadFileApiController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserProfileApiController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706151017558_TaskLastModified.cs" />
-    <Compile Include="Migrations\201706151017558_TaskLastModified.Designer.cs">
-      <DependentUpon>201706151017558_TaskLastModified.cs</DependentUpon>
+    <Compile Include="Migrations\201706190624270_CustomerDate.cs" />
+    <Compile Include="Migrations\201706190624270_CustomerDate.Designer.cs">
+      <DependentUpon>201706190624270_CustomerDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContactDetail.cs" />
+    <Compile Include="Models\files.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\messages.cs" />
     <Compile Include="Models\Product.cs" />
@@ -245,10 +249,14 @@
     <Compile Include="viewModels\dropCust.cs" />
     <Compile Include="viewModels\dropProd.cs" />
     <Compile Include="viewModels\finding_ticketContact.cs" />
+    <Compile Include="viewModels\getprofile.cs" />
     <Compile Include="viewModels\internalTickets.cs" />
     <Compile Include="viewModels\projectDropDownInTickets.cs" />
+    <Compile Include="viewModels\ProjectViewModel\ProjectFileView.cs" />
     <Compile Include="viewModels\ProjectGrid.cs" />
     <Compile Include="viewModels\ProjectInsert.cs" />
+    <Compile Include="viewModels\ProjectViewModel\FilesTab.cs" />
+    <Compile Include="viewModels\ProjectViewModel\taskTab.cs" />
     <Compile Include="viewModels\reqmessage.cs" />
     <Compile Include="viewModels\requestproduct.cs" />
     <Compile Include="viewModels\responseInventory.cs" />
@@ -269,6 +277,7 @@
     <Compile Include="viewModels\ticketStatusForClient.cs" />
     <Compile Include="viewModels\updateOrCreateDropDown.cs" />
     <Compile Include="viewModels\updateProject.cs" />
+    <Compile Include="viewModels\userProfile.cs" />
     <Compile Include="viewModels\userRequest.cs" />
     <Compile Include="viewModels\users.cs" />
     <Compile Include="viewModels\userview.cs" />
@@ -367,6 +376,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\style.css" />
+    <Content Include="Content\UploadFile.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -444,6 +454,7 @@
     <Content Include="Scripts\Theme JS\metisMenu.js" />
     <Content Include="Scripts\Theme JS\metisMenu.min.js" />
     <Content Include="Scripts\Theme JS\sb-admin-2.js" />
+    <Content Include="Scripts\UploadFile.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -493,6 +504,8 @@
     <Content Include="Views\CheckStatus\Index.cshtml" />
     <Content Include="Views\Shared\Nonuser.cshtml" />
     <Content Include="Views\Inventory\ViewInventoryDetail.cshtml" />
+    <Content Include="Views\Project\ProjectFileUpload.cshtml" />
+    <Content Include="Views\UserProfile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -501,8 +514,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706151017558_TaskLastModified.resx">
-      <DependentUpon>201706151017558_TaskLastModified.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706190624270_CustomerDate.resx">
+      <DependentUpon>201706190624270_CustomerDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

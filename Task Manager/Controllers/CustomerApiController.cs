@@ -19,7 +19,6 @@ namespace Task_Manager.Controllers
         [HttpPost]
         public String CreateCustomer(Customer cust)
         {
-
             if (cust == null)
             {
                 return "Please Insert Customer";
@@ -27,10 +26,18 @@ namespace Task_Manager.Controllers
             else
             {
                 var client = db.customer.Find(cust.customerId);
+             
                 if (client != null)
                 {
-                    cust.city_code = cust.city_code + client.city_code.Substring(2, 8);
+                    var sessionId = HttpContext.Current.Session;
+                    string id = sessionId["UserID"].ToString();
+                    var createdUser = db.user.Find(Convert.ToInt32(id));
+                    cust.Created_By = createdUser;
+                    cust.city_code = cust.city_code + client.city_code.Substring(2, 4)+cust.OnBoarddate.Year;
+                    cust.createdOn = DateTime.Now;
                     db.Entry(client).CurrentValues.SetValues(cust);
+                    
+                    
                     db.SaveChanges();
                 }
                 else
@@ -39,10 +46,11 @@ namespace Task_Manager.Controllers
                     string id = sessionId["UserID"].ToString();
                     var createdUser = db.user.Find(Convert.ToInt32(id));
                     cust.Created_By = createdUser;
+                    cust.createdOn = DateTime.Now;
                     //
                     int a = db.customer.Count() + 1;
                     var customerNumber = a.ToString().PadLeft(4, '0');
-                    var customerYear = DateTime.Now.Year;
+                    var customerYear = cust.OnBoarddate.Year;
                     cust.city_code = cust.city_code + customerNumber + customerYear;
 
                     //
@@ -78,6 +86,7 @@ namespace Task_Manager.Controllers
                     viewcustomer.contact = list[i].Phonenumber;
                     viewcustomer.email = list[i].Email;
                     viewcustomer.website = list[i].Website;
+                    viewcustomer.onboardDate = list[i].OnBoarddate.Date.ToShortDateString();
                     viewcustomer.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + list[i].customerId + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + list[i].customerId + ")'/>";
                     toReturn.Add(viewcustomer);
                 }
@@ -161,6 +170,7 @@ namespace Task_Manager.Controllers
                 custdropdown.contact = cust.Phonenumber;
                 custdropdown.email = cust.Email;
                 custdropdown.website = cust.Website;
+                custdropdown.onboardDate = cust.OnBoarddate;
                 List<City> citylist = new List<City>();
                 citylist = db.city.ToList();
                 custdropdown.city = citylist;

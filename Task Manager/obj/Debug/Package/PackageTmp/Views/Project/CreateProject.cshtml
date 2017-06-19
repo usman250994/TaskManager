@@ -41,7 +41,7 @@
                                 <div class=" col-lg-offset-3  col-lg-6">
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
-                                            <label>Customer Name</label> <input type="hidden" ng-model="project.pid"></input>
+                                            <label>Customer Name</label> <input type="hidden" ng-model="project.pid" />
                                         </div>
                                         <div class="col-lg-6 ">
                                             <select ng-options="customer.name for customer in customers" ng-model="customerId" class="ddl"></select>
@@ -113,7 +113,7 @@
                                             <label>Customer Address</label>
                                         </div>
                                         <div class="col-lg-6 ">
-                                            <input class="form-control" type="text" ng-model="project.cAddress" placeholder=" WA 98052-7329. " required="required">
+                                            <input class="form-control" type="text" ng-model="project.cAddress" placeholder=" WA 98052-7329." required="required">
                                         </div>
                                     </div>
                                     <div class="col-lg-offset-6 col-lg-6 spacing">
@@ -172,16 +172,14 @@
                 }
             });
 
-
-            if ($scope.project.pId != null) {
+            if ($scope.project.id > 0) {
 
                 $scope.project.sDate = new Date($scope.project.sDate);
                 $scope.project.eDate = new Date($scope.project.eDate);
-
             }
             else {
-                $scope.project.Start_Date = new Date();
-                $scope.project.End_Date = new Date();
+                $scope.project.sDate = new Date();
+                $scope.project.eDate = new Date();
             }
         });
 

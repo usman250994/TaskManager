@@ -33,7 +33,7 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-exampletick">
                         <thead>
                             <tr>
                                 <th>Ticket Number</th>
@@ -43,7 +43,8 @@
                                 <th>Description</th>
                                 <th>Branch Code</th>
                                 <th>Assigned To</th>
-                                <th>Created By</th>                                
+                                <th>Created By</th>    
+                                <th>Last Updated</th>                            
                                 <th>SMS</th>
                                 <th>Email</th>                                
                                 <th>Status</th>
@@ -155,7 +156,7 @@
     }
     function filltable(datas) {
 
-        $("#dataTables-example").DataTable({
+        $("#dataTables-exampletick").DataTable({
             "aaData": datas,
             "bAutoWidth": false,
             "sPaginationType": "full_numbers",
@@ -168,6 +169,7 @@
                 { "mDataProp": "bran_Code" },
                 { "mDataProp": "users" },
                 { "mDataProp": "createdBy" },
+                { "mDataProp": "lastModify" },
                 { "mDataProp": "sms" },
                 { "mDataProp": "email" },
                 { "mDataProp": "status" },

@@ -15,6 +15,7 @@ namespace Task_Manager.viewModels
         public string contact { get; set; }
         public string website { get; set; }
         public string email { get; set; }
+        public DateTime onboardDate { get; set; }
         public List<City> city { get; set; }
     }
 }

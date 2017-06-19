@@ -55,6 +55,15 @@
                                 </div>
                                 <div class="col-lg-12 spacing">
                                     <div class="col-lg-6 ">
+                                        <label>Customer OnBoardDate</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input type="hidden" id="cust_id" value="0" />
+                                        <input class="form-control" type="date"  id="customerdate">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
                                         <label>Customer Address</label>
                                     </div>
                                     <div class="col-lg-6 ">
@@ -62,6 +71,7 @@
                                         <input class="form-control" type="text" id="CustAdd" required="required">
                                     </div>
                                 </div>
+
 
                                 <div class="col-lg-12 spacing">
                                     <div class="col-lg-6 ">
@@ -118,25 +128,31 @@
     //add user button press for adding or updating db
     //need correction when updating probably
     $(document).ready(function () {
-        $.ajax({
+        if ($('[type="date"]').prop('type') != 'date') {
+            $('[type="date"]').datepicker();
+        }
+           $.ajax({
             url: '/api/CustomerApi',
             type: 'PUT',
             success: function (data) {
                 console.log(data);
                 $.each(data.city, function (i) {
-                   $('#CustomerCityDropdown').append($('<option></option>').val(data.city[i].city_code).html(data.city[i].city_name));
+                    $('#CustomerCityDropdown').append($('<option></option>').val(data.city[i].city_code).html(data.city[i].city_name));
+                   document.getElementById("customerdate").value = Date.now;
                 });
 
-                if (data.cust_id != null) {
+                if (data.cust_id != 0) {
                     document.getElementById("Customername").value = data.username;
+                    document.getElementById("CustomerCityDropdown").value = data.citycode;
                     document.getElementById("cust_id").value = data.cust_id;
                     document.getElementById("CustAdd").value = data.address;
+                    document.getElementById("customerdate").value = data.onboardDate.substring(0,10);
                     document.getElementById("CustContact").value = data.contact.substring(3, 13);
                     document.getElementById("CustWebsites").value = data.website;
                     document.getElementById("CustEmail").value = data.email;
                     document.getElementById("button").value = "Update";
                 }
-
+               
             },
             error: function () { alert('Customer not Updated'); }
         });
@@ -145,6 +161,7 @@
         var name = document.getElementById('Customername').value.trim();
         var address = document.getElementById('CustAdd').value.trim();
         var contact = document.getElementById('CustContact').value.trim();
+        var date = document.getElementById('customerdate').value.trim();
         var websites = document.getElementById('CustWebsites').value.trim();
         var email = document.getElementById('CustEmail').value.trim();
         if (name == "") { alert("Please Insert Customer Name"); }
@@ -153,7 +170,7 @@
         else if (websites == "") { alert("Please Insert Customer Website"); }
         else if (validateEmail(email) == false) { alert('Please provide a valid email address'); }
         else {
-            var model = { customer_name: $("#Customername").val(), customerId: $("#cust_id").val(), enable: true, address: $("#CustAdd").val(), Phonenumber: "+92" + $("#CustContact").val(), Website: $("#CustWebsites").val(), Email: $("#CustEmail").val(), city_code: $("#CustomerCityDropdown").val() };
+            var model = { customer_name: $("#Customername").val(), customerId: $("#cust_id").val(), enable: true, OnBoarddate: $("#customerdate").val(), address: $("#CustAdd").val(), Phonenumber: "+92" + $("#CustContact").val(), Website: $("#CustWebsites").val(), Email: $("#CustEmail").val(), city_code: $("#CustomerCityDropdown").val() };
             console.log(model);
             $.ajax({
                 url: '/api/CustomerApi/',

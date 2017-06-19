@@ -12,6 +12,7 @@ namespace Task_Manager.viewModels.response
         public string name { get; set; }
         public string address { get; set; }
         public string contact { get; set; }
+        public string onboardDate { get; set; }
         public string website { get; set; }
         public string email { get; set; }
         public string action { get; set; }

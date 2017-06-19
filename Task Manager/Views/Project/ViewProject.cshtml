@@ -30,7 +30,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Project Detail
-                    @*<button type="button" class="btn btn-primary" onclick="gridLoad()">Update</button>*@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -72,7 +71,8 @@
             success: function (data) {
                 console.log(data);
                 for (var i = 0; i < data.length; i++) {
-                    $("#dynamic-Grid").append("<tr id=" + i + "><td>" + data[i].projectName + "</td><td>" + data[i].startDate.substring(0, 10) + "</td><td>" + data[i].endDate.substring(0, 10) + "</td><td>" + data[i].customerName + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].customerManager + "</td><td>" + data[i].Email + "</td><td>" + data[i].PhoneNumber + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + "," + i + ")\"></button></td></tr>");
+
+                    $("#dynamic-Grid").append("<tr id=" + i + "><td>" + data[i].projectName + "</td><td>" + data[i].startDate.substring(0, 10) + "</td><td>" + data[i].endDate.substring(0, 10) + "</td><td>" + data[i].customerName + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].customerManager + "</td><td>" + data[i].Email + "</td><td>" + data[i].PhoneNumber + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + "," + i + ")\"></button> <button  class='btn btn-success fa fa-file-word-o' onclick=\"upload(" + data[i].id + "," + i + ")\"></button></td></tr>");
                 }
             },
             error: function () { alert('Grid Not Load'); }
@@ -110,4 +110,21 @@
             }
         });
     }
+
+    function upload(id) {
+
+        $.ajax({
+            async: false,
+            url: '/api/ProjectApi/' + id,
+            type: 'PUT',
+            success: function (data) {
+                window.location.href = '/Project/ProjectFileUpload';
+            },
+            error: function () {
+                alert('User not Updated');
+            }
+        });
+    }
+
+
 </script>

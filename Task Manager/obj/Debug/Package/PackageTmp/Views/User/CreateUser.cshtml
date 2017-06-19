@@ -123,7 +123,6 @@
             url: '/api/UserApi/' + 0,
             type: 'POST',
             success: function (data) {
-                console.log(data);
                 $.each(data.roles, function (i) {
                     $('#Position').append($('<option></option>').val(data.roles[i].id).html(data.roles[i].role_name));
                 });
@@ -133,7 +132,7 @@
                     document.getElementById("user_name").value = data.userview.name;
                     document.getElementById("password").value = data.userview.Password;
                     document.getElementById("Address").value = data.userview.address;
-                    document.getElementById("MobileNo").value = data.userview.contact.substring(3,13);
+                    document.getElementById("MobileNo").value = data.userview.contact.substring(3, 13);
                     document.getElementById("Email").value = data.userview.email;
                     document.getElementById("Position").value = data.userview.positionId;
                     document.getElementById("UpdID").value = data.userview.uId;
@@ -172,7 +171,7 @@
                 success: function (data) {
                     alert(data);
                     window.location.href = '/User/ViewUser';
-               
+
                 },
                 error: function () {
                     alert(data);

@@ -40,6 +40,7 @@
                                 <th>Customer Code</th>
                                 <th>Customer Name</th>
                                 <th>Address</th>
+                                <th>OnBoard Date</th>
                                 <th>Contact</th>
                                 <th>Website</th>
                                 <th>Email</th>
@@ -67,6 +68,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 filltable(data);
             },
             error: function () { alert('Data Not Showing'); }
@@ -74,12 +76,13 @@
     });
 
     function filltable(datas) {
-        $("#dataTables-example").DataTable({
+        $("#dataTables-example").DataTable({ 
             "aaData": datas,
             "aoColumns": [
                 { "mDataProp": "code" },
                 { "mDataProp": "name" },
                 { "mDataProp": "address" },
+                { "mDataProp": "onboardDate" },
                 { "mDataProp": "contact" },
                 { "mDataProp": "website" },
                 { "mDataProp": "email" },
