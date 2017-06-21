@@ -12,6 +12,5 @@ namespace Task_Manager.Models
         public string contact_number { get; set; }
         public string email { get; set; }
         public string address { get; set; }
-        public virtual Users Created_By { get; set; }
     }
 }

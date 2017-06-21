@@ -217,16 +217,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706190624270_CustomerDate.cs" />
-    <Compile Include="Migrations\201706190624270_CustomerDate.Designer.cs">
-      <DependentUpon>201706190624270_CustomerDate.cs</DependentUpon>
+    <Compile Include="Migrations\201706211146349_files.cs" />
+    <Compile Include="Migrations\201706211146349_files.Designer.cs">
+      <DependentUpon>201706211146349_files.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContactDetail.cs" />
-    <Compile Include="Models\files.cs" />
+    <Compile Include="Models\Files.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\messages.cs" />
     <Compile Include="Models\Product.cs" />
@@ -257,6 +257,7 @@
     <Compile Include="viewModels\ProjectInsert.cs" />
     <Compile Include="viewModels\ProjectViewModel\FilesTab.cs" />
     <Compile Include="viewModels\ProjectViewModel\taskTab.cs" />
+    <Compile Include="viewModels\ProjectViewModel\TeamTab.cs" />
     <Compile Include="viewModels\reqmessage.cs" />
     <Compile Include="viewModels\requestproduct.cs" />
     <Compile Include="viewModels\responseInventory.cs" />
@@ -514,8 +515,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706190624270_CustomerDate.resx">
-      <DependentUpon>201706190624270_CustomerDate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706211146349_files.resx">
+      <DependentUpon>201706211146349_files.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

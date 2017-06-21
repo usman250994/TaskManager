@@ -9,14 +9,24 @@ namespace Task_Manager.Models
 {
     public class Project
     {
+
+        
+        public Project()
+        {
+            projectFiles = new List<Files>();
+        }
         public int id { get; set; }
         public string Project_Name { get; set; }
+        public int work_order { get; set; }
         public virtual Users Created_By { get; set; }
         public DateTime Created_On { get; set; }
         public DateTime Start_Date { get; set; }
         public DateTime End_Date { get; set; }   
+
         public virtual Customer customer { get; set; }
         public virtual CustomerContactDetail customerContactDetail { get; set; }
+
+        public List<Files> projectFiles { get; set; }
         public virtual Users projectManager { get; set; }
         public bool Enable { get; set; }     
         

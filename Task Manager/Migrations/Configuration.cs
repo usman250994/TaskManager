@@ -20,8 +20,13 @@ namespace Task_Manager.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-
-            //seeding roles table
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
             List<Models.Roles> roles = new List<Models.Roles>();
             if (!context.roles.Any())
             {
@@ -42,7 +47,6 @@ namespace Task_Manager.Migrations
             // Seeding Users Table
             List<Models.Users> users = new List<Models.Users>();
             if (!context.user.Any())
-
             {
                 Models.Users user = new Models.Users();
                 user.Enable = false;
@@ -104,9 +108,6 @@ namespace Task_Manager.Migrations
                 context.city.AddRange(cities);
                 context.SaveChanges();
             }
-
-
-
         }
     }
 }

@@ -102,7 +102,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div>
-                                            <input id="myfile" name="myFile" type="file" id="images" />
+                                            <input name="myFile" type="file" id="images" />
                                         </div>
                                     </div>
                                 </div>
@@ -171,9 +171,9 @@
         //var myID = 3; //uncomment this to make sure the ajax URL works
         if (files.length > 0) {
             if (window.FormData !== undefined) {
-                Imagedata = new FormData();
+                ImageData = new FormData();
                 for (var x = 0; x < files.length; x++) {
-                    Imagedata.append("file" + x, files[x]);
+                    ImageData.append("file" + x, files[x]);
                 }
             }
         }
@@ -216,7 +216,7 @@
                 barcode: document.getElementById('barcode').value.trim(),
                 vendorName: document.getElementById('vendor').value.trim(),
                 inwarddate: document.getElementById('inward_date').value.trim(),
-                imagepath: document.getElementById('myfile').value
+                imagepath: document.getElementById('images').value.trim()
             }
 
             $.ajax({
@@ -227,19 +227,15 @@
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    alert("Product Saved");
-                    window.location.href = '/Inventory/ViewInventory';
                     //another ajax call for saving image
                     $.ajax({
                         type: "POST",
                         url: '/api/UploadFileApi/',
                         contentType: false,
                         processData: false,
-                        data: Imagedata,
+                        data: ImageData,                       
                         success: function (result) {
                             alert("success message");
-
-
                         },
                         error: function (xhr, status, p3, p4) {
                             var err = "Error " + " " + status + " " + p3 + " " + p4;

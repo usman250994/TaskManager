@@ -14,10 +14,11 @@ namespace Task_Manager.viewModels
         public string pName { get; set; }
         public string eDate { get; set; }
         public string cManager { get; set; }
+        public int workorder { get; set; }
         public string cContact { get; set; }
         public string cEmail { get; set; }
         public string cAddress { get; set; }
-      public List<tagUsersView> userList {get;set;}
-    public List<dropCust> dropList {get;set;}
+        public List<tagUsersView> userList { get; set; }
+        public List<dropCust> dropList { get; set; }
     }
 }

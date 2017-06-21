@@ -208,10 +208,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/10/2017 15:00:29</publishTime>
     </File>
     <File Include="bin/Task_Manager.dll">
-      <publishTime>06/19/2017 14:47:01</publishTime>
+      <publishTime>06/21/2017 18:37:11</publishTime>
     </File>
     <File Include="bin/Task_Manager.pdb">
-      <publishTime>06/19/2017 14:47:01</publishTime>
+      <publishTime>06/21/2017 18:37:11</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>04/07/2017 10:14:30</publishTime>
@@ -724,13 +724,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/15/2017 13:46:20</publishTime>
     </File>
     <File Include="Views/Customer/CreateCustomer.cshtml">
-      <publishTime>06/19/2017 14:43:14</publishTime>
+      <publishTime>06/19/2017 15:09:37</publishTime>
     </File>
     <File Include="Views/Customer/Index.cshtml">
       <publishTime>05/12/2017 16:23:17</publishTime>
     </File>
     <File Include="Views/Customer/ViewCustomer.cshtml">
-      <publishTime>06/19/2017 11:38:38</publishTime>
+      <publishTime>06/21/2017 13:15:53</publishTime>
     </File>
     <File Include="Views/CustomerDetail/CreateCustomer.cshtml">
       <publishTime>04/27/2017 14:39:51</publishTime>
@@ -748,7 +748,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2017 13:46:04</publishTime>
     </File>
     <File Include="Views/Inventory/CreateInventory.cshtml">
-      <publishTime>06/19/2017 10:59:08</publishTime>
+      <publishTime>06/21/2017 18:21:00</publishTime>
     </File>
     <File Include="Views/Inventory/ViewInventory.cshtml">
       <publishTime>06/08/2017 09:43:30</publishTime>
@@ -763,22 +763,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/15/2017 17:06:54</publishTime>
     </File>
     <File Include="Views/Project/CreateProject.cshtml">
-      <publishTime>06/17/2017 11:58:52</publishTime>
+      <publishTime>06/21/2017 12:03:10</publishTime>
     </File>
     <File Include="Views/Project/Index.cshtml">
       <publishTime>05/12/2017 16:23:38</publishTime>
     </File>
     <File Include="Views/Project/ProjectFileUpload.cshtml">
-      <publishTime>06/19/2017 12:25:47</publishTime>
+      <publishTime>06/21/2017 18:35:57</publishTime>
     </File>
     <File Include="Views/Project/ViewProject.cshtml">
-      <publishTime>06/17/2017 10:45:48</publishTime>
+      <publishTime>06/21/2017 12:28:44</publishTime>
     </File>
     <File Include="Views/Shared/Admin.cshtml">
       <publishTime>06/12/2017 12:13:37</publishTime>
     </File>
     <File Include="Views/Shared/CSR.cshtml">
-      <publishTime>06/12/2017 12:13:35</publishTime>
+      <publishTime>06/21/2017 13:44:51</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>04/07/2017 10:13:43</publishTime>
@@ -802,7 +802,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/12/2017 16:23:45</publishTime>
     </File>
     <File Include="Views/Task/ViewTask.cshtml">
-      <publishTime>06/19/2017 10:45:11</publishTime>
+      <publishTime>06/20/2017 10:37:19</publishTime>
     </File>
     <File Include="Views/Ticket/CreateTicket.cshtml">
       <publishTime>06/19/2017 11:55:34</publishTime>
@@ -820,7 +820,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/02/2017 13:08:55</publishTime>
     </File>
     <File Include="Views/UserProfile/Index.cshtml">
-      <publishTime>06/19/2017 12:53:05</publishTime>
+      <publishTime>06/21/2017 13:53:03</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/13/2017 14:37:04</publishTime>
@@ -829,7 +829,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/23/2017 14:04:25</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/19/2017 11:57:57</publishTime>
+      <publishTime>06/21/2017 18:37:31</publishTime>
     </File>
   </ItemGroup>
 </Project>

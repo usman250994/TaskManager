@@ -26,18 +26,18 @@ namespace Task_Manager.Controllers
             else
             {
                 var client = db.customer.Find(cust.customerId);
-             
+
                 if (client != null)
                 {
                     var sessionId = HttpContext.Current.Session;
                     string id = sessionId["UserID"].ToString();
                     var createdUser = db.user.Find(Convert.ToInt32(id));
                     cust.Created_By = createdUser;
-                    cust.city_code = cust.city_code + client.city_code.Substring(2, 4)+cust.OnBoarddate.Year;
+                    cust.city_code = cust.city_code + client.city_code.Substring(2, 4) + cust.OnBoarddate.Year;
                     cust.createdOn = DateTime.Now;
                     db.Entry(client).CurrentValues.SetValues(cust);
-                    
-                    
+
+
                     db.SaveChanges();
                 }
                 else
@@ -73,6 +73,7 @@ namespace Task_Manager.Controllers
             List<Customer> list = new List<Customer>();
             List<ViewCustomer> toReturn = new List<ViewCustomer>();
             var session = HttpContext.Current.Session;
+            int role = Convert.ToInt32(session["role_id"]);
             if (session["UserID"].ToString() == "5")
             {
                 list = db.customer.Where(d => d.enable == true).ToList();
@@ -94,19 +95,21 @@ namespace Task_Manager.Controllers
             else
             {
                 var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
-                list = db.customer.Where(d => d.enable == true && d.Created_By.id == createdBy.id).ToList();
-                for (int i = 0; list.Count > i; i++)
+                list = db.customer.Where(d => d.enable == true).ToList();
+                 for (int i = 0; list.Count > i; i++)
                 {
                     ViewCustomer viewcustomer = new ViewCustomer();
+                    viewcustomer.id = list[i].customerId;
                     viewcustomer.code = list[i].city_code;
                     viewcustomer.name = list[i].customer_name;
                     viewcustomer.address = list[i].address;
                     viewcustomer.contact = list[i].Phonenumber;
                     viewcustomer.email = list[i].Email;
                     viewcustomer.website = list[i].Website;
-                    viewcustomer.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + list[i].customerId + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + list[i].customerId + ")'/>";
+                    viewcustomer.onboardDate = list[i].OnBoarddate.Date.ToShortDateString();
                     toReturn.Add(viewcustomer);
                 }
+               
             }
 
             return toReturn;
@@ -165,7 +168,7 @@ namespace Task_Manager.Controllers
                 cust = db.customer.Find(Convert.ToInt32(str));
                 custdropdown.cust_id = cust.customerId;
                 custdropdown.username = cust.customer_name;
-                custdropdown.citycode = cust.city_code.Substring(0,2);
+                custdropdown.citycode = cust.city_code.Substring(0, 2);
                 custdropdown.address = cust.address;
                 custdropdown.contact = cust.Phonenumber;
                 custdropdown.email = cust.Email;

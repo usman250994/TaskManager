@@ -13,7 +13,9 @@ namespace Task_Manager.viewModels
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
         public string userName { get; set; }
+        public string address { get; set; }
         public string customerName { get; set; }
+        public int workorder { get; set; }
         public string projectManager { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }

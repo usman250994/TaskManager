@@ -34,6 +34,7 @@ namespace Task_Manager.Controllers
                 view.cId = obj.customer.customerId;
                 view.pId = obj.id;
                 view.pName = obj.Project_Name;
+                view.workorder = obj.work_order;
                 view.sDate = obj.Start_Date.ToString();
                 view.eDate = obj.End_Date.ToString(); ;
                 view.pmId = obj.projectManager.id;

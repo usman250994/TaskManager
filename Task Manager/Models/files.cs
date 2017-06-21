@@ -5,12 +5,12 @@ using System.Web;
 
 namespace Task_Manager.Models
 {
-    public class files
+    public class Files
     {
         public int id { get; set; }
         public string fileName { get; set; }
-        public int fileCode { get; set; }
-        public virtual Users createdBy { get; set; }
+        public string fileCode { get; set; }
+        public string filetype { get; set; }
         public DateTime createdOn { get; set; } 
     }
 }

@@ -41,7 +41,7 @@
                                 <div class=" col-lg-offset-3  col-lg-6">
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
-                                            <label>Customer Name</label> <input type="hidden" ng-model="project.pid" />
+                                            <label>Customer Name</label> <input type="hidden" ng-model="project.pId" />
                                         </div>
                                         <div class="col-lg-6 ">
                                             <select ng-options="customer.name for customer in customers" ng-model="customerId" class="ddl"></select>
@@ -57,6 +57,14 @@
                                     </div>
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
+                                            <label>Work Order</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="number" ng-model="project.workorder" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
                                             <label>Start Date</label>
                                         </div>
                                         <div class="col-lg-6 ">
@@ -68,7 +76,7 @@
                                             <label>End Date</label>
                                         </div>
                                         <div class="col-lg-6 ">
-                                            <input class="form-control ui-datepicker" type="date" ng-model="project.eDate" required="required">
+                                            <input class="form-control" type="date" ng-model="project.eDate" required="required">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -148,7 +156,7 @@
     app.controller("projectctrl", function ($scope, $http) {
 
         $scope.message = $http.get('/api/projectupdate/').then(function (response) {
-
+            console.log(response.data);
             $scope.project = response.data;
             $scope.customers = response.data.dropList;
             $scope.optionsList = response.data.userList;
@@ -172,7 +180,7 @@
                 }
             });
 
-            if ($scope.project.id > 0) {
+            if ($scope.project.pId > 0) {
 
                 $scope.project.sDate = new Date($scope.project.sDate);
                 $scope.project.eDate = new Date($scope.project.eDate);
@@ -221,8 +229,9 @@
             }
             else {
                 $scope.new = {};
-                $scope.new.id = $scope.project.id
-                $scope.new.projectName = $scope.pName;
+                $scope.new.id = $scope.project.pId;
+                $scope.new.projectName = $scope.project.pName;
+                $scope.new.workorder = $scope.project.workorder;
                 $scope.new.startDate = $scope.project.sDate;
                 $scope.new.endDate = $scope.project.eDate;
                 $scope.new.pmId = $scope.userId.id;

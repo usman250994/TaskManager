@@ -38,7 +38,8 @@ namespace Task_Manager.Controllers
                         }
                         else
                         {
-                            var obj = db.user.Where(a => a.Email.Equals(log.user_Name) && a.Password.Equals(log.password) && a.Enable.Equals(true)).FirstOrDefault();
+
+                            var obj = db.user.Where(a => a.Email==log.user_Name && a.Password==log.password && a.Enable==true).FirstOrDefault();
                             if (obj != null)
                             {
                                 session["UserID"] = obj.id;

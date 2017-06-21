@@ -17,5 +17,6 @@ namespace Task_Manager.viewModels
         public string address { get; set; }
         public string number { get; set; }
         public int cId { get; set; }
+        public int workorder { get; set; }
     }
 }

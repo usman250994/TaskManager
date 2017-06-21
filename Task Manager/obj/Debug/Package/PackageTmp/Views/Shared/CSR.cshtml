@@ -232,11 +232,9 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        @Html.ActionLink("Profile", "Index", "UserProfile")
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                    </li>
+                    
                     <li class="divider"></li>
                     <li>
                         @Html.ActionLink("Logout", "Index", "Home")
@@ -266,6 +264,16 @@
                     <li>
 
                         @Html.ActionLink("Dashboard", "Index", "Dashboard")
+                    </li>
+                    <li>
+                        <a><i class="fa fa-user-plus fa-fw"></i> Customer<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                @Html.ActionLink("View Customer", "ViewCustomer", "Customer")
+
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
                     </li>
                     <li>
                         <a><i class="fa fa-edit fa-fw"></i> Task<span class="fa arrow"></span></a>

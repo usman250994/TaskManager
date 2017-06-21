@@ -11,6 +11,8 @@ namespace Task_Manager.Controllers
         // GET: UserProfile
         public ActionResult Index()
         {
+            var roles_Id = Session["role_id"].ToString();
+            ViewData["id"] = roles_Id;
             return View();
         }
     }
