@@ -32,7 +32,9 @@ namespace Task_Manager.Controllers
             {
                 var id = addFile.id;
                 addFile.fileCode = pid + filecode + id;
-                addFile.fileName = "/Image/" + id;
+                addFile.fileName = "/Files/" + id + "." + file.fileName.Split('.')[1];
+                sessionId["project"] = "1";
+            //  addFile.fileName = "/Image/" + id;
                 db.SaveChanges();
 
                 
@@ -110,10 +112,11 @@ namespace Task_Manager.Controllers
                 foreach (var entity in list)
                 {
                     FilesTab files = new FilesTab();
-                    files.file_Name = entity.fileName;
+                    files.file_Name = "<a id='"+ entity.id+"' href="+entity.fileName +" download="+entity.id+"><p> Download</p></a>";
                     files.file_Type = entity.filetype;
                     files.fileCode = entity.fileCode;
-                    files.uploaded_date = entity.createdOn;
+                    files.uploaded_date = entity.createdOn.Date.ToShortDateString();
+                    files.upload_time = entity.createdOn.ToShortTimeString();
                     toReturn.Add(files);
                 }
 

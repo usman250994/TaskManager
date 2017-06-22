@@ -18,7 +18,7 @@
             <li class="tab-link " data-tab="tab-2" onclick="call(1)">Task</li>
             <li class="tab-link" data-tab="tab-3" onclick="call(2)">Files</li>
         </ul>
-        <div id="tab-1" class="tab-content current">
+        <div id="tab-1" class="tab-content overflow current">
 
             @************************************* Team ********************************************@
             <table class="table table-striped table-bordered table-hover" id="dataTables-exampl" style="width:100%!important">
@@ -37,7 +37,7 @@
 
         </div>
         @************************************* Task ********************************************@
-        <div id="tab-2" class="tab-content ">
+        <div id="tab-2" class="tab-content overflow ">
             <table class="table table-striped table-bordered table-hover" id="dataTables-examp" style="width:100%!important">
                 <thead id="th">
                     <tr>
@@ -51,23 +51,25 @@
             </table>
         </div>
         @************************************* File ********************************************@
-        <div id="tab-3" class="tab-content">
-            <div>
-                <table class="table table-striped table-bordered table-hover" id="dataTables-exam" style="width:100%!important">
+        <div id="tab-3" class="tab-content overflow">
+            <div >
+                <table class="table table-striped table-bordered table-hover" id="dataTables-exam" style="width:100%!important;">
                     <thead id="th">
                         <tr>
-                            <th>File Name</th>
+                            <th>File Code</th>
                             <th>Type</th>
-                            <th>Added By</th>
+                            <th>Upload Date</th>
+                            <th>Upload Time</th>
                             <th>Download</th>
                         </tr>
                     </thead>
                     <tbody id="dynamic-Grid"></tbody>
                 </table>
             </div>
-            <div id="uplodbtn">
-                <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal" id="btn">Upload File</button>
-            </div>
+           
+        </div>
+        <div id="uplodbtn">
+            <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal" id="btn">Upload File</button>
         </div>
     </div><!-- container -->
 </div>
@@ -91,7 +93,7 @@
                                     </div>
                                     <div class="col-lg-6 ">
                                         <select id="FileCatogreyDropdown" class="form-control">
-                                            <option value="00">Please Select Any File Name</option>
+                                            <option value="00">Please Select File Name</option>
                                             <option value="01">Internal Work Order</option>
                                             <option value="02">Customer Purchase Order</option>
                                             <option value="03">Quotation</option>
@@ -112,7 +114,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div>
-                                            <input name="myFile" type="file" id="images" />
+                                            <input name="myFile" type="file" id="images" accept=".xls,.xlsx,.docx,.pdf,.jpg,.png" />
                                         </div>
                                     </div>
                                 </div>
@@ -187,10 +189,11 @@
                         "aaData": data,
                         "bDestroy": true,
                         "aoColumns": [
-                            { "mDataProp": "file_Name" },
+                            { "mDataProp": "fileCode" },
                             { "mDataProp": "file_Type" },
                             { "mDataProp": "uploaded_date" },
-                            { "mDataProp": "fileCode" }
+                            { "mDataProp": "upload_time" },
+                            { "mDataProp": "file_Name" }
                         ]
                     });
 
@@ -219,10 +222,10 @@
         var dropdowntype = document.getElementById("FileCatogreyDropdown").value.trim();
         var file = document.getElementById("images").value;
         if (dropdowntype == "00") {
-            alert("Please Select Any File Name");
+            alert("Please Select File Name");
         }
-        else if (file == null) {
-            alert("Please Select Any File")
+        else if (file == "") {
+            alert("Please Upload File")
         }
         else {
             var model = { fileName: file, fileCode: dropdowntype };
@@ -235,17 +238,14 @@
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    alert(data);
-
-                    //
-                    $.ajax({
-                        type: "POST",
+                    $.ajax({                       
                         url: '/api/UploadFileApi/',
+                        type: "POST",
                         contentType: false,
                         processData: false,
                         data: ImageData,
                         success: function (result) {
-                            alert("success message");
+                            alert("File Uploaded Successfully");
                         },
                         error: function (xhr, status, p3, p4) {
                             var err = "Error " + " " + status + " " + p3 + " " + p4;

@@ -20,30 +20,43 @@ namespace Task_Manager.Controllers
             var httpRequest = HttpContext.Current.Request;
             if (httpRequest.Files.Count > 0)
             {
-                
-                int name =0;
+                 var sessionId = HttpContext.Current.Session;
+                int name = 0;
+                String nam = "";
                 var docfiles = new List<string>();
                 foreach (string file in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[file];
 
-                    name= db.product.OrderByDescending(p => p.id).FirstOrDefault().id;
-                
-                    var filePath = HttpContext.Current.Server.MapPath("~/Images/"+name+".jpg");
-                    postedFile.SaveAs(filePath);
+                    if(sessionId["project"].ToString()!=null)
+                    {
+                     nam = db.files.OrderByDescending(p => p.id).FirstOrDefault().fileName;
+                    var filePath = HttpContext.Current.Server.MapPath(nam);
 
+                    postedFile.SaveAs(filePath);
                     docfiles.Add(filePath);
                     break;
+                    }
+                    else
+                    {
+                    name = db.product.OrderByDescending(p => p.id).FirstOrDefault().id;
+                    var filePath = HttpContext.Current.Server.MapPath("~/Files/" + name + ".jpg");
+
+                    postedFile.SaveAs(filePath);
+                    docfiles.Add(filePath);
+                    break;
+                    }
+                    
+                  
                 }
                 result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
-                
             }
             else
             {
                 result = Request.CreateResponse(HttpStatusCode.BadRequest);
-                
             }
-            
         }
+    
+        
     }
 }
