@@ -398,7 +398,7 @@ namespace Task_Manager.Controllers
             else
             {
 
-                if (session["UserID"].ToString() == "1")
+                if (session["UserID"].ToString() == "5")
                 {
                     tasks = db.task.Where(c => c.enable == true && c.IsTicket == true).ToList();
                 }

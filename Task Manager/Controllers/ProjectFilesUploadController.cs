@@ -26,7 +26,7 @@ namespace Task_Manager.Controllers
             Files addFile = new Files();
             addFile.filetype = file.fileCode;
             addFile.createdOn = DateTime.Now;
-         
+
             db.files.Add(addFile);
             if (db.SaveChanges() > 0)
             {
@@ -34,10 +34,10 @@ namespace Task_Manager.Controllers
                 addFile.fileCode = pid + filecode + id;
                 addFile.fileName = "/Files/" + id + "." + file.fileName.Split('.')[1];
                 sessionId["project"] = "1";
-            //  addFile.fileName = "/Image/" + id;
+                //  addFile.fileName = "/Image/" + id;
                 db.SaveChanges();
 
-                
+
                 db.project.Find(pid).projectFiles.Add(addFile);
 
                 db.SaveChanges();
@@ -55,7 +55,7 @@ namespace Task_Manager.Controllers
             var sessionId = HttpContext.Current.Session;
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
             Object obj = new object();
-         
+
 
             if (id == 0)
             {
@@ -64,22 +64,19 @@ namespace Task_Manager.Controllers
                 //List<Users> lists = new List<Users>();
                 List<List<Users>> list = new List<List<Users>>();
 
-     list = db.tagging.Where(p => p.project.id==pid).Select(o=>o.users).ToList();
-
-          
-                foreach(var entity in list)
+                list = db.tagging.Where(p => p.project.id == pid).Select(o => o.users).ToList();
+                foreach (var entity in list)
                 {
-            foreach(var ent in entity)
+                    foreach (var ent in entity)
+                    {
+                        TeamTab team = new TeamTab();
+                        team.Address = ent.Address;
+                        team.Name = ent.user_Name;
+                        team.Number = ent.MobileNo;
+                        toReturn.Add(team);
 
-            { 
-                    TeamTab team = new TeamTab();
-                    team.Address= ent.Address;
-                    team.Name=ent.user_Name;
-                    team.Number=ent.MobileNo;
-                    toReturn.Add(team);
-
-            }
-            }
+                    }
+                }
 
                 return toReturn;
             }
@@ -87,13 +84,13 @@ namespace Task_Manager.Controllers
             {
                 List<taskTab> toReturn = new List<taskTab>();
                 List<Task> list = new List<Task>();
-              list = db.tagging.Where(p => p.project.id == pid).Select(o => o.tasks).ToList();
-            
-                foreach(var entity in list)
+                list = db.tagging.Where(p => p.project.id == pid).Select(o => o.tasks).ToList();
+
+                foreach (var entity in list)
                 {
                     taskTab task = new taskTab();
                     task.task_No = entity.id;
-                    task.task_Name= entity.task_name;
+                    task.task_Name = entity.task_name;
                     task.start_Date = entity.start_date;
                     task.end_Date = entity.end_date;
                     toReturn.Add(task);
@@ -103,27 +100,27 @@ namespace Task_Manager.Controllers
             else
             {
                 List<FilesTab> toReturn = new List<FilesTab>();
-               
+
                 List<Files> list = new List<Files>();
 
-                list = db.project.Where(p=>p.id==pid).Select(o=>o.projectFiles).FirstOrDefault();
-                
-            
+                list = db.project.Where(p => p.id == pid).Select(o => o.projectFiles).FirstOrDefault();
+
+
                 foreach (var entity in list)
                 {
                     FilesTab files = new FilesTab();
-                    files.file_Name = "<a id='"+ entity.id+"' href="+entity.fileName +" download="+entity.id+"><p> Download</p></a>";
+                    files.file_Name = "<a id='" + entity.id + "' href=" + entity.fileName + " download=" + entity.id + "><p> Download</p></a>";
                     files.file_Type = entity.filetype;
                     files.fileCode = entity.fileCode;
-                    files.uploaded_date = entity.createdOn.Date.ToShortDateString();
-                    files.upload_time = entity.createdOn.ToShortTimeString();
+                    files.uploaded_date = entity.createdOn;
+
                     toReturn.Add(files);
                 }
 
                 return toReturn;
 
             }
-            
+
         }
 
     }

@@ -217,9 +217,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706211146349_files.cs" />
-    <Compile Include="Migrations\201706211146349_files.Designer.cs">
-      <DependentUpon>201706211146349_files.cs</DependentUpon>
+    <Compile Include="Migrations\201706221030063_usman.cs" />
+    <Compile Include="Migrations\201706221030063_usman.Designer.cs">
+      <DependentUpon>201706221030063_usman.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -515,8 +515,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706211146349_files.resx">
-      <DependentUpon>201706211146349_files.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706221030063_usman.resx">
+      <DependentUpon>201706221030063_usman.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

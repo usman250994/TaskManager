@@ -10,7 +10,8 @@ namespace Task_Manager.Models
         public int id { get; set; }
         public string fileName { get; set; }
         public string fileCode { get; set; }
-        public string filetype { get; set; }
-        public DateTime createdOn { get; set; } 
+        public String filetype { get; set; }
+        public DateTime createdOn { get; set; }
+      
     }
 }
