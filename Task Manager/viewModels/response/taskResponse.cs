@@ -8,7 +8,7 @@ namespace Task_Manager.viewModels.response
 {
     public class taskResponse
     {
-        public int ticket_name { get; set; }
+        public string ticket_name { get; set; }
         public string task_name { get; set; }
         public string cName { get; set; }
         public string description { get; set; }

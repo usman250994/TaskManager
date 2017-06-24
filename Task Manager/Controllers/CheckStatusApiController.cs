@@ -23,16 +23,15 @@ namespace Task_Manager.Controllers
             var Session = HttpContext.Current.Session;
             string customerid = Session["customerid"].ToString();
 
-            int id = 0;
             if (!string.IsNullOrEmpty(customerid))
             {
-                id = Convert.ToInt32(customerid);
-                if (db.task.Any(o => o.id == id && o.enable == true))
+              string  id = customerid;
+                if (db.task.Any(o => o.ticket_code == id && o.enable == true))
                 {
                     clientsTicketRespone status = new clientsTicketRespone();
 
-                    var ticket = db.task.Find(id);
-                    status.tid = ticket.id;
+                    var ticket = db.task.Where(o=>o.ticket_code==id).FirstOrDefault();
+                    status.tid = ticket.ticket_code;
                     status.status = fillStatus(ticket.status);
                     status.date = ticket.created_on;
                     status.description = ticket.description;
@@ -44,8 +43,8 @@ namespace Task_Manager.Controllers
                               
                     list.Add(status);
                     
-                    tick.code= db.tagging.Where(c=>c.tasks.id==id).Select(p=>p.project.customer.city_code).FirstOrDefault();
-                    tick.customer_name=db.tagging.Where(c=>c.tasks.id==id).Select(p=>p.project.customer.customer_name).FirstOrDefault();
+                    tick.code= db.tagging.Where(c=>c.tasks.ticket_code==id).Select(p=>p.project.customer.city_code).FirstOrDefault();
+                    tick.customer_name=db.tagging.Where(c=>c.tasks.ticket_code==id).Select(p=>p.project.customer.customer_name).FirstOrDefault();
                 }
                 else
                 {
@@ -59,7 +58,7 @@ namespace Task_Manager.Controllers
                         {
                             var ticket = db.task.Find(li);
                             clientsTicketRespone status = new clientsTicketRespone();
-                            status.tid = ticket.id;
+                            status.tid = ticket.ticket_code;
                             status.status = fillStatus(ticket.status);
                             status.date = ticket.created_on;
                             status.branch_code = ticket.branch_code;

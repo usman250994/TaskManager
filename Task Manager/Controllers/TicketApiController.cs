@@ -214,6 +214,11 @@ namespace Task_Manager.Controllers
             task.sms = tempTask.sms;
             task.email = tempTask.email;
             task.id = tempTask.id;
+
+            var code = db.project.Where(p => p.id == tempTask.projectId).Select(o => o.customer.city_code).FirstOrDefault();
+
+            code=code.Substring(2,4);
+            task.ticket_code = db.task.Where(c=> c.IsTicket==true).Count()+code;
             return task;
         }
 
@@ -266,14 +271,15 @@ namespace Task_Manager.Controllers
         public List<taskResponse> taskall()
         {
             List<Task> tasks = new List<Task>();
-            List<Task> task = new List<Task>();
+            //List<Task> task = new List<Task>();
             List<taskResponse> taskResponse = new List<taskResponse>();
             //Checking for Dashboard returns 
             var session = HttpContext.Current.Session;
-
+            var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
             if (session["dashboard"] != null)
             {
                 string str = session["dashboard"].ToString();
+               
                 session["dashboard"] = null;
                 //Todays 
                 if (str == "tick_today")
@@ -281,18 +287,18 @@ namespace Task_Manager.Controllers
                     DateTime date = DateTime.Now.Date;
 
 
-                    if (session["UserID"].ToString() == "1")
+                    if (session["UserID"].ToString() == "5")
                     {
-                        task = db.task.Where(c => c.enable == true && c.IsTicket == true).ToList();
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.created_on>=date).ToList();
                     }
                     else
                     {
-                        var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
-                        task = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdBy.id).ToList();
+                        
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdBy.id && c.created_on>=date ).ToList();
 
                         //
 
-                        var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id).ToList();
+                        var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id && c.created_on >= date).ToList();
                         foreach (var entity in tempTask)
                         {
                             var tag = db.tagging.Where(p => p.tasks.id == entity.id).FirstOrDefault();
@@ -301,7 +307,7 @@ namespace Task_Manager.Controllers
                             {
                                 if (tag.users[i].id == createdBy.id)
                                 {
-                                    task.Add(entity);
+                                    tasks.Add(entity);
                                 }
                                 break;
                             }
@@ -313,13 +319,13 @@ namespace Task_Manager.Controllers
                     }
 
 
-                    foreach (var entity in task)
-                    {
-                        if (entity.created_on.Date == date)
-                        {
-                            tasks.Add(entity);
-                        }
-                    }
+                    //foreach (var entity in task)
+                    //{
+                    //    if (entity.created_on.Date == date)
+                    //    {
+                    //        tasks.Add(entity);
+                    //    }
+                    //}
                 }
                 //Unassigned
                 else if (str == "tick_unassign")
@@ -327,55 +333,55 @@ namespace Task_Manager.Controllers
 
                     if (session["UserID"].ToString() == "5")
                     {
-                        task = db.task.Where(c => c.enable == true && c.IsTicket == true).ToList();
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status==0).ToList();
                     }
                     else
                     {
-                        var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
-                        task = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdBy.id).ToList();
+                       
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status==0 && c.Created_By.id == createdBy.id ).ToList();
 
 
                         //
-                        var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id).ToList();
-                        foreach (var entity in tempTask)
-                        {
-                            var tag = db.tagging.Where(p => p.tasks.id == entity.id).FirstOrDefault();
+                        //var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id).ToList();
+                        //foreach (var entity in tempTask)
+                        //{
+                        //    var tag = db.tagging.Where(p => p.tasks.id == entity.id).FirstOrDefault();
 
-                            for (int i = 0; i < tag.users.Count; i++)
-                            {
-                                if (tag.users[i].id == createdBy.id)
-                                {
-                                    task.Add(entity);
-                                }
-                                break;
-                            }
-                        }
+                        //    for (int i = 0; i < tag.users.Count; i++)
+                        //    {
+                        //        if (tag.users[i].id == createdBy.id)
+                        //        {
+                        //            task.Add(entity);
+                        //        }
+                        //        break;
+                        //    }
+                        //}
                     }
 
-                    foreach (var entity in task)
-                    {
-                        if (entity.status == 0)
-                        {
-                            tasks.Add(entity);
-                        }
-                    }
+                    //foreach (var entity in task)
+                    //{
+                    //    if (entity.status == 0)
+                    //    {
+                    //        tasks.Add(entity);
+                    //    }
+                    //}
                 }
                 //Newly
                 else
                 {
                     if (session["UserID"].ToString() == "5")
                     {
-                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true).Take(10).ToList();
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status == 2).ToList();
                     }
                     else
                     {
-                        var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
-                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdBy.id).OrderByDescending(c => c.created_on).Take(10).ToList();
+                       
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdBy.id && c.status==2).ToList();
                         int remaining = 10 - tasks.Count;
                         //
                         if (remaining > 0)
                         {
-                            var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id).OrderByDescending(c => c.created_on).Take(remaining).ToList();
+                            var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id && c.status==2).ToList();
                             foreach (var entity in tempTask)
                             {
                                 var tag = db.tagging.Where(p => p.tasks.id == entity.id).FirstOrDefault();
@@ -404,7 +410,7 @@ namespace Task_Manager.Controllers
                 }
                 else
                 {
-                    var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
+                 
                     tasks = db.task.Where(c => c.enable == true && c.Created_By.id == createdBy.id && c.IsTicket == true).ToList();
 
                     //
@@ -418,8 +424,9 @@ namespace Task_Manager.Controllers
                             if (tag.users[i].id == createdBy.id)
                             {
                                 tasks.Add(entity);
+                                break;
                             }
-                            break;
+                           
                         }
                     }
                     //
@@ -429,7 +436,7 @@ namespace Task_Manager.Controllers
             for (int i = 0; i < tasks.Count; i++)
             {
                 taskResponse taskRes = new taskResponse();
-                taskRes.ticket_name = tasks[i].id;
+                taskRes.ticket_name = tasks[i].ticket_code;
                 int ids = Convert.ToInt32(tasks[i].id);
                 taskRes.task_name = tasks[i].task_name;
                 taskRes.description = tasks[i].description;

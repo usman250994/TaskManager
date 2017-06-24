@@ -44,5 +44,10 @@ button#btn {
 }
 .overflow {
     overflow-y:scroll;
-
+}
+#noti {
+display:none;
+}
+.disabled {
+display:block!important;
 }

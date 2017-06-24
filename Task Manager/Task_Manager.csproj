@@ -221,6 +221,10 @@
     <Compile Include="Migrations\201706221030063_usman.Designer.cs">
       <DependentUpon>201706221030063_usman.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706240902153_usman1.cs" />
+    <Compile Include="Migrations\201706240902153_usman1.Designer.cs">
+      <DependentUpon>201706240902153_usman1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
@@ -517,6 +521,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201706221030063_usman.resx">
       <DependentUpon>201706221030063_usman.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706240902153_usman1.resx">
+      <DependentUpon>201706240902153_usman1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

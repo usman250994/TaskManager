@@ -78,6 +78,13 @@ namespace Task_Manager.Controllers
             task.branch_code = ticket.branch_code;
             task.start_date = DateTime.Now;
             task.end_date = DateTime.Now;
+            task.LastModify = DateTime.Now;
+            var code = db.project.Where(p => p.id == ticket.projectId).Select(o => o.customer.city_code).FirstOrDefault();
+
+            code = code.Substring(2, 4);
+
+            task.ticket_code = db.task.Where(c => c.IsTicket == true).Count() + code;
+
             db.task.Add(task);
             Tagging tag = new Tagging();
             tag.tasks = task;
@@ -105,7 +112,7 @@ namespace Task_Manager.Controllers
 
             if (db.SaveChanges() > 0)
             {
-                return "Ticket is successfully Generated!! you will be cotacted Soon! Please Note Your Ticket Number:" + task.id;
+                return "Ticket is successfully Generated!! you will be cotacted Soon! Please Note Your Ticket Number:" + task.ticket_code;
             }
             else
             {

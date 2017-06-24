@@ -30,7 +30,7 @@ namespace Task_Manager.Controllers
         public ActionResult ViewCustomer()
         {
             var roles_Id = Session["role_id"].ToString();
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id=="1002"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id=="4"))
             {
                 Session["task_id"] = null;
                 ViewData["id"] = roles_Id;

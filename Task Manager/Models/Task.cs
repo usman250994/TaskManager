@@ -17,6 +17,7 @@ namespace Task_Manager.Models
 
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
+        public string ticket_code { get; set; }
         public string task_name { get; set; }
         public string description { get; set; }
         public string branch_code { get; set; }

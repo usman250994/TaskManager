@@ -33,7 +33,7 @@ namespace Task_Manager.Controllers
                 var id = addFile.id;
                 addFile.fileCode = pid + filecode + id;
                 addFile.fileName = "/Files/" + id + "." + file.fileName.Split('.')[1];
-                sessionId["project"] = "1";
+             //   sessionId["project"] = "1";
                 //  addFile.fileName = "/Image/" + id;
                 db.SaveChanges();
 
@@ -60,7 +60,7 @@ namespace Task_Manager.Controllers
             if (id == 0)
             {
                 List<TeamTab> toReturn = new List<TeamTab>();
-
+                List<int> userPresent = new List<int>();
                 //List<Users> lists = new List<Users>();
                 List<List<Users>> list = new List<List<Users>>();
 
@@ -69,12 +69,16 @@ namespace Task_Manager.Controllers
                 {
                     foreach (var ent in entity)
                     {
-                        TeamTab team = new TeamTab();
-                        team.Address = ent.Address;
-                        team.Name = ent.user_Name;
-                        team.Number = ent.MobileNo;
-                        toReturn.Add(team);
 
+                        if (userPresent.IndexOf(ent.id) == -1)
+                        {
+                            TeamTab team = new TeamTab();
+                            team.Address = ent.Address;
+                            team.Name = ent.user_Name;
+                            team.Number = ent.MobileNo;
+                            toReturn.Add(team);
+                            userPresent.Add(ent.id);
+                        }
                     }
                 }
 
