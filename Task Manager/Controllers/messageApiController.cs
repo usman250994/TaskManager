@@ -79,6 +79,10 @@ namespace Task_Manager.Controllers
             returnTo.assigned = users.ToString();
             returnTo.createdby = objTask.Created_By.user_Name;
             returnTo.projectname = db.project.Where(p => p.id == projid).Select(p => p.Project_Name).FirstOrDefault();
+            returnTo.closingDate = objTask.closingDate.Date.ToShortDateString();
+            returnTo.completeDate = objTask.completeDate.Date.ToShortDateString();
+            returnTo.closingNote=objTask.note;
+            returnTo.completeNote=objTask.completeNote;
 
             return returnTo;
         }

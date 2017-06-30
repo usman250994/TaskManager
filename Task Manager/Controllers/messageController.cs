@@ -12,6 +12,12 @@ namespace Task_Manager.Controllers
         // GET: message
         public ActionResult ViewMessage()
         {
+
+            if (Session["role_id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var userid = Session["UserId"];
             var taskid = Session["task_id"];
             if (userid != null && taskid != null)

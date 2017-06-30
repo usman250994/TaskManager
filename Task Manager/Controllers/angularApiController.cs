@@ -73,7 +73,21 @@ namespace Task_Manager.Controllers
         {
            var task= db.task.Find(stat.user);
            task.status = stat.value;
-           db.SaveChanges();
+            if(stat.note!="")
+            { 
+                if(stat.value==3)
+                {
+                    task.completeNote = stat.note;
+                    task.completeDate = DateTime.Now;
+                }
+                else
+                {
+                    task.note = stat.note;
+                    task.closingDate = DateTime.Now;
+                }
+          
+            }
+                db.SaveChanges();
         
         }
 

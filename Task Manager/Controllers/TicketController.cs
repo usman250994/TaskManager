@@ -11,6 +11,10 @@ namespace Task_Manager.Controllers
         // GET: Ticket
         public ActionResult CreateTicket()
         {
+            if (Session["role_id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             Session["task_id"] = null;
             string roles_Id = Session["role_id"].ToString();
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "4"))
@@ -31,6 +35,10 @@ namespace Task_Manager.Controllers
 
         public ActionResult ViewTicket()
         {
+            if (Session["role_id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             Session["task_id"] = null;
             var roles_Id = Session["role_id"].ToString();
             if (Session["UserId"] != null )

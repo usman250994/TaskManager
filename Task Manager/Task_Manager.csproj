@@ -217,9 +217,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706290703284_filetype.cs" />
-    <Compile Include="Migrations\201706290703284_filetype.Designer.cs">
-      <DependentUpon>201706290703284_filetype.cs</DependentUpon>
+    <Compile Include="Migrations\201706301026195_usman2.cs" />
+    <Compile Include="Migrations\201706301026195_usman2.Designer.cs">
+      <DependentUpon>201706301026195_usman2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706301232292_usman3.cs" />
+    <Compile Include="Migrations\201706301232292_usman3.Designer.cs">
+      <DependentUpon>201706301232292_usman3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -260,6 +264,7 @@
     <Compile Include="viewModels\ProjectViewModel\FilesTab.cs" />
     <Compile Include="viewModels\ProjectViewModel\taskTab.cs" />
     <Compile Include="viewModels\ProjectViewModel\TeamTab.cs" />
+    <Compile Include="viewModels\ProjectViewModel\TicketTab.cs" />
     <Compile Include="viewModels\reqmessage.cs" />
     <Compile Include="viewModels\requestproduct.cs" />
     <Compile Include="viewModels\responseInventory.cs" />
@@ -517,8 +522,11 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706290703284_filetype.resx">
-      <DependentUpon>201706290703284_filetype.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706301026195_usman2.resx">
+      <DependentUpon>201706301026195_usman2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706301232292_usman3.resx">
+      <DependentUpon>201706301232292_usman3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

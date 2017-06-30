@@ -23,6 +23,11 @@ namespace Task_Manager.viewModels
         public string assigned { get; set; }
         public string createdby { get; set; }
 
+        public string closingNote { get; set; }
+        public string completeNote { get; set; }
+        public string closingDate { get; set; }
+        public string completeDate { get; set; }
+
        
     }
 }

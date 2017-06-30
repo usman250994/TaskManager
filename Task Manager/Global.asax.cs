@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 using System.Web.SessionState;
 
 namespace Task_Manager
@@ -36,8 +38,11 @@ namespace Task_Manager
 
         void MvcApplication_PostAuthenticateRequest(object sender, EventArgs e)
         {
-            System.Web.HttpContext.Current.SetSessionStateBehavior(
-                SessionStateBehavior.Required);
+
+        HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
+
         }
+
+
     }
 }

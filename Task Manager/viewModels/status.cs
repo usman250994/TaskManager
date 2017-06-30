@@ -10,5 +10,6 @@ namespace Task_Manager.viewModels
 
         public int value { get; set; }
         public int user { get; set; }
+        public string note { get; set; }
     }
 }

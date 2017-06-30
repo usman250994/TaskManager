@@ -13,6 +13,12 @@ namespace Task_Manager.Controllers
 
         public ActionResult CreateCustomer()
         {
+
+            if (Session["role_id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var roles_Id = Session["role_id"].ToString();
             Session["task_id"] = null;
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
@@ -29,6 +35,10 @@ namespace Task_Manager.Controllers
         }
         public ActionResult ViewCustomer()
         {
+            if (Session["role_id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var roles_Id = Session["role_id"].ToString();
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id=="4"))
             {

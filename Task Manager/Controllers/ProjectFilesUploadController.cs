@@ -26,13 +26,13 @@ namespace Task_Manager.Controllers
             Files addFile = new Files();
             addFile.filetype = file.fileCode;
             addFile.createdOn = DateTime.Now;
-
+            string Date = DateTime.Now.Date.Day.ToString() + DateTime.Now.Date.Month.ToString() + DateTime.Now.Date.Year.ToString();
             db.files.Add(addFile);
             if (db.SaveChanges() > 0)
             {
                 var id = addFile.id;
-                addFile.fileCode = pid + filecode + id;
-                addFile.fileName = "/Files/" + id + "." + file.fileName.Split('.')[1];
+                addFile.fileCode = pid + filecode + id+Date ;
+                addFile.fileName = "/Files/" + pid + filecode + id + Date + "." + file.fileName.Split('.')[1];
                 //   sessionId["project"] = "1";
                 //  addFile.fileName = "/Image/" + id;
                 db.SaveChanges();
@@ -55,8 +55,9 @@ namespace Task_Manager.Controllers
             var sessionId = HttpContext.Current.Session;
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
             Names name = new Names();
-            name.pname = db.project.Where(p => p.id == pid).Select(p => p.Project_Name).FirstOrDefault();
-            name.cname = db.project.Where(p => p.id == pid).Select(p => p.customer.customer_name).FirstOrDefault();
+            name.pname = db.project.Where(p => p.id == pid).Select(p => p.Project_Name ).FirstOrDefault();
+            name.cname = db.project.Where(p => p.id == pid).Select(p => p.customer.customer_name ).FirstOrDefault();
+            name.workorder = db.project.Where(p => p.id == pid).Select(p => p.work_order).FirstOrDefault(); 
             if (id == 0)
             {
                 List<TeamTab> toReturn = new List<TeamTab>();
@@ -69,7 +70,6 @@ namespace Task_Manager.Controllers
                 {
                     foreach (var ent in entity)
                     {
-
                         if (userPresent.IndexOf(ent.id) == -1)
                         {
                             TeamTab team = new TeamTab();
@@ -80,18 +80,14 @@ namespace Task_Manager.Controllers
                             userPresent.Add(ent.id);
                         }
                     }
-                }
-               
-                
-                return new Object[]{toReturn, name};
-               
+                }            
+                return new Object[]{toReturn, name};               
             }
             else if (id == 1)
             {
                 List<taskTab> toReturn = new List<taskTab>();
                 List<Task> list = new List<Task>();
                 list = db.tagging.Where(p => p.project.id == pid && p.tasks.IsTicket == false).Select(o => o.tasks).ToList();
-
                 foreach (var entity in list)
                 {
                     taskTab task = new taskTab();
@@ -103,15 +99,11 @@ namespace Task_Manager.Controllers
                 }
                 return new Object[] { toReturn};
             }
-            else
+            else if (id == 2)
             {
                 List<FilesTab> toReturn = new List<FilesTab>();
-
                 List<Files> list = new List<Files>();
-
                 list = db.project.Where(p => p.id == pid).Select(o => o.projectFiles).FirstOrDefault();
-
-
                 foreach (var entity in list)
                 {
                     FilesTab files = new FilesTab();
@@ -124,7 +116,21 @@ namespace Task_Manager.Controllers
                 }
                 return new Object[] { toReturn };
             }
-           
+            else 
+            {
+                List<TicketTab> toReturn = new List<TicketTab>();                
+                var list = db.tagging.Where(p => p.project.id == pid && p.tasks.IsTicket == true).Select(o => o.tasks).ToList();
+                foreach (var entity in list)
+                {
+                    TicketTab files = new TicketTab();
+                   files.ticket_code=entity.ticket_code.ToString();
+                   files.ticket_Name=entity.task_name;
+                   files.branch=entity.branch_code;
+                   files.description = entity.description;
+                    toReturn.Add(files);
+                }
+                return new Object[] { toReturn };
+            }
         }
          
     }

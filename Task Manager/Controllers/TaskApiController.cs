@@ -283,16 +283,35 @@ namespace Task_Manager.Controllers
                 taskRes.bran_Code = "Task";
                 taskRes.lastModify = tasks[i].LastModify.Date.ToShortDateString();
 
-                if (tasks[i].status == 0)
-                    taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0' selected >Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
-                else if (tasks[i].status == 1)
-                    taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1' selected >Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
-                else if (tasks[i].status == 2)
-                    taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2' selected >InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
-                else if (tasks[i].status == 3)
-                    taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3' selected >Complete</option><option value='4'>Closed</option></select>";
+
+                if (session["role_id"].ToString() == "1" || session["role_id"].ToString() == "2")
+                {
+
+                    if (tasks[i].status == 0)
+                        taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0' selected >Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
+                    else if (tasks[i].status == 1)
+                        taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1' selected >Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
+                    else if (tasks[i].status == 2)
+                        taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2' selected >InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
+                    else if (tasks[i].status == 3)
+                        taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3' selected >Complete</option><option value='4'>Closed</option></select>";
+                    else
+                        taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4' selected>Closed</option></select>";
+                }
                 else
-                    taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4' selected>Closed</option></select>";
+                {
+                    if (tasks[i].status == 0)
+                        taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0' selected >Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
+                    else if (tasks[i].status == 1)
+                        taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1' selected >Pending</option><option value='2'>InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
+                    else if (tasks[i].status == 2)
+                        taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2' selected >InProgress</option><option value='3'>Complete</option><option value='4'>Closed</option></select>";
+                    else if (tasks[i].status == 3)
+                        taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3' selected >Complete</option><option value='4'>Closed</option></select>";
+                    else
+                     taskRes.status= "Closed";
+                }
+               
                 taskRes.button = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='UpdateTask(" + tasks[i].id + ")'/><button  class='btn btn-danger fa fa-times' onclick='DeleteTask(" + tasks[i].id + "," + i + ")'></button> <button  class='btn btn-info fa fa-comments-o' onclick='comments(" + tasks[i].id + ")'></button>";
                 Tagging tag = new Tagging();
                 List<string> list = new List<string>();
@@ -419,7 +438,8 @@ namespace Task_Manager.Controllers
             task.description = tempTask.description;
             task.start_date = tempTask.start_date;
             task.end_date = tempTask.end_date;
-
+            task.closingDate = DateTime.Now;
+            task.completeDate = DateTime.Now;
             if (tempTask.tempUsers.Count == 0)
             {
                 task.status = 0;

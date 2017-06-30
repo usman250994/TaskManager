@@ -13,6 +13,10 @@ namespace Task_Manager.Controllers
         TaskContext db = new TaskContext();
         public ActionResult Index()
         {
+            if (Session["role_id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             Session["task_id"] = null;
             var str = Session["UserId"];
             var roles_Id = Session["role_id"].ToString();

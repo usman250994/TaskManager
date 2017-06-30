@@ -9,5 +9,6 @@ namespace Task_Manager.viewModels.ProjectViewModel
     {
         public string cname { get; set; }
         public string pname { get; set; }
+        public int workorder { get; set; }
     }
 }
