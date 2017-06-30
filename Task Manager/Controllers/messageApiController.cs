@@ -65,7 +65,7 @@ namespace Task_Manager.Controllers
             var users = db.tagging.Where(p => p.tasks.id == id).Select(p => p.users.Select(q => q.user_Name).ToList()).FirstOrDefault();
             returnTo.taggedUsers = users;
             returnTo.responseList = listRes;
-            returnTo.task_no = objTask.id;
+            returnTo.task_no = objTask.ticket_code;
             returnTo.task_name = objTask.task_name;
             var projid = db.tagging.Where(c => c.tasks.id == objTask.id).Select(p => p.project.id).FirstOrDefault();
             var obj = db.project.Where(p => p.id == projid).Select(c => c.customer).FirstOrDefault();
@@ -78,7 +78,7 @@ namespace Task_Manager.Controllers
             returnTo.SMS = objTask.sms;
             returnTo.assigned = users.ToString();
             returnTo.createdby = objTask.Created_By.user_Name;
-
+            returnTo.projectname = db.project.Where(p => p.id == projid).Select(p => p.Project_Name).FirstOrDefault();
 
             return returnTo;
         }

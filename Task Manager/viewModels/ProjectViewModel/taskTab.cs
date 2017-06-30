@@ -9,7 +9,7 @@ namespace Task_Manager.viewModels.Project
     {
         public int task_No { get; set; }
         public string task_Name { get; set; }
-        public DateTime start_Date { get; set; }
-        public DateTime end_Date { get; set; }
+        public string start_Date { get; set; }
+        public string end_Date { get; set; }
     }
 }

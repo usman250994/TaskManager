@@ -70,8 +70,8 @@ E:\Visual Studio\Projects\Task Manager\Task Manager\bin\ko\System.Spatial.resour
 E:\Visual Studio\Projects\Task Manager\Task Manager\bin\ru\System.Spatial.resources.dll
 E:\Visual Studio\Projects\Task Manager\Task Manager\bin\zh-Hans\System.Spatial.resources.dll
 E:\Visual Studio\Projects\Task Manager\Task Manager\bin\zh-Hant\System.Spatial.resources.dll
-E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.usman.resources
-E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.usman1.resources
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csprojResolveAssemblyReference.cache
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.filetype.resources
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csproj.GenerateResource.Cache
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.dll
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.pdb

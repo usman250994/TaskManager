@@ -33,7 +33,7 @@ namespace Task_Manager.Controllers
                 var id = addFile.id;
                 addFile.fileCode = pid + filecode + id;
                 addFile.fileName = "/Files/" + id + "." + file.fileName.Split('.')[1];
-             //   sessionId["project"] = "1";
+                //   sessionId["project"] = "1";
                 //  addFile.fileName = "/Image/" + id;
                 db.SaveChanges();
 
@@ -50,13 +50,13 @@ namespace Task_Manager.Controllers
         }
 
         [HttpGet]
-        public object ViewFiles(int id)
+        public object[] ViewFiles(int id)
         {
             var sessionId = HttpContext.Current.Session;
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
-            Object obj = new object();
-
-
+            Names name = new Names();
+            name.pname = db.project.Where(p => p.id == pid).Select(p => p.Project_Name).FirstOrDefault();
+            name.cname = db.project.Where(p => p.id == pid).Select(p => p.customer.customer_name).FirstOrDefault();
             if (id == 0)
             {
                 List<TeamTab> toReturn = new List<TeamTab>();
@@ -81,25 +81,27 @@ namespace Task_Manager.Controllers
                         }
                     }
                 }
-
-                return toReturn;
+               
+                
+                return new Object[]{toReturn, name};
+               
             }
             else if (id == 1)
             {
                 List<taskTab> toReturn = new List<taskTab>();
                 List<Task> list = new List<Task>();
-                list = db.tagging.Where(p => p.project.id == pid).Select(o => o.tasks).ToList();
+                list = db.tagging.Where(p => p.project.id == pid && p.tasks.IsTicket == false).Select(o => o.tasks).ToList();
 
                 foreach (var entity in list)
                 {
                     taskTab task = new taskTab();
                     task.task_No = entity.id;
                     task.task_Name = entity.task_name;
-                    task.start_Date = entity.start_date;
-                    task.end_Date = entity.end_date;
+                    task.start_Date = entity.start_date.Date.ToShortDateString();
+                    task.end_Date = entity.end_date.Date.ToShortDateString(); ;
                     toReturn.Add(task);
                 }
-                return toReturn;
+                return new Object[] { toReturn};
             }
             else
             {
@@ -113,19 +115,17 @@ namespace Task_Manager.Controllers
                 foreach (var entity in list)
                 {
                     FilesTab files = new FilesTab();
-                    files.file_Name = "<a id='" + entity.id + "' href=" + entity.fileName + " download=" + entity.id + "><p> Download</p></a>";
-                    files.file_Type = entity.filetype;
                     files.fileCode = entity.fileCode;
-                    files.uploaded_date = entity.createdOn;
-
+                    files.file_type_name = db.filetype.Where(s => s.Filecode == entity.filetype).Select(s => s.Filename).FirstOrDefault();
+                    files.uploaded_date = entity.createdOn.Date.ToShortDateString();
+                    files.uploaded_time = entity.createdOn.ToShortTimeString();
+                    files.Download = "<a id='" + entity.id + "' href=" + entity.fileName + " download=" + entity.id + "><p> Download</p></a>";
                     toReturn.Add(files);
                 }
-
-                return toReturn;
-
+                return new Object[] { toReturn };
             }
-
+           
         }
-
+         
     }
 }

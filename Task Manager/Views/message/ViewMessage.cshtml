@@ -20,7 +20,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6 ">
                                     <label>Ticket/Task No.</label>
                                 </div>
@@ -29,26 +29,16 @@
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
-                            <div class="col-lg-12 spacing" >
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6 ">
-                                    <label>Task Name</label>
+                                    <label>Ticket/Task Name(POC)</label>
                                 </div>
                                 <div class="col-lg-6 ">
                                     <label id="taskname"></label>
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
-
-                            <div class="col-lg-12 spacing " style="height:125px;">
-                                <div class="col-lg-6">
-                                    <label>Description</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label id="Description"> </label>
-                                </div>
-                                <p style=" border-bottom: 1px solid gray; position:relative; padding-bottom: 100px ; "> </p>
-                            </div>
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6 ">
                                     <label>Customer Code</label>
                                 </div>
@@ -57,7 +47,7 @@
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6 ">
                                     <label>Customer Name</label>
                                 </div>
@@ -66,7 +56,27 @@
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing1">
+                                <div class="col-lg-6 ">
+                                    <label>Project Name</label>
+                                </div>
+                                <div class="col-lg-6 ">
+                                    <label id="pname"></label>
+                                </div>
+                                <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
+                            </div>
+
+                            <div class="col-lg-12 spacing1 " style="height:125px;">
+                                <div class="col-lg-6">
+                                    <label>Description</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label id="Description"> </label>
+                                </div>
+                                <p style=" border-bottom: 1px solid gray; position:relative; padding-bottom: 100px ; "> </p>
+                            </div>
+
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6">
                                     <label>Start Date</label>
                                 </div>
@@ -75,7 +85,7 @@
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6">
                                     <label>End Date</label>
                                 </div>
@@ -84,7 +94,7 @@
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6">
                                     <label>Email</label>
                                 </div>
@@ -93,7 +103,7 @@
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6">
                                     <label>SMS</label>
                                 </div>
@@ -102,7 +112,7 @@
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 30px; "> </p>
                             </div>
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6">
                                     <label>Assigned To</label>
                                 </div>
@@ -111,7 +121,7 @@
                                 </div>
                                 <p style=" border-bottom: 1px solid gray; position:relative;padding-bottom: 40px; "> </p>
                             </div>
-                            <div class="col-lg-12 spacing">
+                            <div class="col-lg-12 spacing1">
                                 <div class="col-lg-6">
                                     <label>Created By</label>
                                 </div>
@@ -173,6 +183,17 @@
 
 <script>
     $(document).ready(function () {
+
+       var temp =  sessionStorage.getItem('task');
+       if (temp == "Yes")
+       {
+           document.getElementById("task").style.backgroundColor = "bisque";
+       }
+       else
+       {
+           document.getElementById("ticket").style.backgroundColor = "bisque";
+       }
+        
         $.ajax({
             async: true,
             url: '/api/messageApi/',
@@ -181,6 +202,7 @@
             dataType: "json",
             success: function (data) {
                 console.log(data);
+
                 for (var i = 0; i < data.responseList.length; i++) {
                     chatstyle(data.responseList[i]);
                 }
@@ -194,6 +216,7 @@
                 document.getElementById('sms').innerText = data.SMS;
                 document.getElementById('email').innerText = data.Email;
                 document.getElementById('createdby').innerText = data.createdby;
+                document.getElementById('pname').innerText = data.prjectname;
                 for (var i = 0; i < data.taggedUsers.length; i++) {
                     document.getElementById('assign').innerText = document.getElementById('assign').innerText + data.taggedUsers[i];
                 }

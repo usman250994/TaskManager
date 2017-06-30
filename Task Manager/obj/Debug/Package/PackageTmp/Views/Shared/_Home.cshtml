@@ -49,8 +49,8 @@
                         @*<a href="//"><i class="fa fa-user fa-fw"></i> User Profile</a>*@
                     </li>
                     @*<li>
-                       // <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                    </li>*@
+                           // <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>*@
                     <li class="divider"></li>
                     <li>
                         @Html.ActionLink("Logout", "Index", "Home")
@@ -82,7 +82,7 @@
                         @Html.ActionLink("Dashboard", "Index", "Dashboard")
                     </li>
                     <li>
-                        <a><i class="fa fa-user-plus fa-fw"></i> Customer<span class="fa arrow"></span></a>
+                        <a><i class="fa fa-user-plus fa-fw"></i> Customer<span class="fa arrow" ></span></a>
                         <ul class="nav nav-second-level">
                             <li>
 
@@ -97,7 +97,7 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a><i class="fa fa-building fa-fw"></i> Projects <span class="fa arrow"></span></a>
+                        <a id="project"><i class="fa fa-building fa-fw"></i> Projects <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 @Html.ActionLink("Create Projects", "CreateProject", "Project")
@@ -126,7 +126,7 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a><i class="fa fa-edit fa-fw"></i> Task<span class="fa arrow"></span></a>
+                        <a id="task"><i class="fa fa-edit fa-fw"></i> Task<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 @Html.ActionLink("Create Task", "CreateTask", "Task")
@@ -140,7 +140,7 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a><i class="fa fa-edge fa-fw"></i> Ticketing<span class="fa arrow"></span></a>
+                        <a id="ticket"><i class="fa fa-edge fa-fw"></i> Ticketing<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 @Html.ActionLink("Create Ticket", "CreateTicket", "Ticket")
@@ -190,7 +190,7 @@
     <script src="~/Scripts/multiple-select.min.js"></script>
     <script src="~/Scripts/Theme JS/jquery.dataTables.min.js"></script>
     <script>
-       
+
     </script>
 </body>
 </html>

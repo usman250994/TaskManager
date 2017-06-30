@@ -431,6 +431,14 @@ namespace Task_Manager.Controllers
             task.sms = tempTask.sms;
             task.email = tempTask.email;
             task.id = tempTask.id;
+
+
+            var code = db.project.Where(p => p.id == tempTask.projectId).Select(o => o.customer.city_code).FirstOrDefault();
+
+            code = code.Substring(2, 4);
+            task.ticket_code = db.task.Count() + code;
+
+
             return task;
         }
 

@@ -218,7 +218,7 @@ namespace Task_Manager.Controllers
             var code = db.project.Where(p => p.id == tempTask.projectId).Select(o => o.customer.city_code).FirstOrDefault();
 
             code=code.Substring(2,4);
-            task.ticket_code = db.task.Where(c=> c.IsTicket==true).Count()+code;
+            task.ticket_code = db.task.Count()+code;
             return task;
         }
 

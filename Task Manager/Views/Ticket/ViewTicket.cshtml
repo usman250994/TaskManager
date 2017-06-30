@@ -39,9 +39,9 @@
                                 <th>Ticket Number</th>
                                 <th>Customer Code</th>
                                 <th>Customer Name</th>
-                                <th>Task Name(POC)</th>
+                                <th>Ticket Name(POC)</th>
                                 <th>Description</th>
-                                <th>Branch Code</th>
+                                <th>Branch Code/ Location</th>
                                 <th>Assigned To</th>
                                 <th>Created By</th>    
                                 <th>Last Updated</th>                            
@@ -127,6 +127,10 @@
         });
     }
     function comments(id) {
+
+        sessionStorage.setItem('task', "No");
+      
+
         console.log(id);
         $.ajax({
             async: false,

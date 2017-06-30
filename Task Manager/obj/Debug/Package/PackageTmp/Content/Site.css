@@ -74,11 +74,12 @@ input[type="search"] {
 #back {
     margin-left: 50%;
 }
-
-
-
-
-
+.col-lg-12.spacing1 {
+    padding-top: 8px;
+}
+a.paginate_button.current {
+    padding: 10px;
+}
 
 /*.chat {
     list-style: none;

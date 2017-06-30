@@ -229,6 +229,9 @@
 
 
     function comments(id) {
+
+        sessionStorage.setItem('task', "Yes");
+     
         console.log(id);
         $.ajax({
             async: false,

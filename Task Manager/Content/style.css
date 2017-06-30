@@ -5,8 +5,8 @@
     padding: 0;
     margin: 0 auto;
     font-family: "Trebuchet MS","Myriad Pro",Arial,sans-serif;
-    background-image:url(../Images/bg.jpg);
-    background-repeat:repeat;
+    background-image: url(../Images/bg.jpg);
+    background-repeat: repeat;
 }
 
 /** fonts used for the icons **/
@@ -38,6 +38,7 @@ a.hiddenanchor {
     width: 500px;
     position: relative;
 }
+
     #wrapper a {
         color: rgb(95, 155, 198);
         text-decoration: underline;
@@ -83,8 +84,8 @@ a.hiddenanchor {
 
     #wrapper label {
         color: rgb(64, 92, 96);
-        padding-top:15px;
-        position: relative!important;
+        padding-top: 15px;
+        position: relative !important;
         float: left;
     }
 
@@ -104,6 +105,8 @@ textarea:-moz-placeholder {
 input {
     outline: none;
 }
+
+
 
 /* all the input except submit and checkbox */
 #wrapper input:not([type="checkbox"]) {
@@ -223,8 +226,8 @@ p.login.button {
 #login {
     z-index: 22;
 }
-#toregister:target ~ #wrapper #login
-{
+
+#toregister:target ~ #wrapper #login {
     -webkit-animation-name: fadeOutLeft;
     -moz-animation-name: fadeOutLeft;
     -ms-animation-name: fadeOutLeft;
@@ -245,4 +248,3 @@ p.login.button {
 .lt8 #wrapper h1 {
     color: #066A75;
 }
-
