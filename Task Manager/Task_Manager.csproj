@@ -514,7 +514,6 @@
     <Content Include="Views\Inventory\CreateInventory.cshtml" />
     <Content Include="Views\Inventory\ViewInventory.cshtml" />
     <Content Include="Views\CheckStatus\Index.cshtml" />
-    <Content Include="Views\Shared\Nonuser.cshtml" />
     <Content Include="Views\Inventory\ViewInventoryDetail.cshtml" />
     <Content Include="Views\Project\ProjectFileUpload.cshtml" />
     <Content Include="Views\UserProfile\Index.cshtml" />

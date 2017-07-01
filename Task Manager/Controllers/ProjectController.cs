@@ -18,6 +18,8 @@ namespace Task_Manager.Controllers
 
             Session["task_id"] = null;
             var roles_Id = Session["role_id"].ToString();
+            string userName = Session["username"].ToString();
+            ViewData["userName"] = userName;
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
             {
 
@@ -34,6 +36,8 @@ namespace Task_Manager.Controllers
         {
             Session["task_id"] = null;
             var roles_Id = Session["role_id"].ToString();
+            string userName = Session["username"].ToString();
+            ViewData["userName"] = userName;
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
             {
                 ViewData["id"] = roles_Id;
@@ -51,6 +55,8 @@ namespace Task_Manager.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            string userName = Session["username"].ToString();
+            ViewData["userName"] = userName;
             Session["task_id"] = null;
             var roles_Id = Session["role_id"].ToString();
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))

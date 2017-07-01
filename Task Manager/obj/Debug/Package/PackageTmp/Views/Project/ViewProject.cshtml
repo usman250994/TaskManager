@@ -33,7 +33,7 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-exampl">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -72,16 +72,40 @@
             dataType: "json",
             success: function (data) {
                 console.log(data);
-                for (var i = 0; i < data.length; i++) {
 
-                    $("#dynamic-Grid").append("<tr id=" + i + "><td>" + data[i].projectName + "</td><td>" + data[i].startDate.substring(0, 10) + "</td><td>" + data[i].endDate.substring(0, 10) + "</td><td>" + data[i].customerName + "</td><td>" + data[i].workorder + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].customerManager + "</td><td>" + data[i].Email + "</td><td>" + data[i].PhoneNumber + "</td><td>"+ data[i].address+"</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + "," + i + ")\"></button> <button  class='btn btn-success fa fa-file-word-o' onclick=\"upload(" + data[i].id + "," + i + ")\"></button></td></tr>");
-                }
+
+                filltable(data);
+
+
+
+                //for (var i = 0; i < data.length; i++) {
+
+                //    $("#dynamic-Grid").append("<tr id=" + i + "><td>" + data[i].projectName + "</td><td>" + data[i].startDate.substring(0, 10) + "</td><td>" + data[i].endDate.substring(0, 10) + "</td><td>" + data[i].customerName + "</td><td>" + data[i].workorder + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].customerManager + "</td><td>" + data[i].Email + "</td><td>" + data[i].PhoneNumber + "</td><td>"+ data[i].address+"</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + "," + i + ")\"></button> <button  class='btn btn-success fa fa-file-word-o' onclick=\"upload(" + data[i].id + "," + i + ")\"></button></td></tr>");
+                //}
             },
             error: function () { alert('Grid Not Load'); }
         });
     });
 
+    function filltable(datas) {
+        $("#dataTables-exampl").DataTable({
+            "aaData": datas,
+            "aoColumns": [
+                { "mDataProp": "projectName" },
+                { "mDataProp": "startDate" },
+                { "mDataProp": "endDate" },
+                { "mDataProp": "customerName" },
+                { "mDataProp": "workorder" },
+                { "mDataProp": "projectManager" },
+                { "mDataProp": "customerManager" },
+                { "mDataProp": "Email" },
+                { "mDataProp": "PhoneNumber" },
+                { "mDataProp": "address" },
+                { "mDataProp": "action" }
+            ]
+        });
 
+    }
 
     function deleteUser(id, rId) {
         if (confirm('Are You Sure ? You Want to Delete Project')) {

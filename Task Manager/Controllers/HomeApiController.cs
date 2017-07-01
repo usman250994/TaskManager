@@ -34,6 +34,7 @@ namespace Task_Manager.Controllers
                         {
                             session["UserID"] = "5";
                             session["role_id"] = "1";
+                            session["username"] = "SUDO";
                             return "Authenticated";
                         }
                         else
@@ -44,6 +45,7 @@ namespace Task_Manager.Controllers
                             {
                                 session["UserID"] = obj.id;
                                 session["role_id"] = obj.Roles_id.id;
+                                session["username"] = obj.user_Name;
                                 return "Authenticated";
                             }
                             return "Invalid ID or Password";

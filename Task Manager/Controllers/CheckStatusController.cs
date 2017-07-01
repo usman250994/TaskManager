@@ -12,6 +12,7 @@ namespace Task_Manager.Controllers
 
         public ActionResult Index()
         {
+           
             if (Session["role_id"] == null)
             {
                 return RedirectToAction("Index", "Home");

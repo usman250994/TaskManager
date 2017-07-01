@@ -34,7 +34,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">Task Manager System</a>
+            <a class="navbar-brand" href="index.html">Task Management System   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @Html.Label("", ViewData["userName"].ToString()) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <label id="date"></label></a>
+
         </div>
         <!-- /.navbar-header -->
 
@@ -46,11 +47,8 @@
                 <ul class="dropdown-menu dropdown-user">
                     <li>
                         @Html.ActionLink("Profile", "Index", "UserProfile")
-                        @*<a href="//"><i class="fa fa-user fa-fw"></i> User Profile</a>*@
+
                     </li>
-                    @*<li>
-                           // <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>*@
                     <li class="divider"></li>
                     <li>
                         @Html.ActionLink("Logout", "Index", "Home")
@@ -82,7 +80,7 @@
                         @Html.ActionLink("Dashboard", "Index", "Dashboard")
                     </li>
                     <li>
-                        <a><i class="fa fa-user-plus fa-fw"></i> Customer<span class="fa arrow" ></span></a>
+                        <a><i class="fa fa-user-plus fa-fw"></i> Customer<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
 
@@ -101,7 +99,6 @@
                         <ul class="nav nav-second-level">
                             <li>
                                 @Html.ActionLink("Create Projects", "CreateProject", "Project")
-
                             </li>
                             <li>
                                 @Html.ActionLink("View Projects", "ViewProject", "Project")
@@ -190,7 +187,9 @@
     <script src="~/Scripts/multiple-select.min.js"></script>
     <script src="~/Scripts/Theme JS/jquery.dataTables.min.js"></script>
     <script>
-
+    var today = new Date().toString();
+    var date = today.substr(0, 16);
+    document.getElementById('date').innerHTML = date;
     </script>
 </body>
 </html>

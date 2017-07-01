@@ -49,11 +49,11 @@ namespace Task_Manager.Controllers
                 var user1 = db.user.Find(projinst.projectManager.id);
                 db.Entry(pro).CurrentValues.SetValues(projinst);
 
-                  projinst.customerContactDetail.customerContactDetailId=  cusDet.customerContactDetailId;
-                
+                projinst.customerContactDetail.customerContactDetailId = cusDet.customerContactDetailId;
+
                 db.Entry(cusDet).CurrentValues.SetValues(projinst.customerContactDetail);
-                
-                
+
+
                 db.Entry(user).CurrentValues.SetValues(user1);
                 //edit user as project manager USMAN
                 if (db.SaveChanges() > 0)
@@ -69,14 +69,14 @@ namespace Task_Manager.Controllers
             {
                 var sessionId = HttpContext.Current.Session;
                 string aid = sessionId["UserID"].ToString();
-               
+
                 var createdUser = db.user.Find(Convert.ToInt32(aid));
                 CustomerContactDetail custdetail = new CustomerContactDetail();
                 custdetail.project_manager = projinst.customerContactDetail.project_manager;
                 custdetail.contact_number = projinst.customerContactDetail.contact_number;
                 custdetail.email = projinst.customerContactDetail.email;
                 custdetail.address = projinst.customerContactDetail.address;
-               // custdetail.Created_By = createdUser;
+                // custdetail.Created_By = createdUser;
                 db.customer_contact_detail.Add(custdetail);
                 //projinst.customerid = custdetail.customerContactDetailId;
                 //  Customer cust = new Customer();
@@ -134,7 +134,7 @@ namespace Task_Manager.Controllers
 
         //    Project obj = new Project();
         //    if (session["project"] != null)
-      
+
         //    {
 
         //        string str = session["project"].ToString();
@@ -186,22 +186,13 @@ namespace Task_Manager.Controllers
 
             List<Project> Proj = new List<Project>();
 
-            if (session["UserID"].ToString() == "5")
-            {
-                Proj = db.project.Where(c => c.Enable == true).ToList();
-            }
 
-            else
-            {
-                var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
-                Proj = db.project.Where(c => c.Enable == true && c.Created_By.id == createdBy.id).ToList();
-            }
-
+            Proj = db.project.Where(c => c.Enable == true).ToList();
 
             foreach (var entity in Proj)
             {
                 ProjectGrid toAdd = new ProjectGrid();
-                toAdd.id = entity.id;
+               // toAdd.id = entity.id;
                 toAdd.projectName = entity.Project_Name;
                 toAdd.startDate = entity.Start_Date.Date;
                 toAdd.endDate = entity.End_Date.Date;
@@ -213,6 +204,8 @@ namespace Task_Manager.Controllers
                 toAdd.userName = entity.Created_By.user_Name;
                 toAdd.Email = entity.customerContactDetail.email;
                 toAdd.PhoneNumber = entity.customerContactDetail.contact_number;
+
+                toAdd.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + entity.id + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + entity.id + ")'/><button  class='btn btn-success fa fa-file-word-o' onclick=\"upload(" + entity.id + ")\"></button>";
 
                 toReturn.Add(toAdd);
             }

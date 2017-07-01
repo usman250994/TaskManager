@@ -18,7 +18,8 @@ namespace Task_Manager.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            string userName = Session["username"].ToString();
+            ViewData["userName"] = userName;
             var roles_Id = Session["role_id"].ToString();
             Session["task_id"] = null;
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
@@ -39,6 +40,8 @@ namespace Task_Manager.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            string userName = Session["username"].ToString();
+            ViewData["userName"] = userName;
             var roles_Id = Session["role_id"].ToString();
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id=="4"))
             {

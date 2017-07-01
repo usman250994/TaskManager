@@ -15,7 +15,8 @@ namespace Task_Manager.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            string userName = Session["username"].ToString();
+            ViewData["userName"] = userName;
             var roles_Id = Session["role_id"].ToString();
             ViewData["id"] = roles_Id;
             return View();

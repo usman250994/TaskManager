@@ -17,7 +17,7 @@ namespace Task_Manager.Controllers
 
         public ActionResult Index()
         {
-           
+            
             Session["customerid"] = null;
             return View();
         }
