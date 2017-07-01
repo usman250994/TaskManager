@@ -158,13 +158,7 @@ namespace Task_Manager.Controllers
                     }
 
 
-                    //foreach (var entity in task)
-                    //{
-                    //    if (entity.created_on.Date == date)
-                    //    {
-                    //        tasks.Add(entity);
-                    //    }
-                    //}
+                 
                 }
                 //Unassigned
                 else if (str == "tick_unassign")
@@ -180,30 +174,9 @@ namespace Task_Manager.Controllers
                         tasks = db.task.Where(c => c.enable == true && c.IsTicket == false && c.status == 0 && c.Created_By.id == createdBy.id).ToList();
 
 
-                        //
-                        //var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id).ToList();
-                        //foreach (var entity in tempTask)
-                        //{
-                        //    var tag = db.tagging.Where(p => p.tasks.id == entity.id).FirstOrDefault();
-
-                        //    for (int i = 0; i < tag.users.Count; i++)
-                        //    {
-                        //        if (tag.users[i].id == createdBy.id)
-                        //        {
-                        //            task.Add(entity);
-                        //        }
-                        //        break;
-                        //    }
-                        //}
+                   
                     }
 
-                    //foreach (var entity in task)
-                    //{
-                    //    if (entity.status == 0)
-                    //    {
-                    //        tasks.Add(entity);
-                    //    }
-                    //}
                 }
                 //Newly
                 else

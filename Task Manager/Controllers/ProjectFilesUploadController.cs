@@ -26,13 +26,13 @@ namespace Task_Manager.Controllers
             Files addFile = new Files();
             addFile.filetype = file.fileCode;
             addFile.createdOn = DateTime.Now;
-            string Date = DateTime.Now.Date.Day.ToString() + DateTime.Now.Date.Month.ToString() + DateTime.Now.Date.Year.ToString();
+          //  string Date = DateTime.Now.Date.Day.ToString() + DateTime.Now.Date.Month.ToString() + DateTime.Now.Date.Year.ToString();
             db.files.Add(addFile);
             if (db.SaveChanges() > 0)
             {
                 var id = addFile.id;
-                addFile.fileCode = pid + filecode + id+Date ;
-                addFile.fileName = "/Files/" + pid + filecode + id + Date + "." + file.fileName.Split('.')[1];
+                addFile.fileCode = pid + filecode + id ;
+                addFile.fileName = "/Files/" + pid + filecode + id  + "." + file.fileName.Split('.')[1];
                 //   sessionId["project"] = "1";
                 //  addFile.fileName = "/Image/" + id;
                 db.SaveChanges();
@@ -64,8 +64,11 @@ namespace Task_Manager.Controllers
                 List<int> userPresent = new List<int>();
                 //List<Users> lists = new List<Users>();
                 List<List<Users>> list = new List<List<Users>>();
+             
+                var tasks=db.tagging.Where(o=>o.project.id==pid &&o.tasks.IsTicket==false ).Select(i=>i.tasks.id).ToList();
+                 
 
-                list = db.tagging.Where(p => p.project.id == pid).Select(o => o.users).ToList();
+                list = db.tagging.Where(p => p.project.id == pid && tasks.Contains(p.tasks.id)).Select(o => o.users).ToList();
                 foreach (var entity in list)
                 {
                     foreach (var ent in entity)

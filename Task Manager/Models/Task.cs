@@ -36,6 +36,8 @@ namespace Task_Manager.Models
         public DateTime closingDate { get; set; }
         public string completeNote { get; set; }
         public DateTime completeDate { get; set; }
+        public virtual Users completingUser {get;set;}
+        public virtual Users closingUser { get; set; }
     }
 
 

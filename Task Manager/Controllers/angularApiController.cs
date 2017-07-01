@@ -14,7 +14,7 @@ namespace Task_Manager.Controllers
     public class angularApiController : ApiController
     {
         TaskContext db = new TaskContext();
-
+        
         [HttpGet]
         public updateTaskReturning get()
         {
@@ -71,21 +71,33 @@ namespace Task_Manager.Controllers
         [HttpDelete]
         public void statusoftask(status stat)
         {
-           var task= db.task.Find(stat.user);
+        
+            var task= db.task.Find(stat.user);
            task.status = stat.value;
             if(stat.note!="")
             { 
+            var Session = HttpContext.Current.Session;
+        int userId = Convert.ToInt32(Session["UserID"]);
+                
                 if(stat.value==3)
                 {
                     task.completeNote = stat.note;
                     task.completeDate = DateTime.Now;
+                task.completingUser=db.user.Find(userId);
                 }
                 else
                 {
                     task.note = stat.note;
                     task.closingDate = DateTime.Now;
+                    task.closingUser = db.user.Find(userId);
                 }
+                
           
+            }
+            else
+            {
+                task.completingUser =null;
+                task.closingUser = null;
             }
                 db.SaveChanges();
         

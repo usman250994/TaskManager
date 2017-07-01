@@ -63,7 +63,18 @@ namespace Task_Manager.Controllers
             }
 
             var users = db.tagging.Where(p => p.tasks.id == id).Select(p => p.users.Select(q => q.user_Name).ToList()).FirstOrDefault();
-            returnTo.taggedUsers = users;
+            var tagged = "";
+            foreach(var entity in users)
+            {
+
+                tagged = tagged+", "+entity;
+            }
+            if(tagged.Length>1)
+            {
+                tagged = tagged.Remove(0, 1);
+            }
+          
+            returnTo.taggedUsers = tagged;
             returnTo.responseList = listRes;
             returnTo.task_no = objTask.ticket_code;
             returnTo.task_name = objTask.task_name;
@@ -79,10 +90,37 @@ namespace Task_Manager.Controllers
             returnTo.assigned = users.ToString();
             returnTo.createdby = objTask.Created_By.user_Name;
             returnTo.projectname = db.project.Where(p => p.id == projid).Select(p => p.Project_Name).FirstOrDefault();
-            returnTo.closingDate = objTask.closingDate.Date.ToShortDateString();
-            returnTo.completeDate = objTask.completeDate.Date.ToShortDateString();
+
+            if (objTask.closingUser != null)
+            {
+           
+                
+                returnTo.closingDate = objTask.closingDate.Date.ToShortDateString();
+                returnTo.closingUser = objTask.closingUser.user_Name;
             returnTo.closingNote=objTask.note;
-            returnTo.completeNote=objTask.completeNote;
+            }
+            else
+            {
+                returnTo.closingNote = "--";
+                returnTo.closingUser = "--";
+                returnTo.closingDate = "--";
+            }
+      if(objTask.completingUser != null)
+      {
+          returnTo.completeNote = objTask.completeNote;
+          returnTo.completeDate = objTask.completeDate.Date.ToShortDateString();
+          returnTo.completingUser = objTask.completingUser.user_Name;
+      }
+            else
+            {
+                returnTo.completeDate = "--";
+
+                returnTo.completeNote = "--";
+
+                returnTo.completingUser = "--";
+          
+            }
+
 
             return returnTo;
         }

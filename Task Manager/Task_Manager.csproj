@@ -225,6 +225,10 @@
     <Compile Include="Migrations\201706301232292_usman3.Designer.cs">
       <DependentUpon>201706301232292_usman3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707010745497_closingCompletingUsers.cs" />
+    <Compile Include="Migrations\201707010745497_closingCompletingUsers.Designer.cs">
+      <DependentUpon>201707010745497_closingCompletingUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
@@ -527,6 +531,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706301232292_usman3.resx">
       <DependentUpon>201706301232292_usman3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707010745497_closingCompletingUsers.resx">
+      <DependentUpon>201707010745497_closingCompletingUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,264 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Theme CSS/bootstrap-3.3.2.min.css" rel="stylesheet" />
+<script src="~/Scripts/Theme JS/jquery.min.js"></script>
+<script src="~/Scripts/Theme JS/bootstrap.min.js"></script>
+
+
+
+<header>
+    <h1>Task <span>Management System</span></h1>
+    <nav class="codrops-demos">
+        <span>Click <strong>"Login"</strong> to see the Today Task</span>
+    </nav>
+</header>
+<section>
+    <div id="container">
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                <div id="wrapper">
+                    <div id="login" class="animate form">
+                        <h1>Log in</h1>
+                        <p>
+                            <label class="uname"> Your Email</label>
+                            <input id="username" name="username" type="text" placeholder="example@gmail.com" required="required" />
+                        </p>
+                        <p>
+                            <label class="youpasswd"> Your Password </label>
+                            <input id="password" type="password" onkeypress="if (event.keyCode == 13) { Login() }" />
+                        </p>
+                        <p class="login button">
+                            <button class="btn_login" onclick="Login()">LOGIN</button>
+                        </p>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-6">
+                <div id="wrapper">
+                    <div id="login" class="animate form">
+                        <h1>Tickets</h1>
+                        <p>
+                            <label class="uname"> Customer Code/Ticket ID</label>
+                            <input class="" type="number" id="customerCode" placeholder="Your ID" onfocusout="DDL(this.value)">
+                        </p>
+                        <p class="login button">
+
+                            <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal">Create Ticket</button>
+                            <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal1" onclick="checkStatus()">Check Status</button>
+                        </p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</section>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title center">Ticket Generator</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Complains
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Name</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" id="user_name">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
+                                    <div class="col-lg-6 ">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" id="Email">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
+                                    <div class="col-lg-6">
+                                        <label>Mobile Number</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <div class="col-lg-2"><label class="abc">+92</label></div>
+                                        <div class="col-lg-10"><input class="form-control" type="number" id="MobileNo" placeholder="3001234567" required="required"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
+                                    <div class="col-lg-6 ">
+                                        <label>Customer Code</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="number" id="custcode" placeholder="12345" onfocusout="DDL(this.value)">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
+                                    <div class="col-lg-6">
+                                        <label>Project Name</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <select id="ProjectDropdown" class="ddlproject"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
+                                    <div class="col-lg-6 ">
+                                        <label>Location / Branch code</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" id="branchcode">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing" style="padding-top:5px;">
+                                    <div class="col-lg-6">
+                                        <label>Description</label>
+                                    </div>
+                                    <div class="col-lg-6" style="padding-top:5px;">
+                                        <textarea class="form-control" type="text" id="Desc" cols="22" rows="2" style="margin-bottom:5px;"> </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-offset-6 col-lg-6 spacing">
+                                    <button class="btn btn-success" value="Add" onclick="Add()"> Send </button>
+                                </div>
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                            <!-- /.col-lg-6 (nested) -->
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.ajax({
+            async: false,
+            url: '/api/HomeApi/',
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                dropDown = data;
+            },
+            error: function () { alert('Data Not Showing'); }
+        });
+    });
+
+    function Login() {
+        var model = { user_Name: $("#username").val(), password: $("#password").val() };
+        console.log(model);
+        $.ajax({
+            async: false,
+            url: '/api/HomeApi/',
+            type: 'POST',
+            data: model,
+            dataType: "json",
+            success: function (data) {
+                if (data == "Authenticated") { window.location.href = ' /Dashboard/'; }
+                else { alert(data); }
+            },
+            error: function (xhr) {
+                alert("Ajax Call Failed");
+            }
+        });
+    }
+
+
+    function Add() {
+        var uname = document.getElementById("user_name").value.trim();
+        var email = document.getElementById("Email").value.trim();
+        var pnum = document.getElementById("MobileNo").value.trim();
+        var code = document.getElementById("custcode").value.trim();
+        var project = document.getElementById("ProjectDropdown").value.trim();
+        var issue = document.getElementById("Desc").value.trim();
+        if (uname == "") { alert("Please enter User Name"); }
+        else if (validateEmail(email) == false) { alert("Please enter Email"); }
+        else if (pnum == "" || pnum.length != 10) { alert("Please enter Mobile Number"); }
+        else if (code == "") { alert("Please enter Customer Code"); }
+        else if (issue == "") { alert("Please Enter the issue"); }
+        else
+        {
+            var model = { name: $("#user_name").val(), email: $("#Email").val(), contact: $("#MobileNo").val(), customerId: $("#custcode").val(), projectId: $("#ProjectDropdown").val(), issue: $("#Desc").val(), branch_code: $("#branchcode").val() };
+            console.log(model);
+            $.ajax({
+                async: false,
+                url: '/api/HomeApi/',
+                type: 'PUT',
+                data: JSON.stringify(model),
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    alert(data);
+                    location.reload();
+                },
+                error: function () {
+                    alert(data);
+                }
+            });
+        }
+    }
+
+    function DDL(val) {
+        var xyz = $('#ProjectDropdown');
+        xyz.empty();
+        for (var i = 0; i < dropDown.length; i++) {
+            if (dropDown[i].customerId == val) {
+         
+                for (var j = 0; j < dropDown[i].projects.length; j++) {
+                    $('#ProjectDropdown').append($('<option></option>').val(dropDown[i].projects[j].id).html(dropDown[i].projects[j].name));
+                }
+
+            }
+        }
+    }
+
+    function checkStatus() {
+        var model = { customerId: $("#customerCode").val() };
+        $.ajax({
+            async: false,
+            url: '/api/HomeApi/',
+            type: 'DELETE',
+            data: JSON.stringify(model),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                window.location.href = '/CheckStatus/Index';
+                //for (var i = 0; i < data.length; i++) {
+                //    $("#dynamic-Grid").append("<tr><td>" + data[i].id + "</td><td>" + data[i].name + "</td><td>" + data[i].description + "</td><td>" + data[i].date.substring(0, 10) + "</td><td>" + data[i].status);
+                //}
+                //$('#myModal').on('hide', function (e) {
+                //    e.preventDefault();
+                //});
+            },
+            error: function () {
+                alert(data);
+            }
+        });
+    }
+
+</script>

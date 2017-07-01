@@ -1,0 +1,278 @@
+﻿@{
+    ViewBag.Title = "ViewTicket";
+    if (ViewData["id"].ToString() == "1")
+    {
+        Layout = "~/Views/Shared/_Home.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "2")
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "3")
+    {
+        Layout = "~/Views/Shared/Normal.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/CSR.cshtml";
+    }
+}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Ticket Detail</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Ticket Detail
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-exampletick">
+                        <thead>
+                            <tr>
+                                <th>Ticket Number</th>
+                                <th>Customer Code</th>
+                                <th>Customer Name</th>
+                                <th>Ticket Name(POC)</th>
+                                <th>Description</th>
+                                <th>Branch Code/ Location</th>
+                                <th>Assigned To</th>
+                                <th>Created By</th>    
+                                <th>Last Updated</th>                            
+                                <th>SMS</th>
+                                <th>Email</th>                                
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                       
+                    </table>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+        <!-- /.row -->
+    </div>
+</div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title center " id="noteHeading"></h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>Add Note</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        ​<textarea id="note" rows="4" cols="30"></textarea>
+                                    </div>
+                                    <div class="col-lg-offset-6 col-lg-6 spacing">
+                                        <button class="btn btn-success" value="Add" onclick="addNote()"> Save </button>
+                                    </div>
+                                    <!-- /.panel -->
+                                </div>
+                                <!-- /.col-lg-12 -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type=text/javascript>
+    function status(value, user) {
+        var model = { value: value, user: user };
+        $.ajax({
+            async: false,
+            url: '/api/TaskApi/',
+            type: 'PUT',
+            data: model,
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () { alert('Grid Not Load'); }
+        });
+    }
+    $(document).ready(function () {
+        $.ajax({
+            async: false,
+            url: '/api/TicketApi/',
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                filltable(data);
+            },
+            error: function () {
+
+                alert('Grid Not Load');
+
+            }
+        });
+    });
+    function DeleteTask(id, rId) {
+        if (confirm('Are You Sure ! You Want to Delete This Ticket')) {
+            $.ajax({
+                url: '/api/TicketApi/' + id,
+                type: 'Delete',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert(data);
+
+                    $('table#dataTables-example tr#' + rId).remove();
+                    location.reload();
+                },
+                error: function (data) { alert(data); }
+            });
+        }
+    }
+    function UpdateTask(id) {
+        $.ajax({
+            async: false,
+            url: '/api/TicketApi/' + id,
+            type: 'PUT',
+            success: function (data) {
+                window.location.href = '/Ticket/CreateTicket';
+            },
+            error: function () {
+                alert(data);
+            }
+        });
+    }
+    function comments(id) {
+
+        sessionStorage.setItem('task', "No");
+      
+
+        console.log(id);
+        $.ajax({
+            async: false,
+            url: '/api/messageApi/' + id,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                window.location.href = '/message/ViewMessage';
+            },
+            error: function () { console.log("Code Not Ok!"); }
+        });
+    }
+    function status(val, id) {
+
+
+        if (val == 4 || val == 3) {
+            sessionStorage.setItem('val', val);
+            sessionStorage.setItem('id', id);
+            //open modal here
+            $('#myModal').modal('toggle');
+
+            if (val == 4)
+            {
+                document.getElementById("noteHeading").innerText="Closing Note";
+            }
+            else
+            {
+                document.getElementById("noteHeading").innerText="Completion Note";
+            }
+            return;
+        }
+
+        else {
+            var model = { value: sessionStorage.getItem('val'), user: sessionStorage.getItem('id'), note: notes };
+
+            var model = { value: val, user: id };
+            $.ajax({
+                async: true,
+                url: '/api/angularApi/',
+                type: 'DELETE',
+                data: JSON.stringify(model),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    console.log("success");
+                },
+                error: function () { console.log("Code Not Ok!"); }
+            });
+        }
+    }
+
+
+
+    function addNote() {
+        var notes = document.getElementById("note").value;
+        if (notes == null || notes == "") {
+            alert("Please enter note to save");
+            return;
+        }
+        var model = { value: sessionStorage.getItem('val'), user: sessionStorage.getItem('id'), note: notes };
+        $.ajax({
+            async: true,
+            url: '/api/angularApi/',
+            type: 'DELETE',
+            data: JSON.stringify(model),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+
+                $('#myModal').modal('toggle');
+                //empty the text are with id note 
+            },
+            error: function () { console.log("Code Not Ok!"); }
+        });
+
+
+    }
+
+
+    function filltable(datas) {
+
+        $("#dataTables-exampletick").DataTable({
+            "aaData": datas,
+            "bAutoWidth": false,
+            "sPaginationType": "full_numbers",
+            "aoColumns": [
+                { "mDataProp": "ticket_name" },
+                 { "mDataProp": "cCode" },
+                  { "mDataProp": "cName" },
+                { "mDataProp": "task_name" },
+                { "mDataProp": "description" },
+                { "mDataProp": "bran_Code" },
+                { "mDataProp": "users" },
+                { "mDataProp": "createdBy" },
+                { "mDataProp": "lastModify" },
+                { "mDataProp": "sms" },
+                { "mDataProp": "email" },
+                { "mDataProp": "status" },
+                { "mDataProp": "button" }
+
+
+
+            ]
+        });
+
+    }
+
+</script>
