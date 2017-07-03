@@ -73,6 +73,7 @@ E:\Visual Studio\Projects\Task Manager\Task Manager\bin\zh-Hant\System.Spatial.r
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.usman2.resources
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.usman3.resources
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.closingCompletingUsers.resources
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.FilesCreatedBy.resources
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csproj.GenerateResource.Cache
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.dll
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.pdb

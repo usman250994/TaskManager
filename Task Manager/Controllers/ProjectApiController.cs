@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -99,7 +100,11 @@ namespace Task_Manager.Controllers
                 {
                     if (db.SaveChanges() > 0)
                     {
+                        //int xyz = proj.id;
+                        //var mappedPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Files/" + xyz + "/");
+                        //Directory.CreateDirectory(mappedPath);
                         return "Done";
+                        
                     }
                     else
                     {
@@ -192,7 +197,7 @@ namespace Task_Manager.Controllers
             foreach (var entity in Proj)
             {
                 ProjectGrid toAdd = new ProjectGrid();
-               // toAdd.id = entity.id;
+                // toAdd.id = entity.id;
                 toAdd.projectName = entity.Project_Name;
                 toAdd.startDate = entity.Start_Date.Date;
                 toAdd.endDate = entity.End_Date.Date;

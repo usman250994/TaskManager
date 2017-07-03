@@ -21,7 +21,15 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Task Assigned</h1>
+            <h1 class="page-header">Task Detail</h1>
+            <div align="center">
+                <button class="btn" onclick="viewAll()">All</button>
+                <button class="btn btn-info" onclick="statusWiseSort(0)">Un Assigned</button>
+                <button class="btn btn-primary" onclick="statusWiseSort(1)">Pending</button>
+                <button class="btn btn-success" onclick="statusWiseSort(2)">In Progress</button>
+                <button class="btn btn-warning" onclick="statusWiseSort(3)">Complete</button>
+                <button class="btn btn-danger" onclick="statusWiseSort(4)">Close</button>
+            </div>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -34,7 +42,7 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-exam">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-exam" style="width: 100%!important">
                         <thead>
                             <tr>
                                 <th>Task Name</th>
@@ -81,23 +89,23 @@
                                         <label>Add Note</label>
                                     </div>
                                     <div class="col-lg-6 ">
-                                        ​<textarea id="note" rows="4" cols="30" ></textarea>
+                                        ​<textarea id="note" rows="4" cols="30"></textarea>
                                     </div>
                                     <div class="col-lg-offset-6 col-lg-6 spacing">
                                         <button class="btn btn-success" value="Add" onclick="addNote()"> Save </button>
                                     </div>
-                        <!-- /.panel -->
+                                    <!-- /.panel -->
+                                </div>
+                                <!-- /.col-lg-12 -->
+                            </div>
+                        </div>
+
                     </div>
-                    <!-- /.col-lg-12 -->
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-            </div>
-            </div>
-    </div>
 <script type=text/javascript>
     function status(value, user) {
         var model = { value: value, user: user };
@@ -139,6 +147,8 @@
     });
     function filltable(datas) {
         $("#dataTables-exam").DataTable({
+            "bDestroy": true,
+            "aaSorting": [[6,'desc']],
             "aaData": datas,
             "aoColumns": [
                 { "mDataProp": "task_name" },
@@ -160,7 +170,25 @@
 
     }
 
+    function statusWiseSort(id) {
 
+        $.ajax({
+            async: false,
+            url: '/api/taskSortingApi/' + id,
+            type: 'PUT',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                filltable(data);
+            },
+            error: function () {
+
+                alert('Grid Not Load');
+
+            }
+        });
+    }
 
     function DeleteTask(id, rId) {
         if (confirm('Are You Sure! You Want to Delete This Task')) {
@@ -195,18 +223,16 @@
 
 
     function status(val, id) {
-        if (val == 4 || val==3) {
+        if (val == 4 || val == 3) {
             sessionStorage.setItem('val', val);
             sessionStorage.setItem('id', id);
             //open modal here
             $('#myModal').modal('toggle');
 
-            if (val == 4)
-            {
-                document.getElementById("noteHeading").innerText="Closing Note";
+            if (val == 4) {
+                document.getElementById("noteHeading").innerText = "Closing Note";
             }
-            else
-            {
+            else {
                 document.getElementById("noteHeading").innerText = "Completion Note";
             }
             return;
@@ -228,11 +254,9 @@
         }
     }
 
-    function addNote()
-    {   
+    function addNote() {
         var notes = document.getElementById("note").value;
-        if (notes ==null || notes=="")
-        {
+        if (notes == null || notes == "") {
             alert("Please enter note to save");
             return;
         }
@@ -244,9 +268,9 @@
             data: JSON.stringify(model),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                
+
                 $('#myModal').modal('toggle');
-                //empty the text are with id note 
+                //empty the text are with id note
             },
             error: function () { console.log("Code Not Ok!"); }
         });
@@ -257,7 +281,7 @@
     function comments(id) {
 
         sessionStorage.setItem('task', "Yes");
-     
+
         console.log(id);
         $.ajax({
             async: false,
@@ -270,5 +294,20 @@
             error: function () { console.log("Code Not Ok!"); }
         });
     }
-
+    function viewAll() {
+        $.ajax({
+            async: false,
+            url: '/api/TaskApi/',
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                filltable(data);
+            },
+            error: function () {
+                alert('Grid Not Load');
+            }
+        });
+    }
 </script>

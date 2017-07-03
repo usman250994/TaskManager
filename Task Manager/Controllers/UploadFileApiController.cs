@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,7 +21,7 @@ namespace Task_Manager.Controllers
             var httpRequest = HttpContext.Current.Request;
             if (httpRequest.Files.Count > 0)
             {
-                 var sessionId = HttpContext.Current.Session;
+                var sessionId = HttpContext.Current.Session;
                 int name = 0;
                 String nam = "";
                 var docfiles = new List<string>();
@@ -28,26 +29,29 @@ namespace Task_Manager.Controllers
                 {
                     var postedFile = httpRequest.Files[file];
 
-                    if(sessionId["project"].ToString()!=null)
+                    if (sessionId["project"].ToString() != null)
                     {
-                     nam = db.files.OrderByDescending(p => p.id).FirstOrDefault().fileName;
-                    var filePath = HttpContext.Current.Server.MapPath(nam);
+                      
 
-                    postedFile.SaveAs(filePath);
-                    docfiles.Add(filePath);
-                    break;
+
+                        nam = db.files.OrderByDescending(p => p.id).FirstOrDefault().fileName;
+                        
+                        var filePath = HttpContext.Current.Server.MapPath(nam);
+                        postedFile.SaveAs(filePath);
+                        docfiles.Add(filePath);
+                        break;
                     }
                     else
                     {
-                    name = db.product.OrderByDescending(p => p.id).FirstOrDefault().id;
-                    var filePath = HttpContext.Current.Server.MapPath("~/Files/" + name + ".jpg");
+                        name = db.product.OrderByDescending(p => p.id).FirstOrDefault().id;
+                        var filePath = HttpContext.Current.Server.MapPath("~/Files/" + name + ".jpg");
 
-                    postedFile.SaveAs(filePath);
-                    docfiles.Add(filePath);
-                    break;
+                        postedFile.SaveAs(filePath);
+                        docfiles.Add(filePath);
+                        break;
                     }
-                    
-                  
+
+
                 }
                 result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
             }
@@ -56,7 +60,7 @@ namespace Task_Manager.Controllers
                 result = Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
-    
-        
+
+
     }
 }

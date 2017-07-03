@@ -206,6 +206,7 @@
     <Compile Include="Controllers\projectupdateController.cs" />
     <Compile Include="Controllers\TaskApiController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\taskSortingApiController.cs" />
     <Compile Include="Controllers\TicketApiController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\UploadFileApiController.cs" />
@@ -228,6 +229,10 @@
     <Compile Include="Migrations\201707010745497_closingCompletingUsers.cs" />
     <Compile Include="Migrations\201707010745497_closingCompletingUsers.Designer.cs">
       <DependentUpon>201707010745497_closingCompletingUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707030739285_FilesCreatedBy.cs" />
+    <Compile Include="Migrations\201707030739285_FilesCreatedBy.Designer.cs">
+      <DependentUpon>201707030739285_FilesCreatedBy.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -517,6 +522,7 @@
     <Content Include="Views\Inventory\ViewInventoryDetail.cshtml" />
     <Content Include="Views\Project\ProjectFileUpload.cshtml" />
     <Content Include="Views\UserProfile\Index.cshtml" />
+    <Content Include="Views\Shared\Nonuser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -533,6 +539,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707010745497_closingCompletingUsers.resx">
       <DependentUpon>201707010745497_closingCompletingUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707030739285_FilesCreatedBy.resx">
+      <DependentUpon>201707030739285_FilesCreatedBy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

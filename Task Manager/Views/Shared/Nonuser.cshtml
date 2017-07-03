@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Task Management System</title>
+
+    <link href="~/Content/Theme CSS/font-awesome.css" rel="stylesheet" />
+
+    <link href="~/Content/Theme CSS/bootstrap.min.css" rel="stylesheet" />
+    <!-- MetisMenu CSS -->
+    <link href="../Content/Theme CSS/metisMenu.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="~/Content/Theme CSS/sb-admin-2.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="../Content/Theme CSS/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/select2.css" rel="stylesheet" />
+    <link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
+    <link href="../Content/Theme CSS/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../Content/Theme CSS/dataTables.responsive.css" rel="stylesheet" type="text/css">
+    <script src="~/Scripts/Theme JS/jquery.min.js"></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">Ticket Detail </a>
+        </div>
+    </nav>
+    @RenderBody()
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../Scripts/Theme JS/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../Scripts/Theme JS/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Scripts/Theme JS/sb-admin-2.js"></script>
+    <script src="~/Scripts/Theme JS/dataTables.responsive.js"></script>
+    <script src="~/Scripts/Theme JS/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/Theme JS/jquery.dataTables.js"></script>
+    <script src="~/Scripts/Theme JS/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+</body>
+</html>

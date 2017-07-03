@@ -15,6 +15,7 @@ namespace Task_Manager.viewModels
         public DateTime end_date { get; set; }
         public DateTime created_on { get; set; }
         public DateTime modified { get; set; }
+        public string ticketCode { get; set; }
         public bool sms { get; set; }
         public bool email { get; set; }
         public int status { get; set; }

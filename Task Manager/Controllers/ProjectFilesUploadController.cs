@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
+using System.IO;
 using System.Web.Http;
 using Task_Manager.Models;
 using Task_Manager.viewModels;
@@ -21,20 +22,33 @@ namespace Task_Manager.Controllers
             var sessionId = HttpContext.Current.Session;
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
             string filecode = file.fileCode.ToString();
-            string uid = sessionId["UserID"].ToString(); //userid
-            var createdUser = db.user.Find(Convert.ToInt32(uid));
+            int uid = Convert.ToInt32(sessionId["UserID"]); //userid
+            string subPath ="ImagesPath"; // your code goes here
+
+
+
             Files addFile = new Files();
+            addFile.createdBy = db.user.Find(uid);
             addFile.filetype = file.fileCode;
-            addFile.createdOn = DateTime.Now;
-          //  string Date = DateTime.Now.Date.Day.ToString() + DateTime.Now.Date.Month.ToString() + DateTime.Now.Date.Year.ToString();
+            addFile.createdOn = DateTime.Now;  
             db.files.Add(addFile);
             if (db.SaveChanges() > 0)
             {
                 var id = addFile.id;
                 addFile.fileCode = pid + filecode + id ;
-                addFile.fileName = "/Files/" + pid + filecode + id  + "." + file.fileName.Split('.')[1];
-                //   sessionId["project"] = "1";
-                //  addFile.fileName = "/Image/" + id;
+                       var projectName = db.project.Find(pid).Project_Name;
+
+                       var path = AppDomain.CurrentDomain.BaseDirectory +"files\\"+ projectName;
+              
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                addFile.fileName = path + pid + filecode + id + "." + file.fileName.Split('.')[1];
+                
+
+
                 db.SaveChanges();
 
 
@@ -54,6 +68,7 @@ namespace Task_Manager.Controllers
         {
             var sessionId = HttpContext.Current.Session;
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
+             int uid = Convert.ToInt32(sessionId["UserID"]); //userid
             Names name = new Names();
             name.pname = db.project.Where(p => p.id == pid).Select(p => p.Project_Name ).FirstOrDefault();
             name.cname = db.project.Where(p => p.id == pid).Select(p => p.customer.customer_name ).FirstOrDefault();
@@ -112,6 +127,7 @@ namespace Task_Manager.Controllers
                     FilesTab files = new FilesTab();
                     files.fileCode = entity.fileCode;
                     files.file_type_name = db.filetype.Where(s => s.Filecode == entity.filetype).Select(s => s.Filename).FirstOrDefault();
+                    files.uploaded_user = db.user.Where(p => p.id == uid).Select(p => p.user_Name).FirstOrDefault();
                     files.uploaded_date = entity.createdOn.Date.ToShortDateString();
                     files.uploaded_time = entity.createdOn.ToShortTimeString();
                     files.Download = "<a id='" + entity.id + "' href=" + entity.fileName + " download=" + entity.id + "><p> Download</p></a>";

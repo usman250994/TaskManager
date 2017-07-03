@@ -8,6 +8,7 @@ namespace Task_Manager.viewModels
     public class taskupdate
     {
         public string taskname { get; set; }
+        public string ticketCode { get; set; }
         public int id { get; set; }
         public int cid { get; set; }
         public int pid { get; set; }

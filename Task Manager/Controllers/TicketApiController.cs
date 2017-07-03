@@ -68,6 +68,7 @@ namespace Task_Manager.Controllers
                 returning.projectId = pid;
                 taskupdate taskUpd = new taskupdate();
                 taskUpd.id = returning.task.id;
+                taskUpd.ticketCode = returning.task.ticket_code;
                 taskUpd.taskname = returning.task.task_name;
                 taskUpd.cid = returning.customerId;
                 taskUpd.pid = returning.projectId;
@@ -136,6 +137,8 @@ namespace Task_Manager.Controllers
                 temptask.created_on = taskdetail.created_on;
                 temptask.sdate = taskdetail.start_date;
                 temptask.edate = taskdetail.end_date;
+                temptask.ticketCode = taskdetail.ticket_code;
+                
                 db.Entry(taskdetail).CurrentValues.SetValues(setTask(temptask));
 
                 //updating project
@@ -205,8 +208,8 @@ namespace Task_Manager.Controllers
             task.LastModify = tempTask.Modified;
             task.closingDate = DateTime.Now;
             task.completeDate = DateTime.Now;
-            task.completeDate = DateTime.Now;
-            task.closingDate = DateTime.Now;
+            //task.completeDate = DateTime.Now;
+            //task.closingDate = DateTime.Now;
 
 
             if (tempTask.assignedTo.Count == 0)
@@ -220,12 +223,19 @@ namespace Task_Manager.Controllers
             task.sms = tempTask.sms;
             task.email = tempTask.email;
             task.id = tempTask.id;
+            if (tempTask.id == 0)
+            {
 
-            var code = db.project.Where(p => p.id == tempTask.projectId).Select(o => o.customer.city_code).FirstOrDefault();
+                var code = db.project.Where(p => p.id == tempTask.projectId).Select(o => o.customer.city_code).FirstOrDefault();
 
-            code=code.Substring(2,4);
-            task.ticket_code = db.task.Count()+code;
-            return task;
+                code = code.Substring(2, 4);
+                task.ticket_code = db.task.Count() + code;
+            }
+            else
+            {
+                task.ticket_code = tempTask.ticketCode;
+            }
+                return task;
         }
 
         //change return to a view model
@@ -540,6 +550,6 @@ namespace Task_Manager.Controllers
 
         }
 
-
+    
     }
 }

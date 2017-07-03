@@ -12,6 +12,7 @@ namespace Task_Manager.Models
         public string fileCode { get; set; }
         public String filetype { get; set; }
         public DateTime createdOn { get; set; }
+        public virtual Users createdBy { get; set; }
       
     }
 }

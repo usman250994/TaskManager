@@ -348,6 +348,7 @@ namespace Task_Manager.Controllers
 
                 var taskdetail = db.task.Find(temp.id);
                 temptask.created_on = taskdetail.created_on;
+                temptask.ticketCode = taskdetail.ticket_code;
                 db.Entry(taskdetail).CurrentValues.SetValues(setTask(temptask));
                 //updating project
                 var tagging = db.tagging.Where(p => p.tasks.id == temptask.id).FirstOrDefault();
@@ -425,14 +426,19 @@ namespace Task_Manager.Controllers
             task.email = tempTask.email;
             task.id = tempTask.id;
 
+            if (tempTask.id == 0)
+            {
+                var code = db.project.Where(p => p.id == tempTask.projectId).Select(o => o.customer.city_code).FirstOrDefault();
 
-            var code = db.project.Where(p => p.id == tempTask.projectId).Select(o => o.customer.city_code).FirstOrDefault();
+                code = code.Substring(2, 4);
+                task.ticket_code = db.task.Count() + code;
+            }
+            else
+            {
+                task.ticket_code = tempTask.ticketCode;
 
-            code = code.Substring(2, 4);
-            task.ticket_code = db.task.Count() + code;
-
-
-            return task;
+            }
+                return task;
         }
 
         //change return to a view model
