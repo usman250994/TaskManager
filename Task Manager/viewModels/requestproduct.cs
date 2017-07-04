@@ -18,6 +18,7 @@ namespace Task_Manager.viewModels
     public string  vendorName {get; set;}
     public DateTime inwarddate { get; set; }
     public string imagepath { get; set; }
+    public string partno { get; set; }
          
     
     

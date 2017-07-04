@@ -18,6 +18,7 @@ namespace Task_Manager.viewModels
         public string barcode { get; set; }
         public string vendorName { get; set; }
         public string action { get; set;}
+        public string partNo { get; set; }
         public DateTime inward { get; set; }
     }
 }

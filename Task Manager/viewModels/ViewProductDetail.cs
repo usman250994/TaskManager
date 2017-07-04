@@ -12,6 +12,7 @@ namespace Task_Manager.viewModels
         public string Catogrey { get; set; }
         public string brand { get; set; }
         public string model { get; set; }
+        public string partno { get; set; }
         public string barcode { get; set; }
         public DateTime inward_date { get; set; }
         public string description { get; set; }

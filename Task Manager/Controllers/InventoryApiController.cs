@@ -42,6 +42,7 @@ namespace Task_Manager.Controllers
             pro.inward_date = prod.inwarddate;
             pro.created_on = DateTime.Now;
             pro.description = prod.description;
+            pro.partNo = prod.partno;
 
 
             pro.id = 0;
@@ -67,6 +68,8 @@ namespace Task_Manager.Controllers
                     pro.image = "/Images/" + id + ".jpg";
                 }
                 db.SaveChanges();
+                var sessionId = HttpContext.Current.Session;
+                sessionId["project"] = null;
                 return "Product Detail Added";
             }
 
@@ -77,9 +80,6 @@ namespace Task_Manager.Controllers
         public List<responseInventory> list()
         {
             List<responseInventory> res = new List<responseInventory>();
-
-
-
             var prod = db.product.Where(p => p.enable == true).ToList();
             foreach (var entity in prod)
             {
@@ -102,6 +102,7 @@ namespace Task_Manager.Controllers
                 //  respon.type = entity.islocal;
                 respon.vendorName = entity.vendor_name;
                 respon.model = entity.model;
+                respon.partNo = entity.partNo;
                 respon.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + entity.id + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + entity.id + ")'/> <button  style= margin-right: 5px;   class='btn btn-Primary  fa fa-eye' onclick='Detailproduct(" + entity.id + ")'/>";
                 res.Add(respon);
             }
@@ -118,7 +119,8 @@ namespace Task_Manager.Controllers
         [HttpGet]
         public ViewProductDetail DetailProduct(int id)
         {
-            string type, catogrey;
+            
+            string type;
             var Session = HttpContext.Current.Session;
             string abc = Session["Product_id"].ToString();
             ViewProductDetail view = new ViewProductDetail();
@@ -134,7 +136,7 @@ namespace Task_Manager.Controllers
                 type = "Imported";
             }
             view.type = type;
-            view.Catogrey = prod.category.ToString();
+            view.Catogrey = prod.category.name;
             view.brand = prod.brand;
             view.model = prod.model;
             view.barcode = prod.barcode;
@@ -143,6 +145,7 @@ namespace Task_Manager.Controllers
             view.quantity = prod.quantity;
             view.vendor_name = prod.vendor_name;
             view.img_path = prod.image;
+            view.partno = prod.partNo;
             return view;
         }
     }

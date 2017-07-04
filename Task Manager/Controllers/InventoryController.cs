@@ -55,7 +55,13 @@ namespace Task_Manager.Controllers
         }
         public ActionResult ViewInventoryDetail()
         {
+            if (Session["role_id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var roles_Id = Session["role_id"].ToString();
+            string userName = Session["username"].ToString();
+            ViewData["userName"] = userName;
             Session["task_id"] = null;
             if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
             {

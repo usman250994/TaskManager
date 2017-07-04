@@ -234,6 +234,10 @@
     <Compile Include="Migrations\201707030739285_FilesCreatedBy.Designer.cs">
       <DependentUpon>201707030739285_FilesCreatedBy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707040806181_partno.cs" />
+    <Compile Include="Migrations\201707040806181_partno.Designer.cs">
+      <DependentUpon>201707040806181_partno.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
@@ -542,6 +546,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707030739285_FilesCreatedBy.resx">
       <DependentUpon>201707030739285_FilesCreatedBy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707040806181_partno.resx">
+      <DependentUpon>201707040806181_partno.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

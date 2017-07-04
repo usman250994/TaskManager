@@ -28,15 +28,10 @@ namespace Task_Manager.Controllers
                 foreach (string file in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[file];
-
-                    if (sessionId["project"].ToString() != null)
+                   
+                    if (sessionId["project"] != null)
                     {
-                      
-
-
-                        nam = db.files.OrderByDescending(p => p.id).FirstOrDefault().fileName;
-                        
-                        var filePath = HttpContext.Current.Server.MapPath(nam);
+                        var filePath = db.files.OrderByDescending(p => p.id).FirstOrDefault().fileName;
                         postedFile.SaveAs(filePath);
                         docfiles.Add(filePath);
                         break;
@@ -44,14 +39,11 @@ namespace Task_Manager.Controllers
                     else
                     {
                         name = db.product.OrderByDescending(p => p.id).FirstOrDefault().id;
-                        var filePath = HttpContext.Current.Server.MapPath("~/Files/" + name + ".jpg");
-
+                        var filePath = HttpContext.Current.Server.MapPath("~/Images/" + name + ".jpg");
                         postedFile.SaveAs(filePath);
                         docfiles.Add(filePath);
                         break;
                     }
-
-
                 }
                 result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
             }
@@ -60,7 +52,5 @@ namespace Task_Manager.Controllers
                 result = Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
-
-
     }
 }

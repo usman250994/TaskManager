@@ -2,8 +2,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/Theme CSS/bootstrap-3.3.2.min.css" rel="stylesheet" />
-<script src="~/Scripts/Theme JS/jquery.min.js"></script>
-<script src="~/Scripts/Theme JS/bootstrap.min.js"></script>
+
+
 
 
 
@@ -228,7 +228,7 @@
         xyz.empty();
         for (var i = 0; i < dropDown.length; i++) {
             if (dropDown[i].customerId == val) {
-         
+
                 for (var j = 0; j < dropDown[i].projects.length; j++) {
                     $('#ProjectDropdown').append($('<option></option>').val(dropDown[i].projects[j].id).html(dropDown[i].projects[j].name));
                 }
@@ -248,12 +248,6 @@
             dataType: "json",
             success: function (data) {
                 window.location.href = '/CheckStatus/Index';
-                //for (var i = 0; i < data.length; i++) {
-                //    $("#dynamic-Grid").append("<tr><td>" + data[i].id + "</td><td>" + data[i].name + "</td><td>" + data[i].description + "</td><td>" + data[i].date.substring(0, 10) + "</td><td>" + data[i].status);
-                //}
-                //$('#myModal').on('hide', function (e) {
-                //    e.preventDefault();
-                //});
             },
             error: function () {
                 alert(data);

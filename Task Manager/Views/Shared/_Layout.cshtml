@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+ 
     <link href="~/Content/demo.css" rel="stylesheet">
     <link href="~/Content/style.css" rel="stylesheet">
 </head>
@@ -14,8 +14,6 @@
         <!-- Codrops top bar -->
         @RenderBody();
       </div>
-    
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
+  
 </body>
 </html>

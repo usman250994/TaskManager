@@ -23,37 +23,28 @@ namespace Task_Manager.Controllers
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
             string filecode = file.fileCode.ToString();
             int uid = Convert.ToInt32(sessionId["UserID"]); //userid
-            string subPath ="ImagesPath"; // your code goes here
+            string subPath = "ImagesPath"; // your code goes here
 
 
 
             Files addFile = new Files();
             addFile.createdBy = db.user.Find(uid);
             addFile.filetype = file.fileCode;
-            addFile.createdOn = DateTime.Now;  
+            addFile.createdOn = DateTime.Now;
             db.files.Add(addFile);
             if (db.SaveChanges() > 0)
             {
                 var id = addFile.id;
-                addFile.fileCode = pid + filecode + id ;
-                       var projectName = db.project.Find(pid).Project_Name;
-
-                       var path = AppDomain.CurrentDomain.BaseDirectory +"files\\"+ projectName;
-              
+                addFile.fileCode = pid + filecode + id;
+                var projectName = db.project.Find(pid).Project_Name;
+                var path = System.Web.Hosting.HostingEnvironment.MapPath("~/Files/" + projectName + "/");
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
                 }
-
                 addFile.fileName = path + pid + filecode + id + "." + file.fileName.Split('.')[1];
-                
-
-
                 db.SaveChanges();
-
-
                 db.project.Find(pid).projectFiles.Add(addFile);
-
                 db.SaveChanges();
                 return "File Saved";
             }
@@ -68,21 +59,19 @@ namespace Task_Manager.Controllers
         {
             var sessionId = HttpContext.Current.Session;
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
-             int uid = Convert.ToInt32(sessionId["UserID"]); //userid
+            int uid = Convert.ToInt32(sessionId["UserID"]); //userid
             Names name = new Names();
-            name.pname = db.project.Where(p => p.id == pid).Select(p => p.Project_Name ).FirstOrDefault();
-            name.cname = db.project.Where(p => p.id == pid).Select(p => p.customer.customer_name ).FirstOrDefault();
-            name.workorder = db.project.Where(p => p.id == pid).Select(p => p.work_order).FirstOrDefault(); 
+            name.pname = db.project.Where(p => p.id == pid).Select(p => p.Project_Name).FirstOrDefault();
+            name.cname = db.project.Where(p => p.id == pid).Select(p => p.customer.customer_name).FirstOrDefault();
+            name.workorder = db.project.Where(p => p.id == pid).Select(p => p.work_order).FirstOrDefault();
             if (id == 0)
             {
                 List<TeamTab> toReturn = new List<TeamTab>();
                 List<int> userPresent = new List<int>();
                 //List<Users> lists = new List<Users>();
                 List<List<Users>> list = new List<List<Users>>();
-             
-                var tasks=db.tagging.Where(o=>o.project.id==pid &&o.tasks.IsTicket==false ).Select(i=>i.tasks.id).ToList();
-                 
 
+                var tasks = db.tagging.Where(o => o.project.id == pid && o.tasks.IsTicket == false).Select(i => i.tasks.id).ToList();
                 list = db.tagging.Where(p => p.project.id == pid && tasks.Contains(p.tasks.id)).Select(o => o.users).ToList();
                 foreach (var entity in list)
                 {
@@ -98,8 +87,8 @@ namespace Task_Manager.Controllers
                             userPresent.Add(ent.id);
                         }
                     }
-                }            
-                return new Object[]{toReturn, name};               
+                }
+                return new Object[] { toReturn, name };
             }
             else if (id == 1)
             {
@@ -115,7 +104,7 @@ namespace Task_Manager.Controllers
                     task.end_Date = entity.end_date.Date.ToShortDateString(); ;
                     toReturn.Add(task);
                 }
-                return new Object[] { toReturn};
+                return new Object[] { toReturn };
             }
             else if (id == 2)
             {
@@ -124,33 +113,38 @@ namespace Task_Manager.Controllers
                 list = db.project.Where(p => p.id == pid).Select(o => o.projectFiles).FirstOrDefault();
                 foreach (var entity in list)
                 {
+                    
                     FilesTab files = new FilesTab();
                     files.fileCode = entity.fileCode;
                     files.file_type_name = db.filetype.Where(s => s.Filecode == entity.filetype).Select(s => s.Filename).FirstOrDefault();
                     files.uploaded_user = db.user.Where(p => p.id == uid).Select(p => p.user_Name).FirstOrDefault();
                     files.uploaded_date = entity.createdOn.Date.ToShortDateString();
                     files.uploaded_time = entity.createdOn.ToShortTimeString();
-                    files.Download = "<a id='" + entity.id + "' href=" + entity.fileName + " download=" + entity.id + "><p> Download</p></a>";
+                    string file = entity.fileName;
+
+                 file=   file.Substring(file.LastIndexOf("Files"));
+                 file = file.Replace(" ", "%20");
+                    files.Download = "<a id='" + entity.id + "' href=" +@"\"+file + " download=" + entity.id + "><p> Download</p></a>";
                     toReturn.Add(files);
                 }
                 return new Object[] { toReturn };
             }
-            else 
+            else
             {
-                List<TicketTab> toReturn = new List<TicketTab>();                
+                List<TicketTab> toReturn = new List<TicketTab>();
                 var list = db.tagging.Where(p => p.project.id == pid && p.tasks.IsTicket == true).Select(o => o.tasks).ToList();
                 foreach (var entity in list)
                 {
                     TicketTab files = new TicketTab();
-                   files.ticket_code=entity.ticket_code.ToString();
-                   files.ticket_Name=entity.task_name;
-                   files.branch=entity.branch_code;
-                   files.description = entity.description;
+                    files.ticket_code = entity.ticket_code.ToString();
+                    files.ticket_Name = entity.task_name;
+                    files.branch = entity.branch_code;
+                    files.description = entity.description;
                     toReturn.Add(files);
                 }
                 return new Object[] { toReturn };
             }
         }
-         
+
     }
 }

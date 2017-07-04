@@ -1,0 +1,332 @@
+﻿@{
+    ViewBag.Title = "ProjectFileUpload";
+    Layout = "~/Views/Shared/_Home.cshtml";
+}
+<link href="~/Content/UploadFile.css" rel="stylesheet" />
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Project  Files</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+        <div class="col-lg-12">
+            <div class="col-lg-4">
+                <h3>Customer Name :<label id="customername"></label></h3>
+            </div>
+            <div class="col-lg-4">
+                <h3>Project Name : <label id="projectname"></label></h3>
+            </div>
+            <div class="col-lg-4">
+                <h3>Work Order : <label id="work"></label></h3>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- /.row -->
+    <div class="container">
+
+
+        <ul class="tabs">
+            <li class="tab-link current" data-tab="tab-1" onclick="call(0)">Team</li>
+            <li class="tab-link " data-tab="tab-2" onclick="call(1)">Task</li>
+            <li class="tab-link" data-tab="tab-3" onclick="call(2)">Files</li>
+            <li class="tab-link" data-tab="tab-4" onclick="call(3)">Ticket</li>
+        </ul>
+        <div id="tab-1" class="tab-content overflow current">
+
+            @************************************* Team ********************************************@
+            <table class="table table-striped table-bordered table-hover" id="dataTables-exampl" style="width:100%!important">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>User Number</th>
+                        <th>User Address</th>
+                    </tr>
+                </thead>
+                <tbody id="dynamic-Grid"></tbody>
+            </table>
+
+
+        </div>
+        @************************************* Task ********************************************@
+        <div id="tab-2" class="tab-content overflow ">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-examp" style="width:100%!important">
+                <thead id="th">
+                    <tr>
+                        <th>Task Id</th>
+                        <th>Task Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody id="dynamic-Grid"></tbody>
+            </table>
+        </div>
+        @************************************* File ********************************************@
+        <div id="tab-3" class="tab-content overflow">
+            <div>
+                <table class="table table-striped table-bordered table-hover" id="dataTables-exam" style="width:100%!important;">
+                    <thead id="th">
+                        <tr>
+                            <th>File Code</th>
+                            <th>Type</th>
+                            <th>Uploaded By</th>
+                            <th>Upload Date</th>
+                            <th>Upload Time</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dynamic-Grid"></tbody>
+                </table>
+            </div>
+        </div>
+        @************************************* Ticket ********************************************@
+        <div id="tab-4" class="tab-content overflow ">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-exa" style="width:100%!important">
+                <thead id="th">
+                    <tr>
+                        <th>Ticket No.</th>
+                        <th>Ticket Name</th>
+                        <th>Branch Code / Location</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody id="dynamic-Grid"></tbody>
+            </table>
+        </div>
+        <div id="uplodbtn">
+            <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal" id="btn" onclick="myFunction()">Upload File</button>
+        </div>
+    </div><!-- container -->
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title center "> File Upload</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6 ">
+                                        <label>File Name</label>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <select id="FileCatogreyDropdown" class="form-control">
+                                            <option value="00">Please Select File Name</option>
+                                            <option value="01">Internal Work Order</option>
+                                            <option value="02">Customer Purchase Order</option>
+                                            <option value="03">Quotation</option>
+                                            <option value="04">Local Purchase Order</option>
+                                            <option value="05">Work Completion</option>
+                                            <option value="06">Progress Report</option>
+                                            <option value="07">Project Budget</option>
+                                            <option value="08">Project Expense</option>
+                                            <option value="09">Project Shedule</option>
+                                            <option value="10">Project Invoice</option>
+                                            <option value="11">Project Material Requisition</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-6">
+                                        <label>File</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <input name="myFile" type="file" id="images" accept=".xls,.xlsx,.docx,.pdf,.jpg,.png" onclick="myFunction()" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 ">
+                                    <div class="col-lg-offset-6 col-lg-6">
+                                        <label style="color:Red" id="noti" class="">
+
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-offset-6 col-lg-6 spacing">
+                                        <button class="btn btn-success" value="Add" onclick="Add()"> Save </button>
+                                    </div>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <!-- /.col-lg-6 (nested) -->
+                                <!-- /.row (nested) -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        document.getElementById("project").style.backgroundColor = "bisque";
+        $('ul.tabs li').click(function () {
+            var tab_id = $(this).attr('data-tab');
+
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
+        })
+        call(0);
+    });
+
+    function call(id) {
+        $.ajax({
+            async: false,
+            url: '/api/ProjectFilesUpload/' + id,
+            type: 'GET',
+            success: function (data) {
+                console.log(data);
+                if (id == 0) {
+                    table = $("#dataTables-exampl").DataTable({
+                        "aaData": data[0],
+                        "bDestroy": true,
+                        "aoColumns": [
+                            { "mDataProp": "Name" },
+                            { "mDataProp": "Number" },
+                            { "mDataProp": "Address" }
+                        ]
+                    });
+
+                    document.getElementById("customername").innerHTML = data[1].cname;
+                    document.getElementById("projectname").innerHTML = data[1].pname;
+                    document.getElementById("work").innerHTML = data[1].workorder;
+                }
+                else if (id == 1) {
+                    $("#dataTables-examp").DataTable({
+                        "aaData": data[0],
+                        "bDestroy": true,
+                        "aoColumns": [
+                            { "mDataProp": "task_No" },
+                            { "mDataProp": "task_Name" },
+                            { "mDataProp": "start_Date" },
+                            { "mDataProp": "end_Date" }
+                        ]
+                    });
+
+                }
+                else if (id == 2) {
+                    $("#dataTables-exam").DataTable({
+                        "aaData": data[0],
+                        "bDestroy": true,
+                        "aoColumns": [
+                            { "mDataProp": "fileCode" },
+                            { "mDataProp": "file_type_name" },
+                            { "mDataProp": "uploaded_user" },
+                            { "mDataProp": "uploaded_date" },
+                            { "mDataProp": "uploaded_time" },
+                            { "mDataProp": "Download" }
+                        ]
+                    });
+
+                }
+                else {
+                    $("#dataTables-exa").DataTable({
+                        "aaData": data[0],
+                        "bDestroy": true,
+                        "aoColumns": [
+                            { "mDataProp": "ticket_code" },
+                            { "mDataProp": "ticket_Name" },
+                            { "mDataProp": "branch" },
+                            { "mDataProp": "description" }
+                        ]
+                    });
+
+                }
+            },
+            error: function () {
+                alert('Detail Updated');
+            }
+        });
+
+    }
+
+    $('#images').on('change', function (e) {
+
+        var files = e.target.files;
+        var imgbytes = document.getElementById('images').files[0].size;
+        var size = imgbytes / 1048576;
+        if (files.length > 0 && size <= 2) {
+            if (window.FormData !== undefined) {
+                ImageData = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    ImageData.append("file" + x, files[x]);
+                }
+            }
+        }
+        else {
+            document.getElementById("noti").innerText = "File Size not Allowed! Max. 2 MB is Allowed";
+            document.getElementById("images").value = "";
+        }
+    });
+
+    function Add() {
+        document.getElementById("noti").value = "";
+        var dropdowntype = document.getElementById("FileCatogreyDropdown").value.trim();
+        var file = document.getElementById("images").value;
+        if (dropdowntype == "00") {
+            alert("Please Select File Name");
+        }
+        else if (file == "") {
+            alert("Please Upload File")
+        }
+        else {
+            var model = { fileName: file, fileCode: dropdowntype };
+            console.log(file + "" + dropdowntype);
+            $.ajax({
+                async: false,
+                url: '/api/ProjectFilesUpload/',
+                type: 'POST',
+                data: JSON.stringify(model),
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $.ajax({
+                        url: '/api/UploadFileApi/',
+                        type: "POST",
+                        contentType: false,
+                        processData: false,
+                        data: ImageData,
+                        success: function (result) {
+                            document.getElementById("noti").innerText = "File Saved Successfully";
+                            document.getElementById("images").value = "";
+                            // document.getElementById("closeModal").click();
+                            call(2);
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            console.log(err);
+                        }
+                    });
+
+                    //
+                },
+                error: function () {
+                    alert("File Not Saved");
+                }
+            });
+        }
+    }
+    function myFunction() {
+
+        // document.getElementById("images").value = "";
+        document.getElementById("noti").innerText = "";
+    }
+</script>
