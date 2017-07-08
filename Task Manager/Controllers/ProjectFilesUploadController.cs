@@ -10,6 +10,7 @@ using Task_Manager.Models;
 using Task_Manager.viewModels;
 using Task_Manager.viewModels.Project;
 using Task_Manager.viewModels.ProjectViewModel;
+using System.Text.RegularExpressions;
 
 namespace Task_Manager.Controllers
 {
@@ -37,12 +38,15 @@ namespace Task_Manager.Controllers
                 var id = addFile.id;
                 addFile.fileCode = pid + filecode + id;
                 var projectName = db.project.Find(pid).Project_Name;
-                var path = System.Web.Hosting.HostingEnvironment.MapPath("~/Files/" + projectName + "/");
+                int workOrder = db.project.Find(pid).work_order;
+                string pname = Regex.Replace(projectName, @"[^0-9a-zA-Z]+", " ");
+
+                var path = HttpContext.Current.Server.MapPath("/Files/" + pname + "_W" + workOrder);
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
                 }
-                addFile.fileName = path + pid + filecode + id + "." + file.fileName.Split('.')[1];
+                addFile.fileName = path + "\\" + pid + filecode + id + "." + file.fileName.Split('.')[1];
                 db.SaveChanges();
                 db.project.Find(pid).projectFiles.Add(addFile);
                 db.SaveChanges();
@@ -113,7 +117,7 @@ namespace Task_Manager.Controllers
                 list = db.project.Where(p => p.id == pid).Select(o => o.projectFiles).FirstOrDefault();
                 foreach (var entity in list)
                 {
-                    
+
                     FilesTab files = new FilesTab();
                     files.fileCode = entity.fileCode;
                     files.file_type_name = db.filetype.Where(s => s.Filecode == entity.filetype).Select(s => s.Filename).FirstOrDefault();
@@ -122,9 +126,9 @@ namespace Task_Manager.Controllers
                     files.uploaded_time = entity.createdOn.ToShortTimeString();
                     string file = entity.fileName;
 
-                 file=   file.Substring(file.LastIndexOf("Files"));
-                 file = file.Replace(" ", "%20");
-                    files.Download = "<a id='" + entity.id + "' href=" +@"\"+file + " download=" + entity.id + "><p> Download</p></a>";
+                    file = file.Substring(file.LastIndexOf("Files"));
+                    file = file.Replace(" ", "%20");
+                    files.Download = "<a id='" + entity.id + "' href=" + @"\" + file + " download=" + entity.id + "><p> Download</p></a>";
                     toReturn.Add(files);
                 }
                 return new Object[] { toReturn };

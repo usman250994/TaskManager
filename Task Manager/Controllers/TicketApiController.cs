@@ -459,8 +459,9 @@ namespace Task_Manager.Controllers
                 taskRes.email = tasks[i].email;
                 taskRes.bran_Code = tasks[i].branch_code;
                 taskRes.sms = tasks[i].sms;
+                taskRes.created_Date = tasks[i].created_on.ToString();
                 taskRes.createdBy = tasks[i].Created_By.user_Name;
-                taskRes.lastModify = tasks[i].LastModify.Date.ToShortDateString();
+                taskRes.lastModify = tasks[i].LastModify.ToString();
                 var projid = db.tagging.Where(c => c.tasks.id == ids).Select(p => p.project.id).FirstOrDefault();
                 var obj = db.project.Where(p => p.id == projid).Select(c => c.customer).FirstOrDefault();
                 taskRes.cCode = obj.city_code;

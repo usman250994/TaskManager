@@ -24,11 +24,12 @@
     }
 
     table, td, th {
-        border: 1px solid rgba(0, 0, 0, 0.23);;
+        border: 1px solid rgba(0, 0, 0, 0.23);
+        ;
     }
-   .table>tbody>tr>td
-   {
-    padding:13px!important;
+
+    .table > tbody > tr > td {
+        padding: 13px !important;
     }
 </style>
 <div id="page-wrapper">
@@ -101,7 +102,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+
                         </div>
+                        <input action="action" onclick="history.go(-1);" type="button" value="Back" class="btn btn-primary" id="back" />
                         <!-- /.col-lg-6 (nested) -->
                         <!-- /.col-lg-6 (nested) -->
                     </div>
@@ -152,6 +155,7 @@
                                         <th>User</th>
                                         <th>Date</th>
                                         <th>Note</th>
+                                        <th>Documents</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -160,6 +164,9 @@
                                         <td id="completeUser"></td>
                                         <td id="completeDate"></td>
                                         <td id="completeNote"></td>
+                                        <td id="completedoc">
+                                            <a>Download</a>
+                                        </td>
 
                                     </tr>
                                     <tr class="success">
@@ -167,6 +174,7 @@
                                         <td id="closeUser"></td>
                                         <td id="closedDate"></td>
                                         <td id="closedNote"></td>
+                                        <td id="closedoc"> </td>
 
                                     </tr>
 
@@ -185,7 +193,6 @@
 
     <!-- /.col-lg-12 -->
     <!-- /.row -->
-</div>
 </div>
 
 <script>
@@ -220,14 +227,16 @@
                 document.getElementById('sms').innerText = data.SMS;
                 document.getElementById('email').innerText = data.Email;
                 document.getElementById('createdby').innerText = data.createdby;
-                document.getElementById('pname').innerText = data.prjectname;
+                document.getElementById('pname').innerText = data.projectname;
                 document.getElementById('completeDate').innerText = data.completeDate;
                 document.getElementById('completeNote').innerText = data.completeNote;
                 document.getElementById('closedDate').innerText = data.closingDate;
                 document.getElementById('closedNote').innerText = data.closingNote;
                 document.getElementById('assign').innerText = data.taggedUsers;
                 document.getElementById('closeUser').innerText = data.closingUser;
-                document.getElementById('completeUser').innerText = data.completingUser;
+                document.getElementById('completeUser').innerText = data.completingUser;         
+                document.getElementById('completedoc').innerHTML = data.completedocument;
+                document.getElementById('closedoc').innerHTML = data.closingdocument;
             },
             error: function () { alert('Grid Not Loaded'); }
         });
@@ -240,7 +249,7 @@
             Alert("Please Enter Some Messege");
             return;
         }
-      
+
 
         var model = {
             msg: document.getElementById("btn-input").value,

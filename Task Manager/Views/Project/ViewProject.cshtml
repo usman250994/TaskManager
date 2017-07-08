@@ -37,10 +37,12 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Created On</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Customer </th>
                                 <th>Work Order</th>
+                                <th>Product</th>
                                 <th>Resco Manager</th>
                                 <th>Customer Manager</th>
                                 <th>Customer Email</th>
@@ -71,17 +73,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
-                console.log(data);
-
-
                 filltable(data);
-
-
-
-                //for (var i = 0; i < data.length; i++) {
-
-                //    $("#dynamic-Grid").append("<tr id=" + i + "><td>" + data[i].projectName + "</td><td>" + data[i].startDate.substring(0, 10) + "</td><td>" + data[i].endDate.substring(0, 10) + "</td><td>" + data[i].customerName + "</td><td>" + data[i].workorder + "</td><td>" + data[i].projectManager + "</td><td>" + data[i].customerManager + "</td><td>" + data[i].Email + "</td><td>" + data[i].PhoneNumber + "</td><td>"+ data[i].address+"</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger fa fa-times' onclick=\"deleteUser(" + data[i].id + "," + i + ")\"></button> <button  class='btn btn-success fa fa-file-word-o' onclick=\"upload(" + data[i].id + "," + i + ")\"></button></td></tr>");
-                //}
             },
             error: function () { alert('Grid Not Load'); }
         });
@@ -92,10 +84,12 @@
             "aaData": datas,
             "aoColumns": [
                 { "mDataProp": "projectName" },
+                { "mDataProp": "createdOn" },
                 { "mDataProp": "startDate" },
                 { "mDataProp": "endDate" },
                 { "mDataProp": "customerName" },
                 { "mDataProp": "workorder" },
+                { "mDataProp": "productCategory" },
                 { "mDataProp": "projectManager" },
                 { "mDataProp": "customerManager" },
                 { "mDataProp": "Email" },
@@ -114,16 +108,14 @@
                 type: 'POST',
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    alert(data);
-
                     $('table#dataTables-example tr#' + rId).remove();
                 },
                 error: function (data) { alert(data); }
             });
         }
     }
-    function preUpdate(id) {
 
+    function preUpdate(id) {
         $.ajax({
             async: false,
             url: '/api/ProjectApi/' + id,
@@ -138,7 +130,6 @@
     }
 
     function upload(id) {
-
         $.ajax({
             async: false,
             url: '/api/ProjectApi/' + id,

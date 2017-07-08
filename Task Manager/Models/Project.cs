@@ -14,6 +14,7 @@ namespace Task_Manager.Models
         public Project()
         {
             projectFiles = new List<Files>();
+           
         }
         public int id { get; set; }
         public string Project_Name { get; set; }
@@ -26,7 +27,9 @@ namespace Task_Manager.Models
         public virtual CustomerContactDetail customerContactDetail { get; set; }
         public List<Files> projectFiles { get; set; }
         public virtual Users projectManager { get; set; }
-        public bool Enable { get; set; }     
+        public bool Enable { get; set; }
+        public virtual Category categroy { get; set; }
+        
         
     }
 }

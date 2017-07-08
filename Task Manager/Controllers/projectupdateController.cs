@@ -24,13 +24,10 @@ namespace Task_Manager.Controllers
             var session = HttpContext.Current.Session;
             if (session["project"] != null)
             {
-
                 string str = session["project"].ToString();
                 session["project"] = null;
                 obj = db.project.Find(Convert.ToInt32(str));
-
                 str = obj.customerContactDetail.contact_number;
-
                 view.cId = obj.customer.customerId;
                 view.pId = obj.id;
                 view.pName = obj.Project_Name;
@@ -42,23 +39,18 @@ namespace Task_Manager.Controllers
                 view.cContact = obj.customerContactDetail.contact_number;
                 view.cEmail = obj.customerContactDetail.email;
                 view.cAddress = obj.customerContactDetail.address;
-
-
+                view.categoryID = obj.categroy.id;
                 obj.customerContactDetail.contact_number = str.Substring(3);
-
-
                 List<tagUsersView> list = new List<tagUsersView>();
-
                 list = db.user.Where(o => o.Enable == true).Select(o => new tagUsersView { id = o.id, name = o.user_Name }).ToList();
-             
-                view.userList=list;
-
-                 List<dropCust> dropcustomer = new List<dropCust>();
-
-            dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
-
-
-                view.dropList= dropcustomer;
+                view.userList = list;
+                List<dropCust> dropcustomer = new List<dropCust>();
+                dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
+                view.dropList = dropcustomer;
+                List<Category> catogery = new List<Category>();
+                catogery = db.caterory.Where(p => p.enable == true).ToList();
+                view.categoryList = catogery;
+               
             }
 
             return view;

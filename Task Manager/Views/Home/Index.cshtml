@@ -47,7 +47,7 @@
                         <p class="login button">
 
                             <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal">Create Ticket</button>
-                            <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal1" onclick="checkStatus()">Check Status</button>
+                            <button type="button" class="btn_login" onclick="checkStatus()">Check Status</button>
                         </p>
                     </div>
                 </div>
@@ -156,6 +156,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        document.getElementById('customerCode').value = "";
         $.ajax({
             async: false,
             url: '/api/HomeApi/',

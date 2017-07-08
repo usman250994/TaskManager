@@ -24,6 +24,7 @@ namespace Task_Manager.Controllers
             Project projinst = new Project();
 
             projinst.id = proji.id;
+            projinst.categroy = db.caterory.Find(proji.categoryId);
             projinst.Project_Name = proji.projectName;
             projinst.work_order = proji.workorder;
             projinst.Created_By = db.user.Find(Convert.ToInt32(id));
@@ -31,14 +32,13 @@ namespace Task_Manager.Controllers
             projinst.Start_Date = proji.startDate;
             projinst.End_Date = proji.endDate;
             projinst.Enable = true;
+            projinst.categroy = db.caterory.Find(proji.categoryId);
             projinst.customer = db.customer.Find(proji.cId);
             CustomerContactDetail cust = new CustomerContactDetail();
             cust.project_manager = proji.pm;
             cust.address = proji.address;
             cust.email = proji.email;
             cust.contact_number = proji.number;
-
-
             projinst.customerContactDetail = cust;
             projinst.projectManager = db.user.Find(proji.pmId);
 
@@ -48,13 +48,11 @@ namespace Task_Manager.Controllers
                 var cusDet = db.customer_contact_detail.Find(pro.customerContactDetail.customerContactDetailId);
                 var user = db.user.Find(pro.projectManager.id);
                 var user1 = db.user.Find(projinst.projectManager.id);
+                pro.categroy = projinst.categroy;
                 db.Entry(pro).CurrentValues.SetValues(projinst);
 
                 projinst.customerContactDetail.customerContactDetailId = cusDet.customerContactDetailId;
-
                 db.Entry(cusDet).CurrentValues.SetValues(projinst.customerContactDetail);
-
-
                 db.Entry(user).CurrentValues.SetValues(user1);
                 //edit user as project manager USMAN
                 if (db.SaveChanges() > 0)
@@ -76,14 +74,10 @@ namespace Task_Manager.Controllers
                 custdetail.project_manager = projinst.customerContactDetail.project_manager;
                 custdetail.contact_number = projinst.customerContactDetail.contact_number;
                 custdetail.email = projinst.customerContactDetail.email;
-                custdetail.address = projinst.customerContactDetail.address;
-                // custdetail.Created_By = createdUser;
-                db.customer_contact_detail.Add(custdetail);
-                //projinst.customerid = custdetail.customerContactDetailId;
-                //  Customer cust = new Customer();
+                custdetail.address = projinst.customerContactDetail.address;             
+                db.customer_contact_detail.Add(custdetail);               
                 var custTemp = db.customer.Find(projinst.customer.customerId);
-                Project proj = new Project();
-                //add user as project manager   USMAN
+                Project proj = new Project();               
                 proj.Created_By = createdUser;
                 proj.work_order = projinst.work_order;
                 proj.projectManager = db.user.Where(p => p.id == projinst.projectManager.id).FirstOrDefault();
@@ -93,18 +87,16 @@ namespace Task_Manager.Controllers
                 proj.Project_Name = projinst.Project_Name;
                 proj.Start_Date = projinst.Start_Date;
                 proj.End_Date = projinst.End_Date;
+                proj.categroy = projinst.categroy;
                 proj.customer = db.customer.Find(projinst.customer.customerId);
                 proj.customerContactDetail = custdetail;
+                proj.categroy = projinst.categroy;
                 db.project.Add(proj);
                 try
                 {
                     if (db.SaveChanges() > 0)
                     {
-                        //int xyz = proj.id;
-                        //var mappedPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Files/" + xyz + "/");
-                        //Directory.CreateDirectory(mappedPath);
                         return "Done";
-                        
                     }
                     else
                     {
@@ -199,8 +191,9 @@ namespace Task_Manager.Controllers
                 ProjectGrid toAdd = new ProjectGrid();
                 // toAdd.id = entity.id;
                 toAdd.projectName = entity.Project_Name;
-                toAdd.startDate = entity.Start_Date.Date;
-                toAdd.endDate = entity.End_Date.Date;
+                toAdd.createdOn = entity.Created_On.Date.ToShortDateString();
+                toAdd.startDate = entity.Start_Date.Date.ToShortDateString();
+                toAdd.endDate = entity.End_Date.Date.ToShortDateString();
                 toAdd.workorder = entity.work_order;
                 toAdd.address = entity.customerContactDetail.address;
                 toAdd.customerManager = entity.customerContactDetail.project_manager;
@@ -208,7 +201,8 @@ namespace Task_Manager.Controllers
                 toAdd.customerName = entity.customer.customer_name;
                 toAdd.userName = entity.Created_By.user_Name;
                 toAdd.Email = entity.customerContactDetail.email;
-                toAdd.PhoneNumber = entity.customerContactDetail.contact_number;
+                toAdd.PhoneNumber = "+92"+entity.customerContactDetail.contact_number;
+                toAdd.productCategory = entity.categroy.name;
 
                 toAdd.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + entity.id + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + entity.id + ")'/><button  class='btn btn-success fa fa-file-word-o' onclick=\"upload(" + entity.id + ")\"></button>";
 

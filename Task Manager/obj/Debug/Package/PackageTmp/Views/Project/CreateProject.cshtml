@@ -32,13 +32,21 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Create Project                         
+                        Create Project
                     </div>
 
                     <div class="panel-body" ng-controller="projectctrl">
                         <form ng-submit="Add()" id="projForm">
                             <div class="row">
                                 <div class=" col-lg-offset-3  col-lg-6">
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Work Order</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="number" ng-model="project.workorder" required="required">
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
                                             <label>Customer Name</label> <input type="hidden" ng-model="project.pId" />
@@ -55,12 +63,13 @@
                                             <input class="form-control" type="text" ng-model="project.pName" required="required">
                                         </div>
                                     </div>
+                                   
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
-                                            <label>Work Order</label>
+                                            <label>Product Category</label>
                                         </div>
                                         <div class="col-lg-6 ">
-                                            <input class="form-control" type="number" ng-model="project.workorder" required="required">
+                                            <select ng-options="Category.name for Category in categories" ng-model="category" class="ddl"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -157,6 +166,7 @@
 
         $scope.message = $http.get('/api/projectupdate/').then(function (response) {
             console.log(response.data);
+            console.log("s");
             $scope.project = response.data;
             $scope.customers = response.data.dropList;
             $scope.optionsList = response.data.userList;
@@ -209,7 +219,11 @@
         });
 
         $scope.message = $http.post('/api/angularApi/').then(function (response) {
-            $scope.optionsList = response.data;
+            console.log("sds");
+            console.log(response.data);
+            console.log("sdssdsdsd");
+            $scope.optionsList = response.data[0];
+            $scope.categories = response.data[1];
             var keepgoing = true;
             angular.forEach($scope.optionsList, function (item) {
                 if (keepgoing) {
@@ -219,6 +233,22 @@
                     }
                 }
             });
+
+
+            //
+            var keepgoing = true;
+            angular.forEach($scope.categories, function (item) {
+                if (keepgoing) {
+                    if ($scope.project.categoryID == item.id) {
+                        $scope.category = item;
+                        keepgoing = false;
+                    }
+                }
+            });
+
+
+
+            //
         });
 
 
@@ -240,6 +270,8 @@
                 $scope.new.email = $scope.project.cEmail;
                 $scope.new.address = $scope.project.cAddress;
                 $scope.new.cId = $scope.customerId.id;
+                // ad the below in scope variable  when retreiving in api  at controller
+                $scope.new.categoryId= $scope.category.id;
 
                 $scope.message = $http.post('/api/ProjectApi/', $scope.new).then(function (response) {
                     console.log(response.data);

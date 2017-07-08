@@ -28,7 +28,7 @@ namespace Task_Manager.viewModels
         public string completeDate { get; set; }
         public string closingUser { get; set; }
         public string completingUser { get; set; }
-
-       
+        public string completedocument { get; set; }
+        public string closingdocument { get; set; }
     }
 }

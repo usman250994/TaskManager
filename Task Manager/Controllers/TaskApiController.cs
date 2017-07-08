@@ -111,32 +111,25 @@ namespace Task_Manager.Controllers
             List<taskResponse> taskResponse = new List<taskResponse>();
             //Checking for Dashboard returns 
             var session = HttpContext.Current.Session;
-
             var createdBy = db.user.Find(Convert.ToInt32(session["UserID"]));
 
             // make setting for different roles viewing tasks from dashboards  
             if (session["dashboard"] != null)
             {
                 string str = session["dashboard"].ToString();
-
                 session["dashboard"] = null;
                 //Todays 
                 if (str == "tick_today")
                 {
                     DateTime date = DateTime.Now.Date;
-
-
                     if (session["UserID"].ToString() == "5")
                     {
                         tasks = db.task.Where(c => c.enable == true && c.IsTicket == false && c.created_on >= date).ToList();
                     }
                     else
                     {
-
                         tasks = db.task.Where(c => c.enable == true && c.IsTicket == false && c.Created_By.id == createdBy.id && c.created_on >= date).ToList();
-
                         //
-
                         var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == false && c.Created_By.id != createdBy.id && c.created_on >= date).ToList();
                         foreach (var entity in tempTask)
                         {
@@ -150,33 +143,20 @@ namespace Task_Manager.Controllers
                                 }
                                 break;
                             }
-
-
                         }
-                        //
-
                     }
-
-
-                 
                 }
                 //Unassigned
                 else if (str == "tick_unassign")
                 {
-
                     if (session["UserID"].ToString() == "5")
                     {
                         tasks = db.task.Where(c => c.enable == true && c.IsTicket == false && c.status == 0).ToList();
                     }
                     else
                     {
-
                         tasks = db.task.Where(c => c.enable == true && c.IsTicket == false && c.status == 0 && c.Created_By.id == createdBy.id).ToList();
-
-
-                   
                     }
-
                 }
                 //Newly
                 else
@@ -187,7 +167,6 @@ namespace Task_Manager.Controllers
                     }
                     else
                     {
-
                         tasks = db.task.Where(c => c.enable == true && c.IsTicket == false && c.Created_By.id == createdBy.id && c.status == 2).ToList();
                         int remaining = 10 - tasks.Count;
                         //
@@ -208,7 +187,6 @@ namespace Task_Manager.Controllers
                                 }
                             }
                         }
-                        //
                     }
                 }
             }
@@ -249,12 +227,13 @@ namespace Task_Manager.Controllers
                 taskRes.createdBy = tasks[i].Created_By.user_Name;
                 taskRes.description = tasks[i].description;
                 taskRes.email = tasks[i].email;
+                taskRes.created_Date = tasks[i].created_on.ToString();
                 taskRes.endDate = tasks[i].end_date.Date.ToShortDateString();
                 taskRes.startDate = tasks[i].start_date.Date.ToShortDateString();
                 taskRes.task_name = tasks[i].task_name;
                 taskRes.sms = tasks[i].sms;
                 taskRes.bran_Code = "Task";
-                taskRes.lastModify = tasks[i].LastModify.Date.ToShortDateString();
+                taskRes.lastModify = tasks[i].LastModify.ToString();
 
 
                 if (session["role_id"].ToString() == "1" || session["role_id"].ToString() == "2")
@@ -282,9 +261,9 @@ namespace Task_Manager.Controllers
                     else if (tasks[i].status == 3)
                         taskRes.status = @"<select  onchange='status(this.value," + tasks[i].id + ")' id=" + tasks[i].id + "><option value='0'>Unassigned</option><option value='1'>Pending</option><option value='2'>InProgress</option><option value='3' selected >Complete</option><option value='4'>Closed</option></select>";
                     else
-                     taskRes.status= "Closed";
+                        taskRes.status = "Closed";
                 }
-               
+
                 taskRes.button = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='UpdateTask(" + tasks[i].id + ")'/><button  class='btn btn-danger fa fa-times' onclick='DeleteTask(" + tasks[i].id + "," + i + ")'></button> <button  class='btn btn-info fa fa-comments-o' onclick='comments(" + tasks[i].id + ")'></button>";
                 Tagging tag = new Tagging();
                 List<string> list = new List<string>();
@@ -438,7 +417,7 @@ namespace Task_Manager.Controllers
                 task.ticket_code = tempTask.ticketCode;
 
             }
-                return task;
+            return task;
         }
 
         //change return to a view model

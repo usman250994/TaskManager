@@ -73,10 +73,14 @@ namespace Task_Manager.Controllers
             task.created_on = DateTime.Now;
             var usr = db.user.Find(5);
             task.Created_By = usr;
+            task.closingDate = DateTime.Now;
+            task.completeDate = DateTime.Now;
+            //task.completingUser = usr;
+            //task.closingUser = usr;
             task.sms = false;
             task.email = false;
             task.IsTicket = true;
-            task.status = 1;
+            task.status = 0;
             task.branch_code = ticket.branch_code;
             task.start_date = DateTime.Now;
             task.end_date = DateTime.Now;

@@ -12,6 +12,7 @@ namespace Task_Manager.viewModels.response
         public string task_name { get; set; }
         public string cName { get; set; }
         public string description { get; set; }
+        public string created_Date { get; set; }
         public string createdBy { get; set; }
         public string startDate { get; set; }
         public string endDate { get; set; }

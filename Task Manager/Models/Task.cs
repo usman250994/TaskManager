@@ -13,6 +13,7 @@ namespace Task_Manager.Models
         public Task()
         {
             discussion = new List<messages>();
+            statusDocument = new List<StatusDocuments>();
         }
 
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -38,7 +39,6 @@ namespace Task_Manager.Models
         public DateTime completeDate { get; set; }
         public virtual Users completingUser {get;set;}
         public virtual Users closingUser { get; set; }
+        public List<StatusDocuments> statusDocument { get; set; }
     }
-
-
 }

@@ -34,6 +34,11 @@ namespace Task_Manager.Controllers
         }
         public ActionResult ViewProject()
         {
+            
+            if (Session["role_id"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             Session["task_id"] = null;
             var roles_Id = Session["role_id"].ToString();
             string userName = Session["username"].ToString();

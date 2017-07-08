@@ -67,6 +67,7 @@
                 $("#dataTables-examp").DataTable({
                     "bDestroy": true,
                     "aaData": data.list,
+                    "aaSorting": [[6, 'desc']],
                     "aoColumns": [
                          { "mDataProp": "tid" },
                          { "mDataProp": "name" },
@@ -83,9 +84,4 @@
             error: function () { alert('Data Not Found'); }
         });
     });
-
-
-    function filltable(datas) {
-
-    }
 </script>

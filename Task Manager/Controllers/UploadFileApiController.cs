@@ -23,12 +23,11 @@ namespace Task_Manager.Controllers
             {
                 var sessionId = HttpContext.Current.Session;
                 int name = 0;
-                String nam = "";
                 var docfiles = new List<string>();
                 foreach (string file in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[file];
-                   
+
                     if (sessionId["project"] != null)
                     {
                         var filePath = db.files.OrderByDescending(p => p.id).FirstOrDefault().fileName;
@@ -50,6 +49,35 @@ namespace Task_Manager.Controllers
             else
             {
                 result = Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+
+
+        [HttpPost]
+        public String StatusDocument(int id)
+        {
+            var Session = HttpContext.Current.Session;
+            HttpResponseMessage result = null;
+            var httpRequest = HttpContext.Current.Request;
+            if (httpRequest.Files.Count > 0)
+            {
+                var docfiles = new List<string>();
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    var statsdocument = db.ticketdocuments.OrderByDescending(p => p.id).FirstOrDefault().documentPath;
+                    postedFile.SaveAs(statsdocument);
+                    docfiles.Add(statsdocument);
+                    break;
+                }
+                result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
+                return ("File Added Sucessfully");
+            }
+            else
+            {
+                result = Request.CreateResponse(HttpStatusCode.BadRequest);
+                return (result.ToString());
             }
         }
     }

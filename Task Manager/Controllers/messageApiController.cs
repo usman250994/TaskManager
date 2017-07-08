@@ -64,16 +64,35 @@ namespace Task_Manager.Controllers
 
             var users = db.tagging.Where(p => p.tasks.id == id).Select(p => p.users.Select(q => q.user_Name).ToList()).FirstOrDefault();
             var tagged = "";
-            foreach(var entity in users)
+            var closetag="";
+            var completetag="";
+            foreach (var entity in users)
             {
-
-                tagged = tagged+", "+entity;
+                tagged = tagged + ", " + entity;
             }
-            if(tagged.Length>1)
+            if (tagged.Length > 1)
             {
                 tagged = tagged.Remove(0, 1);
             }
-          
+            var completedoc = db.task.Where(p => p.id == id).Select(p => p.statusDocument.Where(x => x.isClose == false)).ToList().FirstOrDefault();
+            foreach (var entity in completedoc)
+            {
+                string file = entity.documentPath;
+                file = file.Substring(file.LastIndexOf("TicketNotes"));
+                file = file.Replace(" ", "%20");
+                completetag = completetag + "<a id='" + entity.id + "' href=" + @"\" + file + " download=" + entity.id + "><p> Download</p></a>";
+            }
+            var closedoc = db.task.Where(p => p.id == id).Select(p => p.statusDocument.Where(x => x.isClose == true)).ToList().FirstOrDefault();
+            foreach (var entity in closedoc)
+            {
+                string file = entity.documentPath;
+                file = file.Substring(file.LastIndexOf("TicketNotes"));
+                file = file.Replace(" ", "%20");
+                closetag = closetag +"<a id='" + entity.id + "' href=" + @"\" + file + " download=" + entity.id + "><p> Download</p></a>";
+            }
+           
+            returnTo.closingdocument = closetag;
+            returnTo.completedocument = completetag;
             returnTo.taggedUsers = tagged;
             returnTo.responseList = listRes;
             returnTo.task_no = objTask.ticket_code;
@@ -93,32 +112,30 @@ namespace Task_Manager.Controllers
 
             if (objTask.closingUser != null)
             {
-           
-                
                 returnTo.closingDate = objTask.closingDate.Date.ToShortDateString();
                 returnTo.closingUser = objTask.closingUser.user_Name;
-            returnTo.closingNote=objTask.note;
+                returnTo.closingNote = objTask.note;
             }
             else
             {
                 returnTo.closingNote = "--";
                 returnTo.closingUser = "--";
                 returnTo.closingDate = "--";
+                returnTo.closingdocument = "--";
             }
-      if(objTask.completingUser != null)
-      {
-          returnTo.completeNote = objTask.completeNote;
-          returnTo.completeDate = objTask.completeDate.Date.ToShortDateString();
-          returnTo.completingUser = objTask.completingUser.user_Name;
-      }
+            if (objTask.completingUser != null)
+            {
+                returnTo.completeNote = objTask.completeNote;
+                returnTo.completeDate = objTask.completeDate.Date.ToShortDateString();
+                returnTo.completingUser = objTask.completingUser.user_Name;
+               
+            }
             else
             {
                 returnTo.completeDate = "--";
-
                 returnTo.completeNote = "--";
-
                 returnTo.completingUser = "--";
-          
+                returnTo.closingdocument = "--";
             }
 
 

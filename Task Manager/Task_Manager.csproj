@@ -238,6 +238,22 @@
     <Compile Include="Migrations\201707040806181_partno.Designer.cs">
       <DependentUpon>201707040806181_partno.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707050608355_addingprojectCaegory.cs" />
+    <Compile Include="Migrations\201707050608355_addingprojectCaegory.Designer.cs">
+      <DependentUpon>201707050608355_addingprojectCaegory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707060741032_statusDocuments.cs" />
+    <Compile Include="Migrations\201707060741032_statusDocuments.Designer.cs">
+      <DependentUpon>201707060741032_statusDocuments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707071256571_isClose.cs" />
+    <Compile Include="Migrations\201707071256571_isClose.Designer.cs">
+      <DependentUpon>201707071256571_isClose.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707080734494_dont know.cs" />
+    <Compile Include="Migrations\201707080734494_dont know.Designer.cs">
+      <DependentUpon>201707080734494_dont know.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
@@ -256,6 +272,7 @@
     <Compile Include="Models\TaskContext.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\ticketContact.cs" />
+    <Compile Include="Models\StatusDocuments.cs" />
     <Compile Include="Models\updateTaskReturning.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -549,6 +566,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707040806181_partno.resx">
       <DependentUpon>201707040806181_partno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707050608355_addingprojectCaegory.resx">
+      <DependentUpon>201707050608355_addingprojectCaegory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707060741032_statusDocuments.resx">
+      <DependentUpon>201707060741032_statusDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707071256571_isClose.resx">
+      <DependentUpon>201707071256571_isClose.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707080734494_dont know.resx">
+      <DependentUpon>201707080734494_dont know.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

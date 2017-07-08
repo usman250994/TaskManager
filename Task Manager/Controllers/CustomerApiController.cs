@@ -55,7 +55,7 @@ namespace Task_Manager.Controllers
 
                     //
                     db.customer.Add(cust);
-                    if (db.SaveChanges() == 1)
+                    if (db.SaveChanges() > 1)
                     {
                         return "Customer Added";
                     }

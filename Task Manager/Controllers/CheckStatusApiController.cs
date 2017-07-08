@@ -89,7 +89,7 @@ namespace Task_Manager.Controllers
             if (p == 1)
                 return "Pending";
             if (p == 2)
-                return "Progress";
+                return "InProgress";
             if (p == 3)
                 return "Complete";
             else
