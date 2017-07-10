@@ -11,7 +11,7 @@ namespace Task_Manager
 {
     public class SMSandEmail
     {
-        public bool sendEmail(string email, string Taskname, string Description, string StartDate, string EndDate, string ProjectName)
+        public bool sendEmail(string uname, string email, string ticketid, string customercode, string customername, string ProjectName, string contactnumber, string Ticketdescription)
         {
             var credential = new NetworkCredential
             {
@@ -23,9 +23,9 @@ namespace Task_Manager
                 var message = new MailMessage();
                 message.To.Add(new MailAddress(email));  // replace with valid value 
                 message.From = new MailAddress("RescoTask@outlook.com");  // replace with valid value
-                message.Subject = "Test Email Send";
-                message.Body = "Project Name:'" + ProjectName + "Task:" + Taskname + "Desc:" + Description + "Start Date:" + StartDate + "End Date: " + EndDate + "";
-                // message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
+                message.Subject = "Ticket ID : " + ticketid + "";
+                message.Body = "Dear " + uname + " </br> Thank You ! " + uname + " for connecting with us for your query <br/><br/> Ticket ID : " + ticketid + " <br /> Customer Code: " + ProjectName + " <br /> Customer Name: " + customername + " <br />Contact Number:" + "+92" + contactnumber + " <br /> Project Name" + ProjectName + "<br /> Ticket Description: " + Ticketdescription + " <br /><br/> To Check your Ticket Status please Click On \n <a href=http://192.168.1.177:92>Login</a> With Your Customer Code / Ticket ID ";
+                //message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
                 message.IsBodyHtml = true;
 
                 var smtp = new SmtpClient();
@@ -69,6 +69,11 @@ namespace Task_Manager
             }
 
             return false;
+        }
+
+        internal void sendEmail(string p1, string p2, string p3, int p4, int p5)
+        {
+            throw new NotImplementedException();
         }
     }
 }

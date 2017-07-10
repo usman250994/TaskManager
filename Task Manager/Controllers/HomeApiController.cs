@@ -118,7 +118,16 @@ namespace Task_Manager.Controllers
 
             if (db.SaveChanges() > 0)
             {
+                
+                Task_Manager.SMSandEmail send = new SMSandEmail();
+                string customername = db.project.Where(p => p.id == ticket.projectId).Select(o => o.customer.customer_name).FirstOrDefault();
+                string projectname = db.project.Where(p => p.id == ticket.projectId).Select(p => p.Project_Name).FirstOrDefault();
+
+                send.sendEmail(ticket.name ,ticket.email,task.ticket_code,ticket.customerId.ToString(),customername,projectname,ticket.contact,ticket.issue);
+
+
                 return "Ticket is successfully Generated!! you will be cotacted Soon! Please Note Your Ticket Number:" + task.ticket_code;
+
             }
             else
             {
