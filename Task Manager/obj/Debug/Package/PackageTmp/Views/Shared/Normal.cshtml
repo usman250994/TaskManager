@@ -87,6 +87,16 @@
                         @Html.ActionLink("Dashboard", "Index", "Dashboard")
                     </li>
                     <li>
+                        <a id="project"><i class="fa fa-building fa-fw"></i> Projects <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                @Html.ActionLink("View Projects", "ViewProject", "Project")
+
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
                         <a id="task"><i class="fa fa-edit fa-fw"></i> Task<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -110,22 +120,6 @@
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
-                    <li>
-                        <a><i class="fa fa-user-plus fa-fw"></i> Product<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-
-                                @Html.ActionLink("Create Product", "CreateInventory", "inventory")
-
-                            </li>
-                            <li>
-                                @Html.ActionLink("View Product", "ViewInventory", "inventory")
-
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

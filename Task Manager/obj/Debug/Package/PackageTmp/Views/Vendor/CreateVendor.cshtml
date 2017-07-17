@@ -1,0 +1,383 @@
+﻿@{
+    ViewBag.Title = "CreateVendor";
+    if (ViewData["id"].ToString() == "1")
+    {
+        Layout = "~/Views/Shared/_Home.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "2")
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "3")
+    {
+        Layout = "~/Views/Shared/Normal.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/CSR.cshtml";
+    }
+}
+<div id="wrapper">
+    <!-- Navigation -->
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="text-align:center">Create Vendor</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Create Vendor
+                    </div>
+                    @**********************************************************Start Create Vendor **************************************************************@
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-12 spacing">
+                                    <div class=" col-lg-4 ">
+                                        <label>Code</label>
+                                        <span style="color:red; font-size:18px">*</span>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <label id="UpdID" type="text" name="UpdID" hidden> </label>
+                                        <input class="form-control" id="V_code" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="  col-lg-4 ">
+                                        <label>Name</label>
+                                        <span style="color:red; font-size:18px">*</span>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" type="text" id="V_name">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="  col-lg-4">
+                                        <label>Type</label>
+                                        <span style="color:red; font-size:18px">*</span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <select id="InventoryTypeDropdown" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="  col-lg-4">
+                                        <label>Address</label>
+                                        <span style="color:red; font-size:18px">*</span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="V_adress">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="  col-lg-4">
+                                        <label>City</label>
+                                        <span style="color:red; font-size:18px">*</span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="V_city">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="  col-lg-4">
+                                        <label>Mobile Number</label>
+                                        <span style="color:red; font-size:18px">*</span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-2"><label class="abc">+92</label></div>
+                                        <div class="col-lg-10"><input class="form-control" type="number" id="V_mobileNo" placeholder="3001234567" required="required"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="  col-lg-4 ">
+                                        <label>Telephone No.</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="V_telephone">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="  col-lg-4">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="V_email">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="  col-lg-4 ">
+                                        <label>Website</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="V_web">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="  col-lg-4 ">
+                                        <label>Fax</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="V_fax">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-6 (nested) -->
+                        <!-- /.col-lg-6 (nested) -->
+                    </div>
+                    @**********************************************************End Create Vendor **************************************************************@
+
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+                @**********************************************************Start Note Vendor **************************************************************@
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Note
+                            </div>
+                            <div class="panel-body" style="height:235px;">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12 ">
+                                            <div class="col-lg-4 ">
+                                                <label>Note</label>
+                                            </div>
+                                            <div class="col-lg-6 ">
+                                                <textarea id="V_Note" class="form-control" rows="8"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+
+            </div>
+            @**********************************************************End Note Vendor **************************************************************@
+            <!-- /.panel -->
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Primary Contact
+                    </div>
+                    @**********************************************************Start Primary Contact Vendor **************************************************************@
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-4 ">
+                                        <label>Contact Name</label>
+                                        <span style="color:red; font-size:18px">*</span>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <input class="form-control" id="user_name" placeholder="User Name" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-4">
+                                        <label>Reg. No</label>
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="user_reg">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-4">
+                                        <label>NIC</label>
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="user_nic">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-4">
+                                        <label>Designation</label>
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="user_deg" placeholder="CEO / Marketing">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-4">
+                                        <label>Email Address</label>
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="email" id="user_email" placeholder="Example12@Gmail.com" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-4">
+                                        <label>Mobile Number</label>
+                                        <span style="color:red; font-size:18px">*</span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-2"><label class="abc">+92</label></div>
+                                        <div class="col-lg-10"><input class="form-control" type="number" id="user_mobno" placeholder="3001234567" required="required"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-4">
+                                        <label>Telephone No. </label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="user_telephone">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 spacing">
+                                    <div class="col-lg-4">
+                                        <label>Fax</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" type="text" id="user_fax">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <!-- /.col-lg-6 (nested) -->
+                        <!-- /.col-lg-6 (nested) -->
+                    </div>
+                    @**********************************************************End Primary Contact Vendor **************************************************************@
+
+                    <!-- /.row (nested) -->
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Vendor Evaluiation
+                            </div>
+                            @**********************************************************Start Vendor Evaluation **************************************************************@
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12 spacing">
+                                            <div class="col-lg-4">
+                                                <label>Evaluation Phase</label>
+                                                <span style="color:red; font-size:18px">*</span>
+                                            </div>
+                                            <div class="col-lg-6 ">
+                                                <input type="radio" name="phase" id="approve"> Approved
+                                                <input type="radio" name="phase" id="notapprove"> Not Approved
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 spacing">
+                                            <div class="col-lg-4 ">
+                                                <label>Vendor Status</label>
+                                                <span style="color:red; font-size:18px">*</span>
+                                            </div>
+                                            <div class="col-lg-6 ">
+                                                <input type="radio" name="Status" id="active"> Active
+                                                <input type="radio" name="Status" id="inactive"> In-Active
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 spacing">
+                                            <div class="col-lg-4">
+                                                <label>Vendor Credit Limit</label>
+                                                <span style="color:red; font-size:18px">*</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" type="text" id="v_creditlimit">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 spacing">
+                                            <div class="col-lg-4">
+                                                <label>Credit Time Per</label>
+                                                <span style="color:red; font-size:18px">*</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="col-lg-3">
+                                                    <div class="row">
+                                                        <input class="form-control" type="number" id="credit_time">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2"><label class="abc">Days</label></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 spacing">
+                                            <div class="col-lg-4">
+                                                <label>Prefereed Courier </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" type="text" id="courier">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 spacing">
+                                            <div class="col-lg-4 ">
+                                                <label>System Catogrey</label>
+                                                <span style="color:red; font-size:18px">*</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <select id="CatogreyDropdown" class="form-control"></select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            @**********************************************************End Vendor Evaluation **************************************************************@
+
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <div class="col-lg-offset-5 col-lg-6 spacing" style="padding-bottom: 50px;">
+                <input type="button" class="btn btn-success" onclick="Add()" id="button" value="Create" style="width:150px; height:40px;" />
+                <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();" style="width:150px; height:40px;">
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+        <!-- /.panel -->
+    </div>
+    <!-- /.row -->
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: '/api/VendorApi/' + 1,
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $.each(data.systemCategory, function (i) {
+                    $('#CatogreyDropdown').append($('<option></option>').val(data.systemCategory[i].id).html(data.systemCategory[i].name));
+                });
+                $.each(data.type, function (i) {
+                    $('#InventoryTypeDropdown').append($('<option></option>').val(data.type[i].id).html(data.type[i].type_Name));
+                });
+            },
+            error: function () {
+                alert('Dropdown Not Loaded');
+            }
+        });
+    });
+</script>
+<script src="~/Scripts/Vendor.js"></script>

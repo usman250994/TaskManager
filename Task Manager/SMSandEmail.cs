@@ -15,8 +15,12 @@ namespace Task_Manager
         {
             var credential = new NetworkCredential
             {
-                UserName = "RescoTask@outlook.com",  // User Email Address example@outlook.com
-                Password = "Resco@1234"  // User Password
+
+
+
+
+               // UserName = "RescoTask@outlook.com",  // User Email Address example@outlook.com
+               // Password = "Resco@1234"  // User Password
             };
             try
             {

@@ -14,6 +14,7 @@ namespace Task_Manager.Controllers
 {
     public class TaskApiController : ApiController
     {
+        Log log = new Log();
         TaskContext db = new TaskContext();
 
         // Grid Status Fill Dropdown
@@ -343,6 +344,9 @@ namespace Task_Manager.Controllers
                     var user = db.user.Find(temptask.tempUsers[i].id);
                     tagging.users.Add(user);
                 }
+               
+                log.Update("Task", taskdetail.id, id);
+
             }
             //create
             else
@@ -362,11 +366,12 @@ namespace Task_Manager.Controllers
                 }
                 tag.users = usr;
                 db.tagging.Add(tag);
-
+                 log.Update("Task", tag.id, id);
             }
             if (db.SaveChanges() > 0)
             {
-                return "task success!!";
+             
+                return "Task Added Successfully !!";
 
             }
             else
@@ -447,10 +452,14 @@ namespace Task_Manager.Controllers
         [HttpDelete]
         public String delete(int id)
         {
+            var sessionId = HttpContext.Current.Session;
+            string Deleteuserid = sessionId["UserID"].ToString();
             var user = db.task.Where(p => p.id == id).FirstOrDefault().enable = false;
 
             if (db.SaveChanges() == 1)
             {
+                Log log = new Log();
+                log.Delete("Task", id, Deleteuserid);
                 return "Task Deleted";
             }
             else

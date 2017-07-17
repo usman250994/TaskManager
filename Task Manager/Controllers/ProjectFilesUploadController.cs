@@ -121,14 +121,14 @@ namespace Task_Manager.Controllers
                     FilesTab files = new FilesTab();
                     files.fileCode = entity.fileCode;
                     files.file_type_name = db.filetype.Where(s => s.Filecode == entity.filetype).Select(s => s.Filename).FirstOrDefault();
-                    files.uploaded_user = db.user.Where(p => p.id == uid).Select(p => p.user_Name).FirstOrDefault();
+                    files.uploaded_user = entity.createdBy.user_Name;
                     files.uploaded_date = entity.createdOn.Date.ToShortDateString();
                     files.uploaded_time = entity.createdOn.ToShortTimeString();
                     string file = entity.fileName;
 
                     file = file.Substring(file.LastIndexOf("Files"));
                     file = file.Replace(" ", "%20");
-                    files.Download = "<a id='" + entity.id + "' href=" + @"\" + file + " download=" + entity.id + "><p> Download</p></a>";
+                    files.Download = "<a id='" + entity.id + "' href=" + @"\" + file + " download=" + entity.fileCode + "><p> Download</p></a>";
                     toReturn.Add(files);
                 }
                 return new Object[] { toReturn };

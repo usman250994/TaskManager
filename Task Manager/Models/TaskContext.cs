@@ -29,5 +29,10 @@ namespace Task_Manager.Models
         public DbSet<StatusDocuments> ticketdocuments { get; set; }
         public DbSet<Files> files { get; set; }
         public DbSet<FilesType> filetype { get; set; }
+        public DbSet<AuditLog> auditLog { get; set; }
+        public DbSet<Vendor> vendor { get; set; }
+        public DbSet<VendorContact> vendorContact { get; set; }
+        public DbSet<VendorType> vendorType { get; set; }
+
     }
 }

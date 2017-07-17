@@ -14,6 +14,7 @@ namespace Task_Manager.Controllers
     public class TicketApiController : ApiController
     {
         TaskContext db = new TaskContext();
+        Log log = new Log();
 
         // Grid Status Fill Dropdown
         [HttpPut]
@@ -138,7 +139,7 @@ namespace Task_Manager.Controllers
                 temptask.sdate = taskdetail.start_date;
                 temptask.edate = taskdetail.end_date;
                 temptask.ticketCode = taskdetail.ticket_code;
-                
+
                 db.Entry(taskdetail).CurrentValues.SetValues(setTask(temptask));
 
                 //updating project
@@ -154,11 +155,13 @@ namespace Task_Manager.Controllers
                     var user = db.user.Find(temptask.assignedTo[i].id);
                     tagging.users.Add(user);
                 }
+
+                log.Update("Ticket", taskdetail.id, id);
             }
             //create
             else
             {
-   
+
                 var task = setTask(temptask);
                 // db.task.Add(task);
                 Tagging tag = new Tagging();
@@ -173,11 +176,11 @@ namespace Task_Manager.Controllers
                 }
                 tag.users = usr;
                 db.tagging.Add(tag);
-
+                log.Update("Ticket", tag.id, id);
             }
             if (db.SaveChanges() > 0)
             {
-                return "ticket success!!";
+                return "Ticket Added !!";
 
             }
             else
@@ -190,16 +193,16 @@ namespace Task_Manager.Controllers
         {
             var sessionId = HttpContext.Current.Session;
             string id = sessionId["UserID"].ToString();
-        
+
 
             var createdUser = db.user.Find(Convert.ToInt32(id));
             Task task = new Task();
             task.enable = true;
-            
+
             task.Created_By = createdUser;
             task.task_name = tempTask.uname;
             task.description = tempTask.issue;
-            
+
             task.branch_code = tempTask.branchCode;
             task.IsTicket = true;
             task.created_on = tempTask.created_on;
@@ -235,7 +238,7 @@ namespace Task_Manager.Controllers
             {
                 task.ticket_code = tempTask.ticketCode;
             }
-                return task;
+            return task;
         }
 
         //change return to a view model
@@ -270,10 +273,13 @@ namespace Task_Manager.Controllers
         [HttpDelete]
         public String delete(int id)
         {
+            var sessionId = HttpContext.Current.Session;
+            string Deleteuserid = sessionId["UserID"].ToString();
             var user = db.task.Where(p => p.id == id).FirstOrDefault().enable = false;
 
             if (db.SaveChanges() == 1)
             {
+                log.Delete("Ticket", id, Deleteuserid);
                 return "Task Deleted";
             }
             else
@@ -295,22 +301,20 @@ namespace Task_Manager.Controllers
             if (session["dashboard"] != null)
             {
                 string str = session["dashboard"].ToString();
-               
+
                 session["dashboard"] = null;
                 //Todays 
                 if (str == "tick_today")
                 {
                     DateTime date = DateTime.Now.Date;
-
-
                     if (session["UserID"].ToString() == "5")
                     {
-                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.created_on>=date).ToList();
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.created_on >= date).ToList();
                     }
                     else
                     {
-                        
-                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdBy.id && c.created_on>=date ).ToList();
+
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdBy.id && c.created_on >= date).ToList();
 
                         //
 
@@ -327,14 +331,8 @@ namespace Task_Manager.Controllers
                                 }
                                 break;
                             }
-
-
                         }
-                        //
-
                     }
-
-
                     //foreach (var entity in task)
                     //{
                     //    if (entity.created_on.Date == date)
@@ -349,12 +347,12 @@ namespace Task_Manager.Controllers
 
                     if (session["UserID"].ToString() == "5")
                     {
-                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status==0).ToList();
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status == 0).ToList();
                     }
                     else
                     {
-                       
-                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status==0 && c.Created_By.id == createdBy.id ).ToList();
+
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status == 0 && c.Created_By.id == createdBy.id).ToList();
 
 
                         //
@@ -391,13 +389,13 @@ namespace Task_Manager.Controllers
                     }
                     else
                     {
-                       
-                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdBy.id && c.status==2).ToList();
+
+                        tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id == createdBy.id && c.status == 2).ToList();
                         int remaining = 10 - tasks.Count;
                         //
                         if (remaining > 0)
                         {
-                            var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id && c.status==2).ToList();
+                            var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id && c.status == 2).ToList();
                             foreach (var entity in tempTask)
                             {
                                 var tag = db.tagging.Where(p => p.tasks.id == entity.id).FirstOrDefault();
@@ -426,7 +424,7 @@ namespace Task_Manager.Controllers
                 }
                 else
                 {
-                 
+
                     tasks = db.task.Where(c => c.enable == true && c.Created_By.id == createdBy.id && c.IsTicket == true).ToList();
 
                     //
@@ -442,7 +440,7 @@ namespace Task_Manager.Controllers
                                 tasks.Add(entity);
                                 break;
                             }
-                           
+
                         }
                     }
                     //
@@ -551,6 +549,6 @@ namespace Task_Manager.Controllers
 
         }
 
-    
+
     }
 }

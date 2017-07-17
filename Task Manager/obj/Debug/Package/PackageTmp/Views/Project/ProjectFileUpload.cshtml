@@ -1,6 +1,21 @@
 ﻿@{
     ViewBag.Title = "ProjectFileUpload";
-    Layout = "~/Views/Shared/_Home.cshtml";
+    if (ViewData["id"].ToString() == "1")
+    {
+        Layout = "~/Views/Shared/_Home.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "2")
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "3")
+    {
+        Layout = "~/Views/Shared/Normal.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/CSR.cshtml";
+    }
 }
 <link href="~/Content/UploadFile.css" rel="stylesheet" />
 <div id="page-wrapper">
@@ -132,6 +147,7 @@
                                             <option value="09">Project Shedule</option>
                                             <option value="10">Project Invoice</option>
                                             <option value="11">Project Material Requisition</option>
+                                            <option value="12">Delivery Challan</option>
                                         </select>
                                     </div>
                                 </div>

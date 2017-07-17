@@ -13,6 +13,7 @@ namespace Task_Manager.Controllers
 {
     public class CustomerApiController : ApiController
     {
+        Log log = new Log();
         TaskContext db = new TaskContext();
 
         //To Add User In Database Table Customer
@@ -36,9 +37,8 @@ namespace Task_Manager.Controllers
                     cust.city_code = cust.city_code + client.city_code.Substring(2, 4) + cust.OnBoarddate.Year;
                     cust.createdOn = DateTime.Now;
                     db.Entry(client).CurrentValues.SetValues(cust);
-
-
                     db.SaveChanges();
+                    log.Update("Customer", client.customerId, id);
                 }
                 else
                 {
@@ -57,6 +57,7 @@ namespace Task_Manager.Controllers
                     db.customer.Add(cust);
                     if (db.SaveChanges() > 1)
                     {
+                        log.Create("Customer", cust.customerId, id);
                         return "Customer Added";
                     }
                     else
@@ -119,24 +120,20 @@ namespace Task_Manager.Controllers
         [HttpPost]
         public String delete(int id)
         {
-
             List<int> list = new List<int>();
-
             list = db.project.Where(d => d.customer.customerId == id).Select(d => d.id).ToList();
-
-            // [Route("/api/ProjectApi/"), HttpPost]
-
-
             for (int i = 0; i < list.Count; i++)
             {
                 var result = new ProjectApiController().delete(list[i]);
-
             }
             db.customer.Find(id).enable = false;
-
             //also remove complete hierarchy
             if (db.SaveChanges() == 1)
             {
+                var session = HttpContext.Current.Session;
+                string Deleteuserid = session["UserID"].ToString();
+                Log log = new Log();
+                log.Delete("Customer", id, Deleteuserid);
                 return "Customer Delete Success ";
             }
             else

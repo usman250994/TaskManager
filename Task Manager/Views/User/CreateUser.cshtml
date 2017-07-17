@@ -123,14 +123,15 @@
             url: '/api/UserApi/' + 0,
             type: 'POST',
             success: function (data) {
+
                 $.each(data.roles, function (i) {
                     $('#Position').append($('<option></option>').val(data.roles[i].id).html(data.roles[i].role_name));
                 });
 
+
                 if (data.userview != null) {
-                    console.log(data.userview.address);
                     document.getElementById("user_name").value = data.userview.name;
-                    document.getElementById("password").value = data.userview.Password;
+                    document.getElementById("password").value = data.userview.pasword;
                     document.getElementById("Address").value = data.userview.address;
                     document.getElementById("MobileNo").value = data.userview.contact.substring(3, 13);
                     document.getElementById("Email").value = data.userview.email;

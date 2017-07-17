@@ -1,25 +1,33 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 using Task_Manager.Models;
 using Task_Manager.viewModels;
 using Task_Manager.viewModels.Views;
+
 
 namespace Task_Manager.Controllers
 {
     public class UserApiController : ApiController
     {
+        Log log = new Log();
         TaskContext db = new TaskContext();
 
         [Route("/api/UserApi/"), HttpPost]
         public String CreateUser(userRequest Emp)
         {
+            var sessionId = HttpContext.Current.Session;
+            string updatedid = sessionId["UserID"].ToString();
 
+       
             var user = db.user.Find(Emp.id);
             //user already exisits
             if (user != null)
@@ -36,6 +44,8 @@ namespace Task_Manager.Controllers
                 //db.Entry(user).CurrentValues.SetValues(Emp);
                 if (db.SaveChanges() > 0)
                 {
+                 
+                    log.Update("Users", user.id, updatedid);
                     return "User updated Succesfully";
                 }
                 else
@@ -46,7 +56,7 @@ namespace Task_Manager.Controllers
             //Add user here
             else
             {
-                var sessionId = HttpContext.Current.Session;
+         
                 string id = sessionId["UserID"].ToString();
                 var createdUser = db.user.Find(Convert.ToInt32(id));
                 var userRole = db.roles.Find(Emp.Roles_id);
@@ -64,6 +74,7 @@ namespace Task_Manager.Controllers
                 db.user.Add(adduser);
                 if (db.SaveChanges() > 0)
                 {
+                    log.Create("Users", adduser.id, id);
                     return "User Added Successfully";
                 }
                 else
@@ -78,8 +89,8 @@ namespace Task_Manager.Controllers
             users obj = new users();
             List<Roles> role = new List<Roles>();
             role = db.roles.Where(p => p.enable == true).ToList();
-            
-            obj.roles=role;
+
+            obj.roles = role;
             var session = HttpContext.Current.Session;
             if (session["user"] != null)
             {
@@ -87,7 +98,7 @@ namespace Task_Manager.Controllers
                 session["user"] = null;
                 int ids = Convert.ToInt32(str);
                 var user = db.user.Where(p => p.id == ids).Select(o => new userview { uId = ids, name = o.user_Name, address = o.Address, email = o.Email, contact = o.MobileNo, pasword = o.Password, positionId = o.Roles_id.id }).FirstOrDefault();
-                obj.userview=user;
+                obj.userview = user;
             }
             return obj;
         }
@@ -97,11 +108,16 @@ namespace Task_Manager.Controllers
         [Route("/api/UserApi/"), HttpDelete]
         public String delete(int id)
         {
+            var sessionId = HttpContext.Current.Session;
+            string updatedid = sessionId["UserID"].ToString();
             var user = db.user.Where(p => p.id == id).FirstOrDefault().Enable = false;
-
+           
             if (db.SaveChanges() == 1)
             {
+                Log log = new Log();
+                log.Delete("Users", id, updatedid);
                 return "You Want To Delete This User ?";
+               
             }
             else
             {

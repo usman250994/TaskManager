@@ -79,6 +79,10 @@ E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migra
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.statusDocuments.resources
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.isClose.resources
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.dontknow.resources
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.auditlog.resources
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.audit.resources
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.vendor.resources
+E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.Migrations.note.resources
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.csproj.GenerateResource.Cache
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.dll
 E:\Visual Studio\Projects\Task Manager\Task Manager\obj\Debug\Task_Manager.pdb

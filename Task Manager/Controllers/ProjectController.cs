@@ -34,7 +34,7 @@ namespace Task_Manager.Controllers
         }
         public ActionResult ViewProject()
         {
-            
+
             if (Session["role_id"] == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -43,7 +43,7 @@ namespace Task_Manager.Controllers
             var roles_Id = Session["role_id"].ToString();
             string userName = Session["username"].ToString();
             ViewData["userName"] = userName;
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
             {
                 ViewData["id"] = roles_Id;
                 return View();
@@ -64,7 +64,7 @@ namespace Task_Manager.Controllers
             ViewData["userName"] = userName;
             Session["task_id"] = null;
             var roles_Id = Session["role_id"].ToString();
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
             {
                 ViewData["id"] = roles_Id;
                 return View();

@@ -12,12 +12,17 @@ namespace Task_Manager.Controllers
 
         public ActionResult Index()
         {
-           
-            if (Session["role_id"] == null)
+            if ( Session["role_id"].ToString() == "1")
+            {
+
+                ViewData["id"] = 1;
+                return View();
+            }
+            else
             {
                 return RedirectToAction("Index", "Home");
+
             }
-            return View();
         }
     }
 }

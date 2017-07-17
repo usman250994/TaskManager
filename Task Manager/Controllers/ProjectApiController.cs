@@ -13,7 +13,7 @@ namespace Task_Manager.Controllers
 {
     public class ProjectApiController : ApiController
     {
-
+        Log log = new Log();
         TaskContext db = new TaskContext();
 
         public String CreateProj(tempProj proji)
@@ -46,17 +46,19 @@ namespace Task_Manager.Controllers
             if (pro != null)
             {
                 var cusDet = db.customer_contact_detail.Find(pro.customerContactDetail.customerContactDetailId);
-                var user = db.user.Find(pro.projectManager.id);
-                var user1 = db.user.Find(projinst.projectManager.id);
+                var newUser = db.user.Single(c => c.id == projinst.projectManager.id);
                 pro.categroy = projinst.categroy;
                 db.Entry(pro).CurrentValues.SetValues(projinst);
 
                 projinst.customerContactDetail.customerContactDetailId = cusDet.customerContactDetailId;
                 db.Entry(cusDet).CurrentValues.SetValues(projinst.customerContactDetail);
-                db.Entry(user).CurrentValues.SetValues(user1);
+                pro.projectManager = newUser;
+
                 //edit user as project manager USMAN
                 if (db.SaveChanges() > 0)
                 {
+
+                    log.Update("Project", pro.id, id);
                     return "Project updated Succesfully";
                 }
                 else
@@ -74,10 +76,10 @@ namespace Task_Manager.Controllers
                 custdetail.project_manager = projinst.customerContactDetail.project_manager;
                 custdetail.contact_number = projinst.customerContactDetail.contact_number;
                 custdetail.email = projinst.customerContactDetail.email;
-                custdetail.address = projinst.customerContactDetail.address;             
-                db.customer_contact_detail.Add(custdetail);               
+                custdetail.address = projinst.customerContactDetail.address;
+                db.customer_contact_detail.Add(custdetail);
                 var custTemp = db.customer.Find(projinst.customer.customerId);
-                Project proj = new Project();               
+                Project proj = new Project();
                 proj.Created_By = createdUser;
                 proj.work_order = projinst.work_order;
                 proj.projectManager = db.user.Where(p => p.id == projinst.projectManager.id).FirstOrDefault();
@@ -96,6 +98,7 @@ namespace Task_Manager.Controllers
                 {
                     if (db.SaveChanges() > 0)
                     {
+                        log.Create("Project", proj.id, aid);
                         return "Done";
                     }
                     else
@@ -180,11 +183,36 @@ namespace Task_Manager.Controllers
         {
             List<ProjectGrid> toReturn = new List<ProjectGrid>();
             var session = HttpContext.Current.Session;
-
+            int uid = Convert.ToInt32(session["UserID"]); //userid
+            string role_Id = session["role_Id"].ToString();
             List<Project> Proj = new List<Project>();
 
+            if (role_Id == "1" || role_Id == "2")
+            {
+                Proj = db.project.Where(c => c.Enable == true).ToList();
+            }
 
-            Proj = db.project.Where(c => c.Enable == true).ToList();
+            else
+            {
+                var employee = db.user.Find(uid);
+                var projectToShow = db.tagging.Where(c => c.tasks.IsTicket == false && c.tasks.enable == true).ToList();
+                var projects = db.project.Where(c => c.projectManager.id == uid).ToList();
+
+                foreach (var entity in projectToShow)
+                {
+                    var user = entity.users.Where(c => c.id == uid).FirstOrDefault();
+                    if (user == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Proj.Add(entity.project);
+                    }
+                }
+                Proj.AddRange(projects);
+            }
+
 
             foreach (var entity in Proj)
             {
@@ -201,10 +229,16 @@ namespace Task_Manager.Controllers
                 toAdd.customerName = entity.customer.customer_name;
                 toAdd.userName = entity.Created_By.user_Name;
                 toAdd.Email = entity.customerContactDetail.email;
-                toAdd.PhoneNumber = "+92"+entity.customerContactDetail.contact_number;
+                toAdd.PhoneNumber = "+92" + entity.customerContactDetail.contact_number;
                 toAdd.productCategory = entity.categroy.name;
-
-                toAdd.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + entity.id + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + entity.id + ")'/><button  class='btn btn-success fa fa-file-word-o' onclick=\"upload(" + entity.id + ")\"></button>";
+                if (role_Id == "1")
+                {
+                    toAdd.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + entity.id + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + entity.id + ")'/><button  class='btn btn-success fa fa-file-word-o' onclick=\"upload(" + entity.id + ")\"></button>";
+                }
+                else
+                {
+                    toAdd.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + entity.id + ")'/> <button  class='btn btn-success fa fa-file-word-o' onclick='upload(" + entity.id + ")'/>";
+                }
 
                 toReturn.Add(toAdd);
             }
@@ -228,6 +262,10 @@ namespace Task_Manager.Controllers
 
             if (db.SaveChanges() > 0)
             {
+                var session = HttpContext.Current.Session;
+                string Deleteuserid = session["UserID"].ToString();
+                Log log = new Log();
+                log.Delete("Project", id, Deleteuserid);
                 return "Project Deleted Success!! ";
             }
             else

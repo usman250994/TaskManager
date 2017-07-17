@@ -67,11 +67,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
-                console.log(data);
                 filltable(data);
-                //for (var i = 0; i < data.length; i++) {
-                //    $("#dynamic-Grid").append("<tr><td>" + data[i].user_Name + "</td><td>" + data[i].Roles_id.role_name + "</td><td>" + data[i].Address + "</td><td>" + data[i].Email + "</td><td>" + data[i].MobileNo + "</td><td><button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick=\"preUpdate(" + data[i].id + ")\"></button> <button  class='btn btn-danger  fa fa-times' onclick=\"deleteUser(" + data[i].id + ")\"></button></td></tr>");
-                //}
             },
             error: function () { alert('Grid Not Load'); }
         });
@@ -107,27 +103,6 @@
                 alert('User not Updated');
             }
         });
-
-
-        //$.ajax({
-        //    url: '/api/UserApi/' + id,
-        //    type: 'GET',
-        //    contentType: "application/json;charset=utf-8",
-        //    dataType: "json",
-        //    success: function (data) {
-        //        console.log(data);
-        //        document.getElementById("user_name").value = data.user_Name;
-        //        document.getElementById("password").value = data.Password;
-        //        document.getElementById("Address").value = data.Address;
-        //        document.getElementById("MobileNo").value = data.MobileNo;
-        //        document.getElementById("Email").value = data.Email;
-        //        document.getElementById("id").value = data.id;
-        //        document.getElementById("bc").value = "Confirm to Udpdate";
-        //        document.getElementById("date").value = data.CreatedOn;
-        //        document.getElementById("enable").value = "true";
-        //    },
-        //    error: function () { alert('User not Added'); }
-        //});
     }
     function deleteUser(id) {
         $.ajax({

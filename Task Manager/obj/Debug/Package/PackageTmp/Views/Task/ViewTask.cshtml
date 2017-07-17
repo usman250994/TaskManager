@@ -111,7 +111,7 @@
                                         <div class="col-lg-offset-6 col-lg-6 ">
                                             <div>
                                                 <label style="color:Red" id="noti" class="">
-                                                   
+
                                                 </label>
                                             </div>
                                             <button class="btn btn-success" value="Add" onclick="addNote()"> Save </button>
@@ -153,20 +153,6 @@
 
     }
     $(document).ready(function () {
-        //if (sessionStorage.getItem('taskId') != null) {
-        //    alert(sessionStorage.getItem('taskId'));
-        //    //var table = $('#dataTables-exam').DataTable();
-        //    //$('#dataTables-exam tbody').on('click', 'tr', function () {
-        //    //    if ($(this).hasClass('selected')) {
-        //    //        $(this).removeClass('selected');
-        //    //    }
-        //    //    else {
-        //    //        table.$('tr.selected').removeClass('selected');
-        //    //        $(this).addClass('selected');
-        //    //    }
-        //    //});
-
-        //}
         $.ajax({
             async: false,
             url: '/api/TaskApi/',
@@ -176,13 +162,6 @@
             success: function (data) {
                 console.log(data);
                 filltable(data);
-
-
-                //test = [0, 1];
-                //var rowIndex = $('#dataTables-exam').dataTable().fnAddData(datas);
-                //var row = $('#dataTables-exam').dataTable().fnGetNodes(rowIndex);
-                //   $(tr).attr('id', '1');
-
             },
             error: function () {
 
