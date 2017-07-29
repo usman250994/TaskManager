@@ -31,6 +31,7 @@ namespace Task_Manager.Controllers
             Files addFile = new Files();
             addFile.createdBy = db.user.Find(uid);
             addFile.filetype = file.fileCode;
+            addFile.enable = true;
             addFile.createdOn = DateTime.Now;
             db.files.Add(addFile);
             if (db.SaveChanges() > 0)
@@ -46,7 +47,9 @@ namespace Task_Manager.Controllers
                 {
                     Directory.CreateDirectory(path);
                 }
-                addFile.fileName = path + "\\" + pid + filecode + id + "." + file.fileName.Split('.')[1];
+                string[] split = file.fileName.Split('.');
+
+                addFile.fileName = path + "\\" + pid + filecode + id + "." + split.Last();
                 db.SaveChanges();
                 db.project.Find(pid).projectFiles.Add(addFile);
                 db.SaveChanges();
@@ -63,6 +66,7 @@ namespace Task_Manager.Controllers
         {
             var sessionId = HttpContext.Current.Session;
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
+           // sessionId["project"] = null; // Usman Check
             int uid = Convert.ToInt32(sessionId["UserID"]); //userid
             Names name = new Names();
             name.pname = db.project.Where(p => p.id == pid).Select(p => p.Project_Name).FirstOrDefault();
@@ -108,16 +112,17 @@ namespace Task_Manager.Controllers
                     task.end_Date = entity.end_date.Date.ToShortDateString(); ;
                     toReturn.Add(task);
                 }
-                return new Object[] { toReturn };
+                return new Object[] { toReturn, name };
             }
             else if (id == 2)
             {
                 List<FilesTab> toReturn = new List<FilesTab>();
                 List<Files> list = new List<Files>();
-                list = db.project.Where(p => p.id == pid).Select(o => o.projectFiles).FirstOrDefault();
+                list = db.project.Where(p => p.id == pid).Select(z => z.projectFiles).FirstOrDefault().Where(i => i.enable == true).ToList();
+
+
                 foreach (var entity in list)
                 {
-
                     FilesTab files = new FilesTab();
                     files.fileCode = entity.fileCode;
                     files.file_type_name = db.filetype.Where(s => s.Filecode == entity.filetype).Select(s => s.Filename).FirstOrDefault();
@@ -128,12 +133,12 @@ namespace Task_Manager.Controllers
 
                     file = file.Substring(file.LastIndexOf("Files"));
                     file = file.Replace(" ", "%20");
-                    files.Download = "<a id='" + entity.id + "' href=" + @"\" + file + " download=" + entity.fileCode + "><p> Download</p></a>";
+                    files.Download = "<a id='" + entity.id + "' href=" + @"\" + file + " download=" + entity.fileCode + "><p> Download</p></a> <button class='btn btn-danger fa fa-times' onclick=Deletefile(" + entity.id + ")></button>";
                     toReturn.Add(files);
                 }
-                return new Object[] { toReturn };
+                return new Object[] { toReturn, name };
             }
-            else
+            else if (id == 3)
             {
                 List<TicketTab> toReturn = new List<TicketTab>();
                 var list = db.tagging.Where(p => p.project.id == pid && p.tasks.IsTicket == true).Select(o => o.tasks).ToList();
@@ -146,7 +151,41 @@ namespace Task_Manager.Controllers
                     files.description = entity.description;
                     toReturn.Add(files);
                 }
-                return new Object[] { toReturn };
+                return new Object[] { toReturn, name };
+            }
+            else
+            {
+                string nature;
+                var proj = db.project.Find(pid);
+                ProjectGrid toAdd = new ProjectGrid();
+                if (proj.Work == "1")
+                {
+                    nature = "Supply";
+                }
+                else if (proj.Work == "2")
+                {
+                    nature = "Installation";
+                }
+                else
+                {
+                    nature = "Supply & Installation";
+                }
+                toAdd.projectName = proj.Project_Name;
+                toAdd.createdOn = proj.Created_On.Date.ToShortDateString();
+                toAdd.startDate = proj.Start_Date.Date.ToShortDateString();
+                toAdd.endDate = proj.End_Date.Date.ToShortDateString();
+                toAdd.workorder = proj.work_order;
+                toAdd.address = proj.customerContactDetail.address;
+                toAdd.customerManager = proj.customerContactDetail.project_manager;
+                toAdd.projectManager = proj.projectManager.user_Name;
+                toAdd.customerName = proj.customer.customer_name;
+                toAdd.userName = proj.Created_By.user_Name;
+                toAdd.Email = proj.customerContactDetail.email;
+                toAdd.PhoneNumber = "+92" + proj.customerContactDetail.contact_number;
+                toAdd.productCategory = proj.categroy.name;
+                toAdd.natureofWork = nature;
+
+                return new Object[] { toAdd, name };
             }
         }
 

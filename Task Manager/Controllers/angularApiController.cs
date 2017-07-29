@@ -16,7 +16,6 @@ namespace Task_Manager.Controllers
     {
         TaskContext db = new TaskContext();
 
-
         [HttpGet]
         public updateTaskReturning get()
         {
@@ -28,7 +27,6 @@ namespace Task_Manager.Controllers
                 session["Task"] = null;
                 var task = db.task.Find(Convert.ToInt32(str));
 
-                //
                 List<tagUsersView> taggedUsers = new List<tagUsersView>();
                 var tag = db.tagging.Where(p => p.tasks.id == task.id).FirstOrDefault();
 
@@ -56,20 +54,16 @@ namespace Task_Manager.Controllers
             }
         }
 
-
         [HttpGet]
         public List<dropCust> getthem(int id)
         {
             List<dropCust> dropcustomer = new List<dropCust>();
-
             dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
-
             return dropcustomer;
         }
 
-
         [HttpDelete]
-        public void statusoftask(status stat)
+        public void statusoftask(filestatus stat)
         {
             // **************************** Adding File In StatusDocument DB*************
             var Session = HttpContext.Current.Session;
@@ -129,15 +123,13 @@ namespace Task_Manager.Controllers
             db.SaveChanges();
         }
 
-
         [HttpPost]
         public List<dropProd> gethem(int id)
         {
             List<dropProd> dropproject = new List<dropProd>();
-            dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+            dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.work_order + " - " + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
             return dropproject;
         }
-
 
         [HttpPost]
         public List<object> find()

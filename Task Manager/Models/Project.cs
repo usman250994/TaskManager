@@ -9,12 +9,9 @@ namespace Task_Manager.Models
 {
     public class Project
     {
-
-        
         public Project()
         {
             projectFiles = new List<Files>();
-           
         }
         public int id { get; set; }
         public string Project_Name { get; set; }
@@ -22,14 +19,16 @@ namespace Task_Manager.Models
         public virtual Users Created_By { get; set; }
         public DateTime Created_On { get; set; }
         public DateTime Start_Date { get; set; }
-        public DateTime End_Date { get; set; }   
+        public DateTime End_Date { get; set; }
+        public string Work { get; set; }
         public virtual Customer customer { get; set; }
         public virtual CustomerContactDetail customerContactDetail { get; set; }
         public List<Files> projectFiles { get; set; }
         public virtual Users projectManager { get; set; }
         public bool Enable { get; set; }
+        public virtual Status status{ get; set; }
         public virtual Category categroy { get; set; }
-        
-        
+
+
     }
 }

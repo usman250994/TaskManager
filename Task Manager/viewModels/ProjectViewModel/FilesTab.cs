@@ -13,6 +13,7 @@ namespace Task_Manager.viewModels.Project
         public string uploaded_date { get; set; }
         public string uploaded_time { get; set; }
         public string Download { get; set; }
-       
+
+
     }
 }

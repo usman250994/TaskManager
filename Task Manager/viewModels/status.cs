@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Task_Manager.viewModels
 {
-    public class status
+    public class filestatus
     {
 
         public int value { get; set; }

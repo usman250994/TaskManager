@@ -13,6 +13,7 @@ namespace Task_Manager.Models
         public String filetype { get; set; }
         public DateTime createdOn { get; set; }
         public virtual Users createdBy { get; set; }
+        public bool enable { get; set; }
       
     }
 }

@@ -39,16 +39,18 @@
     </div>
 
     <!-- /.row -->
-    <div class="container">
+    <div class="container" id="xyz">
 
 
         <ul class="tabs">
-            <li class="tab-link current" data-tab="tab-1" onclick="call(0)">Team</li>
+            <li class="tab-link current" data-tab="tab-5" onclick="call(4)">Project</li>
+            <li class="tab-link  " data-tab="tab-1" onclick="call(0)">Team</li>
             <li class="tab-link " data-tab="tab-2" onclick="call(1)">Task</li>
             <li class="tab-link" data-tab="tab-3" onclick="call(2)">Files</li>
             <li class="tab-link" data-tab="tab-4" onclick="call(3)">Ticket</li>
+
         </ul>
-        <div id="tab-1" class="tab-content overflow current">
+        <div id="tab-1" class="tab-content overflow  ">
 
             @************************************* Team ********************************************@
             <table class="table table-striped table-bordered table-hover" id="dataTables-exampl" style="width:100%!important">
@@ -110,9 +112,88 @@
                 <tbody id="dynamic-Grid"></tbody>
             </table>
         </div>
-        <div id="uplodbtn">
-            <button type="button" class="btn_login" data-toggle="modal" data-target="#myModal" id="btn" onclick="myFunction()">Upload File</button>
+        @************************************* Project ********************************************@
+        <div id="tab-5" class="tab-content overflow current">
+            <table class="table  table-striped table-bordered table-hover">
+                <tbody>
+                    <tr>
+                        <td>Work Order</td>
+                        <td id="workorder"></td>
+                    </tr>
+                    <tr>
+                        <td>Product</td>
+                        <td id="product"></td>
+
+                    </tr>
+                    <tr>
+                        <td>Nature Of Work</td>
+                        <td id="worktype"></td>
+
+                    </tr>
+                    <tr>
+                        <td>Customer</td>
+                        <td id="Customer"></td>
+
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td id="name"> </td>
+
+                    </tr>
+                    <tr>
+                        <td>Created On</td>
+                        <td id="createdon"> </td>
+
+                    </tr>
+                    <tr>
+                        <td>Start Date</td>
+                        <td id="sdaTE"> </td>
+
+                    </tr>
+                    <tr>
+                        <td>End Date</td>
+                        <td id="edate"> </td>
+
+                    </tr>
+                    <tr>
+                        <td>Project Manager</td>
+                        <td id="projManager"> </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>Customer Manager</td>
+                        <td id="custmanager"> </td>
+
+                    </tr>
+                    <tr>
+                        <td>Customer Email</td>
+                        <td id="custEmail"> </td>
+
+                    </tr>
+                    <tr>
+                        <td>Customer Mobile No</td>
+                        <td id="custMObile"> </td>
+
+                    </tr>
+                    <tr>
+                        <td>Customer Address</td>
+                        <td id="custAdd"> </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+
+
         </div>
+        <div class="row">
+            <div class="pull-left" id="uplodbtn">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="btn" onclick="myFunction()">Upload File</button>
+                <button type="button" class="btn btn-primary btn-lg" onclick="immediateTask()" style="margin-top:20px">Add Task</button>
+            </div>
+        </div>
+
     </div><!-- container -->
 </div>
 <div id="myModal" class="modal fade" role="dialog">
@@ -171,21 +252,21 @@
                                         <button class="btn btn-success" value="Add" onclick="Add()"> Save </button>
                                     </div>
                                 </div>
-                                <!-- /.col-lg-6 (nested) -->
-                                <!-- /.col-lg-6 (nested) -->
-                                <!-- /.row (nested) -->
+                              
+                          
                             </div>
-                            <!-- /.panel-body -->
+                      
                         </div>
-                        <!-- /.panel -->
+                  
                     </div>
-                    <!-- /.col-lg-12 -->
+            
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
         document.getElementById("project").style.backgroundColor = "bisque";
@@ -198,7 +279,7 @@
             $(this).addClass('current');
             $("#" + tab_id).addClass('current');
         })
-        call(0);
+        call(4);
     });
 
     function call(id) {
@@ -208,6 +289,10 @@
             type: 'GET',
             success: function (data) {
                 console.log(data);
+                document.getElementById("customername").innerHTML = data[1].cname;
+                document.getElementById("projectname").innerHTML = data[1].pname;
+                document.getElementById("work").innerHTML = data[1].workorder;
+
                 if (id == 0) {
                     table = $("#dataTables-exampl").DataTable({
                         "aaData": data[0],
@@ -219,12 +304,10 @@
                         ]
                     });
 
-                    document.getElementById("customername").innerHTML = data[1].cname;
-                    document.getElementById("projectname").innerHTML = data[1].pname;
-                    document.getElementById("work").innerHTML = data[1].workorder;
+                   
                 }
                 else if (id == 1) {
-                    $("#dataTables-examp").DataTable({
+                    table = $("#dataTables-examp").DataTable({
                         "aaData": data[0],
                         "bDestroy": true,
                         "aoColumns": [
@@ -237,7 +320,7 @@
 
                 }
                 else if (id == 2) {
-                    $("#dataTables-exam").DataTable({
+                  table=  $("#dataTables-exam").DataTable({
                         "aaData": data[0],
                         "bDestroy": true,
                         "aoColumns": [
@@ -251,8 +334,8 @@
                     });
 
                 }
-                else {
-                    $("#dataTables-exa").DataTable({
+                else if (id == 3) {
+                    table=     $("#dataTables-exa").DataTable({
                         "aaData": data[0],
                         "bDestroy": true,
                         "aoColumns": [
@@ -264,6 +347,22 @@
                     });
 
                 }
+                else {
+                    document.getElementById("workorder").innerHTML = data[0].workorder;
+                    document.getElementById("projManager").innerHTML = data[0].projectManager;
+                    document.getElementById("product").innerHTML = data[0].productCategory;
+                    document.getElementById("worktype").innerHTML = data[0].natureofWork;
+                    document.getElementById("Customer").innerHTML = data[0].customerName;
+                    document.getElementById("name").innerHTML = data[0].projectName;
+                    document.getElementById("createdon").innerHTML = data[0].createdOn;
+                    document.getElementById("sdaTE").innerHTML = data[0].startDate;
+                    document.getElementById("edate").innerHTML = data[0].endDate;
+                    document.getElementById("custmanager").innerHTML = data[0].customerManager;
+                    document.getElementById("custEmail").innerHTML = data[0].Email;
+                    document.getElementById("custMObile").innerHTML = data[0].PhoneNumber;
+                    document.getElementById("custAdd").innerHTML = data[0].address;
+                }
+
             },
             error: function () {
                 alert('Detail Updated');
@@ -290,6 +389,21 @@
             document.getElementById("images").value = "";
         }
     });
+
+    function Deletefile(id) {
+        $.ajax({
+            async: false,
+            url: '/api/projectupdate/' + id,
+            type: "Put",
+            success: function (data) {
+                alert("File Deleted");
+                call(2);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
 
     function Add() {
         document.getElementById("noti").value = "";
@@ -319,10 +433,9 @@
                         processData: false,
                         data: ImageData,
                         success: function (result) {
-                            // document.getElementById("noti").innerText = "File Saved Successfully";
-                            // document.getElementById("images").value = "";
-                            // document.getElementById("closeModal").click();
-                            // call(2);
+                            document.getElementById("noti").innerText = "File Saved Successfully!";
+
+
                         },
                         error: function (xhr, status, p3, p4) {
                             var err = "Error " + " " + status + " " + p3 + " " + p4;
@@ -340,9 +453,22 @@
             });
         }
     }
-    function myFunction() {
 
-        // document.getElementById("images").value = "";
+    function myFunction() {
         document.getElementById("noti").innerText = "";
+    }
+
+    function immediateTask() {
+        $.ajax({
+            async: false,
+            url: '/api/ProjectApi/' + 0,
+            type: "POST",
+            success: function (data) {
+                window.location.href = '/Task/CreateTask';
+            },
+            error: function () {
+                alert("error");
+            }
+        });
     }
 </script>

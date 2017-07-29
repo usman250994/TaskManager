@@ -38,17 +38,24 @@ namespace Task_Manager.Controllers
                 {
                     active.Perform = db.user.Where(p => p.id == perfomid).Select(p => p.user_Name).FirstOrDefault();
                 }
+                else if (tablename == "Products")
+                {
+                    active.Perform = db.product.Where(p => p.id == perfomid).Select(p => p.product_name).FirstOrDefault();
+                }
+                else if (tablename == "Vendor")
+                {
+                    active.Perform = db.vendor.Where(p => p.id == perfomid).Select(p => p.vendorName).FirstOrDefault();
+                }
                 else
                 {
                     active.Perform = db.task.Where(p => p.id == perfomid).Select(p => p.task_name).FirstOrDefault();
                 }
-               
+
                 active.User = db.user.Where(p => p.id == user).Select(p => p.user_Name).FirstOrDefault();
                 active.Date = list[i].activityDate.ToString();
                 toReturn.Add(active);
             }
             return toReturn;
         }
-
     }
 }

@@ -186,6 +186,7 @@ namespace Task_Manager.Controllers
                 taskRes.bran_Code = tasks[i].branch_code;
                 taskRes.sms = tasks[i].sms;
                 taskRes.createdBy = tasks[i].Created_By.user_Name;
+                taskRes.created_Date = tasks[i].created_on.ToString();
                 taskRes.lastModify = tasks[i].LastModify.Date.ToShortDateString();
                 var projid = db.tagging.Where(c => c.tasks.id == ids).Select(p => p.project.id).FirstOrDefault();
                 var obj = db.project.Where(p => p.id == projid).Select(c => c.customer).FirstOrDefault();

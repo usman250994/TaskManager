@@ -12,6 +12,7 @@ namespace Task_Manager.Controllers
 {
     public class InventoryApiController : ApiController
     {
+        Log log = new Log();
         TaskContext db = new TaskContext();
         [HttpGet]
         public List<Category> dropdown()
@@ -24,7 +25,7 @@ namespace Task_Manager.Controllers
         [HttpPost]
         public string CreateProduct(requestproduct prod)
         {
-
+           
             if (System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
             {
                 var picture = System.Web.HttpContext.Current.Request.Files["logo"];
@@ -32,6 +33,7 @@ namespace Task_Manager.Controllers
 
             Product pro = new Product();
             var session = HttpContext.Current.Session;
+             string uid =session["UserID"].ToString();
             pro.enable = true;
             pro.barcode = prod.barcode;
             pro.brand = prod.brand;
@@ -68,6 +70,7 @@ namespace Task_Manager.Controllers
                     pro.image = "/Images/" + id + ".jpg";
                 }
                 db.SaveChanges();
+                log.Create("Products",pro.id,uid);
                 var sessionId = HttpContext.Current.Session;
                 sessionId["project"] = null;
                 return "Product Detail Added";
@@ -119,7 +122,7 @@ namespace Task_Manager.Controllers
         [HttpGet]
         public ViewProductDetail DetailProduct(int id)
         {
-            
+
             string type;
             var Session = HttpContext.Current.Session;
             string abc = Session["Product_id"].ToString();

@@ -207,6 +207,7 @@
     <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ProjectFilesUploadController.cs" />
+    <Compile Include="Controllers\projectUpdateContinuedController.cs" />
     <Compile Include="Controllers\projectupdateController.cs" />
     <Compile Include="Controllers\TaskApiController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
@@ -225,58 +226,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Log.cs" />
-    <Compile Include="Migrations\201706301026195_usman2.cs" />
-    <Compile Include="Migrations\201706301026195_usman2.Designer.cs">
-      <DependentUpon>201706301026195_usman2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706301232292_usman3.cs" />
-    <Compile Include="Migrations\201706301232292_usman3.Designer.cs">
-      <DependentUpon>201706301232292_usman3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707010745497_closingCompletingUsers.cs" />
-    <Compile Include="Migrations\201707010745497_closingCompletingUsers.Designer.cs">
-      <DependentUpon>201707010745497_closingCompletingUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707030739285_FilesCreatedBy.cs" />
-    <Compile Include="Migrations\201707030739285_FilesCreatedBy.Designer.cs">
-      <DependentUpon>201707030739285_FilesCreatedBy.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707040806181_partno.cs" />
-    <Compile Include="Migrations\201707040806181_partno.Designer.cs">
-      <DependentUpon>201707040806181_partno.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707050608355_addingprojectCaegory.cs" />
-    <Compile Include="Migrations\201707050608355_addingprojectCaegory.Designer.cs">
-      <DependentUpon>201707050608355_addingprojectCaegory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707060741032_statusDocuments.cs" />
-    <Compile Include="Migrations\201707060741032_statusDocuments.Designer.cs">
-      <DependentUpon>201707060741032_statusDocuments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707071256571_isClose.cs" />
-    <Compile Include="Migrations\201707071256571_isClose.Designer.cs">
-      <DependentUpon>201707071256571_isClose.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707080734494_dont know.cs" />
-    <Compile Include="Migrations\201707080734494_dont know.Designer.cs">
-      <DependentUpon>201707080734494_dont know.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707130657195_auditlog.cs" />
-    <Compile Include="Migrations\201707130657195_auditlog.Designer.cs">
-      <DependentUpon>201707130657195_auditlog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707130903072_audit.cs" />
-    <Compile Include="Migrations\201707130903072_audit.Designer.cs">
-      <DependentUpon>201707130903072_audit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707150912471_vendor.cs" />
-    <Compile Include="Migrations\201707150912471_vendor.Designer.cs">
-      <DependentUpon>201707150912471_vendor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707171031154_note.cs" />
-    <Compile Include="Migrations\201707171031154_note.Designer.cs">
-      <DependentUpon>201707171031154_note.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\Category.cs" />
@@ -291,6 +240,7 @@
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Requests.cs" />
     <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Tagging.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\TaskContext.cs" />
@@ -320,11 +270,13 @@
     <Compile Include="viewModels\ProjectGrid.cs" />
     <Compile Include="viewModels\ProjectInsert.cs" />
     <Compile Include="viewModels\ProjectViewModel\FilesTab.cs" />
+    <Compile Include="viewModels\ProjectViewModel\projectStatus.cs" />
     <Compile Include="viewModels\ProjectViewModel\taskTab.cs" />
     <Compile Include="viewModels\ProjectViewModel\TeamTab.cs" />
     <Compile Include="viewModels\ProjectViewModel\TicketTab.cs" />
     <Compile Include="viewModels\reqmessage.cs" />
     <Compile Include="viewModels\requestproduct.cs" />
+    <Compile Include="viewModels\responseCategory.cs" />
     <Compile Include="viewModels\responseInventory.cs" />
     <Compile Include="viewModels\responseListForMessage.cs" />
     <Compile Include="viewModels\responseMessage.cs" />
@@ -348,6 +300,7 @@
     <Compile Include="viewModels\users.cs" />
     <Compile Include="viewModels\userview.cs" />
     <Compile Include="viewModels\Vendor\CreateVendor.cs" />
+    <Compile Include="viewModels\Vendor\VendorDetail.cs" />
     <Compile Include="viewModels\Vendor\VendorDropdown.cs" />
     <Compile Include="viewModels\ViewChatAndDetail.cs" />
     <Compile Include="viewModels\ViewProductDetail.cs" />
@@ -552,7 +505,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\User\CreateUser.cshtml" />
-    <Content Include="Views\Task\CreateTask.cshtml" />
     <Content Include="Views\Task\ViewTask.cshtml" />
     <Content Include="Views\User\ViewUser.cshtml" />
     <Content Include="Views\Shared\_Home.cshtml" />
@@ -579,53 +531,14 @@
     <Content Include="Views\Vendor\CreateVendor.cshtml" />
     <Content Include="Views\Vendor\VendorContacts.cshtml" />
     <Content Include="Views\Vendor\ViewVendor.cshtml" />
+    <Content Include="Views\Shared\Procurement.cshtml" />
+    <Content Include="Views\Task\CreateTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706301026195_usman2.resx">
-      <DependentUpon>201706301026195_usman2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706301232292_usman3.resx">
-      <DependentUpon>201706301232292_usman3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707010745497_closingCompletingUsers.resx">
-      <DependentUpon>201707010745497_closingCompletingUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707030739285_FilesCreatedBy.resx">
-      <DependentUpon>201707030739285_FilesCreatedBy.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707040806181_partno.resx">
-      <DependentUpon>201707040806181_partno.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707050608355_addingprojectCaegory.resx">
-      <DependentUpon>201707050608355_addingprojectCaegory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707060741032_statusDocuments.resx">
-      <DependentUpon>201707060741032_statusDocuments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707071256571_isClose.resx">
-      <DependentUpon>201707071256571_isClose.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707080734494_dont know.resx">
-      <DependentUpon>201707080734494_dont know.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707130657195_auditlog.resx">
-      <DependentUpon>201707130657195_auditlog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707130903072_audit.resx">
-      <DependentUpon>201707130903072_audit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707150912471_vendor.resx">
-      <DependentUpon>201707150912471_vendor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707171031154_note.resx">
-      <DependentUpon>201707171031154_note.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

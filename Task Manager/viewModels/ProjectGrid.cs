@@ -22,6 +22,9 @@ namespace Task_Manager.viewModels
         public string PhoneNumber { get; set; }
         public string customerManager { get; set; }
         public string productCategory { get; set; }
+        public string natureofWork { get; set; }
+        public string status { get; set; }
         public string action { get; set; }
+        
     }
 }

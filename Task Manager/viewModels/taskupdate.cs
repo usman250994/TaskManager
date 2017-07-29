@@ -18,6 +18,9 @@ namespace Task_Manager.viewModels
         public string bCode { get; set; }           
         public bool sms { get; set; }
         public bool email { get; set; }
+        public bool fromProj { get; set; }
+        public string projectName { get; set; }
+        public string customerName { get; set; }
         public List<tagUsersView> tags { get; set; }
         public List<tagUsersView> list { get; set; }
         public List<dropCust> dropcustomer { get; set; }

@@ -24,6 +24,21 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div align="center">
+                @*<button class="btn btn-primary" onclick="statusWiseSort(0)">All</button>*@
+                <button class="btn btn-info" onclick="statusWiseSort(1)">Un Assigned</button>
+                <button class="btn btn-primary" onclick="statusWiseSort(2)">Advance Recived</button>
+                <button class="btn btn-success" onclick="statusWiseSort(3)">Equipment Deliverd</button>
+                <button class="btn btn-warning" onclick="statusWiseSort(4)">In Progress</button>
+                <button class="btn btn-danger" onclick="statusWiseSort(5)">Final Payment</button>
+                <button class="btn btn-danger" onclick="statusWiseSort(6)">OnHold</button>
+                <button class="btn btn-danger" onclick="statusWiseSort(7)">Completed</button>
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
@@ -38,6 +53,7 @@
                             <tr>
                                 <th>Work Order</th>
                                 <th>Product</th>
+                                <th>Nature Of Work</th>
                                 <th>Customer </th>
                                 <th>Name</th>
                                 <th>Created On</th>
@@ -48,6 +64,7 @@
                                 <th>Customer Email</th>
                                 <th>Customer Mobile</th>
                                 <th>Customer Address</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -67,7 +84,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-
             url: '/api/ProjectApi/',
             type: 'GET',
             contentType: "application/json;charset=utf-8",
@@ -81,12 +97,13 @@
 
     function filltable(datas) {
         $("#dataTables-exampl").DataTable({
-            "aaSorting":[5, 'asc'],
+            "aaSorting": [5, 'asc'],
             "pageLength": 25,
             "aaData": datas,
             "aoColumns": [
                 { "mDataProp": "workorder" },
                 { "mDataProp": "productCategory" },
+                { "mDataProp": "natureofWork" },
                 { "mDataProp": "customerName" },
                 { "mDataProp": "projectName" },
                 { "mDataProp": "createdOn" },
@@ -97,10 +114,12 @@
                 { "mDataProp": "Email" },
                 { "mDataProp": "PhoneNumber" },
                 { "mDataProp": "address" },
+                { "mDataProp": "status" },
                 { "mDataProp": "action" }
             ]
         });
     }
+
     function deleteUser(id, rId) {
         if (confirm('Are You Sure ? You Want to Delete Project')) {
             $.ajax({
@@ -143,5 +162,63 @@
         });
     }
 
+    function statusWiseSort(id) {
 
+        $.ajax({
+            async: false,
+            url: '/api/ProjectApi/' + id,
+            type: 'Delete',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                filltable(data);
+            },
+            error: function () {
+
+                alert('Grid Not Load');
+
+            }
+        });
+    }
+
+    function filltable(data) {
+        $("#dataTables-exampl").DataTable({
+            "bDestroy": true,
+            "aaSorting": [5, 'asc'],
+            "pageLength": 25,
+            "aaData": data,
+            "aoColumns": [
+                { "mDataProp": "workorder" },
+                { "mDataProp": "productCategory" },
+                { "mDataProp": "natureofWork" },
+                { "mDataProp": "customerName" },
+                { "mDataProp": "projectName" },
+                { "mDataProp": "createdOn" },
+                { "mDataProp": "startDate" },
+                { "mDataProp": "endDate" },
+                { "mDataProp": "projectManager" },
+                { "mDataProp": "customerManager" },
+                { "mDataProp": "Email" },
+                { "mDataProp": "PhoneNumber" },
+                { "mDataProp": "address" },
+                { "mDataProp": "status" },
+                { "mDataProp": "action" }
+            ]
+        });
+    }
+    function status(val, id) {
+        var model = { value: val, user: id };
+        $.ajax({
+            async: true,
+
+            url: '/api/ProjectApi/',
+            type: 'Delete',
+            data: JSON.stringify(model),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                console.log("success");
+            },
+            error: function () { console.log("Code Not Ok!"); }
+        });
+    }
 </script>

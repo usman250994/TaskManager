@@ -20,8 +20,9 @@ namespace Task_Manager.viewModels
         public string cEmail { get; set; }
         public string cAddress { get; set; }
         public int categoryID { get; set; }
+        public string natureOfWork { get; set; }
         public List<tagUsersView> userList { get; set; }
         public List<dropCust> dropList { get; set; }
-        public List<Category> categoryList { get; set; }
+        public List<responseCategory> categoryList { get; set; }
     }
 }

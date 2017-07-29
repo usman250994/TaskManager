@@ -13,6 +13,7 @@ namespace Task_Manager.viewModels
         public DateTime endDate { get; set; }
         public int pmId { get; set; }
         public string pm { get; set; }
+        public string natureOfWork { get; set; }
         public string email { get; set; }
         public string address { get; set; }
         public string number { get; set; }

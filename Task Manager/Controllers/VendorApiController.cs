@@ -13,6 +13,7 @@ namespace Task_Manager.Controllers
 {
     public class VendorApiController : ApiController
     {
+        Log log = new Log();
         Vendorcreate vendorclass = new Vendorcreate();
         TaskContext db = new TaskContext();
 
@@ -30,15 +31,12 @@ namespace Task_Manager.Controllers
             toreturn.type = types;
             return toreturn;
         }
+
         [HttpPost]
         public string CreateVendor(CreateVendor create)
         {
             var sessionId = HttpContext.Current.Session;
             int userId = Convert.ToInt32(sessionId["UserID"]);
-
-
-
-
             //*************** Vendor Contact Detail *********************
             VendorContact vendor_Contacts = new VendorContact();
             vendor_Contacts.name = create.user_name;
@@ -53,7 +51,7 @@ namespace Task_Manager.Controllers
             //*************** Vendor Detail *********************
             Vendor vendors = new Vendor();
             vendors.vendorName = create.vendorName;
-            vendors.type = db.vendorType.Where(p => p.id == create.vendortype).FirstOrDefault();
+            vendors.type = db.vendorType.Find(create.payType.id);
             vendors.address = create.vendoraddress;
             vendors.city = create.vendorcity;
             vendors.mobNo = "+92" + create.vendormobNo;
@@ -65,19 +63,58 @@ namespace Task_Manager.Controllers
             vendors.isApprove = create.isApprove;
             vendors.creditLimit = create.vendorcreditLimit;
             vendors.days = create.vendordays;
+            vendors.enable = true;
             vendors.preferredCourier = create.vendorpreferredCourier;
-            vendors.syestemCategory = create.vendorsyestemCategory;
             vendors.vendorContact = vendor_Contacts;
             vendors.createdBy = db.user.Find(userId);
+            foreach (var item in create.vendorsystemCategory)
+            {
+                var items = db.caterory.Find(item.id);
+                vendors.categories.Add(items);
+            }
             db.vendor.Add(vendors);
+            //vendorCatogeries vend = new vendorCatogeries();
+
+            //vend.vendor = vendors;
+
+
+            //db.vendorCategories.Add(vend);
+
+
             if (db.SaveChanges() > 0)
             {
+                log.Create("Vendor", vendors.id, userId.ToString());
                 return "Vendor Added Successfully";
             }
             else
             {
                 return "Vendor Not Added";
             }
+        }
+
+        [HttpGet]
+        public List<VendorDetail> VendorGrid()
+        {
+            var vednorList = db.vendor.Where(p => p.enable == true).ToList();
+            List<VendorDetail> toReturn = new List<VendorDetail>();
+            foreach (var entity in vednorList)
+            {
+                VendorDetail vd = new VendorDetail();
+                vd.vendorName = entity.vendorName;
+                vd.vendorAddress = entity.address;
+                vd.vendorCity = entity.city;
+                vd.vendorEmail = entity.Email;
+                vd.vendorMobile = entity.mobNo;
+                vd.Note = entity.note;
+                vd.vendorCreditlimit = entity.creditLimit;
+                vd.vendorPrefereedcourier = entity.preferredCourier;
+                vd.vendorWebsite = entity.website;
+                vd.vendorDays = entity.days;
+                vd.vendorPaymenttype = entity.type.type_Name;
+                vd.vendorActive = entity.isActive;
+                toReturn.Add(vd);
+            }
+            return toReturn;
         }
     }
 }

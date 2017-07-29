@@ -18,7 +18,7 @@ namespace Task_Manager.Controllers
 
         // Grid Status Fill Dropdown
         [HttpPut]
-        public String fillDropDown(status stat)
+        public String fillDropDown(filestatus stat)
         {
             db.task.Find(stat.user).status = stat.value;
             if (db.SaveChanges() == 1)
@@ -77,7 +77,7 @@ namespace Task_Manager.Controllers
                 taskUpd.issue = returning.task.description;
                 taskUpd.list = db.user.Where(o => o.Enable == true).Select(o => new tagUsersView { id = o.id, name = o.user_Name }).ToList();
                 taskUpd.dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
-                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.work_order + "-" + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
                 taskUpd.tags = returning.tags;
                 taskUpd.sms = returning.task.sms;
                 taskUpd.email = returning.task.email;
@@ -92,7 +92,7 @@ namespace Task_Manager.Controllers
                 taskUpd.tags = taggedUsers;
                 taskUpd.list = db.user.Where(o => o.Enable == true).Select(o => new tagUsersView { id = o.id, name = o.user_Name }).ToList();
                 taskUpd.dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
-                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.work_order + "-" + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
                 return taskUpd;
             }
         }
@@ -163,7 +163,8 @@ namespace Task_Manager.Controllers
             {
 
                 var task = setTask(temptask);
-                // db.task.Add(task);
+                db.task.Add(task);
+                db.SaveChanges();
                 Tagging tag = new Tagging();
                 tag.tasks = task;
                 tag.project = db.project.Find(temptask.projectId);
@@ -176,10 +177,12 @@ namespace Task_Manager.Controllers
                 }
                 tag.users = usr;
                 db.tagging.Add(tag);
-                log.Update("Ticket", tag.id, id);
+                log.Create("Task", task.id, id);
+
             }
             if (db.SaveChanges() > 0)
             {
+
                 return "Ticket Added !!";
 
             }
@@ -333,13 +336,6 @@ namespace Task_Manager.Controllers
                             }
                         }
                     }
-                    //foreach (var entity in task)
-                    //{
-                    //    if (entity.created_on.Date == date)
-                    //    {
-                    //        tasks.Add(entity);
-                    //    }
-                    //}
                 }
                 //Unassigned
                 else if (str == "tick_unassign")
@@ -351,34 +347,11 @@ namespace Task_Manager.Controllers
                     }
                     else
                     {
-
                         tasks = db.task.Where(c => c.enable == true && c.IsTicket == true && c.status == 0 && c.Created_By.id == createdBy.id).ToList();
 
-
-                        //
-                        //var tempTask = db.task.Where(c => c.enable == true && c.IsTicket == true && c.Created_By.id != createdBy.id).ToList();
-                        //foreach (var entity in tempTask)
-                        //{
-                        //    var tag = db.tagging.Where(p => p.tasks.id == entity.id).FirstOrDefault();
-
-                        //    for (int i = 0; i < tag.users.Count; i++)
-                        //    {
-                        //        if (tag.users[i].id == createdBy.id)
-                        //        {
-                        //            task.Add(entity);
-                        //        }
-                        //        break;
-                        //    }
-                        //}
                     }
 
-                    //foreach (var entity in task)
-                    //{
-                    //    if (entity.status == 0)
-                    //    {
-                    //        tasks.Add(entity);
-                    //    }
-                    //}
+
                 }
                 //Newly
                 else

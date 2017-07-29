@@ -19,6 +19,7 @@
 }
 <div id="wrapper">
     <!-- Navigation -->
+
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -63,7 +64,7 @@
                                             <input class="form-control" type="text" ng-model="project.pName" required="required">
                                         </div>
                                     </div>
-                                   
+
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
                                             <label>Product Category</label>
@@ -72,6 +73,17 @@
                                             <select ng-options="Category.name for Category in categories" ng-model="category" class="ddl"></select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-6 ">
+                                            <label>Nature Of Work</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <select ng-model="project.natureOfWork"
+                                                    ng-options="idx as choice for (idx, choice) in natureOfWork" class="ddl"></select>
+                                        </div>
+                                    </div>
+
+
                                     <div class="col-lg-12 spacing">
                                         <div class="col-lg-6 ">
                                             <label>Start Date</label>
@@ -113,7 +125,7 @@
                                         </div>
                                         <div class="col-lg-6 ">
                                             <div class="col-lg-2"><label class="abc">+92</label></div>
-                                            <div class="col-lg-10"><input class="form-control" type="text" ng-model="project.cContact" placeholder="3401234567" required="required"></div>
+                                            <div class="col-lg-10"><input class="form-control" type="number" ng-model="project.cContact" placeholder="3401234567" required="required"></div>
 
                                         </div>
                                     </div>
@@ -139,21 +151,20 @@
                                     </div>
 
                                 </div>
-                                <!-- /.col-lg-6 (nested) -->
-                                <!-- /.col-lg-6 (nested) -->
+
                             </div>
                         </form>
-                        <!-- /.row (nested) -->
+
                     </div>
-                    <!-- /.panel-body -->
+
                 </div>
-                <!-- /.panel -->
+
             </div>
-            <!-- /.col-lg-12 -->
+
         </div>
-        <!-- /.row -->
+
     </div>
-    <!-- /#page-wrapper -->
+
 </div>
 
 <script src="~/Scripts/angular.min.js"></script>
@@ -163,8 +174,10 @@
     var app = angular.module("project", ['multipleSelect']);
 
     app.controller("projectctrl", function ($scope, $http) {
-
+        $scope.natureOfWork = ["Supply", "Installation", "Supply & Installation"];
         $scope.message = $http.get('/api/projectupdate/').then(function (response) {
+
+            console.log(response.data);
             $scope.project = response.data;
             $scope.customers = response.data.dropList;
             $scope.optionsList = response.data.userList;
@@ -177,7 +190,6 @@
                     }
                 }
             });
-
             var keepgoing = true;
             angular.forEach($scope.customers, function (item) {
                 if (keepgoing) {
@@ -187,7 +199,6 @@
                     }
                 }
             });
-
             if ($scope.project.pId > 0) {
 
                 $scope.project.sDate = new Date($scope.project.sDate);
@@ -197,42 +208,19 @@
                 $scope.project.sDate = new Date();
                 $scope.project.eDate = new Date();
             }
-        });
-
-
-        $scope.message = $http.get('/api/angularApi/' + 0).then(function (response) {
-            $scope.customers = response.data;
-            //
-            console.log(response.data);
             var keepgoing = true;
             angular.forEach($scope.customers, function (item) {
                 if (keepgoing) {
+
                     if ($scope.project.cId == item.id) {
+
                         $scope.customerId = item;
                         keepgoing = false;
                     }
                 }
             });
+            $scope.categories = response.data.categoryList;
 
-            //
-        });
-
-        $scope.message = $http.post('/api/angularApi/').then(function (response) {
-            console.log(response.data);
-            $scope.optionsList = response.data[0];
-            $scope.categories = response.data[1];
-            var keepgoing = true;
-            angular.forEach($scope.optionsList, function (item) {
-                if (keepgoing) {
-                    if ($scope.project.pmId == item.id) {
-                        $scope.userId = item;
-                        keepgoing = false;
-                    }
-                }
-            });
-
-
-            //
             var keepgoing = true;
             angular.forEach($scope.categories, function (item) {
                 if (keepgoing) {
@@ -242,18 +230,13 @@
                     }
                 }
             });
-
-
-
-            //
         });
-
-
-
         $scope.Add = function () {
+
             if ($scope.project.sDate >= $scope.project.eDate) {
                 alert("Please Enter Corrct Date ");
             }
+
             else {
                 $scope.new = {};
                 $scope.new.id = $scope.project.pId;
@@ -267,8 +250,9 @@
                 $scope.new.email = $scope.project.cEmail;
                 $scope.new.address = $scope.project.cAddress;
                 $scope.new.cId = $scope.customerId.id;
-                // ad the below in scope variable  when retreiving in api  at controller
-                $scope.new.categoryId= $scope.category.id;
+
+                $scope.new.categoryId = $scope.category.id;
+                $scope.new.natureOfWork = $scope.project.natureOfWork;
 
                 $scope.message = $http.post('/api/ProjectApi/', $scope.new).then(function (response) {
                     console.log(response.data);
@@ -280,4 +264,3 @@
         }
     });
 </script>
-

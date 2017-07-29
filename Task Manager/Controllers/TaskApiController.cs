@@ -19,7 +19,7 @@ namespace Task_Manager.Controllers
 
         // Grid Status Fill Dropdown
         [Route("/api/TaskApi/"), HttpPut]
-        public String fillDropDown(status stat)
+        public String fillDropDown(filestatus stat)
         {
             db.task.Find(stat.user).status = stat.value;
             if (stat.value == 0)
@@ -52,6 +52,8 @@ namespace Task_Manager.Controllers
         {
             updateTaskReturning returning = new updateTaskReturning();
             var session = HttpContext.Current.Session;
+            string roleid = session["role_id"].ToString();
+            int userId = Convert.ToInt32(session["UserID"]);
             if (session["Task"] != null)
             {
                 string str = session["Task"].ToString();
@@ -83,8 +85,17 @@ namespace Task_Manager.Controllers
                 taskUpd.sdate = returning.task.start_date.ToString();
                 taskUpd.edate = returning.task.end_date.ToString();
                 taskUpd.list = db.user.Where(o => o.Enable == true).Select(o => new tagUsersView { id = o.id, name = o.user_Name }).ToList();
+
                 taskUpd.dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
-                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                if (roleid == "1")
+                {
+                    taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.work_order + "-" + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+
+                }
+                else
+                {
+                    taskUpd.dropproject = db.project.Where(o => o.Enable == true && o.projectManager.id == userId && o.Created_By.id == userId).Select(o => new dropProd { name = o.work_order + "-" + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                }
                 taskUpd.tags = returning.tags;
                 taskUpd.sms = returning.task.sms;
                 taskUpd.email = returning.task.email;
@@ -92,12 +103,37 @@ namespace Task_Manager.Controllers
             }
             else
             {
+                //do something here for todays requirement
                 taskupdate taskUpd = new taskupdate();
                 List<tagUsersView> taggedUsers = new List<tagUsersView>();
                 taskUpd.tags = taggedUsers;
                 taskUpd.list = db.user.Where(o => o.Enable == true).Select(o => new tagUsersView { id = o.id, name = o.user_Name }).ToList();
                 taskUpd.dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
-                taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                if (roleid == "1")
+                {
+                    taskUpd.dropproject = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.work_order + "-" + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                }
+                else
+                {
+                    taskUpd.dropproject = db.project.Where(o => o.Enable == true && o.projectManager.id == userId || o.Created_By.id == userId).Select(o => new dropProd { name = o.work_order + "-" + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                }
+
+
+                if (session["customerForTask"] != null)
+                {
+                  
+                    int cid = Convert.ToInt32(session["customerForTask"]);
+                    session["customerForTask"] = null;
+                 int pid = Convert.ToInt32(session["project"]);
+                 taskUpd.projectName =db.project.Where(i => i.id == pid).Select(o => o.Project_Name).FirstOrDefault();
+                 taskUpd.customerName =db.customer.Where(p=>p.customerId==cid).Select(o=>o.customer_name).FirstOrDefault();
+                    taskUpd.fromProj = true; 
+
+                     taskUpd.dropproject.Clear();
+                       taskUpd.dropcustomer.Clear(); 
+                }
+                else { taskUpd.fromProj = false; }
+              
                 return taskUpd;
             }
         }
@@ -344,16 +380,23 @@ namespace Task_Manager.Controllers
                     var user = db.user.Find(temptask.tempUsers[i].id);
                     tagging.users.Add(user);
                 }
-               
+
                 log.Update("Task", taskdetail.id, id);
 
             }
             //create
             else
             {
-
+                if(temp.fromProj)
+                {
+                    temptask.projectId = Convert.ToInt32(sessionId["project"]);
+                    
+                }
                 var task = setTask(temptask);
-                // db.task.Add(task);
+                db.task.Add(task);
+
+                db.SaveChanges();
+
                 Tagging tag = new Tagging();
                 tag.tasks = task;
                 tag.project = db.project.Find(temptask.projectId);
@@ -366,11 +409,11 @@ namespace Task_Manager.Controllers
                 }
                 tag.users = usr;
                 db.tagging.Add(tag);
-                 log.Update("Task", tag.id, id);
+                log.Create("Task", task.id, id);
             }
             if (db.SaveChanges() > 0)
             {
-             
+
                 return "Task Added Successfully !!";
 
             }
