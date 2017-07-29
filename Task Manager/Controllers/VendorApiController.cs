@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Http;
 using Task_Manager.BLL;
 using Task_Manager.Models;
+using Task_Manager.viewModels;
 using Task_Manager.viewModels.Vendor;
 
 namespace Task_Manager.Controllers
@@ -22,8 +23,8 @@ namespace Task_Manager.Controllers
         {
             VendorDropdown toreturn = new VendorDropdown();
             //For Category
-            List<Category> category = new List<Category>();
-            category = db.caterory.Where(p => p.enable == true).ToList();
+            List<dropCust> category = new List<dropCust>();
+            category = db.caterory.Where(p => p.enable == true).Select(o => new dropCust { id=o.id,name=o.name}).ToList();
             toreturn.systemCategory = category;
             //For Type
             List<VendorType> types = new List<VendorType>();

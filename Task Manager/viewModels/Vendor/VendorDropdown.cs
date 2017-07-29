@@ -8,7 +8,7 @@ namespace Task_Manager.viewModels.Vendor
 {
     public class VendorDropdown
     {
-        public List<Category> systemCategory { get; set; }
+        public List<dropCust> systemCategory { get; set; }
         public List<VendorType> type { get; set; }
     }
 }
