@@ -8,8 +8,18 @@ namespace Task_Manager.viewModels.Vendor
 {
     public class CreateVendor
     {
+
+
+        public CreateVendor()
+        
+        {
+            vendorsystemCategory = new List<dropCust>();
+
+
+        }
+        public int vendorid { get; set; }
         public string vendorName { get; set; }
-        public VendorType payType { get; set; }
+        public int payType { get; set; }
         public string vendoraddress { get; set; }
         public string vendorcity { get; set; }
         public string vendormobNo { get; set; }
@@ -23,7 +33,7 @@ namespace Task_Manager.viewModels.Vendor
         public string vendorcreditLimit { get; set; }
         public int vendordays { get; set; }
         public string vendorpreferredCourier { get; set; }
-        public List<Category> vendorsystemCategory { get; set; }
+        public List<dropCust> vendorsystemCategory { get; set; }
         public string createdBy { get; set; }
         public String user_name { get; set; }
         public string userregNo { get; set; }

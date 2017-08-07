@@ -149,7 +149,7 @@ namespace Task_Manager.Controllers
             string nature;
             List<Project> Proj = new List<Project>();
 
-            if (role_Id == "1" || role_Id == "2")
+            if (role_Id == "1" || role_Id == "2" || role_Id == "9")
             {
                 Proj = db.project.Where(c => c.Enable == true).ToList();
             }
@@ -210,26 +210,39 @@ namespace Task_Manager.Controllers
                 toAdd.natureofWork = nature;
 
                 //add if else OrderedParallelQuery whatever way to get which one is selected
+                if (role_Id != "9")
+                {
 
-                if (entity.status.id == 1)
-                    toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1' selected>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
-                else if (entity.status.id == 2)
-                    toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2' selected>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
-                else if (entity.status.id == 3)
-                    toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3' selected>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
-                else if (entity.status.id == 4)
-                    toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4' selected>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
-                else if (entity.status.id == 5)
-                    toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5' selected>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
-                else if (entity.status.id == 6)
-                    toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6' selected>OnHold</option><option value='7'>Completed</option></select>";
-                else
-                    toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7' selected >Completed</option></select>";
+                    if (entity.status.id == 1)
+                        toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1' selected>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
+                    else if (entity.status.id == 2)
+                        toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2' selected>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
+                    else if (entity.status.id == 3)
+                        toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3' selected>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
+                    else if (entity.status.id == 4)
+                        toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4' selected>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
+                    else if (entity.status.id == 5)
+                        toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5' selected>Final Payment </option><option value='6'>OnHold</option><option value='7'>Completed</option></select>";
+                    else if (entity.status.id == 6)
+                        toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6' selected>OnHold</option><option value='7'>Completed</option></select>";
+                    else
+                        toAdd.status = @"<select  onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='1'>Unassigned</option><option value='2'>Advance Received</option><option value='3'>Equipment Delivered</option><option value='4'>InProgress</option><option value='5'>Final Payment </option><option value='6'>OnHold</option><option value='7' selected >Completed</option></select>";
 
+                }
+                else {
+                    toAdd.status = "Not For Procurement";
+                
+                }
+               
                 if (role_Id == "1")
                 {
                     toAdd.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + entity.id + ")'/> <button  class='btn btn-danger  fa fa-times' onclick='deleteUser(" + entity.id + ")'/><button  class='btn btn-success fa fa-file-word-o' onclick=\"upload(" + entity.id + ")\"></button>";
                 }
+                else if (role_Id == "9")
+                {
+                    toAdd.action = @"<button  class='btn btn-success fa fa-file-word-o' onclick=\upload(" + entity.id + ")\"></button>";
+                }
+
                 else
                 {
                     toAdd.action = @"<button value='Update' class='btn btn-primary fa fa-cog' id='upd' onclick='preUpdate(" + entity.id + ")'/> <button  class='btn btn-success fa fa-file-word-o' onclick='upload(" + entity.id + ")'/>";

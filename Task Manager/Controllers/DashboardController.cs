@@ -78,16 +78,7 @@ namespace Task_Manager.Controllers
                 ViewBag.todayst = view[3];
                 ViewBag.unassignedt = view[4];
                 ViewBag.newlyt = view[5];
-                //foreach (var entity in tasks)
-                //{
-                //    if (entity.created_on.Date == date)
-                //    {
-                //        tasks.Add(entity);
-                //    }
-                //}
-                ///  working for tickets
-                ///  
-                //ended working for tickets 
+
                 return View();
             }
             else

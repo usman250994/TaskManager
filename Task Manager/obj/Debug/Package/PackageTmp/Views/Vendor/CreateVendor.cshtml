@@ -12,9 +12,13 @@
     {
         Layout = "~/Views/Shared/Normal.cshtml";
     }
-    else
+    else if (ViewData["id"].ToString() == "4")
     {
         Layout = "~/Views/Shared/CSR.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/Procurement.cshtml";
     }
 }
 <div id="wrapper" ng-app="vendor" ng-controller="vendorCtrl">
@@ -43,7 +47,7 @@
                                             <label>Code</label>
                                         </div>
                                         <div class="col-lg-6 ">
-                                            <label type="text" name="UpdID" hidden> </label>
+                                            <label type="text" ng-model="vendor.vendorid" hidden> </label>
                                             <input class="form-control" ng-model="vendor.V_code" disabled>
                                         </div>
                                     </div>
@@ -62,7 +66,7 @@
                                             <span style="color:red; font-size:18px">*</span>
                                         </div>
                                         <div class="col-lg-6">
-                                            <select ng-options="Pay.type_Name for Pay in pay" ng-model="vendor.payType" class="ddl" required="required" ></select>
+                                            <select ng-options="Pay.name for Pay in pay" ng-model="vendor.payType" class="ddl" required="required"></select>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -91,7 +95,7 @@
                                         <div class="col-lg-6">
                                             <div class="col-lg-2"><label class="abc">+92</label></div>
                                             <div class="col-lg-10">
-                                                <input class="form-control" type="number" ng-model="vendor.vendormobNo" placeholder="3001234567" required="required">
+                                                <input class="form-control" type="text" ng-model="vendor.vendormobNo" placeholder="3xxxxxxxxx" required="required">
                                             </div>
                                         </div>
                                     </div>
@@ -100,7 +104,7 @@
                                             <label>Telephone No.</label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input class="form-control" type="number" ng-model="vendor.vendorteleNo">
+                                            <input class="form-control" type="text" ng-model="vendor.vendorteleNo">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -157,8 +161,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /.col-lg-6 (nested) -->
-                                    <!-- /.col-lg-6 (nested) -->
+
                                 </div>
                                 <!-- /.row (nested) -->
                             </div>
@@ -230,7 +233,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="col-lg-2"><label class="abc">+92</label></div>
-                                            <div class="col-lg-10"><input class="form-control" type="number" ng-model="vendor.usermobNo" placeholder="3001234567" required="required"></div>
+                                            <div class="col-lg-10"><input class="form-control" type="text" ng-model="vendor.usermobNo" placeholder="3xxxxxxxxx" required="required"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -238,7 +241,7 @@
                                             <label>Telephone No. </label>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input class="form-control" type="number" ng-model="vendor.usertelephoneNo">
+                                            <input class="form-control" type="text" ng-model="vendor.usertelephoneNo">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 spacing">
@@ -338,7 +341,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+
                                 </div>
                                 @**********************************************************End Vendor Evaluation **************************************************************@
 
@@ -366,24 +369,29 @@
     var app = angular.module("vendor", ['multipleSelect']);
     app.controller("vendorCtrl", function ($scope, $http) {
         $scope.message = $http.get('/api/VendorApi/' + 1).then(function (response) {
-            console.log(response.data);
             $scope.data = response.data;
             $scope.pay = $scope.data.type;
             $scope.inventoryTypes = $scope.data.systemCategory;
+            if ($scope.data.vend != null) {
+                $scope.vendor = $scope.data.vend;
+                angular.forEach($scope.pay, function (item) {
+                    if (item.id == $scope.vendor.payType) {
+                        $scope.vendor.payType = item;
+                    }
+                });
+            }
         });
 
         $scope.Add = function () {
-            console.log($scope.vendor);
-            console.log($scope.vendor.isApprove);
-            console.log($scope.vendor.isActive);
-
-            console.log($scope.vendor);
-            //You have to send $scope.vendor in this api. Already validated
-            $scope.message = $http.post('/api/VendorApi/', $scope.vendor).then(function (response) {
-                alert("Vendor Added Sucessfully");
-                console.log(response.data);
-                console.log("bye");
-            });
+            if ($scope.vendor.vendormobNo.length != 10 || $scope.vendor.usermobNo.length != 10) {
+                alert("Please Enter Correct Mobile Number.")
+            }
+            else {
+                $scope.vendor.payType = $scope.vendor.payType.id;
+                $scope.message = $http.post('/api/VendorApi/', $scope.vendor).then(function (response) {
+                    alert("Sucessfully");
+                });
+            }
         }
     });
 

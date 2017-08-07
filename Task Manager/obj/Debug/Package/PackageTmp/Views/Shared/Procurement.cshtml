@@ -87,50 +87,13 @@
 
                         @Html.ActionLink("Dashboard", "Index", "Dashboard")
                     </li>
-                    <li>
 
-                        @Html.ActionLink("Last Activity", "Index", "ActivityLog")
-                    </li>
-                    <li>
-                        <a><i class="fa fa-user-plus fa-fw"></i> Customer<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-
-                                @Html.ActionLink("Create Customer", "CreateCustomer", "Customer")
-
-                            </li>
-                            <li>
-                                @Html.ActionLink("View Customer", "ViewCustomer", "Customer")
-
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
                     <li>
                         <a id="project"><i class="fa fa-building fa-fw"></i> Projects <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                @Html.ActionLink("Create Projects", "CreateProject", "Project")
-                            </li>
-                            <li>
                                 @Html.ActionLink("View Projects", "ViewProject", "Project")
-
                             </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a><i class="fa fa-users fa-fw"></i> Users<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                @Html.ActionLink("Create User", "CreateUser", "User")
-
-                            </li>
-                            <li>
-                                @Html.ActionLink("View User", "ViewUser", "User")
-
-                            </li>
-
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
@@ -138,12 +101,7 @@
                         <a id="task"><i class="fa fa-edit fa-fw"></i> Task<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                @Html.ActionLink("Create Task", "CreateTask", "Task")
-
-                            </li>
-                            <li>
                                 @Html.ActionLink("View Task", "ViewTask", "Task")
-
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -152,12 +110,7 @@
                         <a id="ticket"><i class="fa fa-edge fa-fw"></i> Ticketing<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                @Html.ActionLink("Create Ticket", "CreateTicket", "Ticket")
-
-                            </li>
-                            <li>
                                 @Html.ActionLink("View Ticket", "ViewTicket", "Ticket")
-
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -187,9 +140,9 @@
                             <li>
                                 @Html.ActionLink("Vendor Detail", "ViewVendor", "Vendor")
                             </li>
-                            <li>
-                                @Html.ActionLink("Vendor Contact Detail", "VendorContacts", "Vendor")
-                            </li>
+                            @*<li>
+                                    @Html.ActionLink("Vendor Contact Detail", "VendorContacts", "Vendor")
+                                </li>*@
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>

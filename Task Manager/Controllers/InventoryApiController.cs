@@ -15,10 +15,10 @@ namespace Task_Manager.Controllers
         Log log = new Log();
         TaskContext db = new TaskContext();
         [HttpGet]
-        public List<Category> dropdown()
+        public List<dropCust> dropdown()
         {
-            List<Category> cat = new List<Category>();
-            cat = db.caterory.ToList();
+            List<dropCust> cat = new List<dropCust>();
+            cat = db.caterory.Where(o=>o.enable==true).Select(o => new dropCust{ id=o.id,name=o.name}).ToList();
             return cat;
         }
 

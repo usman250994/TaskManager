@@ -43,7 +43,7 @@ namespace Task_Manager.Controllers
             var roles_Id = Session["role_id"].ToString();
             string userName = Session["username"].ToString();
             ViewData["userName"] = userName;
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"||roles_Id=="9"))
             {
                 ViewData["id"] = roles_Id;
                 return View();

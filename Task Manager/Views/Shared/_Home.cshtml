@@ -149,7 +149,7 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a id="ticket"><i class="fa fa-edge fa-fw"></i> Ticketing<span class="fa arrow"></span></a>
+                        <a id="ticket"><i class="fa fa-ticket"></i> Ticketing<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 @Html.ActionLink("Create Ticket", "CreateTicket", "Ticket")
@@ -163,7 +163,7 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a><i class="fa fa-user-plus fa-fw"></i> Product<span class="fa arrow"></span></a>
+                        <a><i class=" fa fa-product-hunt"></i> Product<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
 
@@ -178,7 +178,7 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a><i class="fa fa-edge fa-fw"></i> Vendors<span class="fa arrow"></span></a>
+                        <a><i class="fa fa-window-restore"></i> Vendors<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 @Html.ActionLink("Create Vendor", "CreateVendor", "Vendor")
@@ -187,13 +187,22 @@
                             <li>
                                 @Html.ActionLink("Vendor Detail", "ViewVendor", "Vendor")
                             </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a><i class="fa fa-newspaper-o"></i> Requisition<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
                             <li>
-                                @Html.ActionLink("Vendor Contact Detail", "VendorContacts", "Vendor")
+                                @Html.ActionLink("Create Requisition", "CreateRequisition", "Requisition")
+
+                            </li>
+                            <li>
+                                @Html.ActionLink("Requisition Detail", "ViewRequisition", "Requisition")
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
-
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

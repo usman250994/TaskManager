@@ -66,7 +66,7 @@ namespace Task_Manager.Controllers
         {
             var sessionId = HttpContext.Current.Session;
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
-           // sessionId["project"] = null; // Usman Check
+            // sessionId["project"] = null; // Usman Check
             int uid = Convert.ToInt32(sessionId["UserID"]); //userid
             Names name = new Names();
             name.pname = db.project.Where(p => p.id == pid).Select(p => p.Project_Name).FirstOrDefault();
@@ -189,5 +189,11 @@ namespace Task_Manager.Controllers
             }
         }
 
+
+        [HttpPost]
+        public string Requisition(int id)
+        {
+            return "Done";
+        }
     }
 }

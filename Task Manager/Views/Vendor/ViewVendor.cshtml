@@ -12,9 +12,13 @@
     {
         Layout = "~/Views/Shared/Normal.cshtml";
     }
-    else
+    else if (ViewData["id"].ToString() == "4")
     {
         Layout = "~/Views/Shared/CSR.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/Procurement.cshtml";
     }
 }
 <div id="page-wrapper">
@@ -40,7 +44,7 @@
                                 <th>Type</th>
                                 <th>Address</th>
                                 <th>City</th>
-                                <th>Mobile No. </th>                           
+                                <th>Mobile No. </th>
                                 <th>Email</th>
                                 <th>Website</th>
                                 <th>Active</th>
@@ -48,7 +52,8 @@
                                 <th>Prefereed Courier</th>
                                 <th>Days</th>
                                 <th>Note</th>
-                               
+                                <th>Action</th>
+
                             </tr>
                         </thead>
                         <tbody id="dynamic-Grid"></tbody>
@@ -96,7 +101,38 @@
                 { "mDataProp": "vendorPrefereedcourier" },
                 { "mDataProp": "vendorDays" },
                 { "mDataProp": "Note" },
+                { "mDataProp": "action" }
             ]
+        });
+    }
+
+
+    function DetailVendor() {
+        alert("Detail")
+    }
+    function DeleteVendor(id) {
+        $.ajax({
+            url: '/api/VendorApi/' + id,
+            type: 'DELETE',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                alert('Vendor Deleted');
+            },
+            error: function () { alert('Vendor Not Deleted'); }
+        });
+    }
+    function UpdateVendor(id) {
+        $.ajax({
+            url: '/api/VendorApi/' + id,
+            type: 'POST',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                window.location.href = 'CreateVendor';
+
+            },
+            error: function () { alert('Vendor Not Update'); }
         });
     }
 </script>

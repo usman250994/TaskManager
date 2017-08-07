@@ -9,6 +9,7 @@ namespace Task_Manager.Controllers
     public class VendorController : Controller
     {
         // GET: Vendor
+
         public ActionResult CreateVendor()
         {
             if (Session["role_id"] == null)
@@ -19,7 +20,7 @@ namespace Task_Manager.Controllers
             ViewData["userName"] = userName;
             var roles_Id = Session["role_id"].ToString();
             Session["task_id"] = null;
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"|| roles_Id=="9"))
             {
 
                 ViewData["id"] = roles_Id;
@@ -42,7 +43,7 @@ namespace Task_Manager.Controllers
             ViewData["userName"] = userName;
             var roles_Id = Session["role_id"].ToString();
             Session["task_id"] = null;
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"||roles_Id=="9"))
             {
 
                 ViewData["id"] = roles_Id;
@@ -64,7 +65,7 @@ namespace Task_Manager.Controllers
             ViewData["userName"] = userName;
             var roles_Id = Session["role_id"].ToString();
             Session["task_id"] = null;
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "9"))
             {
 
                 ViewData["id"] = roles_Id;

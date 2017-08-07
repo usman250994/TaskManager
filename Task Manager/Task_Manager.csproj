@@ -209,6 +209,8 @@
     <Compile Include="Controllers\ProjectFilesUploadController.cs" />
     <Compile Include="Controllers\projectUpdateContinuedController.cs" />
     <Compile Include="Controllers\projectupdateController.cs" />
+    <Compile Include="Controllers\RequisitionApiController.cs" />
+    <Compile Include="Controllers\RequisitionController.cs" />
     <Compile Include="Controllers\TaskApiController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\taskSortingApiController.cs" />
@@ -226,6 +228,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Log.cs" />
+    <Compile Include="Migrations\201708070559027_requisition_new.cs" />
+    <Compile Include="Migrations\201708070559027_requisition_new.Designer.cs">
+      <DependentUpon>201708070559027_requisition_new.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708070605413_requisition_issued.cs" />
+    <Compile Include="Migrations\201708070605413_requisition_issued.Designer.cs">
+      <DependentUpon>201708070605413_requisition_issued.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708070727527_requisition_issu.cs" />
+    <Compile Include="Migrations\201708070727527_requisition_issu.Designer.cs">
+      <DependentUpon>201708070727527_requisition_issu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\Category.cs" />
@@ -239,6 +253,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Requests.cs" />
+    <Compile Include="Models\Requisition.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Tagging.cs" />
@@ -276,6 +291,9 @@
     <Compile Include="viewModels\ProjectViewModel\TicketTab.cs" />
     <Compile Include="viewModels\reqmessage.cs" />
     <Compile Include="viewModels\requestproduct.cs" />
+    <Compile Include="viewModels\Requisition\createRequisition.cs" />
+    <Compile Include="viewModels\Requisition\dropdown.cs" />
+    <Compile Include="viewModels\Requisition\viewRequisition.cs" />
     <Compile Include="viewModels\responseCategory.cs" />
     <Compile Include="viewModels\responseInventory.cs" />
     <Compile Include="viewModels\responseListForMessage.cs" />
@@ -533,12 +551,25 @@
     <Content Include="Views\Vendor\ViewVendor.cshtml" />
     <Content Include="Views\Shared\Procurement.cshtml" />
     <Content Include="Views\Task\CreateTask.cshtml" />
+    <Content Include="Views\Requisition\CreateRequisition.cshtml" />
+    <Content Include="Views\Requisition\ViewRequisition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708070559027_requisition_new.resx">
+      <DependentUpon>201708070559027_requisition_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708070605413_requisition_issued.resx">
+      <DependentUpon>201708070605413_requisition_issued.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708070727527_requisition_issu.resx">
+      <DependentUpon>201708070727527_requisition_issu.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

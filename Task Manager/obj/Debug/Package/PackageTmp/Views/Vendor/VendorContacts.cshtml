@@ -1,7 +1,26 @@
 ﻿
 @{
     ViewBag.Title = "VendorContacts";
-    Layout = "~/Views/Shared/_Home.cshtml";
+    if (ViewData["id"].ToString() == "1")
+    {
+        Layout = "~/Views/Shared/_Home.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "2")
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "3")
+    {
+        Layout = "~/Views/Shared/Normal.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "4")
+    {
+        Layout = "~/Views/Shared/CSR.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/Procurement.cshtml";
+    }
 }
 
 <h2>VendorContacts</h2>

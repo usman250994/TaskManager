@@ -20,7 +20,7 @@ namespace Task_Manager.Controllers
             ViewData["userName"] = userName;
             var roles_Id = Session["role_id"].ToString();
             Session["task_id"] = null;
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"||roles_Id=="9"))
             {
                 ViewData["id"] = roles_Id;
                 return View();
@@ -41,7 +41,7 @@ namespace Task_Manager.Controllers
             ViewData["userName"] = userName;
             var roles_Id = Session["role_id"].ToString();
             Session["task_id"] = null;
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3" || roles_Id == "9"))
             {
                 ViewData["id"] = roles_Id;
                 return View();
@@ -63,7 +63,7 @@ namespace Task_Manager.Controllers
             string userName = Session["username"].ToString();
             ViewData["userName"] = userName;
             Session["task_id"] = null;
-            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3"))
+            if (Session["UserId"] != null && (roles_Id == "1" || roles_Id == "2" || roles_Id == "3" || roles_Id == "9"))
             {
                 ViewData["id"] = roles_Id;
                 return View();

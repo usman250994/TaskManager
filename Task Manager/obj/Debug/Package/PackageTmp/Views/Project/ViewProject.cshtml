@@ -1,5 +1,4 @@
 ﻿@{
-    ViewBag.Title = "ViewProject";
     if (ViewData["id"].ToString() == "1")
     {
         Layout = "~/Views/Shared/_Home.cshtml";
@@ -12,9 +11,13 @@
     {
         Layout = "~/Views/Shared/Normal.cshtml";
     }
-    else
+    else if (ViewData["id"].ToString() == "4")
     {
         Layout = "~/Views/Shared/CSR.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/Procurement.cshtml";
     }
 }
 <div id="page-wrapper">

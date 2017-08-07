@@ -28,7 +28,6 @@ namespace Task_Manager.Controllers
             else
             {
                 return RedirectToAction("Index", "Home");
-
             }
         }
         public ActionResult ViewTask()
