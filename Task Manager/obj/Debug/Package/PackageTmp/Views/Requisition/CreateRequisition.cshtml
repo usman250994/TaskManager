@@ -39,19 +39,21 @@
                         <div class="col-lg-12" style="padding-bottom:20px">
                             <div class="col-lg-4">
                                 <div class="col-lg-offset-3 col-lg-3"><h4>Serial No</h4></div>
-                                <div class="col-lg-6"><input class="form-control" id="serial" placeholder="8000" required="required" disabled></div>
+                                <div class="col-lg-6">
+                                    <input class="form-control" value="{{requisition.serialNo}} " disabled>
+                                </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="col-lg-offset-3 col-lg-3"> <h4>Customer</h4></div>
 
                                 <div class="col-lg-6">
-                                    <select class="form-control" ng-options="customer.name for customer in customers" ng-model="customerId" ng-change="selectionChange(this.customer.id)" required="required"></select>
+                                    <select class="form-control" ng-options="customer.name for customer in requisition.customer" ng-model="selectedCustomer" ng-change="selectProjects()" required></select>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="col-lg-offset-3 col-lg-3"><h4>Project</h4></div>
                                 <div class="col-lg-6">
-                                    <select class="form-control" ng-options="project.name for project in task.dropproject" ng-model="projectId"></select>
+                                    <select class="form-control" ng-options="project.name for project in selectedProject" ng-model="projectSelected" required></select>
                                 </div>
                             </div>
                             <div id="tab-2" class="tab-content overflow ">
@@ -72,20 +74,23 @@
 
                                     <tbody id="dynamic-Grid">
                                         <form ng-submit="submitRequis()">
-                                            <tr ng-repeat="item in items">
-                                                <td><input class="form-control" type="number" ng-model="$index+1" disabled></td>
-                                                <td><input class="form-control" type="text" ng-model="item.itemName" placeholder="Hard Disk" required="required"></td>
-                                                <td><input class="form-control" type="text" ng-model="item.itemCode" placeholder="H-2017" required="required"></td>
-                                                <td><input class="form-control" type="text" ng-model="item.units" placeholder="Kg/Ml" required="required"></td>
-                                                <td><input class="form-control" type="text" ng-model="item.quantity" placeholder="5" required="required"></td>
-                                                <td><input class="form-control" type="date" ng-model="item.date" placeholder="mm/dd/yyyy" required="required"></td>
-                                                <td><input class="form-control" type="text" ng-model="item.issueQuant" required="required"></td>
+                                            <tr ng-if="items.length>0" ng-repeat="item in items">
+                                                <td><input class="form-control" type="number" value={{$index+1}} disabled></td>
+                                                <td><input class="form-control" type="text" ng-model="item.itemName" placeholder="Item Description" ng-required="true"></td>
+                                                <td><input class="form-control" type="text" ng-model="item.itemCode" placeholder="H-2017" ng-required="true"></td>
+                                                <td><input class="form-control" type="text" ng-model="item.units" placeholder="Kg/Ml" ng-required="true"></td>
+                                                <td><input class="form-control" type="text" ng-model="item.quantity" placeholder="5" ng-required="true"></td>
+                                                <td><input class="form-control" type="date" ng-model="item.dateReq" placeholder="mm/dd/yyyy" ng-required="true"></td>
+                                                <td><input class="form-control" type="text" ng-model="item.issueQuant" ng-required="true"></td>
                                                 <td><button value="sub" class="btn btn-danger fa fa-minus" ng-click="removeItem($index)" /></td>
                                             </tr>
                                         </form>
                                     </tbody>
                                 </table>
-                                <div class="col-lg-12"><button class="btn btn-warning pull-right" ng-click="add()">Save </button></div>
+                                <center>
+                                    <div><button class="btn btn-warning center" ng-click="add()">Save </button></div>
+                                </center>
+
                             </div>
                         </div>
                     </div>
@@ -102,22 +107,64 @@
         app.controller("reqCtrl", function ($scope, $http) {
             $scope.message = $http.get('/api/RequisitionApi/' + 1).then(function (response) {
                 $scope.requisition = response.data;
-                $scope.customers = $scope.requisition.customer;
-                $scope.originalProjects = $scope.requisition.project;
+
             });
             $scope.items = [];
             $scope.addItem = function () {
-                var obj = { name: "", code: "", unit: "", quantity: "", dateReq: "", issueQuant: "" };
+                var obj = { "itemName": "", "itemCode": "", "units": "", "quantity": "", "dateReq": "", "issueQuant": "" };
                 $scope.items.push(obj);
+
             }
             $scope.removeItem = function (index) {
                 $scope.items.splice(index, 1);
             }
-            $scope.add = function () {
-                console.log($scope.items)
-                $scope.message = $http.post('/api/RequisitionApi/', $scope.items).then(function (response) {
-                    alert("Sucessfully");
+            $scope.selectProjects = function () {
+                var id = $scope.selectedCustomer.id;
+                $scope.selectedProject = [];
+                angular.forEach($scope.requisition.project, function (item) {
+                    if (item.custId == id) {
+                        $scope.selectedProject.push(item);
+                    }
                 });
             }
+            $scope.add = function () {
+                var keepGoing = true;
+                angular.forEach($scope.items, function (item, index) {
+                    if (keepGoing) {
+                        angular.forEach(item, function (value, key) {
+                            if (keepGoing) {
+                                if (value == "") {
+                                    keepGoing = false;
+                                    alert("Please Fill in the " + key + " field correctly of item number: " + index + 1);
+                                }
+                            }
+                        });
+
+
+                        //have to change format of date  then comparision will work
+                        var today = new Date();
+                        if (keepGoing) {
+                            if (item.dateReq <= today) {
+                                alert("Date required cannot be less than todays date. For Item Number: " + index + 1);
+                                keepGoing = false;
+                            }
+                        }
+                    }
+
+                });
+                if (keepGoing) {
+                    $scope.requisition.customerId = $scope.selectedCustomer.id;
+                    $scope.requisition.projectId = $scope.projectSelected.id;
+                    $scope.requisition.serialNo = $scope.requisition.serialNo;
+                    $scope.requisition.items = $scope.items;
+
+                    $scope.message = $http.post('/api/RequisitionApi/', $scope.requisition).then(function (response) {
+                        alert("Sucessfully");
+                        window.location.href = '/Requisition/ViewRequisition';
+                    });
+
+                }
+            }
+
         });
     </script>

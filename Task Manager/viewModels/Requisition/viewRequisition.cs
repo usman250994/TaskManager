@@ -8,7 +8,7 @@ namespace Task_Manager.viewModels.Requisition
     public class viewRequisition
     {
         public int id { get; set; }
-        public string Sno { get; set; }
+        public int serialNo { get; set; }
         public string customerName { get; set; }
         public string projectName { get; set; }
         public string itemName { get; set; }
@@ -24,6 +24,6 @@ namespace Task_Manager.viewModels.Requisition
         public string issuedBy { get; set; }
         public string issuedTo { get; set; }
         public string issuedDate { get; set; }
-        public bool enable { get; set; }
+        public string  action { get; set; }
     }
 }

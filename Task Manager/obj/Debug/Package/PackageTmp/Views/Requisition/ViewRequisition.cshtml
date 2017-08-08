@@ -63,8 +63,8 @@
                                 <th>Created By</th>
                                 <th>Approved By</th>
                                 <th>Approved Date</th>
-                                <th>Approved By</th>
-                                <th>Approved Date</th>
+                                <th>Issued By</th>
+                                <th>Issued Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -90,22 +90,11 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
-                console.log(data);
                 filltable(data);
-                console.log("hi");
             },
             error: function () { alert('Requisition grid not working'); }
         });
     });
-    //function filltable(datas) {
-    //    $("#dataTables-exampl").DataTable({
-    //        "aaData": datas,
-    //        "aoColumns": [
-    //
-    //    });
-
-    //}
-
     function filltable(datas) {
         $("#dataTables-exampl").DataTable({
             "pageLength": 25,
@@ -121,12 +110,27 @@
                 { "mDataProp": "issuedQuantity" },
                 { "mDataProp": "createdDate" },
                 { "mDataProp": "createdBy" },
+                { "mDataProp": "approvedBy" },
                 { "mDataProp": "approvedDate" },
+                { "mDataProp": "issuedBy" },
                 { "mDataProp": "issuedDate" },
-                { "mDataProp": "issuedTo" },
+                { "mDataProp": "action" }
             ]
         });
     }
-
+    function deleteRequisition(id) {
+        $.ajax({
+            async: false,
+            url: '/api/RequisitionApi/' + id,
+            type: 'DELETE',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                alert('Requisition Deleted');
+                location.reload();
+            },
+            error: function () { alert('Requisition Not Deleted'); }
+        });
+    }
 
 </script>

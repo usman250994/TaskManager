@@ -23,72 +23,115 @@ namespace Task_Manager.Controllers
             List<dropProd> dropProj = new List<dropProd>();
             dropProj = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.work_order + "-" + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
             toReturn.project = dropProj;
+            toReturn.serialNo = (db.requisition.Count() + 8000).ToString();
             return toReturn;
         }
         [HttpPost]
-        public void CreateRequisition(List<createRequisition> create)
+        public void CreateRequisition(createRequisition create)
         {
             var Session = HttpContext.Current.Session;
             int id = Convert.ToInt32(Session["UserID"]);
-            foreach (var entity in create)
+            Requisition req = new Requisition();
+            req.customer = db.customer.Find(create.customerId);
+            req.project = db.project.Find(create.projectId);
+            req.serialNo = create.serialNo;
+            req.createdBy = db.user.Find(id);
+            req.createdDate = DateTime.Now;
+            req.issued_received_Date = DateTime.Now;
+            req.approvedDate = DateTime.Now;
+            req.enable = true;
+            // now create requisitionItems
+
+            foreach (var entity in create.items)
             {
-                Requisition req = new Requisition();
-                req.customer = db.customer.Find(entity.customerid);
-                req.project = db.project.Find(entity.projectid);
-                req.Sno = entity.sno;
-                req.itemName = entity.itemName;
-                req.itemCode = entity.itemCode;
-                req.units = entity.units;
-                req.requiredQuantity = entity.quantity;
-                req.requiredDate = entity.date;
-                req.createdBy = db.user.Find(id);
-                req.createdDate = DateTime.Now;
-                req.approvedDate = DateTime.Now;
-                req.issuedDate = DateTime.Now;
-                req.enable = true;
-
-                db.requisition.Add(req);
-                db.SaveChanges();
+                requisitionItems items = new requisitionItems();
+                items.enable = true;
+                items.issuedQuanatity = entity.issueQuant;
+                items.itemCode = entity.itemCode;
+                items.itemName = entity.itemName;
+                items.requiredDate = entity.dateReq;
+                items.units = entity.units;
+                items.quantity = entity.quantity;
+                items.requisition = req;
+                db.requisitionItem.Add(items);
             }
-            //if (db.SaveChanges() > 0)
-            //{
-            //    return "Saved";
-            //}
-            //else
-            //{
-            //    return "Not Saved";
-            //}
-
+            db.requisition.Add(req);
+            db.SaveChanges();
         }
         [HttpGet]
-        public List< viewRequisition> Grid()
+        public List<viewRequisition> Grid()
         {
             List<viewRequisition> toReturn = new List<viewRequisition>();
-            var req = db.requisition.Where(a => a.enable == true).ToList();
-            viewRequisition view = new viewRequisition();
+            var req = db.requisition.Where(x => x.enable == true).ToList();
             foreach (var entity in req)
             {
-                view.Sno = entity.Sno;
+                var item = db.requisitionItem.Where(x => x.requisition.id == entity.id).ToList();
+                viewRequisition view = new viewRequisition();
+                if (item != null && item.Count > 0)
+                {
+                    List<string> list = new List<string>();
+                    for (int i = 0; i < item.Count; i++)
+                    {
+                        string item_name = item[i].itemName;
+                        string issuedQuanatity = item[i].issuedQuanatity;
+                        string itemCode = item[i].itemCode;
+                        string quantity = item[i].quantity;
+                        string units = item[i].units;
+                        view.itemName = view.itemName + item_name + ",";
+                        view.itemCode = view.itemCode + itemCode + ",";
+                        view.units = view.units + units + ",";
+                        view.requiredQuantity = view.requiredQuantity + quantity + ",";
+                        view.issuedQuantity = view.issuedQuantity + issuedQuanatity + ",";
+                        list.Add(item_name);
+                        list.Add(itemCode);
+                        list.Add(quantity);
+                        list.Add(units);
+                        list.Add(issuedQuanatity);
+                        view.requiredDate = item[i].requiredDate.ToShortDateString();
+                    }
+
+                }
+
+                view.serialNo = entity.serialNo;
                 view.customerName = entity.customer.customer_name;
                 view.projectName = entity.project.Project_Name;
-                view.itemName = entity.itemName;
-                view.itemCode = entity.itemCode;
-                view.units = entity.units;
-                view.requiredQuantity = entity.requiredQuantity;
-                view.requiredDate = entity.requiredDate.ToString();
-                view.issuedQuantity = entity.issuedQuanatity;
                 view.createdBy = entity.createdBy.user_Name;
-                view.createdDate = entity.createdDate.ToString();
-                view.approvedBy = entity.approvedBy.user_Name;
-                view.approvedDate = entity.approvedDate.ToString();
-                view.issuedBy = entity.issuedBy.user_Name;
-                view.issuedTo = entity.issuedTo.user_Name;
-                view.issuedDate = entity.issuedDate.ToString();
+                view.createdDate = entity.createdDate.ToShortDateString();
+                if (entity.approvedBy == null)
+                {
+                    view.approvedBy = "Not Approved";
+                    view.approvedDate = "Not Approved";
+                }
+                else
+                {
+                    view.approvedBy = entity.approvedBy.user_Name;
+                    view.approvedDate = entity.approvedDate.ToShortDateString();
+                }
+
+                if (entity.issuedBy == null)
+                {
+                    view.issuedBy = "Not Issued";
+                    view.issuedTo = "Not Issued";
+                    view.issuedDate = "Not Issued";
+                }
+                else
+                {
+                    view.issuedBy = entity.issuedBy.user_Name;
+                    view.issuedTo = entity.receivedBy.user_Name;
+                    view.issuedDate = entity.issued_received_Date.ToShortDateString();
+                }
+                view.action = @" <button  class='btn btn-danger  fa fa-times' onclick='deleteRequisition(" + entity.id + ")'/>";
                 toReturn.Add(view);
             }
             return toReturn;
         }
-
+        [HttpDelete]
+        public void DeleteRequisition(int id)
+        {
+            var req = db.requisitionItem.Find(id);
+            req.enable = false;
+            db.SaveChanges();
+        }
 
     }
 }

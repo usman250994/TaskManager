@@ -7,13 +7,22 @@ namespace Task_Manager.viewModels.Requisition
 {
     public class createRequisition
     {
-        public string sno { get; set; }
-        public int customerid { get; set; }
-        public int projectid { get; set; }
-        public string itemName { get; set; }
-        public string itemCode { get; set; }
-        public string units { get; set; }
-        public string quantity { get; set; }
-        public DateTime date { get; set; }
+        public int serialNo { get; set; }
+        public int customerId { get; set; }
+        public int projectId { get; set; }
+        public virtual List<reqItems> items { get; set; }
+
+        public class reqItems
+        {
+            public string itemName { get; set; }
+            public string itemCode { get; set; }
+            public string units { get; set; }
+            public string quantity { get; set; }
+            public string issueQuant { get; set; }
+            public DateTime dateReq { get; set; }
+        }
+        
+        
     }
+     
 }

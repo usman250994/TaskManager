@@ -9,8 +9,8 @@ namespace Task_Manager.Models
     public class TaskContext : DbContext
     {
         public TaskContext()
-          //  : base("Data Source=192.168.1.177; Initial Catalog=Task Manager; User Id=sa; Password=resco@1234; Integrated Security=False") // For Server
-        : base("Data Source=.; Initial Catalog=Task Manager; User Id=sa; Password=resco123!; Integrated Security=False") // For LocalDB
+            //: base("Data Source=192.168.1.177; Initial Catalog=Task Manager; User Id=sa; Password=resco@1234; Integrated Security=False") // For Server
+            : base("Data Source=.; Initial Catalog=Task Manager; User Id=sa; Password=resco123!; Integrated Security=False") // For LocalDB
         { }
 
         public DbSet<Roles> roles { get; set; }
@@ -35,6 +35,7 @@ namespace Task_Manager.Models
         public DbSet<VendorType> vendorType { get; set; }
         public DbSet<Status> status { get; set; }
         public DbSet<Requisition> requisition { get; set; }
+        public DbSet<requisitionItems> requisitionItem { get; set; }
     }
 
 

@@ -184,9 +184,9 @@
 
         $scope.selectionChange = function () {
             $scope.task.dropproject = [];
-            console.log(this.customerId);
+           
             var id = this.customerId.id;
-            console.log(id);
+      
             angular.forEach($scope.originalProjects, function (item) {
                 if (item.custId == id) {
        
