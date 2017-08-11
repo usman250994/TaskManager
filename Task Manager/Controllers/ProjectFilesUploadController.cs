@@ -64,6 +64,7 @@ namespace Task_Manager.Controllers
         [HttpGet]
         public object[] ViewFiles(int id)
         {
+
             var sessionId = HttpContext.Current.Session;
             int pid = Convert.ToInt32(sessionId["project"]);//projectid
             // sessionId["project"] = null; // Usman Check
@@ -109,7 +110,7 @@ namespace Task_Manager.Controllers
                     task.task_No = entity.id;
                     task.task_Name = entity.task_name;
                     task.start_Date = entity.start_date.Date.ToShortDateString();
-                    task.end_Date = entity.end_date.Date.ToShortDateString(); ;
+                    task.end_Date = entity.end_date.Date.ToShortDateString();
                     toReturn.Add(task);
                 }
                 return new Object[] { toReturn, name };
@@ -153,7 +154,7 @@ namespace Task_Manager.Controllers
                 }
                 return new Object[] { toReturn, name };
             }
-            else
+            else if (id == 4)
             {
                 string nature;
                 var proj = db.project.Find(pid);
@@ -187,13 +188,56 @@ namespace Task_Manager.Controllers
 
                 return new Object[] { toAdd, name };
             }
+            else
+            {
+                List<requisitionTab> toReturn = new List<requisitionTab>();
+                var req = db.requisition.Where(x => x.project.id == pid && x.enable == true).ToList();
+                foreach (var entity in req)
+                {
+                    var reqitem = db.requisitionItem.Where(x => x.requisition.id == entity.id && x.enable == true).Select(p => new requisitionItem { id = p.id, itemCode = p.itemCode, itemName = p.itemName, quantity = p.quantity }).ToList();
+
+                    foreach (var ent in reqitem)
+                    {
+                        requisitionTab toAdd = new requisitionTab();
+                        toAdd.itemName = ent.itemName;
+                        toAdd.itemCode = ent.itemCode;
+                        toAdd.qunantity = ent.quantity;
+                        toAdd.request = entity.createdBy.user_Name;
+                        toAdd.MRI = entity.serialNo;
+                        if (entity.approvedBy != null)
+                        {
+                            //toAdd.approve = ent.approvedBy.user_Name;
+                        }
+                        else
+                        {
+                            toAdd.approve = "Not Approve";
+                        }
+
+                        toAdd.view = @"<button  class='btn btn-primary  fa fa-comments' data-toggle='modal' data-target='#myModal1' onclick='viewRequisition(" + entity.id + ")'/>";
+                        toReturn.Add(toAdd);
+                    }
+                }
+                return new Object[] { toReturn, name };
+            }
         }
-
-
         [HttpPost]
-        public string Requisition(int id)
+        public Object Requisition(int id)
         {
-            return "Done";
+            List<requisitiontabodal> toReturn = new List<requisitiontabodal>();
+            List<requisitionItems> reqItem = new List<requisitionItems>();
+            var req = db.requisition.Find(id);
+            reqItem = db.requisitionItem.Where(x => x.requisition.id == req.id).ToList();
+            foreach (var entity in reqItem)
+            {
+                requisitiontabodal toAdd = new requisitiontabodal();
+                toAdd.itemName = entity.itemName;
+                toAdd.itemCode = entity.itemCode;
+                toAdd.qunantity = entity.quantity;
+                toAdd.approve = @"<input type='checkbox' ng-model='" + entity.approve+"' onclick='fillReqItems("+entity.id+")'>";
+              //  toAdd.view = @"<select onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='0'>Please Select </option><option value='1'>Approved</option></select>";
+                toReturn.Add(toAdd);       
+            }
+            return toReturn;       
         }
     }
 }

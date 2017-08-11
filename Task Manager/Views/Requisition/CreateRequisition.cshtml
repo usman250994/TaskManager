@@ -47,13 +47,21 @@
                                 <div class="col-lg-offset-3 col-lg-3"> <h4>Customer</h4></div>
 
                                 <div class="col-lg-6">
-                                    <select class="form-control" ng-options="customer.name for customer in requisition.customer" ng-model="selectedCustomer" ng-change="selectProjects()" required></select>
+                                    <select class="form-control" ng-options="customer.name for customer in requisition.customer" data-ng-if="!requisition.formReq" ng-model="selectedCustomer" ng-change="selectProjects()" ng-disabled="check"></select>
+                                    <input class="form-control" type="text" data-ng-if="requisition.formReq" ng-model=" requisition.customername" required="required" disabled>
+                                    @*<select class="form-control" ng-options="customer.name for customer in requisition.customer" ng-model="selectedCustomer" ng-change="selectProjects()"  required></select>*@
+
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="col-lg-offset-3 col-lg-3"><h4>Project</h4></div>
                                 <div class="col-lg-6">
-                                    <select class="form-control" ng-options="project.name for project in selectedProject" ng-model="projectSelected" required></select>
+                                    <select class="form-control" ng-options="project.name for project in selectedProject" data-ng-if="!requisition.formReq" ng-model="projectSelected" required ng-disabled="check"></select>
+                                    <input class="form-control" type="text" data-ng-if="requisition.formReq" ng-model=" requisition.projectname" required="required" disabled>
+
+
+
+                                    @*<select class="form-control" ng-options="project.name for project in selectedProject" ng-model="projectSelected" required></select>*@
                                 </div>
                             </div>
                             <div id="tab-2" class="tab-content overflow ">
@@ -64,7 +72,7 @@
                                             <th>Item Name</th>
                                             <th>Item Code</th>
                                             <th>Units</th>
-                                            <th>Quantity</th>
+                                            <th>Quantity Required</th>
                                             <th>Date Required</th>
                                             <th>Quantity Issued</th>
                                             <th>Action</th>
@@ -78,7 +86,7 @@
                                                 <td><input class="form-control" type="number" value={{$index+1}} disabled></td>
                                                 <td><input class="form-control" type="text" ng-model="item.itemName" placeholder="Item Description" ng-required="true"></td>
                                                 <td><input class="form-control" type="text" ng-model="item.itemCode" placeholder="H-2017" ng-required="true"></td>
-                                                <td><input class="form-control" type="text" ng-model="item.units" placeholder="Kg/Ml" ng-required="true"></td>
+                                                <td><select class="form-control" ng-options="units.name for units in requisition.units" ng-model="item.units" required></select> </td>
                                                 <td><input class="form-control" type="text" ng-model="item.quantity" placeholder="5" ng-required="true"></td>
                                                 <td><input class="form-control" type="date" ng-model="item.dateReq" placeholder="mm/dd/yyyy" ng-required="true"></td>
                                                 <td><input class="form-control" type="text" ng-model="item.issueQuant" ng-required="true"></td>
@@ -98,19 +106,21 @@
             </div>
         </div>
     </div>
-
+</div>
 
     <script src="~/Scripts/angular.min.js"></script>
 
     <script type="text/javascript">
         var app = angular.module("requisition", []);
         app.controller("reqCtrl", function ($scope, $http) {
+          
             $scope.message = $http.get('/api/RequisitionApi/' + 1).then(function (response) {
+                console.log(response.data);
                 $scope.requisition = response.data;
-
             });
             $scope.items = [];
             $scope.addItem = function () {
+
                 var obj = { "itemName": "", "itemCode": "", "units": "", "quantity": "", "dateReq": "", "issueQuant": "" };
                 $scope.items.push(obj);
 
@@ -119,7 +129,8 @@
                 $scope.items.splice(index, 1);
             }
             $scope.selectProjects = function () {
-                var id = $scope.selectedCustomer.id;
+               
+                var id = this.selectedCustomer.id;
                 $scope.selectedProject = [];
                 angular.forEach($scope.requisition.project, function (item) {
                     if (item.custId == id) {
@@ -128,6 +139,7 @@
                 });
             }
             $scope.add = function () {
+               
                 var keepGoing = true;
                 angular.forEach($scope.items, function (item, index) {
                     if (keepGoing) {
@@ -153,18 +165,27 @@
 
                 });
                 if (keepGoing) {
+
                     $scope.requisition.customerId = $scope.selectedCustomer.id;
                     $scope.requisition.projectId = $scope.projectSelected.id;
                     $scope.requisition.serialNo = $scope.requisition.serialNo;
+                    $scope.requisition.formReq = $scope.requisition.formReq;
                     $scope.requisition.items = $scope.items;
 
                     $scope.message = $http.post('/api/RequisitionApi/', $scope.requisition).then(function (response) {
                         alert("Sucessfully");
-                        window.location.href = '/Requisition/ViewRequisition';
+                        if ($scope.requisition.formReq) {
+                            window.history.back();
+                        }
+                        else {
+                            window.location.href = '/Requisition/ViewRequisition';
+                        }
+
                     });
 
                 }
             }
 
         });
+
     </script>

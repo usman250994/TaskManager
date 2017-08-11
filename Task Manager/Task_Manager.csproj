@@ -228,6 +228,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Log.cs" />
+    <Compile Include="Migrations\201708110655203_reqIems.cs" />
+    <Compile Include="Migrations\201708110655203_reqIems.Designer.cs">
+      <DependentUpon>201708110655203_reqIems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708111115571_corrected.cs" />
+    <Compile Include="Migrations\201708111115571_corrected.Designer.cs">
+      <DependentUpon>201708111115571_corrected.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\Category.cs" />
@@ -251,6 +259,7 @@
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\ticketContact.cs" />
     <Compile Include="Models\StatusDocuments.cs" />
+    <Compile Include="Models\Units.cs" />
     <Compile Include="Models\updateTaskReturning.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\Vendor.cs" />
@@ -275,11 +284,14 @@
     <Compile Include="viewModels\ProjectInsert.cs" />
     <Compile Include="viewModels\ProjectViewModel\FilesTab.cs" />
     <Compile Include="viewModels\ProjectViewModel\projectStatus.cs" />
+    <Compile Include="viewModels\ProjectViewModel\requisitionTab.cs" />
     <Compile Include="viewModels\ProjectViewModel\taskTab.cs" />
     <Compile Include="viewModels\ProjectViewModel\TeamTab.cs" />
     <Compile Include="viewModels\ProjectViewModel\TicketTab.cs" />
     <Compile Include="viewModels\reqmessage.cs" />
     <Compile Include="viewModels\requestproduct.cs" />
+    <Compile Include="viewModels\requisitionItem.cs" />
+    <Compile Include="viewModels\requisitiontabodal.cs" />
     <Compile Include="viewModels\Requisition\createRequisition.cs" />
     <Compile Include="viewModels\Requisition\dropdown.cs" />
     <Compile Include="viewModels\Requisition\viewRequisition.cs" />
@@ -542,12 +554,21 @@
     <Content Include="Views\Task\CreateTask.cshtml" />
     <Content Include="Views\Requisition\CreateRequisition.cshtml" />
     <Content Include="Views\Requisition\ViewRequisition.cshtml" />
+    <Content Include="Views\User\Viewsdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708110655203_reqIems.resx">
+      <DependentUpon>201708110655203_reqIems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708111115571_corrected.resx">
+      <DependentUpon>201708111115571_corrected.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

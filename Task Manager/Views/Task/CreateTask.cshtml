@@ -147,10 +147,12 @@
     app.controller("taskctrl", function ($scope, $http) {
         $scope.message = $http.get('/api/TaskApi/' + 0).then(function (response) {
 
-
+            console.log(response.data);
             $scope.task = response.data;
             console.log(response.data);
+            console.log($scope.check);
             $scope.check = false;
+            console.log($scope.check);
             $scope.selectedList = $scope.task.tags;
             $scope.optionsList = $scope.task.list;
             $scope.originalProjects = $scope.task.dropproject;

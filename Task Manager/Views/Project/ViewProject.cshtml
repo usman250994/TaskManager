@@ -100,7 +100,7 @@
 
     function filltable(datas) {
         $("#dataTables-exampl").DataTable({
-            "aaSorting": [5, 'asc'],
+            "aaSorting": [[1, 'asc'], [5, 'asc']],
             "pageLength": 25,
             "aaData": datas,
             "aoColumns": [

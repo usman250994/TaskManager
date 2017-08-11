@@ -36,6 +36,7 @@ namespace Task_Manager.Models
         public DbSet<Status> status { get; set; }
         public DbSet<Requisition> requisition { get; set; }
         public DbSet<requisitionItems> requisitionItem { get; set; }
+        public DbSet<Units> unit { get; set; }
     }
 
 

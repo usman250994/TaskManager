@@ -121,19 +121,19 @@ namespace Task_Manager.Controllers
 
                 if (session["customerForTask"] != null)
                 {
-                  
+
                     int cid = Convert.ToInt32(session["customerForTask"]);
                     session["customerForTask"] = null;
-                 int pid = Convert.ToInt32(session["project"]);
-                 taskUpd.projectName =db.project.Where(i => i.id == pid).Select(o => o.Project_Name).FirstOrDefault();
-                 taskUpd.customerName =db.customer.Where(p=>p.customerId==cid).Select(o=>o.customer_name).FirstOrDefault();
-                    taskUpd.fromProj = true; 
+                    int pid = Convert.ToInt32(session["project"]);
+                    taskUpd.projectName = db.project.Where(i => i.id == pid).Select(o => o.Project_Name).FirstOrDefault();
+                    taskUpd.customerName = db.customer.Where(p => p.customerId == cid).Select(o => o.customer_name).FirstOrDefault();
+                    taskUpd.fromProj = true;
 
-                     taskUpd.dropproject.Clear();
-                       taskUpd.dropcustomer.Clear(); 
+                    taskUpd.dropproject.Clear();
+                    taskUpd.dropcustomer.Clear();
                 }
                 else { taskUpd.fromProj = false; }
-              
+
                 return taskUpd;
             }
         }
@@ -387,10 +387,10 @@ namespace Task_Manager.Controllers
             //create
             else
             {
-                if(temp.fromProj)
+                if (temp.fromProj)
                 {
                     temptask.projectId = Convert.ToInt32(sessionId["project"]);
-                    
+
                 }
                 var task = setTask(temptask);
                 db.task.Add(task);

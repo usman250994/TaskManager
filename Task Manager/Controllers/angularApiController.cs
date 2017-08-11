@@ -145,5 +145,34 @@ namespace Task_Manager.Controllers
 
 
         }
+        [HttpPut]
+        public void RequisitionStatus(filestatus status)
+        {
+            //   var Session = HttpContext.Current.Session;
+            //   int uid = Convert.ToInt32(Session["UserID"]);
+            //   var items = db.requisitionItem.Where(x => x.id == id).FirstOrDefault();
+            //   items.approvedBy = db.user.Find(uid);
+            //   items.approvedDate = DateTime.Now;
+            //   if (db.SaveChanges() > 0)
+            //   {
+            //       return true;
+            //   }
+            //   else
+            //   {
+            //       return false;
+            //   }
+
+            //if (status.value == 0)
+            //{
+            //    reqItem.requisition.approvedBy = null;
+
+            //}
+            //else
+            //{
+
+            //   // reqItem.requisition.approvedBy = db.user.Find(id);
+            //}
+
+        }
     }
 }

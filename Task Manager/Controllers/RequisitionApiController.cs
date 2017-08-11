@@ -18,12 +18,33 @@ namespace Task_Manager.Controllers
         public dropdown dropdownList(int id)
         {
             dropdown toReturn = new dropdown();
-            var dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
-            toReturn.customer = dropcustomer;
-            List<dropProd> dropProj = new List<dropProd>();
-            dropProj = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.work_order + "-" + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
-            toReturn.project = dropProj;
-            toReturn.serialNo = (db.requisition.Count() + 8000).ToString();
+            var Session = HttpContext.Current.Session;
+            if (Session["customerForTask"] != null)
+            {
+                int cid = Convert.ToInt32(Session["customerForTask"]);
+                Session["customerForTask"] = null;
+                int pid = Convert.ToInt32(Session["project"]);
+                var unit = db.unit.Where(o => o.enable == true).Select(o => new dropCust { name = o.name, id = o.id }).ToList();
+                toReturn.units = unit;
+                toReturn.serialNo = (db.requisition.Count() + 8000).ToString();
+                toReturn.projectname = db.project.Where(i => i.id == pid).Select(o => o.Project_Name).FirstOrDefault();
+                toReturn.customername = db.customer.Where(p => p.customerId == cid).Select(o => o.customer_name).FirstOrDefault();
+                toReturn.formReq = true;
+
+            }
+            else
+            {
+                var dropcustomer = db.customer.Where(o => o.enable == true).Select(o => new dropCust { name = o.customer_name, id = o.customerId }).ToList();
+                toReturn.customer = dropcustomer;
+                List<dropProd> dropProj = new List<dropProd>();
+                dropProj = db.project.Where(o => o.Enable == true).Select(o => new dropProd { name = o.work_order + "-" + o.Project_Name, id = o.id, custId = o.customer.customerId }).ToList();
+                toReturn.project = dropProj;
+                toReturn.serialNo = (db.requisition.Count() + 8000).ToString();
+                var unit = db.unit.Where(o => o.enable == true).Select(o => new dropCust { name = o.name, id = o.id }).ToList();
+                toReturn.units = unit;
+                toReturn.formReq = false;
+            }
+
             return toReturn;
         }
         [HttpPost]
@@ -32,8 +53,21 @@ namespace Task_Manager.Controllers
             var Session = HttpContext.Current.Session;
             int id = Convert.ToInt32(Session["UserID"]);
             Requisition req = new Requisition();
-            req.customer = db.customer.Find(create.customerId);
-            req.project = db.project.Find(create.projectId);
+
+            if (create.formReq == false)
+            {
+                req.customer = db.customer.Find(create.customerId);
+                req.project = db.project.Find(create.projectId);
+
+            }
+            else
+            {
+                int cid = Convert.ToInt32(Session["customerForTask"]);
+                int pid = Convert.ToInt32(Session["project"]);
+                req.customer = db.customer.Find(cid);
+                req.project = db.project.Find(pid);
+
+            }
             req.serialNo = create.serialNo;
             req.createdBy = db.user.Find(id);
             req.createdDate = DateTime.Now;
@@ -41,6 +75,7 @@ namespace Task_Manager.Controllers
             req.approvedDate = DateTime.Now;
             req.enable = true;
             // now create requisitionItems
+
 
             foreach (var entity in create.items)
             {
@@ -50,7 +85,7 @@ namespace Task_Manager.Controllers
                 items.itemCode = entity.itemCode;
                 items.itemName = entity.itemName;
                 items.requiredDate = entity.dateReq;
-                items.units = entity.units;
+                items.units = db.unit.Find(entity.units.id);
                 items.quantity = entity.quantity;
                 items.requisition = req;
                 db.requisitionItem.Add(items);
@@ -58,11 +93,30 @@ namespace Task_Manager.Controllers
             db.requisition.Add(req);
             db.SaveChanges();
         }
-        [HttpGet]
-        public List<viewRequisition> Grid()
+        [HttpPost]
+        public List<viewRequisition> Grid(int id)
         {
+            List<Requisition> req = new List<Requisition>();
+
+
             List<viewRequisition> toReturn = new List<viewRequisition>();
-            var req = db.requisition.Where(x => x.enable == true).ToList();
+            if (id == 0)
+            {
+                req = db.requisition.Where(x => x.enable == true).ToList();
+            }
+            else if (id == 1)
+            {
+                req = db.requisition.Where(x => x.enable == true && x.approvedBy == null && x.issuedBy == null).ToList();
+            }
+            else if (id == 2)
+            {
+                req = db.requisition.Where(x => x.enable == true && x.approvedBy != null).ToList();
+            }
+            else
+            {
+                req = db.requisition.Where(x => x.enable == true && x.issuedBy != null).ToList();
+            }
+
             foreach (var entity in req)
             {
                 var item = db.requisitionItem.Where(x => x.requisition.id == entity.id).ToList();
@@ -76,7 +130,7 @@ namespace Task_Manager.Controllers
                         string issuedQuanatity = item[i].issuedQuanatity;
                         string itemCode = item[i].itemCode;
                         string quantity = item[i].quantity;
-                        string units = item[i].units;
+                        string units = item[i].units.name;
                         view.itemName = view.itemName + item_name + ",";
                         view.itemCode = view.itemCode + itemCode + ",";
                         view.units = view.units + units + ",";
@@ -89,7 +143,6 @@ namespace Task_Manager.Controllers
                         list.Add(issuedQuanatity);
                         view.requiredDate = item[i].requiredDate.ToShortDateString();
                     }
-
                 }
 
                 view.serialNo = entity.serialNo;
@@ -120,7 +173,7 @@ namespace Task_Manager.Controllers
                     view.issuedTo = entity.receivedBy.user_Name;
                     view.issuedDate = entity.issued_received_Date.ToShortDateString();
                 }
-                view.action = @" <button  class='btn btn-danger  fa fa-times' onclick='deleteRequisition(" + entity.id + ")'/>";
+                view.action = @" <button  class='btn btn-danger  fa fa-times' onclick='deleteRequisition(" + entity.id + ")'/><button  class='btn btn-primary  fa fa-comments' data-toggle='modal' data-target='#myModal1' onclick='viewRequisition(" + entity.id + ")'/>";
                 toReturn.Add(view);
             }
             return toReturn;
@@ -128,7 +181,7 @@ namespace Task_Manager.Controllers
         [HttpDelete]
         public void DeleteRequisition(int id)
         {
-            var req = db.requisitionItem.Find(id);
+            var req = db.requisition.Find(id);
             req.enable = false;
             db.SaveChanges();
         }

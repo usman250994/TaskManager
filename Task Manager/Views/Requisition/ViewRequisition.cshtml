@@ -31,10 +31,10 @@
         <div class="col-lg-12">
             <div align="center">
                 @*<button class="btn btn-primary" onclick="statusWiseSort(0)">All</button>*@
+                <button class="btn btn-info" onclick="status(0)">All</button>
                 <button class="btn btn-info" onclick="status(1)">Request</button>
                 <button class="btn btn-primary" onclick="status(2)">Approve</button>
                 <button class="btn btn-success" onclick="status(3)">Issued</button>
-                <button class="btn btn-warning" onclick="status(4)">Recived</button>
             </div>
         </div>
         <!-- /.col-lg-12 -->
@@ -51,7 +51,7 @@
                     <table class="table table-striped table-bordered table-hover" id="dataTables-exampl" style="width: 100%!important">
                         <thead>
                             <tr>
-                                <th>Serial No</th>
+                                <th>MRI</th>
                                 <th>Customer Name</th>
                                 <th>Project Name</th>
                                 <th>Item Name</th>
@@ -74,6 +74,7 @@
                     <!-- /.table-responsive -->
                 </div>
                 <!-- /.panel-body -->
+
             </div>
             <!-- /.panel -->
         </div>
@@ -81,13 +82,56 @@
         <!-- /.row -->
     </div>
 </div>
+<div id="myModal1" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        Modal content
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closeModal" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title center "> Requisition</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div>
+                                        <div>
+                                            <table class="table table-striped table-bordered table-hover" id="viewReq" style="width:100%!important;">
+                                                <thead id="th">
+                                                    <tr>
+                                                        <th>S No.</th>
+                                                        <th>Item Name</th>
+                                                        <th>Item Code</th>
+                                                        <th>Quantity</th>
+                                                        <th>Request By</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="dynamic-Grid"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
 
     $(document).ready(function () {
         $.ajax({
             async: false,
-            url: '/api/RequisitionApi/',
-            type: 'GET',
+            url: '/api/RequisitionApi/' + 0,
+            type: 'POST',
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -98,6 +142,8 @@
     });
     function filltable(datas) {
         $("#dataTables-exampl").DataTable({
+            "bDestroy": true,
+            "bAutoWidth": true,
             "pageLength": 25,
             "aaData": datas,
             "aoColumns": [
@@ -133,6 +179,20 @@
             },
             error: function () { alert('Requisition Not Deleted'); }
         });
+    }
+    function status(id) {
+        $.ajax({
+            async: false,
+            url: '/api/RequisitionApi/' + id,
+            type: 'POST',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                filltable(data);
+            },
+            error: function () { alert('Requisition grid not working'); }
+        });
+
     }
 
 </script>

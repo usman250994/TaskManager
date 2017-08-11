@@ -19,6 +19,7 @@ namespace Task_Manager.Models
         public virtual Users issuedBy { get; set; }
         public virtual Users receivedBy { get; set; }
         public DateTime issued_received_Date { get; set; }
+        public string approvalNote { get; set; }
         public bool enable { get; set; }
 
 
