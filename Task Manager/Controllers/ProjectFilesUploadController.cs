@@ -11,6 +11,7 @@ using Task_Manager.viewModels;
 using Task_Manager.viewModels.Project;
 using Task_Manager.viewModels.ProjectViewModel;
 using System.Text.RegularExpressions;
+using Task_Manager.viewModels.Requisition;
 
 namespace Task_Manager.Controllers
 {
@@ -194,29 +195,38 @@ namespace Task_Manager.Controllers
                 var req = db.requisition.Where(x => x.project.id == pid && x.enable == true).ToList();
                 foreach (var entity in req)
                 {
+
                     var reqitem = db.requisitionItem.Where(x => x.requisition.id == entity.id && x.enable == true).Select(p => new requisitionItem { id = p.id, itemCode = p.itemCode, itemName = p.itemName, quantity = p.quantity }).ToList();
-
-                    foreach (var ent in reqitem)
+                    requisitionTab toAdd = new requisitionTab();
+                    List<string> list = new List<string>();
+                    for (int i = 0; i < reqitem.Count; i++)
                     {
-                        requisitionTab toAdd = new requisitionTab();
-                        toAdd.itemName = ent.itemName;
-                        toAdd.itemCode = ent.itemCode;
-                        toAdd.qunantity = ent.quantity;
-                        toAdd.request = entity.createdBy.user_Name;
-                        toAdd.MRI = entity.serialNo;
-                        if (entity.approvedBy != null)
-                        {
-                            //toAdd.approve = ent.approvedBy.user_Name;
-                        }
-                        else
-                        {
-                            toAdd.approve = "Not Approve";
-                        }
 
-                        toAdd.view = @"<button  class='btn btn-primary  fa fa-comments' data-toggle='modal' data-target='#myModal1' onclick='viewRequisition(" + entity.id + ")'/>";
-                        toReturn.Add(toAdd);
+                        string item_name = reqitem[i].itemName;
+                        string itemCode = reqitem[i].itemCode;
+                        string quantity = reqitem[i].quantity;
+                        toAdd.itemName = toAdd.itemName + item_name + ",";
+                        toAdd.itemCode = toAdd.itemCode + itemCode + ",";
+                        toAdd.qunantity = toAdd.qunantity + quantity + ",";
+                        list.Add(item_name);
+                        list.Add(itemCode);
+                        list.Add(quantity);
                     }
+                    toAdd.request = entity.createdBy.user_Name;
+                    toAdd.MRI = entity.serialNo;
+                    if (entity.approvedBy != null)
+                    {
+                        toAdd.approve = entity.approvedBy.user_Name;
+                    }
+                    else
+                    {
+                        toAdd.approve = "Not Approve";
+                    }
+
+                    toAdd.view = @"<button  class='btn btn-primary  fa fa-comments' data-toggle='modal' data-target='#myModal1' onclick='viewRequisition(" + entity.id + ")'/>";
+                    toReturn.Add(toAdd);
                 }
+
                 return new Object[] { toReturn, name };
             }
         }
@@ -233,11 +243,13 @@ namespace Task_Manager.Controllers
                 toAdd.itemName = entity.itemName;
                 toAdd.itemCode = entity.itemCode;
                 toAdd.qunantity = entity.quantity;
-                toAdd.approve = @"<input type='checkbox' ng-model='" + entity.approve+"' onclick='fillReqItems("+entity.id+")'>";
-              //  toAdd.view = @"<select onchange='status(this.value," + entity.id + ")' id=" + entity.id + "><option value='0'>Please Select </option><option value='1'>Approved</option></select>";
-                toReturn.Add(toAdd);       
+                toAdd.reqStatus = entity.approve;
+                toAdd.approve = @"<input type='checkbox' ng-model='" + entity.approve + "' onclick='fillReqItems(" + entity.id + ")'>";
+
+                
+                toReturn.Add(toAdd);
             }
-            return toReturn;       
+            return toReturn;
         }
     }
 }

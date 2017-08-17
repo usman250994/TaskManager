@@ -62,11 +62,11 @@ namespace Task_Manager.Controllers
             }
             else
             {
-                int cid = Convert.ToInt32(Session["customerForTask"]);
+
                 int pid = Convert.ToInt32(Session["project"]);
+                int cid = db.project.Where(x => x.id == pid).Select(x => x.customer.customerId).FirstOrDefault();
                 req.customer = db.customer.Find(cid);
                 req.project = db.project.Find(pid);
-
             }
             req.serialNo = create.serialNo;
             req.createdBy = db.user.Find(id);
@@ -81,7 +81,7 @@ namespace Task_Manager.Controllers
             {
                 requisitionItems items = new requisitionItems();
                 items.enable = true;
-                items.issuedQuanatity = entity.issueQuant;
+                //items.issuedQuanatity = entity.issueQuant;
                 items.itemCode = entity.itemCode;
                 items.itemName = entity.itemName;
                 items.requiredDate = entity.dateReq;
@@ -126,6 +126,7 @@ namespace Task_Manager.Controllers
                     List<string> list = new List<string>();
                     for (int i = 0; i < item.Count; i++)
                     {
+
                         string item_name = item[i].itemName;
                         string issuedQuanatity = item[i].issuedQuanatity;
                         string itemCode = item[i].itemCode;
@@ -184,6 +185,47 @@ namespace Task_Manager.Controllers
             var req = db.requisition.Find(id);
             req.enable = false;
             db.SaveChanges();
+        }
+        [HttpPut]
+        public void approveRequisition(requsitionApprove approve)
+        {
+            var Session = HttpContext.Current.Session;
+            int id = Convert.ToInt32(Session["UserID"]);
+            int Itemid = approve.items[0];
+            var reqitem = db.requisitionItem.Find(Itemid);
+            var req = db.requisition.Where(x => x.id == reqitem.requisition.id).FirstOrDefault();
+            if (req != null)
+            {
+                foreach (var entity in approve.items)
+                {
+
+                    var items = db.requisitionItem.Find(entity);
+                    items.approve = true;
+
+                }
+                req.approvalNote = approve.note;
+                req.approvedBy = db.user.Find(id);
+                req.approvedDate = DateTime.Now;
+            }
+            db.SaveChanges();
+        }
+        [HttpPut]
+        public object[] viewDetail(int id)
+        {
+            List<viewreq> toReturn = new List<viewreq>();
+
+            var req = db.requisitionItem.Where(x => x.requisition.id == id && x.approve==true).ToList();
+            string Notes = req[0].requisition.approvalNote;
+            foreach (var entity in req)
+            {
+                viewreq item = new viewreq();
+                item.itemName = entity.itemName;
+                item.itemCode = entity.itemCode;
+                item.quantity = entity.quantity;
+                item.status = "Pending"; 
+                toReturn.Add(item);
+            }
+            return new Object[] { toReturn, Notes };
         }
 
     }

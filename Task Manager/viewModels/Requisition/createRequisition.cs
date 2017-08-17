@@ -19,7 +19,7 @@ namespace Task_Manager.viewModels.Requisition
             public string itemCode { get; set; }
             public dropCust units { get; set; }
             public string quantity { get; set; }
-            public string issueQuant { get; set; }
+            //public string issueQuant { get; set; }
             public DateTime dateReq { get; set; }
         }
         

@@ -1,0 +1,398 @@
+﻿@{
+    ViewBag.Title = "CreateVendor";
+    if (ViewData["id"].ToString() == "1")
+    {
+        Layout = "~/Views/Shared/_Home.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "2")
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "3")
+    {
+        Layout = "~/Views/Shared/Normal.cshtml";
+    }
+    else if (ViewData["id"].ToString() == "4")
+    {
+        Layout = "~/Views/Shared/CSR.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/Procurement.cshtml";
+    }
+}
+<div id="wrapper" ng-app="vendor" ng-controller="vendorCtrl">
+    <!-- Navigation -->
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="text-align:center">Create Vendor</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <form ng-submit="Add()">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Create Vendor
+                        </div>
+                        @**********************************************************Start Create Vendor **************************************************************@
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12 spacing">
+                                        <div class=" col-lg-4 ">
+                                            <label>Code</label>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <label type="text" ng-model="vendor.vendorid" hidden> </label>
+                                            <input class="form-control" ng-model="vendor.V_code" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="  col-lg-4 ">
+                                            <label>Name</label>
+                                            <span style="color:red; font-size:18px">*</span>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" type="text" ng-model="vendor.vendorName" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="  col-lg-4">
+                                            <label>Type</label>
+                                            <span style="color:red; font-size:18px">*</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <select ng-options="Pay.name for Pay in pay" ng-model="vendor.payType" class="ddl" required="required"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="  col-lg-4">
+                                            <label>Address</label>
+                                            <span style="color:red; font-size:18px">*</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="text" ng-model="vendor.vendoraddress" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="  col-lg-4">
+                                            <label>City</label>
+                                            <span style="color:red; font-size:18px">*</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control ddl" type="text" ng-model="vendor.vendorcity" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="  col-lg-4">
+                                            <label>Mobile Number</label>
+                                            <span style="color:red; font-size:18px">*</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="col-lg-2"><label class="abc">+92</label></div>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" type="text" ng-model="vendor.vendormobNo" placeholder="3xxxxxxxxx" required="required">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="  col-lg-4 ">
+                                            <label>Telephone No.</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="text" ng-model="vendor.vendorteleNo">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="  col-lg-4">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="email" ng-model="vendor.vendorEmail">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="  col-lg-4 ">
+                                            <label>Website</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="text" ng-model="vendor.vendorwebsite">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="  col-lg-4 ">
+                                            <label>Fax</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="text" ng-model="vendor.vendorfax">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                            <!-- /.col-lg-6 (nested) -->
+                        </div>
+                        @**********************************************************End Create Vendor **************************************************************@
+
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                    @**********************************************************Start Note Vendor **************************************************************@
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Note
+                                </div>
+                                <div class="panel-body" style="height:235px;">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12 ">
+                                                <div class="col-lg-4 ">
+                                                    <label>Note</label>
+                                                </div>
+                                                <div class="col-lg-6 ">
+                                                    <textarea ng-model="vendor.vendorNote" class="form-control" rows="8"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.row (nested) -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                    </div>
+
+                </div>
+                @**********************************************************End Note Vendor **************************************************************@
+                <!-- /.panel -->
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Primary Contact
+                        </div>
+                        @**********************************************************Start Primary Contact Vendor **************************************************************@
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-4 ">
+                                            <label>Contact Name</label>
+                                            <span style="color:red; font-size:18px">*</span>
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <input class="form-control" ng-model="vendor.user_name" placeholder="User Name" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-4">
+                                            <label>Reg. No</label>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="text" ng-model="vendor.userregNo">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-4">
+                                            <label>NIC</label>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="text" ng-model="vendor.usernic">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-4">
+                                            <label>Designation</label>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="text" ng-model="vendor.usertitle" placeholder="CEO / Marketing">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-4">
+                                            <label>Email Address</label>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="email" ng-model="vendor.useremail" placeholder="Example12@Gmail.com">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-4">
+                                            <label>Mobile Number</label>
+                                            <span style="color:red; font-size:18px">*</span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="col-lg-2"><label class="abc">+92</label></div>
+                                            <div class="col-lg-10"><input class="form-control" type="text" ng-model="vendor.usermobNo" placeholder="3xxxxxxxxx" required="required"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-4">
+                                            <label>Telephone No. </label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="text" ng-model="vendor.usertelephoneNo">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 spacing">
+                                        <div class="col-lg-4">
+                                            <label>Fax</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" type="text" ng-model="vendor.userfax">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                            <!-- /.col-lg-6 (nested) -->
+                            <!-- /.col-lg-6 (nested) -->
+                        </div>
+                        @**********************************************************End Primary Contact Vendor **************************************************************@
+
+                        <!-- /.row (nested) -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Vendor Evaluiation
+                                </div>
+                                @**********************************************************Start Vendor Evaluation **************************************************************@
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12 spacing">
+                                                <div class="col-lg-4">
+                                                    <label>Evaluation Phase</label>
+                                                    <span style="color:red; font-size:18px">*</span>
+                                                </div>
+                                                <div class="col-lg-6 ">
+                                                    <input type="radio" name="phase" ng-model="vendor.isApprove" data-ng-value="true" required="required"> Approved
+                                                    <input type="radio" name="phase" ng-model="vendor.isApprove" data-ng-value="false"> Not Approved
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 spacing">
+                                                <div class="col-lg-4 ">
+                                                    <label>Vendor Status</label>
+                                                    <span style="color:red; font-size:18px">*</span>
+                                                </div>
+                                                <div class="col-lg-6 ">
+                                                    <input type="radio" name="Status" ng-model="vendor.isActive" data-ng-value="true" required="required"> Active
+                                                    <input type="radio" name="Status" ng-model="vendor.isActive" data-ng-value="false"> In-Active
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 spacing">
+                                                <div class="col-lg-4">
+                                                    <label>Vendor Credit Limit</label>
+                                                    <span style="color:red; font-size:18px">*</span>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <input class="form-control" type="text" ng-model="vendor.vendorcreditLimit" required="required">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 spacing">
+                                                <div class="col-lg-4">
+                                                    <label>Credit Time Per</label>
+                                                    <span style="color:red; font-size:18px">*</span>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="col-lg-3">
+                                                        <div class="row">
+                                                            <input class="form-control" type="number" ng-model="vendor.vendordays" required="required">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2"><label class="abc">Days</label></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 spacing">
+                                                <div class="col-lg-4">
+                                                    <label>Prefereed Courier </label>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <input class="form-control" type="text" ng-model="vendor.vendorpreferredCourier">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 spacing">
+                                                <div class="col-lg-4 ">
+                                                    <label>System Catogrey</label>
+                                                    <span style="color:red; font-size:18px">*</span>
+                                                </div>
+
+                                                @*needs to be a multi selct*@
+                                                <div class="col-lg-6">
+                                                    <multiple-autocomplete ng-model="vendor.vendorsystemCategory" object-property="name"
+                                                                           suggestions-arr="inventoryTypes" required="required"></multiple-autocomplete>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @**********************************************************End Vendor Evaluation **************************************************************@
+
+                                <!-- /.row (nested) -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <div class="col-lg-offset-5 col-lg-6 spacing" style="padding-bottom: 50px;">
+                    <input type="submit" id="submit" value="Create" class="btn btn-success" style="width:150px; height:40px;" />
+                    <input type="button" class="btn btn-info" value="Reset" onclick="location.reload();" style="width:150px; height:40px;">
+                </div>
+            </div>
+        </form>
+        <!-- /.col-lg-12 -->
+        <!-- /.panel -->
+    </div>
+    <!-- /.row -->
+
+</div>
+<script src="~/Scripts/angular.min.js"></script>
+<script>
+    var app = angular.module("vendor", ['multipleSelect']);
+    app.controller("vendorCtrl", function ($scope, $http) {
+        $scope.message = $http.get('/api/VendorApi/' + 1).then(function (response) {
+            $scope.data = response.data;
+            $scope.pay = $scope.data.type;
+            $scope.inventoryTypes = $scope.data.systemCategory;
+            if ($scope.data.vend != null) {
+                $scope.vendor = $scope.data.vend;
+                angular.forEach($scope.pay, function (item) {
+                    if (item.id == $scope.vendor.payType) {
+                        $scope.vendor.payType = item;
+                    }
+                });
+            }
+        });
+
+        $scope.Add = function () {
+            if ($scope.vendor.vendormobNo.length != 10 || $scope.vendor.usermobNo.length != 10) {
+                alert("Please Enter Correct Mobile Number.")
+            }
+            else {
+                $scope.vendor.payType = $scope.vendor.payType.id;
+                $scope.message = $http.post('/api/VendorApi/', $scope.vendor).then(function (response) {
+                    alert("Sucessfully");
+                });
+            }
+        }
+    });
+
+</script>

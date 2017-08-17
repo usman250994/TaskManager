@@ -228,14 +228,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Log.cs" />
-    <Compile Include="Migrations\201708110655203_reqIems.cs" />
-    <Compile Include="Migrations\201708110655203_reqIems.Designer.cs">
-      <DependentUpon>201708110655203_reqIems.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708111115571_corrected.cs" />
-    <Compile Include="Migrations\201708111115571_corrected.Designer.cs">
-      <DependentUpon>201708111115571_corrected.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\Category.cs" />
@@ -294,6 +286,8 @@
     <Compile Include="viewModels\requisitiontabodal.cs" />
     <Compile Include="viewModels\Requisition\createRequisition.cs" />
     <Compile Include="viewModels\Requisition\dropdown.cs" />
+    <Compile Include="viewModels\Requisition\requsitionApprove.cs" />
+    <Compile Include="viewModels\Requisition\viewreq.cs" />
     <Compile Include="viewModels\Requisition\viewRequisition.cs" />
     <Compile Include="viewModels\responseCategory.cs" />
     <Compile Include="viewModels\responseInventory.cs" />
@@ -561,14 +555,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708110655203_reqIems.resx">
-      <DependentUpon>201708110655203_reqIems.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708111115571_corrected.resx">
-      <DependentUpon>201708111115571_corrected.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
